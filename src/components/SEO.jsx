@@ -5,8 +5,8 @@ const SEO = ({ title, description, image, url }) => {
   const siteTitle = 'AmpuMe';
   const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
   const metaDescription = description || "The all-in-one platform for life after limb loss. Find products, resources, providers, and support in one place.";
-  const metaImage = image || 'https://ampume-landing-v3.vercel.app/og-image.png';
-  const metaUrl = url || 'https://ampume-landing-v3.vercel.app/';
+  const metaImage = image || 'https://ampume.com/og-image.png';
+  const metaUrl = url || 'https://ampume.com/';
 
   return (
     <Helmet>

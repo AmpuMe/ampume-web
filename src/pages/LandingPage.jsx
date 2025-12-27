@@ -6,14 +6,14 @@ import SEO from '../components/SEO';
 import Footer from '../components/Footer';
 import WaitlistModal from '../components/WaitlistModal';
 import { useSubscribe } from '../hooks/useSubscribe';
-import heroImage from '../assets/new-hero-3.jpeg';
-import marketplaceImage from '../assets/shop.jpeg';
-import peopleImage from '../assets/people.jpeg';
-import personImage from '../assets/person.jpeg';
-import familyImage from '../assets/family.jpeg';
-import friendsImage from '../assets/friends.jpeg';
-import friends2Image from '../assets/friends-2.jpeg';
-import cardPhoto from '../assets/support.jpeg';
+import heroImage from '../assets/new-hero-3.webp';
+import marketplaceImage from '../assets/shop.webp';
+import peopleImage from '../assets/people.webp';
+import personImage from '../assets/person.webp';
+import familyImage from '../assets/family.webp';
+import friendsImage from '../assets/friends.webp';
+import friends2Image from '../assets/friends-2.webp';
+import cardPhoto from '../assets/support.webp';
 
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
   <motion.div

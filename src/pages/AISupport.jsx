@@ -97,42 +97,66 @@ const AISupport = () => {
           </div>
           
           <div className="col-span-12 lg:col-span-5 lg:col-start-8 mt-12 lg:mt-0">
-            <form className="flex flex-col gap-6 bg-white p-8 md:p-12 border border-gray-100">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-widest mb-4">First Name</label>
-                  <input 
-                    type="text" 
-                    placeholder="Jane" 
-                    className="w-full bg-transparent border-b border-gray-200 py-4 text-left text-xl placeholder:text-gray-300 focus:outline-none focus:border-black transition-colors"
-                  />
+            {success ? (
+              <div className="bg-white p-8 md:p-12 border border-gray-100 text-center">
+                <h3 className="text-2xl font-medium mb-4">You're on the list!</h3>
+                <p className="text-gray-500">We'll let you know as soon as we launch.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="flex flex-col gap-6 bg-white p-8 md:p-12 border border-gray-100">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="firstName" className="block text-xs font-bold uppercase tracking-widest mb-4">First Name</label>
+                    <input 
+                      id="firstName"
+                      type="text" 
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      placeholder="Jane" 
+                      className="w-full bg-transparent border-b border-gray-200 py-4 text-left text-xl placeholder:text-gray-300 focus:outline-none focus:border-black transition-colors"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="lastName" className="block text-xs font-bold uppercase tracking-widest mb-4">Last Name</label>
+                    <input 
+                      id="lastName"
+                      type="text" 
+                      value={formData.lastName}
+                      onChange={handleChange}
+                      placeholder="Doe" 
+                      className="w-full bg-transparent border-b border-gray-200 py-4 text-left text-xl placeholder:text-gray-300 focus:outline-none focus:border-black transition-colors"
+                      required
+                    />
+                  </div>
                 </div>
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-widest mb-4">Last Name</label>
+                  <label htmlFor="email" className="block text-xs font-bold uppercase tracking-widest mb-4">Email Address</label>
                   <input 
-                    type="text" 
-                    placeholder="Doe" 
+                    id="email"
+                    type="email" 
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="name@example.com" 
                     className="w-full bg-transparent border-b border-gray-200 py-4 text-left text-xl placeholder:text-gray-300 focus:outline-none focus:border-black transition-colors"
+                    required
                   />
                 </div>
-              </div>
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-widest mb-4">Email Address</label>
-                <input 
-                  type="email" 
-                  placeholder="name@example.com" 
-                  className="w-full bg-transparent border-b border-gray-200 py-4 text-left text-xl placeholder:text-gray-300 focus:outline-none focus:border-black transition-colors"
-                />
-              </div>
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mt-4">
-                <button className="bg-black text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-gray-800 transition-colors w-full md:w-auto">
-                  Join Waitlist
-                </button>
-                 <p className="text-xs text-gray-400">
-                  No spam. Unsubscribe anytime.
-                </p>
-              </div>
-            </form>
+                {error && <p className="text-red-500 text-xs">{error}</p>}
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mt-4">
+                  <button 
+                    type="submit"
+                    disabled={loading}
+                    className="bg-black text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-gray-800 transition-colors w-full md:w-auto disabled:opacity-50"
+                  >
+                    {loading ? 'Joining...' : 'Join Waitlist'}
+                  </button>
+                   <p className="text-xs text-gray-400">
+                    No spam. Unsubscribe anytime.
+                  </p>
+                </div>
+              </form>
+            )}
           </div>
         </div>
       </section>
