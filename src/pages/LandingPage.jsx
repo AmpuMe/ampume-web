@@ -221,7 +221,7 @@ const LandingPage = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
             {/* AI Support - Position 1 - LIVE */}
-            <FadeIn id="ai-support" onClick={() => navigate('/ai-support')} delay={0} className="group relative h-[450px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
+            <FadeIn id="ai-support" onClick={() => navigate('/ai-support')} delay={0} className="group relative h-[500px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
               <img src={friendsImage} loading="lazy" alt="AI Support" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
               <div className="absolute top-8 left-8 z-10 flex gap-2">
@@ -239,7 +239,7 @@ const LandingPage = () => {
             </FadeIn>
 
             {/* Marketplace - Position 2 */}
-            <FadeIn id="marketplace" onClick={() => setModalOpen(true)} delay={0.1} className="group relative h-[450px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
+            <FadeIn id="marketplace" onClick={() => setModalOpen(true)} delay={0.1} className="group relative h-[500px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
               <img src={marketplaceImage} loading="lazy" alt="Marketplace" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
               <div className="absolute top-8 left-8 z-10 flex gap-2">
@@ -257,7 +257,7 @@ const LandingPage = () => {
             </FadeIn>
 
             {/* Telehealth - Position 3 */}
-            <FadeIn id="telehealth" onClick={() => setModalOpen(true)} delay={0.2} className="group relative h-[450px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
+            <FadeIn id="telehealth" onClick={() => setModalOpen(true)} delay={0.2} className="group relative h-[500px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
               <img src={cardPhoto} loading="lazy" alt="Telehealth" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
               <div className="absolute top-8 left-8 z-10 flex gap-2">
@@ -275,7 +275,7 @@ const LandingPage = () => {
             </FadeIn>
 
             {/* Resources - Position 4 */}
-            <FadeIn id="resources" onClick={() => setModalOpen(true)} delay={0.3} className="group relative h-[450px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
+            <FadeIn id="resources" onClick={() => setModalOpen(true)} delay={0.3} className="group relative h-[500px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
               <img src={peopleImage} loading="lazy" alt="Resources" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
               <div className="absolute top-8 left-8 z-10 flex gap-2">
