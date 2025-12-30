@@ -239,13 +239,13 @@ const LandingPage = () => {
             </FadeIn>
 
             {/* Marketplace - Position 2 */}
-            <FadeIn id="marketplace" onClick={() => setModalOpen(true)} delay={0.1} className="group relative h-[500px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
+            <FadeIn id="marketplace" onClick={() => setModalOpen(true)} delay={0.1} className="group relative h-[450px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
               <img src={marketplaceImage} loading="lazy" alt="Marketplace" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
               <div className="absolute top-8 left-8 z-10 flex gap-2">
                 <span className="text-xs font-bold uppercase tracking-widest bg-white text-black px-3 py-1">Shop</span>
               </div>
-              <div className="absolute bottom-0 left-0 w-full p-8 text-white">
+              <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
                 <h4 className="text-3xl font-medium mb-3">Marketplace</h4>
                 <div className="h-auto md:h-0 md:group-hover:h-auto overflow-hidden transition-all duration-500">
                    <p className="text-sm text-white/90 leading-relaxed mb-4">
@@ -257,13 +257,13 @@ const LandingPage = () => {
             </FadeIn>
 
             {/* Telehealth - Position 3 */}
-            <FadeIn id="telehealth" onClick={() => setModalOpen(true)} delay={0.2} className="group relative h-[500px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
+            <FadeIn id="telehealth" onClick={() => setModalOpen(true)} delay={0.2} className="group relative h-[450px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
               <img src={cardPhoto} loading="lazy" alt="Telehealth" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
               <div className="absolute top-8 left-8 z-10 flex gap-2">
                 <span className="text-xs font-bold uppercase tracking-widest bg-white text-black px-3 py-1">Care</span>
               </div>
-              <div className="absolute bottom-0 left-0 w-full p-8 text-white">
+              <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
                 <h4 className="text-3xl font-medium mb-3">Telehealth</h4>
                 <div className="h-auto md:h-0 md:group-hover:h-auto overflow-hidden transition-all duration-500">
                    <p className="text-sm text-white/90 leading-relaxed mb-4">
@@ -275,13 +275,13 @@ const LandingPage = () => {
             </FadeIn>
 
             {/* Resources - Position 4 */}
-            <FadeIn id="resources" onClick={() => setModalOpen(true)} delay={0.3} className="group relative h-[500px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
+            <FadeIn id="resources" onClick={() => setModalOpen(true)} delay={0.3} className="group relative h-[450px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
               <img src={peopleImage} loading="lazy" alt="Resources" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
               <div className="absolute top-8 left-8 z-10 flex gap-2">
                 <span className="text-xs font-bold uppercase tracking-widest bg-white text-black px-3 py-1">Learn</span>
               </div>
-              <div className="absolute bottom-0 left-0 w-full p-8 text-white">
+              <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
                 <h4 className="text-3xl font-medium mb-3">Resources</h4>
                 <div className="h-auto md:h-0 md:group-hover:h-auto overflow-hidden transition-all duration-500">
                    <p className="text-sm text-white/90 leading-relaxed mb-4">
@@ -298,7 +298,7 @@ const LandingPage = () => {
       {/* Who This Is For - Swiss 3-Col Layout with Dividers */}
       <section className="py-20 md:py-32 px-6 md:px-12 bg-white">
         <FadeIn>
-          <div className="grid grid-cols-12 gap-6 mb-12 md:mb-20 border-b border-gray-100 pb-8">
+          <div className="grid grid-cols-12 gap-6 mb-8 md:mb-20 border-b border-gray-100 pb-8">
             <div className="col-span-12 md:col-span-6">
               <h2 className="text-4xl md:text-5xl font-normal leading-tight">
                 Designed for <br /> everyone involved.
