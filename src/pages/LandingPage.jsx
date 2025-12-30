@@ -231,7 +231,7 @@ const LandingPage = () => {
                 <h4 className="text-3xl font-medium mb-3">AI Support</h4>
                 <div className="h-auto md:h-0 md:group-hover:h-auto overflow-hidden transition-all duration-500">
                    <p className="text-sm text-white/90 leading-relaxed mb-4">
-                    24/7 answers you can trust. Trained on verified medical data.
+                    24/7 answers you can trust. Trained on expert resources.
                   </p>
                   <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1 group-hover:border-white transition-colors">Start Chatting <ArrowRight size={14} /></span>
                 </div>
