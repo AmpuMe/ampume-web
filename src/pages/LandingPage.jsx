@@ -193,15 +193,15 @@ const LandingPage = () => {
       </section>
 
       {/* Intro Section - "One Place" - Swiss Split Layout */}
-      <section className="py-32 px-6 md:px-12 bg-white border-b border-gray-100">
-        <div className="grid grid-cols-12 gap-6">
+      <section className="py-20 md:py-32 px-6 md:px-12 bg-white border-b border-gray-100">
+        <div className="grid grid-cols-12 gap-8 md:gap-16">
           <FadeIn className="col-span-12 md:col-span-5">
             <h2 className="text-4xl md:text-5xl font-normal leading-tight sticky top-32">
               We think there should be one place that brings it all together.
             </h2>
           </FadeIn>
           <FadeIn className="col-span-12 md:col-span-6 md:col-start-7">
-            <p className="text-xl md:text-2xl text-gray-500 font-light leading-relaxed mb-12">
+            <p className="text-xl md:text-2xl text-gray-500 font-light leading-relaxed mb-8 md:mb-12">
               Navigating limb loss is fragmented. Products are scattered, information is buried, and finding a specialist takes hours. We're changing that by creating a single source of truth for you and your support system.
             </p>
             <button onClick={() => scrollToSection('platform')} className="inline-flex items-center text-sm font-bold uppercase tracking-widest border-b border-black pb-1 hover:opacity-70 transition-opacity text-left">
@@ -212,26 +212,26 @@ const LandingPage = () => {
       </section>
 
       {/* Platform Grid - Hunter Style: "Brand Portfolio" */}
-      <section id="platform" className="py-20 px-6 md:px-12 bg-white">
+      <section id="platform" className="py-16 md:py-20 px-6 md:px-12 bg-white">
         <div className="max-w-full mx-auto">
-          <div className="flex justify-between items-end mb-16">
+          <div className="flex justify-between items-end mb-10 md:mb-16">
             <h3 className="text-2xl font-medium">The Platform</h3>
             <span className="hidden md:block text-sm text-gray-400">Everything you need</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
             {/* AI Support - Position 1 - LIVE */}
-            <FadeIn id="ai-support" onClick={() => navigate('/ai-support')} delay={0} className="group relative h-[500px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
+            <FadeIn id="ai-support" onClick={() => navigate('/ai-support')} delay={0} className="group relative h-[450px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
               <img src={friendsImage} loading="lazy" alt="AI Support" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
               <div className="absolute top-8 left-8 z-10 flex gap-2">
                 <span className="text-xs font-bold uppercase tracking-widest bg-white text-black px-3 py-1">Ask</span>
               </div>
-              <div className="absolute bottom-0 left-0 w-full p-8 text-white">
+              <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
                 <h4 className="text-3xl font-medium mb-3">AI Support</h4>
                 <div className="h-auto md:h-0 md:group-hover:h-auto overflow-hidden transition-all duration-500">
                    <p className="text-sm text-white/90 leading-relaxed mb-4">
-                    Ask questions at 2am. Trained on verified medical data.
+                    24/7 answers you can trust. Trained on verified medical data.
                   </p>
                   <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1 group-hover:border-white transition-colors">Start Chatting <ArrowRight size={14} /></span>
                 </div>
@@ -296,9 +296,9 @@ const LandingPage = () => {
       </section>
 
       {/* Who This Is For - Swiss 3-Col Layout with Dividers */}
-      <section className="py-32 px-6 md:px-12 bg-white">
+      <section className="py-20 md:py-32 px-6 md:px-12 bg-white">
         <FadeIn>
-          <div className="grid grid-cols-12 gap-6 mb-20 border-b border-gray-100 pb-8">
+          <div className="grid grid-cols-12 gap-6 mb-12 md:mb-20 border-b border-gray-100 pb-8">
             <div className="col-span-12 md:col-span-6">
               <h2 className="text-4xl md:text-5xl font-normal leading-tight">
                 Designed for <br /> everyone involved.
@@ -325,7 +325,7 @@ const LandingPage = () => {
       </section>
 
       {/* Waitlist / CTA - Clean Minimalist Style */}
-      <section id="waitlist" className="py-32 px-6 md:px-12 bg-gray-50 text-black border-t border-gray-100">
+      <section id="waitlist" className="py-20 md:py-32 px-6 md:px-12 bg-gray-50 text-black border-t border-gray-100">
         <div className="grid grid-cols-12 gap-6 items-center">
           <div className="col-span-12 lg:col-span-6">
              <h2 className="text-5xl md:text-7xl font-medium tracking-tight mb-8">
