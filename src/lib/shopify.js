@@ -1,16 +1,34 @@
-import { createStorefrontApiClient } from '@shopify/storefront-api-client';
-
 // Shopify Storefront API configuration
-// Replace these with your actual values
 const SHOPIFY_STORE_DOMAIN = import.meta.env.VITE_SHOPIFY_STORE_DOMAIN || 'ampume.myshopify.com';
 const SHOPIFY_STOREFRONT_TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN || '';
+const API_VERSION = '2024-01';
 
-export const shopifyClient = createStorefrontApiClient({
-  storeDomain: SHOPIFY_STORE_DOMAIN,
-  apiVersion: '2024-01',
-  // shpss_ tokens are private Storefront API tokens
-  privateAccessToken: SHOPIFY_STOREFRONT_TOKEN,
-});
+const STOREFRONT_API_URL = `https://${SHOPIFY_STORE_DOMAIN}/api/${API_VERSION}/graphql.json`;
+
+async function shopifyFetch(query, variables = {}) {
+  const response = await fetch(STOREFRONT_API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Shopify-Storefront-Private-Token': SHOPIFY_STOREFRONT_TOKEN,
+    },
+    body: JSON.stringify({ query, variables }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Shopify API error: ${response.status} ${response.statusText}`);
+  }
+
+  const json = await response.json();
+
+  if (json.errors) {
+    console.error('Shopify GraphQL errors:', json.errors);
+    const message = json.errors.map(e => e.message).join(', ');
+    throw new Error(message);
+  }
+
+  return json.data;
+}
 
 // GraphQL Queries
 export const PRODUCTS_QUERY = `
@@ -410,162 +428,52 @@ export const REMOVE_FROM_CART_MUTATION = `
   }
 `;
 
-// Helper to extract error message from various error formats
-function getErrorMessage(errors) {
-  if (!errors) return 'Unknown error';
-  if (typeof errors === 'string') return errors;
-  if (Array.isArray(errors)) return errors.map(e => e.message || String(e)).join(', ');
-  if (errors.message) return errors.message;
-  if (errors.graphQLErrors) return errors.graphQLErrors.map(e => e.message).join(', ');
-  if (errors.networkStatusCode) return `Network error: ${errors.networkStatusCode}`;
-  return JSON.stringify(errors);
-}
-
 // Helper functions
 export async function fetchProducts(first = 50, after = null) {
-  try {
-    const response = await shopifyClient.request(PRODUCTS_QUERY, {
-      variables: { first, after },
-    });
-
-    if (response.errors) {
-      console.error('Error fetching products:', response.errors);
-      throw new Error(getErrorMessage(response.errors));
-    }
-
-    return response.data?.products;
-  } catch (err) {
-    console.error('fetchProducts error:', err);
-    throw err;
-  }
+  const data = await shopifyFetch(PRODUCTS_QUERY, { first, after });
+  return data?.products;
 }
 
 export async function fetchProductByHandle(handle) {
-  try {
-    const response = await shopifyClient.request(PRODUCT_BY_HANDLE_QUERY, {
-      variables: { handle },
-    });
-
-    if (response.errors) {
-      console.error('Error fetching product:', response.errors);
-      throw new Error(getErrorMessage(response.errors));
-    }
-
-    return response.data?.productByHandle;
-  } catch (err) {
-    console.error('fetchProductByHandle error:', err);
-    throw err;
-  }
+  const data = await shopifyFetch(PRODUCT_BY_HANDLE_QUERY, { handle });
+  return data?.productByHandle;
 }
 
 export async function createCart(lines = []) {
-  try {
-    const response = await shopifyClient.request(CREATE_CART_MUTATION, {
-      variables: { lines },
-    });
-
-    if (response.errors) {
-      console.error('Error creating cart:', response.errors);
-      throw new Error(getErrorMessage(response.errors));
-    }
-
-    const data = response.data;
-    if (data?.cartCreate?.userErrors?.length > 0) {
-      throw new Error(data.cartCreate.userErrors.map(e => e.message).join(', '));
-    }
-
-    return data?.cartCreate?.cart;
-  } catch (err) {
-    console.error('createCart error:', err);
-    throw err;
+  const data = await shopifyFetch(CREATE_CART_MUTATION, { lines });
+  if (data?.cartCreate?.userErrors?.length > 0) {
+    throw new Error(data.cartCreate.userErrors.map(e => e.message).join(', '));
   }
+  return data?.cartCreate?.cart;
 }
 
 export async function getCart(cartId) {
-  try {
-    const response = await shopifyClient.request(GET_CART_QUERY, {
-      variables: { cartId },
-    });
-
-    if (response.errors) {
-      console.error('Error fetching cart:', response.errors);
-      throw new Error(getErrorMessage(response.errors));
-    }
-
-    return response.data?.cart;
-  } catch (err) {
-    console.error('getCart error:', err);
-    throw err;
-  }
+  const data = await shopifyFetch(GET_CART_QUERY, { cartId });
+  return data?.cart;
 }
 
 export async function addToCart(cartId, lines) {
-  try {
-    const response = await shopifyClient.request(ADD_TO_CART_MUTATION, {
-      variables: { cartId, lines },
-    });
-
-    if (response.errors) {
-      console.error('Error adding to cart:', response.errors);
-      throw new Error(getErrorMessage(response.errors));
-    }
-
-    const data = response.data;
-    if (data?.cartLinesAdd?.userErrors?.length > 0) {
-      throw new Error(data.cartLinesAdd.userErrors.map(e => e.message).join(', '));
-    }
-
-    return data?.cartLinesAdd?.cart;
-  } catch (err) {
-    console.error('addToCart error:', err);
-    throw err;
+  const data = await shopifyFetch(ADD_TO_CART_MUTATION, { cartId, lines });
+  if (data?.cartLinesAdd?.userErrors?.length > 0) {
+    throw new Error(data.cartLinesAdd.userErrors.map(e => e.message).join(', '));
   }
+  return data?.cartLinesAdd?.cart;
 }
 
 export async function updateCartLine(cartId, lines) {
-  try {
-    const response = await shopifyClient.request(UPDATE_CART_MUTATION, {
-      variables: { cartId, lines },
-    });
-
-    if (response.errors) {
-      console.error('Error updating cart:', response.errors);
-      throw new Error(getErrorMessage(response.errors));
-    }
-
-    const data = response.data;
-    if (data?.cartLinesUpdate?.userErrors?.length > 0) {
-      throw new Error(data.cartLinesUpdate.userErrors.map(e => e.message).join(', '));
-    }
-
-    return data?.cartLinesUpdate?.cart;
-  } catch (err) {
-    console.error('updateCartLine error:', err);
-    throw err;
+  const data = await shopifyFetch(UPDATE_CART_MUTATION, { cartId, lines });
+  if (data?.cartLinesUpdate?.userErrors?.length > 0) {
+    throw new Error(data.cartLinesUpdate.userErrors.map(e => e.message).join(', '));
   }
+  return data?.cartLinesUpdate?.cart;
 }
 
 export async function removeFromCart(cartId, lineIds) {
-  try {
-    const response = await shopifyClient.request(REMOVE_FROM_CART_MUTATION, {
-      variables: { cartId, lineIds },
-    });
-
-    if (response.errors) {
-      console.error('Error removing from cart:', response.errors);
-      throw new Error(getErrorMessage(response.errors));
-    }
-
-    const data = response.data;
-    if (data?.cartLinesRemove?.userErrors?.length > 0) {
-      throw new Error(data.cartLinesRemove.userErrors.map(e => e.message).join(', '));
-    }
-
-    return data?.cartLinesRemove?.cart;
-  } catch (err) {
-    console.error('removeFromCart error:', err);
-    throw err;
+  const data = await shopifyFetch(REMOVE_FROM_CART_MUTATION, { cartId, lineIds });
+  if (data?.cartLinesRemove?.userErrors?.length > 0) {
+    throw new Error(data.cartLinesRemove.userErrors.map(e => e.message).join(', '));
   }
+  return data?.cartLinesRemove?.cart;
 }
 
 // Price formatting helper
