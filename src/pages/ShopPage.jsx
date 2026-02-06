@@ -101,7 +101,7 @@ export default function ShopPage() {
 
       <main className="pt-32 pb-20">
         {/* Hero Section */}
-        <section className="px-6 md:px-12 mb-16">
+        <section className="px-6 md:px-12 mb-8 md:mb-16">
           <FadeIn className="max-w-4xl">
             <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 block">
               Marketplace
@@ -152,7 +152,7 @@ export default function ShopPage() {
             </div>
 
             {/* Type Filter Pills */}
-            <div className="flex items-center gap-2 overflow-x-auto">
+            <div className="flex flex-wrap items-center gap-2">
               {productTypes.map((type) => (
                 <button
                   key={type}
@@ -175,7 +175,7 @@ export default function ShopPage() {
         {/* Products Grid */}
         <section className="px-6 md:px-12">
           {isLoading ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
               {[...Array(8)].map((_, i) => (
                 <div key={i} className="animate-pulse">
                   <div className="aspect-square bg-gray-100 rounded-lg mb-4" />
@@ -201,7 +201,7 @@ export default function ShopPage() {
               <p className="text-sm text-gray-400 mb-8">
                 {filteredGroups.length} product{filteredGroups.length !== 1 ? 's' : ''}
               </p>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
                 {filteredGroups.map((group, index) => (
                   <ProductCard
                     key={group.baseName}
