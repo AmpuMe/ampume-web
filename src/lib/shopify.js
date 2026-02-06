@@ -1,16 +1,11 @@
-// Shopify Storefront API configuration
-const SHOPIFY_STORE_DOMAIN = import.meta.env.VITE_SHOPIFY_STORE_DOMAIN || 'ampume.myshopify.com';
-const SHOPIFY_STOREFRONT_TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN || '';
-const API_VERSION = '2024-01';
-
-const STOREFRONT_API_URL = `https://${SHOPIFY_STORE_DOMAIN}/api/${API_VERSION}/graphql.json`;
+// Shopify Storefront API - proxied through /api/shopify serverless function
+// This keeps the private token server-side
 
 async function shopifyFetch(query, variables = {}) {
-  const response = await fetch(STOREFRONT_API_URL, {
+  const response = await fetch('/api/shopify', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Shopify-Storefront-Private-Token': SHOPIFY_STOREFRONT_TOKEN,
     },
     body: JSON.stringify({ query, variables }),
   });
