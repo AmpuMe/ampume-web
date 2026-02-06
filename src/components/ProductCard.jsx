@@ -25,12 +25,12 @@ export default function ProductCard({ group, index = 0 }) {
         className="group block"
       >
         {/* Image Container */}
-        <div className="relative aspect-square bg-brand-offwhite rounded-lg overflow-hidden mb-4">
+        <div className="relative aspect-[3/4] bg-brand-offwhite rounded-lg overflow-hidden mb-4">
           {image ? (
             <img
               src={image.url}
               alt={image.altText || baseName}
-              className="w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-[1.03]"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
               loading="lazy"
             />
           ) : (
