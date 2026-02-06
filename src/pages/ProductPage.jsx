@@ -405,28 +405,9 @@ export default function ProductPage() {
                       Description
                     </h3>
                     <div
-                      className="prose prose-sm max-w-none text-gray-600"
+                      className="max-w-none text-gray-600 text-sm leading-relaxed space-y-4 [&_h4]:text-black [&_h4]:font-medium [&_h4]:text-base [&_h4]:mt-6 [&_h4]:mb-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1.5 [&_li]:text-gray-600 [&_p]:text-gray-600"
                       dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
                     />
-                  </div>
-                )}
-
-                {/* Tags */}
-                {product.tags?.length > 0 && (
-                  <div className="border-t border-gray-100 pt-8 mt-8">
-                    <h3 className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">
-                      Tags
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {product.tags.map(tag => (
-                        <span
-                          key={tag}
-                          className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
                   </div>
                 )}
               </div>
