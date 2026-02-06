@@ -6,7 +6,7 @@ import SimpleNavbar from '../components/SimpleNavbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import { useCart } from '../context/CartContext';
-import { fetchProductByHandle, formatPrice } from '../lib/shopify';
+import { fetchProductByHandle, fetchProducts, formatPrice, groupProducts, extractBaseName, extractVariantLabel } from '../lib/shopify';
 
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
   <motion.div
@@ -29,8 +29,25 @@ export default function ProductPage() {
   const [selectedImage, setSelectedImage] = useState(0);
   const [isAdding, setIsAdding] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
+  const [currentGroup, setCurrentGroup] = useState(null);
 
   const { addToCart, cartCount, openCart } = useCart();
+
+  // Fetch sibling products for color/fabric navigation
+  useEffect(() => {
+    const loadSiblings = async () => {
+      try {
+        const result = await fetchProducts(100);
+        const productList = result?.edges?.map(edge => edge.node) || [];
+        const groups = groupProducts(productList);
+        const myGroup = groups.find(g => g.handles.includes(handle));
+        setCurrentGroup(myGroup && myGroup.products.length > 1 ? myGroup : null);
+      } catch (err) {
+        console.error('Error loading siblings:', err);
+      }
+    };
+    loadSiblings();
+  }, [handle]);
 
   // Fetch product on mount
   useEffect(() => {
@@ -145,7 +162,7 @@ export default function ProductPage() {
   return (
     <div className="min-h-screen bg-white text-black font-sans">
       <SEO
-        title={`${product.title} | AmpuMe Shop`}
+        title={`${currentGroup ? currentGroup.baseName : product.title} | AmpuMe Shop`}
         description={product.description || `Shop ${product.title} at AmpuMe`}
         url={`https://ampume.com/shop/${handle}`}
       />
@@ -242,10 +259,47 @@ export default function ProductPage() {
                   )}
                 </div>
 
+                {/* Color/Fabric Navigation */}
+                {currentGroup && (
+                  <div className="mb-6 pb-6 border-b border-gray-100">
+                    <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">
+                      Color / Fabric
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {currentGroup.products.map((sibling) => {
+                        const label = extractVariantLabel(sibling.title, currentGroup.baseName);
+                        const isCurrent = sibling.handle === handle;
+                        return (
+                          <Link
+                            key={sibling.handle}
+                            to={`/shop/${sibling.handle}`}
+                            className={`
+                              px-4 py-2 text-sm border rounded-full transition-colors
+                              ${isCurrent
+                                ? 'border-black bg-black text-white'
+                                : 'border-gray-200 hover:border-gray-400 text-gray-600'
+                              }
+                            `}
+                          >
+                            {label || 'Standard'}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
                 {/* Title */}
-                <h1 className="text-3xl md:text-4xl font-light tracking-tight mb-4">
-                  {product.title}
+                <h1 className="text-3xl md:text-4xl font-light tracking-tight mb-1">
+                  {currentGroup ? currentGroup.baseName : product.title}
                 </h1>
+                {currentGroup ? (
+                  <p className="text-lg text-gray-500 mb-4">
+                    {extractVariantLabel(product.title, currentGroup.baseName) || 'Standard'}
+                  </p>
+                ) : (
+                  <div className="mb-4" />
+                )}
 
                 {/* Price */}
                 <p className="text-2xl font-bold mb-6">

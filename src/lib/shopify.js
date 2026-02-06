@@ -478,3 +478,80 @@ export function formatPrice(amount, currencyCode = 'USD') {
     currency: currencyCode,
   }).format(amount);
 }
+
+// Product grouping utilities
+
+export function extractBaseName(title) {
+  const dashIndex = title.indexOf(' - ');
+  if (dashIndex !== -1) return title.substring(0, dashIndex).trim();
+  const slashIndex = title.indexOf(' / ');
+  if (slashIndex !== -1) return title.substring(0, slashIndex).trim();
+  return title;
+}
+
+export function extractVariantLabel(title, baseName) {
+  if (title === baseName) return null;
+  const remainder = title.substring(baseName.length).trim();
+  return remainder.replace(/^[-/]\s*/, '').trim() || null;
+}
+
+export function groupProducts(products) {
+  const groupMap = new Map();
+
+  for (const product of products) {
+    const baseName = extractBaseName(product.title);
+    if (!groupMap.has(baseName)) {
+      groupMap.set(baseName, {
+        baseName,
+        productType: product.productType,
+        vendor: product.vendor,
+        products: [],
+        primaryProduct: product,
+        handles: [],
+      });
+    }
+    const group = groupMap.get(baseName);
+    group.products.push(product);
+    group.handles.push(product.handle);
+  }
+
+  for (const group of groupMap.values()) {
+    const prices = group.products
+      .map(p => parseFloat(p.priceRange?.minVariantPrice?.amount || '0'))
+      .filter(p => p > 0);
+    group.minPrice = prices.length > 0 ? Math.min(...prices) : 0;
+    group.maxPrice = prices.length > 0
+      ? Math.max(...group.products.map(p => parseFloat(p.priceRange?.maxVariantPrice?.amount || '0')))
+      : 0;
+    group.optionCount = group.products.length;
+  }
+
+  return Array.from(groupMap.values());
+}
+
+export const CATEGORY_ORDER = [
+  { key: 'Prosthetic Liner', label: 'Prosthetic Liners', id: 'liners' },
+  { key: 'Prosthetic Sock', label: 'Prosthetic Socks', id: 'socks' },
+  { key: 'Prosthetic Sleeve', label: 'Prosthetic Sleeves', id: 'sleeves' },
+  { key: 'Prosthetic Accessory', label: 'Accessories', id: 'accessories' },
+];
+
+export function categorizeGroups(groups) {
+  const categories = [];
+  const matched = new Set();
+
+  for (const cat of CATEGORY_ORDER) {
+    const catGroups = groups.filter(g => g.productType === cat.key);
+    if (catGroups.length > 0) {
+      categories.push({ ...cat, groups: catGroups });
+      catGroups.forEach(g => matched.add(g.baseName));
+    }
+  }
+
+  const other = groups.filter(g => !matched.has(g.baseName));
+  if (other.length > 0) {
+    categories.push({ key: 'Other', label: 'Other Products', id: 'other', groups: other });
+  }
+
+  return categories;
+}

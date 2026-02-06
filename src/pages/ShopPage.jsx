@@ -1,12 +1,12 @@
 import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Search, SlidersHorizontal, X, ShoppingBag } from 'lucide-react';
+import { Search, X, ShoppingBag } from 'lucide-react';
 import SimpleNavbar from '../components/SimpleNavbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import ProductCard from '../components/ProductCard';
 import { useCart } from '../context/CartContext';
-import { fetchProducts } from '../lib/shopify';
+import { fetchProducts, groupProducts, categorizeGroups, CATEGORY_ORDER } from '../lib/shopify';
 
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
   <motion.div
@@ -26,12 +26,9 @@ export default function ShopPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedType, setSelectedType] = useState('all');
-  const [showFilters, setShowFilters] = useState(false);
 
   const { cartCount, openCart } = useCart();
 
-  // Fetch products on mount
   useEffect(() => {
     const loadProducts = async () => {
       try {
@@ -50,25 +47,32 @@ export default function ShopPage() {
     loadProducts();
   }, []);
 
-  // Get unique product types for filtering
-  const productTypes = useMemo(() => {
-    const types = new Set(products.map(p => p.productType).filter(Boolean));
-    return ['all', ...Array.from(types)];
-  }, [products]);
+  const categories = useMemo(() => {
+    const groups = groupProducts(products);
 
-  // Filter products based on search and type
-  const filteredProducts = useMemo(() => {
-    return products.filter(product => {
-      const matchesSearch = searchQuery === '' ||
-        product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.vendor?.toLowerCase().includes(searchQuery.toLowerCase());
+    const filtered = searchQuery
+      ? groups.filter(group => {
+          const q = searchQuery.toLowerCase();
+          return (
+            group.baseName.toLowerCase().includes(q) ||
+            group.vendor?.toLowerCase().includes(q) ||
+            group.productType?.toLowerCase().includes(q) ||
+            group.products.some(p => p.title.toLowerCase().includes(q))
+          );
+        })
+      : groups;
 
-      const matchesType = selectedType === 'all' || product.productType === selectedType;
+    return categorizeGroups(filtered);
+  }, [products, searchQuery]);
 
-      return matchesSearch && matchesType;
-    });
-  }, [products, searchQuery, selectedType]);
+  const totalGroups = categories.reduce((sum, cat) => sum + cat.groups.length, 0);
+
+  const scrollToSection = (categoryKey) => {
+    const cat = CATEGORY_ORDER.find(c => c.key === categoryKey);
+    if (cat) {
+      document.getElementById(cat.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white text-black font-sans">
@@ -123,7 +127,7 @@ export default function ShopPage() {
           </FadeIn>
         </section>
 
-        {/* Filters Section */}
+        {/* Search & Category Navigation */}
         <section className="px-6 md:px-12 mb-12 border-y border-gray-100 py-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             {/* Search */}
@@ -146,73 +150,24 @@ export default function ShopPage() {
               )}
             </div>
 
-            {/* Filter Toggle (Mobile) */}
-            <button
-              onClick={() => setShowFilters(!showFilters)}
-              className="md:hidden flex items-center gap-2 px-4 py-3 border border-gray-200 rounded-full text-sm"
-            >
-              <SlidersHorizontal className="w-4 h-4" />
-              Filters
-            </button>
-
-            {/* Type Filters (Desktop) */}
-            <div className="hidden md:flex items-center gap-2">
-              {productTypes.map((type) => (
+            {/* Category Pills */}
+            <div className="flex items-center gap-2 overflow-x-auto">
+              {CATEGORY_ORDER.map((cat) => (
                 <button
-                  key={type}
-                  onClick={() => setSelectedType(type)}
-                  className={`
-                    px-4 py-2 text-sm rounded-full transition-colors
-                    ${selectedType === type
-                      ? 'bg-black text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                    }
-                  `}
+                  key={cat.key}
+                  onClick={() => scrollToSection(cat.key)}
+                  className="px-4 py-2 text-sm rounded-full transition-colors bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap"
                 >
-                  {type === 'all' ? 'All Products' : type}
+                  {cat.label}
                 </button>
               ))}
             </div>
           </div>
-
-          {/* Mobile Filters */}
-          {showFilters && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden mt-4 pt-4 border-t border-gray-100"
-            >
-              <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">
-                Product Type
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {productTypes.map((type) => (
-                  <button
-                    key={type}
-                    onClick={() => {
-                      setSelectedType(type);
-                      setShowFilters(false);
-                    }}
-                    className={`
-                      px-4 py-2 text-sm rounded-full transition-colors
-                      ${selectedType === type
-                        ? 'bg-black text-white'
-                        : 'bg-gray-100 text-gray-600'
-                      }
-                    `}
-                  >
-                    {type === 'all' ? 'All Products' : type}
-                  </button>
-                ))}
-              </div>
-            </motion.div>
-          )}
         </section>
 
-        {/* Products Grid */}
-        <section className="px-6 md:px-12">
-          {isLoading ? (
+        {/* Category Sections */}
+        {isLoading ? (
+          <section className="px-6 md:px-12">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
               {[...Array(8)].map((_, i) => (
                 <div key={i} className="animate-pulse">
@@ -222,35 +177,53 @@ export default function ShopPage() {
                 </div>
               ))}
             </div>
-          ) : error ? (
+          </section>
+        ) : error ? (
+          <section className="px-6 md:px-12">
             <div className="text-center py-20">
               <p className="text-gray-500 mb-4">Unable to load products</p>
               <p className="text-sm text-gray-400">{error}</p>
             </div>
-          ) : filteredProducts.length === 0 ? (
+          </section>
+        ) : totalGroups === 0 ? (
+          <section className="px-6 md:px-12">
             <div className="text-center py-20">
               <p className="text-gray-500 mb-2">No products found</p>
               <p className="text-sm text-gray-400">
                 {searchQuery ? 'Try a different search term' : 'Check back soon for new products'}
               </p>
             </div>
-          ) : (
-            <>
-              <p className="text-sm text-gray-400 mb-8">
-                {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''}
-              </p>
+          </section>
+        ) : (
+          categories.map((category) => (
+            <section
+              key={category.id}
+              id={category.id}
+              className="px-6 md:px-12 mb-16 scroll-mt-24"
+            >
+              <FadeIn className="mb-8">
+                <div className="flex items-baseline justify-between">
+                  <h2 className="text-2xl md:text-3xl font-light tracking-tight">
+                    {category.label}
+                  </h2>
+                  <p className="text-sm text-gray-400">
+                    {category.groups.length} product{category.groups.length !== 1 ? 's' : ''}
+                  </p>
+                </div>
+              </FadeIn>
+
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
-                {filteredProducts.map((product, index) => (
+                {category.groups.map((group, index) => (
                   <ProductCard
-                    key={product.id}
-                    product={product}
+                    key={group.baseName}
+                    group={group}
                     index={index}
                   />
                 ))}
               </div>
-            </>
-          )}
-        </section>
+            </section>
+          ))
+        )}
       </main>
 
       <Footer />
