@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import ProductCard from '../components/ProductCard';
 import { useCart } from '../context/CartContext';
-import { fetchProducts, groupProducts, categorizeGroups, CATEGORY_ORDER } from '../lib/shopify';
+import { fetchProducts, groupProducts } from '../lib/shopify';
 
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
   <motion.div
@@ -26,6 +26,7 @@ export default function ShopPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedType, setSelectedType] = useState('all');
 
   const { cartCount, openCart } = useCart();
 
@@ -47,32 +48,32 @@ export default function ShopPage() {
     loadProducts();
   }, []);
 
-  const categories = useMemo(() => {
+  // Get unique product types for filter pills
+  const productTypes = useMemo(() => {
+    const types = new Set(products.map(p => p.productType).filter(Boolean));
+    return ['all', ...Array.from(types)];
+  }, [products]);
+
+  // Group products, then filter by search and type
+  const filteredGroups = useMemo(() => {
     const groups = groupProducts(products);
 
-    const filtered = searchQuery
-      ? groups.filter(group => {
-          const q = searchQuery.toLowerCase();
-          return (
-            group.baseName.toLowerCase().includes(q) ||
-            group.vendor?.toLowerCase().includes(q) ||
-            group.productType?.toLowerCase().includes(q) ||
-            group.products.some(p => p.title.toLowerCase().includes(q))
-          );
-        })
-      : groups;
+    return groups.filter(group => {
+      const matchesType = selectedType === 'all' || group.productType === selectedType;
 
-    return categorizeGroups(filtered);
-  }, [products, searchQuery]);
+      const matchesSearch = !searchQuery || (() => {
+        const q = searchQuery.toLowerCase();
+        return (
+          group.baseName.toLowerCase().includes(q) ||
+          group.vendor?.toLowerCase().includes(q) ||
+          group.productType?.toLowerCase().includes(q) ||
+          group.products.some(p => p.title.toLowerCase().includes(q))
+        );
+      })();
 
-  const totalGroups = categories.reduce((sum, cat) => sum + cat.groups.length, 0);
-
-  const scrollToSection = (categoryKey) => {
-    const cat = CATEGORY_ORDER.find(c => c.key === categoryKey);
-    if (cat) {
-      document.getElementById(cat.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
+      return matchesType && matchesSearch;
+    });
+  }, [products, searchQuery, selectedType]);
 
   return (
     <div className="min-h-screen bg-white text-black font-sans">
@@ -127,7 +128,7 @@ export default function ShopPage() {
           </FadeIn>
         </section>
 
-        {/* Search & Category Navigation */}
+        {/* Search & Filter */}
         <section className="px-6 md:px-12 mb-12 border-y border-gray-100 py-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             {/* Search */}
@@ -150,24 +151,30 @@ export default function ShopPage() {
               )}
             </div>
 
-            {/* Category Pills */}
+            {/* Type Filter Pills */}
             <div className="flex items-center gap-2 overflow-x-auto">
-              {CATEGORY_ORDER.map((cat) => (
+              {productTypes.map((type) => (
                 <button
-                  key={cat.key}
-                  onClick={() => scrollToSection(cat.key)}
-                  className="px-4 py-2 text-sm rounded-full transition-colors bg-gray-100 text-gray-600 hover:bg-gray-200 whitespace-nowrap"
+                  key={type}
+                  onClick={() => setSelectedType(type)}
+                  className={`
+                    px-4 py-2 text-sm rounded-full transition-colors whitespace-nowrap
+                    ${selectedType === type
+                      ? 'bg-black text-white'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }
+                  `}
                 >
-                  {cat.label}
+                  {type === 'all' ? 'All Products' : type}
                 </button>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Category Sections */}
-        {isLoading ? (
-          <section className="px-6 md:px-12">
+        {/* Products Grid */}
+        <section className="px-6 md:px-12">
+          {isLoading ? (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
               {[...Array(8)].map((_, i) => (
                 <div key={i} className="animate-pulse">
@@ -177,43 +184,25 @@ export default function ShopPage() {
                 </div>
               ))}
             </div>
-          </section>
-        ) : error ? (
-          <section className="px-6 md:px-12">
+          ) : error ? (
             <div className="text-center py-20">
               <p className="text-gray-500 mb-4">Unable to load products</p>
               <p className="text-sm text-gray-400">{error}</p>
             </div>
-          </section>
-        ) : totalGroups === 0 ? (
-          <section className="px-6 md:px-12">
+          ) : filteredGroups.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-gray-500 mb-2">No products found</p>
               <p className="text-sm text-gray-400">
                 {searchQuery ? 'Try a different search term' : 'Check back soon for new products'}
               </p>
             </div>
-          </section>
-        ) : (
-          categories.map((category) => (
-            <section
-              key={category.id}
-              id={category.id}
-              className="px-6 md:px-12 mb-16 scroll-mt-24"
-            >
-              <FadeIn className="mb-8">
-                <div className="flex items-baseline justify-between">
-                  <h2 className="text-2xl md:text-3xl font-light tracking-tight">
-                    {category.label}
-                  </h2>
-                  <p className="text-sm text-gray-400">
-                    {category.groups.length} product{category.groups.length !== 1 ? 's' : ''}
-                  </p>
-                </div>
-              </FadeIn>
-
+          ) : (
+            <>
+              <p className="text-sm text-gray-400 mb-8">
+                {filteredGroups.length} product{filteredGroups.length !== 1 ? 's' : ''}
+              </p>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
-                {category.groups.map((group, index) => (
+                {filteredGroups.map((group, index) => (
                   <ProductCard
                     key={group.baseName}
                     group={group}
@@ -221,9 +210,9 @@ export default function ShopPage() {
                   />
                 ))}
               </div>
-            </section>
-          ))
-        )}
+            </>
+          )}
+        </section>
       </main>
 
       <Footer />
