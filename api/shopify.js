@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 
   const SHOPIFY_STORE_DOMAIN = process.env.VITE_SHOPIFY_STORE_DOMAIN || 'ampume.myshopify.com';
   const SHOPIFY_STOREFRONT_TOKEN = process.env.VITE_SHOPIFY_STOREFRONT_TOKEN || '';
-  const API_VERSION = '2025-01';
+  const API_VERSION = '2024-10';
 
   if (!SHOPIFY_STOREFRONT_TOKEN) {
     return res.status(500).json({
@@ -34,7 +34,7 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN,
+        'Shopify-Storefront-Private-Token': SHOPIFY_STOREFRONT_TOKEN,
       },
       body: JSON.stringify({ query, variables }),
     });
@@ -56,7 +56,7 @@ export default async function handler(req, res) {
           url,
           tokenPrefix: SHOPIFY_STOREFRONT_TOKEN.substring(0, 6),
           domain: SHOPIFY_STORE_DOMAIN,
-          header: 'X-Shopify-Storefront-Access-Token',
+          header: 'Shopify-Storefront-Private-Token',
         }
       });
     }
