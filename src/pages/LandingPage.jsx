@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Menu, X, ChevronRight, ArrowUpRight } from 'lucide-react';
 import SEO from '../components/SEO';
@@ -239,22 +239,24 @@ const LandingPage = () => {
             </FadeIn>
 
             {/* Marketplace - Position 2 */}
-            <FadeIn id="marketplace" onClick={() => setModalOpen(true)} delay={0.1} className="group relative h-[500px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
-              <img src={marketplaceImage} loading="lazy" alt="Marketplace" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
-              <div className="absolute top-8 left-8 z-10 flex gap-2">
-                <span className="text-xs font-bold uppercase tracking-widest bg-white text-black px-3 py-1">Shop</span>
-              </div>
-              <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
-                <h4 className="text-3xl font-medium mb-3">Marketplace</h4>
-                <div className="h-auto md:h-0 md:group-hover:h-auto overflow-hidden transition-all duration-500">
-                   <p className="text-sm text-white/90 leading-relaxed mb-4">
-                    Essentials like liners, sleeves, and skincare. Verified by the community.
-                  </p>
-                  <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1">Coming Soon</span>
+            <Link to="/shop">
+              <FadeIn id="marketplace" delay={0.1} className="group relative h-[500px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
+                <img src={marketplaceImage} loading="lazy" alt="Marketplace" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
+                <div className="absolute top-8 left-8 z-10 flex gap-2">
+                  <span className="text-xs font-bold uppercase tracking-widest bg-white text-black px-3 py-1">Shop</span>
                 </div>
-              </div>
-            </FadeIn>
+                <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
+                  <h4 className="text-3xl font-medium mb-3">Marketplace</h4>
+                  <div className="h-auto md:h-0 md:group-hover:h-auto overflow-hidden transition-all duration-500">
+                    <p className="text-sm text-white/90 leading-relaxed mb-4">
+                      Prosthetic liners, socks, sleeves, and accessories. Quality supplies shipped directly to you.
+                    </p>
+                    <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1">Shop Now</span>
+                  </div>
+                </div>
+              </FadeIn>
+            </Link>
 
             {/* Telehealth - Position 3 */}
             <FadeIn id="telehealth" onClick={() => setModalOpen(true)} delay={0.2} className="group relative h-[500px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
