@@ -35,8 +35,6 @@ const AISupport = () => {
     script.setAttribute('div_id', uniqueId);
     script.setAttribute('p_id', '88174');
     script.setAttribute('p_key', '753d22f90965230c7eac8e489e242b9b');
-    script.setAttribute('width', '100%');
-    script.setAttribute('height', '700px');
     
     document.body.appendChild(script);
 
@@ -80,7 +78,7 @@ const AISupport = () => {
           </div>
 
           {/* Chat Interface - Raw Embed */}
-          <div className="w-full" style={{ minHeight: '700px' }}>
+          <div className="w-full">
                <div ref={containerRef}></div>
           </div>
         </div>
