@@ -46,6 +46,7 @@ export const PILLAR_WITH_RESOURCES_QUERY = `
       editorialSummary,
       externalUrl,
       videoUrl,
+      thumbnailUrl,
       source,
       featured,
       tags
@@ -61,6 +62,7 @@ export const FEATURED_RESOURCES_QUERY = `
     contentType,
     editorialSummary,
     externalUrl,
+    thumbnailUrl,
     source,
     featured,
     tags,
@@ -77,6 +79,7 @@ export const RESOURCE_DETAIL_QUERY = `
     editorialSummary,
     externalUrl,
     videoUrl,
+    thumbnailUrl,
     body,
     source,
     featured,

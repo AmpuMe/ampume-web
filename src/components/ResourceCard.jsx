@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Play, FileText, List } from 'lucide-react';
@@ -12,12 +13,26 @@ const typeConfig = {
 export default function ResourceCard({ resource, pillarSlug, index = 0 }) {
   const config = typeConfig[resource.contentType] || typeConfig.article;
   const TypeIcon = config.icon;
+  const [imgError, setImgError] = useState(false);
 
   // External links open in new tab, everything else goes to detail page
   const isExternal = resource.contentType === 'externalLink' && resource.externalUrl;
+  const showThumbnail = resource.thumbnailUrl && !imgError;
 
   const cardContent = (
     <>
+      {showThumbnail && (
+        <div className="aspect-[16/9] -mx-5 -mt-5 mb-4 overflow-hidden rounded-t-lg bg-gray-50">
+          <img
+            src={resource.thumbnailUrl}
+            alt=""
+            className="w-full h-full object-cover"
+            onError={() => setImgError(true)}
+            loading="lazy"
+          />
+        </div>
+      )}
+
       <div className="flex items-start justify-between mb-3">
         <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-gray-400">
           <TypeIcon className="w-3.5 h-3.5" />

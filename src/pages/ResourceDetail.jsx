@@ -135,6 +135,19 @@ export default function ResourceDetail() {
             )}
           </FadeIn>
 
+          {/* Thumbnail Image (non-video) */}
+          {!embedUrl && resource.thumbnailUrl && (
+            <FadeIn delay={0.1} className="mb-8">
+              <div className="aspect-[2/1] rounded-lg overflow-hidden bg-gray-50">
+                <img
+                  src={resource.thumbnailUrl}
+                  alt=""
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </FadeIn>
+          )}
+
           {/* Video Embed */}
           {embedUrl && (
             <FadeIn delay={0.1} className="mb-8">
