@@ -19,33 +19,28 @@ const AISupport = () => {
   };
 
   useEffect(() => {
-    // Generate a truly unique ID for this specific mount instance
-    const uniqueId = `customgpt_page_${Math.random().toString(36).substr(2, 9)}`;
     const container = containerRef.current;
-    
     if (!container) return;
-    
-    // Assign the unique ID to the container
-    container.id = uniqueId;
-    container.innerHTML = ''; // Ensure clean slate
+
+    container.id = 'customgpt_chat';
+    container.innerHTML = '';
 
     const script = document.createElement('script');
-    script.src = "https://cdn.customgpt.ai/js/embed.js";
-    // Removed defer=true to prioritize loading since this is the main page content
-    script.setAttribute('div_id', uniqueId);
+    script.src = 'https://cdn.customgpt.ai/js/embed.js';
+    script.defer = true;
+    script.setAttribute('div_id', 'customgpt_chat');
     script.setAttribute('p_id', '88174');
     script.setAttribute('p_key', '753d22f90965230c7eac8e489e242b9b');
-    
+
     document.body.appendChild(script);
 
     return () => {
-      // Cleanup: remove script and clear container
       if (document.body.contains(script)) {
         document.body.removeChild(script);
       }
       if (container) {
         container.innerHTML = '';
-        container.removeAttribute('id'); // Remove ID so zombie scripts can't find it
+        container.removeAttribute('id');
       }
     };
   }, []);
