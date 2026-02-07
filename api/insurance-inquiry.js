@@ -44,10 +44,6 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-    console.log('MailerLite response status:', response.status);
-    console.log('MailerLite response data:', JSON.stringify(data));
-    console.log('GROUP_ID used:', GROUP_ID || 'NONE');
-
     if (!response.ok) {
       console.error('MailerLite Error:', data);
       return res.status(400).json({ error: data.message || 'Failed to submit' });
