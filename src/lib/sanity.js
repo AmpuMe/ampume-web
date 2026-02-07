@@ -46,6 +46,7 @@ export const PILLAR_WITH_RESOURCES_QUERY = `
       editorialSummary,
       externalUrl,
       videoUrl,
+      "thumbnailImage": thumbnail.asset->url,
       thumbnailUrl,
       source,
       featured,
@@ -62,6 +63,7 @@ export const FEATURED_RESOURCES_QUERY = `
     contentType,
     editorialSummary,
     externalUrl,
+    "thumbnailImage": thumbnail.asset->url,
     thumbnailUrl,
     source,
     featured,
@@ -79,6 +81,7 @@ export const RESOURCE_DETAIL_QUERY = `
     editorialSummary,
     externalUrl,
     videoUrl,
+    "thumbnailImage": thumbnail.asset->url,
     thumbnailUrl,
     body,
     source,
@@ -105,6 +108,11 @@ export async function fetchFeaturedResources() {
 
 export async function fetchResourceDetail(slug) {
   return sanityFetch(RESOURCE_DETAIL_QUERY, { slug });
+}
+
+// Get the best available thumbnail: uploaded Sanity image > external URL > null
+export function getThumbnailUrl(resource) {
+  return resource?.thumbnailImage || resource?.thumbnailUrl || null;
 }
 
 // Extract YouTube embed URL from various YouTube URL formats

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Play, FileText, List } from 'lucide-react';
+import { getThumbnailUrl } from '../lib/sanity';
 
 const typeConfig = {
   externalLink: { label: 'Link', icon: ArrowUpRight },
@@ -17,14 +18,15 @@ export default function ResourceCard({ resource, pillarSlug, index = 0 }) {
 
   // External links open in new tab, everything else goes to detail page
   const isExternal = resource.contentType === 'externalLink' && resource.externalUrl;
-  const showThumbnail = resource.thumbnailUrl && !imgError;
+  const thumbSrc = getThumbnailUrl(resource);
+  const showThumbnail = thumbSrc && !imgError;
 
   const cardContent = (
     <>
       {showThumbnail && (
         <div className="aspect-[16/9] -mx-5 -mt-5 mb-4 overflow-hidden rounded-t-lg bg-gray-50">
           <img
-            src={resource.thumbnailUrl}
+            src={thumbSrc}
             alt=""
             className="w-full h-full object-cover"
             onError={() => setImgError(true)}

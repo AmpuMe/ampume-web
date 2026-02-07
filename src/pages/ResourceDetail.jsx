@@ -6,7 +6,7 @@ import SimpleNavbar from '../components/SimpleNavbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import PortableTextRenderer from '../components/PortableTextRenderer';
-import { fetchResourceDetail, getYouTubeEmbedUrl } from '../lib/sanity';
+import { fetchResourceDetail, getYouTubeEmbedUrl, getThumbnailUrl } from '../lib/sanity';
 
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
   <motion.div
@@ -136,11 +136,11 @@ export default function ResourceDetail() {
           </FadeIn>
 
           {/* Thumbnail Image (non-video) */}
-          {!embedUrl && resource.thumbnailUrl && (
+          {!embedUrl && getThumbnailUrl(resource) && (
             <FadeIn delay={0.1} className="mb-8">
               <div className="aspect-[2/1] rounded-lg overflow-hidden bg-gray-50">
                 <img
-                  src={resource.thumbnailUrl}
+                  src={getThumbnailUrl(resource)}
                   alt=""
                   className="w-full h-full object-cover"
                 />
