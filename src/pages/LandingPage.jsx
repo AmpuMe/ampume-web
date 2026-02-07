@@ -76,7 +76,7 @@ const LandingPage = () => {
     { name: 'AI Support', href: '/ai-support' },
     { name: 'Marketplace', href: '#marketplace' },
     { name: 'Telehealth', href: '#telehealth' },
-    { name: 'Resources', href: '#resources' },
+    { name: 'Resources', href: '/resources' },
   ];
 
   const handleNavClick = (href) => {
@@ -277,7 +277,7 @@ const LandingPage = () => {
             </FadeIn>
 
             {/* Resources - Position 4 */}
-            <FadeIn id="resources" onClick={() => setModalOpen(true)} delay={0.3} className="group relative h-[500px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
+            <FadeIn id="resources" delay={0.3} className="group relative h-[500px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32" onClick={() => navigate('/resources')}>
               <img src={peopleImage} loading="lazy" alt="Resources" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
               <div className="absolute top-8 left-8 z-10 flex gap-2">
@@ -289,7 +289,7 @@ const LandingPage = () => {
                    <p className="text-sm text-white/90 leading-relaxed mb-4">
                     Recovery timelines, product comparisons, and guides.
                   </p>
-                  <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1">Coming Soon</span>
+                  <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1">Explore <ArrowRight size={14} /></span>
                 </div>
               </div>
             </FadeIn>

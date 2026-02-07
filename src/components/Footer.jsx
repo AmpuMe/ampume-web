@@ -18,7 +18,7 @@ const Footer = () => {
           <ul className="space-y-4 text-sm font-medium">
             <li><Link to="/" onClick={() => window.location.hash = '#marketplace'} className="hover:text-white transition-colors text-gray-300">Marketplace</Link></li>
             <li><Link to="/" onClick={() => window.location.hash = '#telehealth'} className="hover:text-white transition-colors text-gray-300">Telehealth</Link></li>
-            <li><Link to="/" onClick={() => window.location.hash = '#resources'} className="hover:text-white transition-colors text-gray-300">Resources</Link></li>
+            <li><Link to="/resources" className="hover:text-white transition-colors text-gray-300">Resources</Link></li>
             <li><Link to="/" onClick={() => window.location.hash = '#ai-support'} className="hover:text-white transition-colors text-gray-300">AI Support</Link></li>
           </ul>
         </div>

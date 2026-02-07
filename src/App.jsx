@@ -15,6 +15,11 @@ const AccessibilityStatement = lazy(() => import('./pages/AccessibilityStatement
 const ShopPage = lazy(() => import('./pages/ShopPage'));
 const ProductPage = lazy(() => import('./pages/ProductPage'));
 
+// Lazy load resource pages
+const ResourcesHub = lazy(() => import('./pages/ResourcesHub'));
+const PillarPage = lazy(() => import('./pages/PillarPage'));
+const ResourceDetail = lazy(() => import('./pages/ResourceDetail'));
+
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
@@ -42,6 +47,9 @@ const App = () => {
           <Route path="/ai-support" element={<AISupport />} />
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/shop/:handle" element={<ProductPage />} />
+          <Route path="/resources" element={<ResourcesHub />} />
+          <Route path="/resources/:pillarSlug" element={<PillarPage />} />
+          <Route path="/resources/:pillarSlug/:resourceSlug" element={<ResourceDetail />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/accessibility-statement" element={<AccessibilityStatement />} />

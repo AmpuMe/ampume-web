@@ -21,6 +21,8 @@ const SimpleNavbar = () => {
           
           <div className="hidden lg:flex col-span-6 justify-center gap-12">
             <Link to="/" className="text-sm font-medium hover:opacity-70 transition-opacity">Home</Link>
+            <Link to="/shop" className="text-sm font-medium hover:opacity-70 transition-opacity">Shop</Link>
+            <Link to="/resources" className="text-sm font-medium hover:opacity-70 transition-opacity">Resources</Link>
           </div>
 
           <div className="hidden lg:flex col-span-3 justify-end items-center">
@@ -49,6 +51,8 @@ const SimpleNavbar = () => {
             </div>
             <div className="flex flex-col gap-6 text-xl font-medium">
               <Link to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+              <Link to="/shop" onClick={() => setMobileMenuOpen(false)}>Shop</Link>
+              <Link to="/resources" onClick={() => setMobileMenuOpen(false)}>Resources</Link>
             </div>
           </motion.div>
         )}

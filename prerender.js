@@ -14,6 +14,7 @@ const routesToPrerender = [
     '/',
     '/ai-support',
     '/shop',
+    '/resources',
     '/privacy-policy',
     '/terms-of-service',
     '/accessibility-statement'
