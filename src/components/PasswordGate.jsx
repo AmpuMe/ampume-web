@@ -4,7 +4,7 @@ const SITE_PASSWORD = import.meta.env.VITE_SITE_PASSWORD;
 
 const PasswordGate = ({ children }) => {
   const [authorized, setAuthorized] = useState(
-    () => !SITE_PASSWORD || sessionStorage.getItem('site-auth') === 'true'
+    () => !SITE_PASSWORD || (typeof window !== 'undefined' && sessionStorage.getItem('site-auth') === 'true')
   );
   const [input, setInput] = useState('');
   const [error, setError] = useState(false);
