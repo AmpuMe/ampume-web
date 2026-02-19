@@ -129,9 +129,48 @@ export default function PillarPage() {
 
         {/* Insurance Expert Form (special pillar) */}
         {isInsurancePillar && (
-          <FadeIn delay={0.1} className="mb-12">
-            <InsuranceExpertForm />
-          </FadeIn>
+          <>
+            <FadeIn delay={0.1} className="mb-12">
+              <InsuranceExpertForm />
+            </FadeIn>
+
+            {/* Insurance & Shopping FAQ */}
+            <FadeIn delay={0.15} className="mb-12 max-w-3xl">
+              <h2 className="text-xl font-medium mb-6">Frequently Asked Questions</h2>
+              <div className="space-y-6">
+                <div className="border-b border-gray-100 pb-6">
+                  <h3 className="text-sm font-bold mb-2">Can I use insurance to buy prosthetic supplies online?</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    In many cases, yes. Prosthetic liners, socks, sleeves, and other supplies are often covered under durable medical equipment (DME) benefits. Coverage varies by plan — submit your details above and we'll help you understand what's covered.
+                  </p>
+                </div>
+                <div className="border-b border-gray-100 pb-6">
+                  <h3 className="text-sm font-bold mb-2">What if my insurance doesn't cover what I need?</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Our <Link to="/shop" className="underline hover:text-black transition-colors">shop</Link> offers prosthetic supplies at accessible prices for out-of-pocket purchases. Many people keep backup liners, travel supplies, or extra socks on hand outside of their insurance coverage.
+                  </p>
+                </div>
+                <div className="border-b border-gray-100 pb-6">
+                  <h3 className="text-sm font-bold mb-2">How often does insurance replace prosthetic liners?</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Most insurance plans cover liner replacement every 6 to 12 months, depending on the plan and medical necessity. If you're between replacement cycles and need a liner now, our shop has you covered.
+                  </p>
+                </div>
+                <div className="border-b border-gray-100 pb-6">
+                  <h3 className="text-sm font-bold mb-2">What information do I need to check my benefits?</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Your insurance provider name, policy or member ID, and a general idea of what supplies you need. Fill out the form above and our team will do the rest — we'll review your benefits and follow up within 2-3 business days.
+                  </p>
+                </div>
+                <div className="pb-6">
+                  <h3 className="text-sm font-bold mb-2">Do you accept Medicare or Medicaid?</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Coverage for prosthetic supplies through Medicare and Medicaid varies by state and plan type. Submit your information above and we'll help determine what your specific plan covers.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+          </>
         )}
 
         {/* Resource Grid */}

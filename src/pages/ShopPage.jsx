@@ -139,7 +139,11 @@ export default function ShopPage() {
               <p className="text-sm text-gray-600 leading-relaxed">
                 <strong className="text-black">Have insurance coverage?</strong> Many prosthetic supplies
                 are covered by insurance plans. We recommend checking your benefits before purchasing
-                out-of-pocket. These products are ideal for backup supplies, travel, or when you need
+                out-of-pocket.{' '}
+                <Link to="/resources/ask-an-insurance-expert" className="underline hover:text-black transition-colors">
+                  Ask an insurance expert
+                </Link>{' '}
+                to find out what's covered. These products are also ideal for backup supplies, travel, or when you need
                 items outside your coverage period.
               </p>
             </div>
