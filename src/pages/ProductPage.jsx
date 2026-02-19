@@ -1,12 +1,12 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ShoppingBag, Check, ChevronDown } from 'lucide-react';
+import { ArrowLeft, ShoppingBag, Check, ChevronDown, FileDown } from 'lucide-react';
 import SimpleNavbar from '../components/SimpleNavbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import { useCart } from '../context/CartContext';
-import { fetchProductByHandle, fetchProducts, formatPrice, groupProducts, extractBaseName, extractVariantLabel } from '../lib/shopify';
+import { fetchProductByHandle, fetchProducts, formatPrice, groupProducts, extractBaseName, extractVariantLabel, getCategoryByProductType } from '../lib/shopify';
 
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
   <motion.div
@@ -152,7 +152,7 @@ export default function ProductPage() {
             className="inline-flex items-center gap-2 text-sm font-medium hover:text-gray-600"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to Shop
+            Browse Categories
           </Link>
         </div>
       </div>
@@ -186,13 +186,18 @@ export default function ProductPage() {
       <main className="pt-32 pb-20 px-6 md:px-12">
         {/* Back Link */}
         <FadeIn className="mb-8">
-          <Link
-            to="/shop"
-            className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-black transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Shop
-          </Link>
+          {(() => {
+            const cat = getCategoryByProductType(product.productType);
+            return (
+              <Link
+                to={cat ? `/shop/${cat.id}` : '/shop'}
+                className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-black transition-colors"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                {cat ? cat.label : 'Back to Shop'}
+              </Link>
+            );
+          })()}
         </FadeIn>
 
         <div className="max-w-6xl mx-auto">
@@ -396,6 +401,22 @@ export default function ProductPage() {
                       Check your benefits before purchasing.
                     </p>
                   </div>
+
+                  {/* PDF Download for Alpha/WillowWood liners */}
+                  {(product.vendor === 'WillowWood' || product.vendor === 'Ohio Willow Wood' || (product.tags || []).some(t => t.toLowerCase().includes('alpha'))) && (
+                    <a
+                      href="/Important-Instructions-for-Amputees.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:border-gray-400 transition-colors"
+                    >
+                      <FileDown className="w-5 h-5 text-gray-500 flex-shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium">Important Instructions for Amputees</p>
+                        <p className="text-xs text-gray-400">PDF Download</p>
+                      </div>
+                    </a>
+                  )}
                 </div>
 
                 {/* Description */}

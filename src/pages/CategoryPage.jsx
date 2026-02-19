@@ -1,0 +1,221 @@
+import { useState, useEffect, useMemo } from 'react';
+import { useLocation, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ArrowLeft, ShoppingBag } from 'lucide-react';
+import SimpleNavbar from '../components/SimpleNavbar';
+import Footer from '../components/Footer';
+import SEO from '../components/SEO';
+import ProductCard from '../components/ProductCard';
+import FilterBar, { applyFilters } from '../components/FilterBar';
+import { useCart } from '../context/CartContext';
+import { fetchProductsByType, getCategoryById, groupProducts } from '../lib/shopify';
+
+const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: "-50px" }}
+    transition={{ duration: 0.6, delay, ease: "easeOut" }}
+    className={className}
+    {...props}
+  >
+    {children}
+  </motion.div>
+);
+
+const CATEGORY_COPY = {
+  liners: {
+    tagline: 'Professionally Curated. Patient-Focused.',
+    intro: 'Choosing the right prosthetic liner is one of the most important decisions for comfort and function. We recommend working with your prosthetist to determine the best liner for your needs. If you\'re ordering independently, each product page includes sizing guides and detailed specifications to help you make an informed choice.',
+    tip: 'Already have a liner you like? Check the model number printed on your current liner to find the same or similar product below.',
+  },
+};
+
+export default function CategoryPage() {
+  const location = useLocation();
+  const categoryId = location.pathname.split('/').pop();
+  const category = getCategoryById(categoryId);
+
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [activeFilters, setActiveFilters] = useState({});
+
+  const { cartCount, openCart } = useCart();
+
+  useEffect(() => {
+    if (!category) return;
+
+    const loadProducts = async () => {
+      try {
+        setIsLoading(true);
+        const result = await fetchProductsByType(category.key);
+        setProducts(result);
+      } catch (err) {
+        console.error('Error loading products:', err);
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadProducts();
+  }, [category?.key]);
+
+  const filteredProducts = useMemo(() => {
+    const filtered = applyFilters(products, categoryId, activeFilters);
+    return groupProducts(filtered);
+  }, [products, categoryId, activeFilters]);
+
+  const handleFilterChange = (key, value) => {
+    setActiveFilters(prev => ({ ...prev, [key]: value }));
+  };
+
+  const copy = CATEGORY_COPY[categoryId];
+
+  if (!category) {
+    return (
+      <div className="min-h-screen bg-white">
+        <SimpleNavbar />
+        <div className="pt-32 px-6 md:px-12 text-center">
+          <h1 className="text-2xl font-medium mb-4">Category not found</h1>
+          <Link
+            to="/shop"
+            className="inline-flex items-center gap-2 text-sm font-medium hover:text-gray-600"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Shop
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-white text-black font-sans">
+      <SEO
+        title={`${category.label} | AmpuMe Shop`}
+        description={category.description}
+        url={`https://ampume.com/shop/${categoryId}`}
+      />
+
+      <SimpleNavbar />
+
+      {/* Cart Button (Fixed) */}
+      <button
+        onClick={openCart}
+        className="fixed bottom-6 right-6 z-40 bg-black text-white p-4 rounded-full shadow-lg hover:bg-gray-800 transition-colors"
+        aria-label="Open cart"
+      >
+        <ShoppingBag className="w-6 h-6" />
+        {cartCount > 0 && (
+          <span className="absolute -top-1 -right-1 bg-brand-gold text-black text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
+            {cartCount}
+          </span>
+        )}
+      </button>
+
+      <main className="pt-32 pb-20">
+        {/* Back Link + Hero */}
+        <section className="px-6 md:px-12 mb-8 md:mb-12">
+          <FadeIn>
+            <Link
+              to="/shop"
+              className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-black transition-colors mb-8 block"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              All Categories
+            </Link>
+          </FadeIn>
+
+          <FadeIn className="max-w-3xl" delay={0.05}>
+            <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 block">
+              {copy?.tagline || 'The AmpuMe Shop'}
+            </span>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight mb-6">
+              {category.label}
+            </h1>
+            <p className="text-lg text-gray-600 leading-relaxed">
+              {category.description}
+            </p>
+          </FadeIn>
+
+          {/* Category-specific intro copy */}
+          {copy?.intro && (
+            <FadeIn delay={0.1} className="mt-8 max-w-3xl">
+              <div className="bg-brand-offwhite border border-gray-100 p-6 rounded-lg">
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  {copy.intro}
+                </p>
+              </div>
+            </FadeIn>
+          )}
+
+          {/* Tip line */}
+          {copy?.tip && (
+            <FadeIn delay={0.15} className="mt-4 max-w-3xl">
+              <p className="text-sm text-gray-500 italic">
+                {copy.tip}
+              </p>
+            </FadeIn>
+          )}
+        </section>
+
+        {/* Filter Bar */}
+        <section className="px-6 md:px-12 mb-8">
+          <FilterBar
+            categoryId={categoryId}
+            activeFilters={activeFilters}
+            onFilterChange={handleFilterChange}
+          />
+        </section>
+
+        {/* Products Grid */}
+        <section className="px-6 md:px-12">
+          {isLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="aspect-[3/4] bg-gray-100 rounded-lg mb-4" />
+                  <div className="h-4 bg-gray-100 rounded w-3/4 mb-2" />
+                  <div className="h-4 bg-gray-100 rounded w-1/4" />
+                </div>
+              ))}
+            </div>
+          ) : error ? (
+            <div className="text-center py-20">
+              <p className="text-gray-500 mb-4">Unable to load products</p>
+              <p className="text-sm text-gray-400">{error}</p>
+            </div>
+          ) : filteredProducts.length === 0 ? (
+            <div className="text-center py-20">
+              <p className="text-gray-500 mb-2">No products found</p>
+              <p className="text-sm text-gray-400">
+                {Object.values(activeFilters).some(v => v !== 'all')
+                  ? 'Try adjusting your filters'
+                  : 'Check back soon for new products'}
+              </p>
+            </div>
+          ) : (
+            <>
+              <p className="text-sm text-gray-400 mb-8">
+                {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''}
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+                {filteredProducts.map((group, index) => (
+                  <ProductCard
+                    key={group.baseName}
+                    group={group}
+                    index={index}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}

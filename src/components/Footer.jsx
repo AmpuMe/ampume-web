@@ -16,10 +16,9 @@ const Footer = () => {
         <div className="col-span-6 md:col-span-2 md:col-start-5">
           <h3 className="text-xs font-bold uppercase tracking-widest mb-8 text-gray-400">Platform</h3>
           <ul className="space-y-4 text-sm font-medium">
-            <li><Link to="/" onClick={() => window.location.hash = '#marketplace'} className="hover:text-white transition-colors text-gray-300">Marketplace</Link></li>
-            <li><Link to="/" onClick={() => window.location.hash = '#telehealth'} className="hover:text-white transition-colors text-gray-300">Telehealth</Link></li>
+            <li><Link to="/shop" className="hover:text-white transition-colors text-gray-300">Shop</Link></li>
             <li><Link to="/resources" className="hover:text-white transition-colors text-gray-300">Resources</Link></li>
-            <li><Link to="/" onClick={() => window.location.hash = '#ai-support'} className="hover:text-white transition-colors text-gray-300">AI Support</Link></li>
+            <li><Link to="/ai-support" className="hover:text-white transition-colors text-gray-300">AI Support</Link></li>
           </ul>
         </div>
 

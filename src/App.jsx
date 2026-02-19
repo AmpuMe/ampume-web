@@ -13,6 +13,7 @@ const AccessibilityStatement = lazy(() => import('./pages/AccessibilityStatement
 
 // Lazy load shop pages
 const ShopPage = lazy(() => import('./pages/ShopPage'));
+const CategoryPage = lazy(() => import('./pages/CategoryPage'));
 const ProductPage = lazy(() => import('./pages/ProductPage'));
 
 // Lazy load resource pages
@@ -46,6 +47,10 @@ const App = () => {
           <Route path="/" element={<LandingPage />} />
           <Route path="/ai-support" element={<AISupport />} />
           <Route path="/shop" element={<ShopPage />} />
+          <Route path="/shop/liners" element={<CategoryPage />} />
+          <Route path="/shop/socks" element={<CategoryPage />} />
+          <Route path="/shop/sleeves" element={<CategoryPage />} />
+          <Route path="/shop/accessories" element={<CategoryPage />} />
           <Route path="/shop/:handle" element={<ProductPage />} />
           <Route path="/resources" element={<ResourcesHub />} />
           <Route path="/resources/:pillarSlug" element={<PillarPage />} />

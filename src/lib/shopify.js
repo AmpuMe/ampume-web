@@ -530,11 +530,43 @@ export function groupProducts(products) {
 }
 
 export const CATEGORY_ORDER = [
-  { key: 'Prosthetic Liner', label: 'Prosthetic Liners', id: 'liners' },
-  { key: 'Prosthetic Sock', label: 'Prosthetic Socks', id: 'socks' },
-  { key: 'Prosthetic Sleeve', label: 'Prosthetic Sleeves', id: 'sleeves' },
-  { key: 'Prosthetic Accessory', label: 'Accessories', id: 'accessories' },
+  {
+    key: 'Prosthetic Liner',
+    label: 'Prosthetic Liners',
+    id: 'liners',
+    description: 'Cushion and locking liners from trusted manufacturers, available in multiple sizes and configurations.',
+    icon: 'Shield',
+  },
+  {
+    key: 'Prosthetic Sock',
+    label: 'Prosthetic Socks',
+    id: 'socks',
+    description: 'Ply socks for volume management and comfort throughout the day.',
+    icon: 'Layers',
+  },
+  {
+    key: 'Prosthetic Sleeve',
+    label: 'Prosthetic Sleeves',
+    id: 'sleeves',
+    description: 'Suspension sleeves to keep your prosthesis secure and comfortable.',
+    icon: 'Grip',
+  },
+  {
+    key: 'Prosthetic Accessory',
+    label: 'Accessories',
+    id: 'accessories',
+    description: 'Cleaners, lubricants, and other supplies to maintain your prosthetic.',
+    icon: 'Package',
+  },
 ];
+
+export function getCategoryById(id) {
+  return CATEGORY_ORDER.find(cat => cat.id === id) || null;
+}
+
+export function getCategoryByProductType(productType) {
+  return CATEGORY_ORDER.find(cat => cat.key === productType) || null;
+}
 
 export function categorizeGroups(groups) {
   const categories = [];
@@ -554,4 +586,75 @@ export function categorizeGroups(groups) {
   }
 
   return categories;
+}
+
+// Fetch products filtered by Shopify product type
+const PRODUCTS_BY_TYPE_QUERY = `
+  query ProductsByType($query: String!, $first: Int!) {
+    products(first: $first, query: $query) {
+      edges {
+        node {
+          id
+          title
+          handle
+          description
+          descriptionHtml
+          productType
+          tags
+          vendor
+          priceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+            maxVariantPrice {
+              amount
+              currencyCode
+            }
+          }
+          images(first: 5) {
+            edges {
+              node {
+                id
+                url
+                altText
+                width
+                height
+              }
+            }
+          }
+          variants(first: 100) {
+            edges {
+              node {
+                id
+                title
+                availableForSale
+                price {
+                  amount
+                  currencyCode
+                }
+                selectedOptions {
+                  name
+                  value
+                }
+              }
+            }
+          }
+          options {
+            id
+            name
+            values
+          }
+        }
+      }
+    }
+  }
+`;
+
+export async function fetchProductsByType(productType, first = 50) {
+  const data = await shopifyFetch(PRODUCTS_BY_TYPE_QUERY, {
+    query: `product_type:'${productType}'`,
+    first,
+  });
+  return data?.products?.edges?.map(edge => edge.node) || [];
 }

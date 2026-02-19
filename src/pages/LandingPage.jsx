@@ -73,18 +73,13 @@ const LandingPage = () => {
   }, []);
 
   const navLinks = [
-    { name: 'AI Support', href: '/ai-support' },
-    { name: 'Marketplace', href: '#marketplace' },
-    { name: 'Telehealth', href: '#telehealth' },
+    { name: 'Shop', href: '/shop' },
     { name: 'Resources', href: '/resources' },
+    { name: 'AI Support', href: '/ai-support' },
   ];
 
   const handleNavClick = (href) => {
-    if (href.startsWith('/')) {
-      navigate(href);
-    } else {
-      scrollToSection(href.replace('#', ''));
-    }
+    navigate(href);
   };
 
   const scrollToSection = (id) => {
@@ -98,7 +93,7 @@ const LandingPage = () => {
     <div className="min-h-screen bg-brand-white text-brand-black font-sans">
       <SEO 
         title="Home"
-        description="AmpuMe is the all-in-one platform for life after limb loss. Discover our Marketplace, Telehealth services, Resources, and AI Support."
+        description="AmpuMe is the all-in-one platform for life after limb loss. Discover our Shop, Telehealth services, Resources, and AI Support."
       />
       <WaitlistModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
       
@@ -238,16 +233,16 @@ const LandingPage = () => {
               </div>
             </FadeIn>
 
-            {/* Marketplace - Position 2 */}
+            {/* Shop - Position 2 */}
             <Link to="/shop">
               <FadeIn id="marketplace" delay={0.1} className="group relative h-[500px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
-                <img src={marketplaceImage} loading="lazy" alt="Marketplace" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <img src={marketplaceImage} loading="lazy" alt="Shop" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
                 <div className="absolute top-8 left-8 z-10 flex gap-2">
                   <span className="text-xs font-bold uppercase tracking-widest bg-white text-black px-3 py-1">Shop</span>
                 </div>
                 <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
-                  <h4 className="text-3xl font-medium mb-3">Marketplace</h4>
+                  <h4 className="text-3xl font-medium mb-3">Shop</h4>
                   <div className="h-auto md:h-0 md:group-hover:h-auto overflow-hidden transition-all duration-500">
                     <p className="text-sm text-white/90 leading-relaxed mb-4">
                       Prosthetic liners, socks, sleeves, and accessories. Quality supplies shipped directly to you.
