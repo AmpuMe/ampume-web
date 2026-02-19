@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ShoppingBag, Shield, Layers, Grip, Package, ArrowRight } from 'lucide-react';
+import { ShoppingBag, ArrowRight } from 'lucide-react';
 import SimpleNavbar from '../components/SimpleNavbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
@@ -21,16 +21,7 @@ const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
   </motion.div>
 );
 
-const ICON_MAP = {
-  Shield,
-  Layers,
-  Grip,
-  Package,
-};
-
-function CategoryCard({ category, productCount, index }) {
-  const Icon = ICON_MAP[category.icon] || Package;
-
+function CategoryCard({ category, productCount, image, index }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -40,27 +31,34 @@ function CategoryCard({ category, productCount, index }) {
     >
       <Link
         to={`/shop/${category.id}`}
-        className="group block bg-brand-offwhite rounded-lg p-8 md:p-10 hover:bg-gray-100 transition-colors h-full"
+        className="group relative block h-[320px] md:h-[400px] overflow-hidden rounded-lg"
       >
-        <div className="flex items-start justify-between mb-6">
-          <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
-            <Icon className="w-6 h-6 text-gray-700" />
-          </div>
-          <ArrowRight className="w-5 h-5 text-gray-300 group-hover:text-black group-hover:translate-x-1 transition-all" />
-        </div>
-
-        <h3 className="text-xl font-medium mb-2 group-hover:text-gray-700 transition-colors">
-          {category.label}
-        </h3>
-        <p className="text-sm text-gray-500 leading-relaxed mb-4">
-          {category.description}
-        </p>
-
-        {productCount > 0 && (
-          <span className="text-xs font-bold uppercase tracking-widest text-gray-400">
-            {productCount} product{productCount !== 1 ? 's' : ''}
-          </span>
+        {image ? (
+          <img
+            src={image}
+            alt={category.label}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+        ) : (
+          <div className="w-full h-full bg-gray-100" />
         )}
+        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-500" />
+        <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
+          <h3 className="text-2xl md:text-3xl font-medium mb-2">{category.label}</h3>
+          <p className="text-sm text-white/80 leading-relaxed mb-3">
+            {category.description}
+          </p>
+          <div className="flex items-center justify-between">
+            {productCount > 0 && (
+              <span className="text-xs font-bold uppercase tracking-widest text-white/60">
+                {productCount} product{productCount !== 1 ? 's' : ''}
+              </span>
+            )}
+            <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1 group-hover:border-white transition-colors">
+              Browse <ArrowRight size={14} />
+            </span>
+          </div>
+        </div>
       </Link>
     </motion.div>
   );
@@ -68,6 +66,7 @@ function CategoryCard({ category, productCount, index }) {
 
 export default function ShopPage() {
   const [categoryCounts, setCategoryCounts] = useState({});
+  const [categoryImages, setCategoryImages] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const { cartCount, openCart } = useCart();
 
@@ -80,10 +79,16 @@ export default function ShopPage() {
         const categories = categorizeGroups(groups);
 
         const counts = {};
+        const images = {};
         for (const cat of categories) {
           counts[cat.id] = cat.groups.length;
+          // Grab the first product image for this category
+          const firstProduct = cat.groups[0]?.primaryProduct || cat.groups[0]?.products?.[0];
+          const img = firstProduct?.images?.edges?.[0]?.node?.url;
+          if (img) images[cat.id] = img;
         }
         setCategoryCounts(counts);
+        setCategoryImages(images);
       } catch (err) {
         console.error('Error loading product counts:', err);
       } finally {
@@ -161,7 +166,7 @@ export default function ShopPage() {
           {isLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[...Array(4)].map((_, i) => (
-                <div key={i} className="animate-pulse bg-gray-50 rounded-lg h-56" />
+                <div key={i} className="animate-pulse bg-gray-100 rounded-lg h-[320px] md:h-[400px]" />
               ))}
             </div>
           ) : (
@@ -171,6 +176,7 @@ export default function ShopPage() {
                   key={category.id}
                   category={category}
                   productCount={categoryCounts[category.id] || 0}
+                  image={categoryImages[category.id]}
                   index={index}
                 />
               ))}
