@@ -126,28 +126,11 @@ export default function ShopPage() {
               The AmpuMe Shop
             </span>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight mb-6">
-              Curated for Life After Limb Loss
+              Curated by prosthetic professionals.
             </h1>
             <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-              Every product hand-selected by prosthetic professionals to support
-              your comfort, mobility, and independence.
+              Every product hand-selected to support your comfort, mobility, and independence.
             </p>
-          </FadeIn>
-
-          {/* Trust Builder */}
-          <FadeIn delay={0.1} className="mt-8 max-w-3xl">
-            <div className="bg-brand-offwhite border border-gray-100 p-6 rounded-lg">
-              <p className="text-sm text-gray-600 leading-relaxed">
-                <strong className="text-black">Curated by prosthetic professionals.</strong>{' '}
-                We understand the challenges of living with limb loss. Every product in our
-                marketplace is selected by experienced prosthetists to ensure quality, compatibility,
-                and value. Need something specific?{' '}
-                <a href="mailto:info@ampume.com" className="underline hover:text-black transition-colors">
-                  Contact us
-                </a>{' '}
-                for special orders.
-              </p>
-            </div>
           </FadeIn>
 
           {/* Insurance Notice */}
