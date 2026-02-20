@@ -1,12 +1,13 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ShoppingBag, Check, ChevronDown, FileDown } from 'lucide-react';
 import SimpleNavbar from '../components/SimpleNavbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import { useCart } from '../context/CartContext';
 import { fetchProductByHandle, fetchProducts, formatPrice, groupProducts, extractBaseName, extractVariantLabel, getCategoryByProductType } from '../lib/shopify';
+import { findLinerDescription } from '../data/linerDescriptions';
 
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
   <motion.div
@@ -19,6 +20,36 @@ const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
     {children}
   </motion.div>
 );
+
+function DescriptionSection({ title, defaultOpen = false, children }) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+  return (
+    <div className="border-b border-gray-100">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex justify-between items-center py-4 text-left"
+      >
+        <h3 className="text-sm font-bold uppercase tracking-widest">{title}</h3>
+        <ChevronDown
+          className={`w-4 h-4 text-gray-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+        />
+      </button>
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className="overflow-hidden"
+          >
+            <div className="pb-6">{children}</div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export default function ProductPage() {
   const { handle } = useParams();
@@ -420,17 +451,150 @@ export default function ProductPage() {
                 </div>
 
                 {/* Description */}
-                {product.descriptionHtml && (
-                  <div className="border-t border-gray-100 pt-8">
-                    <h3 className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">
-                      Description
-                    </h3>
-                    <div
-                      className="max-w-none text-gray-600 text-sm leading-relaxed space-y-4 [&_h4]:text-black [&_h4]:font-medium [&_h4]:text-base [&_h4]:mt-6 [&_h4]:mb-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1.5 [&_li]:text-gray-600 [&_p]:text-gray-600"
-                      dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
-                    />
-                  </div>
-                )}
+                {(() => {
+                  const baseName = currentGroup ? currentGroup.baseName : product.title;
+                  const linerDesc = findLinerDescription(baseName);
+
+                  if (linerDesc) {
+                    return (
+                      <div className="border-t border-gray-100 pt-4">
+                        {/* Product Overview - open by default */}
+                        <DescriptionSection title="Product Overview" defaultOpen>
+                          <div className="space-y-3">
+                            {linerDesc.overview.map((para, i) => (
+                              <p key={i} className="text-sm text-gray-600 leading-relaxed">{para}</p>
+                            ))}
+                          </div>
+                        </DescriptionSection>
+
+                        {/* Key Features & Benefits */}
+                        <DescriptionSection title="Key Features & Benefits">
+                          <ul className="list-disc pl-5 space-y-1.5">
+                            {linerDesc.features.map((feat, i) => (
+                              <li key={i} className="text-sm text-gray-600 leading-relaxed">{feat}</li>
+                            ))}
+                          </ul>
+                        </DescriptionSection>
+
+                        {/* Fabric Options - only for liners that have them */}
+                        {linerDesc.fabricOptions && (
+                          <DescriptionSection title="Fabric Options">
+                            <div className="space-y-3">
+                              {linerDesc.fabricOptions.map((opt, i) => (
+                                <div key={i} className="bg-gray-50 rounded-lg p-3">
+                                  <p className="text-sm font-medium text-black">{opt.name}</p>
+                                  <p className="text-sm text-gray-600 mt-0.5">{opt.desc}</p>
+                                </div>
+                              ))}
+                            </div>
+                          </DescriptionSection>
+                        )}
+
+                        {/* Gel & Fabric Technology - ALPS GP only */}
+                        {(linerDesc.gelTechnology || linerDesc.fabricTechnology) && (
+                          <DescriptionSection title="Technology">
+                            <div className="space-y-3">
+                              {linerDesc.gelTechnology && (
+                                <div>
+                                  <p className="text-sm font-medium text-black mb-1">Gel Technology</p>
+                                  <p className="text-sm text-gray-600 leading-relaxed">{linerDesc.gelTechnology}</p>
+                                </div>
+                              )}
+                              {linerDesc.fabricTechnology && (
+                                <div>
+                                  <p className="text-sm font-medium text-black mb-1">Fabric Technology</p>
+                                  <p className="text-sm text-gray-600 leading-relaxed">{linerDesc.fabricTechnology}</p>
+                                </div>
+                              )}
+                            </div>
+                          </DescriptionSection>
+                        )}
+
+                        {/* Suspension Options - ALPS GP only */}
+                        {linerDesc.suspensionOptions && (
+                          <DescriptionSection title="Suspension Options">
+                            <div className="space-y-3">
+                              {linerDesc.suspensionOptions.map((opt, i) => (
+                                <div key={i} className="bg-gray-50 rounded-lg p-3">
+                                  <p className="text-sm font-medium text-black">{opt.name}</p>
+                                  <p className="text-sm text-gray-600 mt-0.5">{opt.desc}</p>
+                                </div>
+                              ))}
+                            </div>
+                          </DescriptionSection>
+                        )}
+
+                        {/* Specifications */}
+                        <DescriptionSection title="Specifications">
+                          <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                            {Object.entries(linerDesc.specs).map(([label, value]) => (
+                              <div key={label} className="contents">
+                                <p className="text-sm text-gray-400">{label}</p>
+                                <p className="text-sm text-black">{value}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </DescriptionSection>
+
+                        {/* Measuring Guide */}
+                        <DescriptionSection title="Measuring Guide">
+                          <ol className="list-decimal pl-5 space-y-2">
+                            {linerDesc.measuringGuide.map((step, i) => (
+                              <li key={i} className="text-sm text-gray-600 leading-relaxed">{step}</li>
+                            ))}
+                          </ol>
+                        </DescriptionSection>
+
+                        {/* Application Instructions */}
+                        <DescriptionSection title="Application Instructions">
+                          <ol className="list-decimal pl-5 space-y-2">
+                            {linerDesc.applicationInstructions.map((step, i) => (
+                              <li key={i} className="text-sm text-gray-600 leading-relaxed">{step}</li>
+                            ))}
+                          </ol>
+                        </DescriptionSection>
+
+                        {/* Care Instructions */}
+                        <DescriptionSection title="Care Instructions">
+                          <ol className="list-decimal pl-5 space-y-2">
+                            {linerDesc.careInstructions.map((step, i) => (
+                              <li key={i} className="text-sm text-gray-600 leading-relaxed">{step}</li>
+                            ))}
+                          </ol>
+                        </DescriptionSection>
+
+                        {/* Precautions */}
+                        <DescriptionSection title="Precautions">
+                          <ul className="space-y-2">
+                            {linerDesc.precautions.map((item, i) => (
+                              <li key={i} className="flex items-start gap-2 text-sm text-amber-700 leading-relaxed">
+                                <span className="text-amber-500 mt-0.5 flex-shrink-0">⚠</span>
+                                {item}
+                              </li>
+                            ))}
+                          </ul>
+                        </DescriptionSection>
+                      </div>
+                    );
+                  }
+
+                  // Fallback: non-liner products use descriptionHtml
+                  if (product.descriptionHtml) {
+                    return (
+                      <div className="border-t border-gray-100 pt-8">
+                        <h3 className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">
+                          Description
+                        </h3>
+                        <div
+                          className="max-w-none text-gray-600 text-sm leading-relaxed space-y-4 [&_h4]:text-black [&_h4]:font-medium [&_h4]:text-base [&_h4]:mt-6 [&_h4]:mb-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1.5 [&_li]:text-gray-600 [&_p]:text-gray-600"
+                          dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+                        />
+                      </div>
+                    );
+                  }
+
+                  return null;
+                })()}
               </div>
             </FadeIn>
           </div>
