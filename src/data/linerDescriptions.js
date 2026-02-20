@@ -3,6 +3,7 @@
 
 export const LINER_DESCRIPTIONS = {
   'Alpha Classic AK Cushion': {
+    sizingType: 'alpha-ak',
     overview: [
       'The Alpha\u00AE Classic Above-Knee (AK) Cushion Liner is designed for transfemoral prosthesis users seeking enhanced distal protection and adaptive pressure management.',
       'The AK profile incorporates 9 mm of gel distally, tapering to 3 mm proximally, with an integrated gel pad that cushions the distal lateral femur. This configuration helps protect sensitive distal anatomy while accommodating uneven socket pressures.',
@@ -57,6 +58,7 @@ export const LINER_DESCRIPTIONS = {
   },
 
   'Alpha Classic AK Locking': {
+    sizingType: 'alpha-ak',
     overview: [
       'The Alpha\u00AE Classic Above-Knee (AK) Locking Liner is designed for transfemoral users who utilize a pin-lock suspension system.',
       'It features a 9 mm distal to 3 mm proximal AK gel profile, providing enhanced distal femur cushioning and adaptive pressure distribution. This configuration helps protect sensitive distal anatomy while accommodating uneven socket pressures.',
@@ -110,6 +112,7 @@ export const LINER_DESCRIPTIONS = {
   },
 
   'Alpha Classic BK Cushion': {
+    sizingType: 'alpha-bk',
     overview: [
       'The Alpha\u00AE Classic Below-Knee (BK) Cushion Liner is designed for transtibial prosthesis users seeking adaptive pressure distribution and durable comfort.',
       'Constructed from thermoplastic elastomer (TPE) enriched with medical-grade mineral oil and Vitamin E, the Classic Gel formulation features high flow and low rebound properties. The gel adapts dynamically to pressure changes while maintaining its shape over time.',
@@ -167,6 +170,7 @@ export const LINER_DESCRIPTIONS = {
   },
 
   'Alpha Classic BK Locking': {
+    sizingType: 'alpha-bk',
     overview: [
       'The Alpha\u00AE Classic Below-Knee (BK) Locking Liner is designed for transtibial prosthesis users who utilize a pin-lock suspension system.',
       'Constructed from thermoplastic elastomer (TPE) enriched with medical-grade mineral oil and Vitamin E, the Classic Gel formulation features high flow and low rebound properties. The gel adapts dynamically to pressure changes while maintaining its shape over time.',
@@ -225,6 +229,7 @@ export const LINER_DESCRIPTIONS = {
   },
 
   'EasyLiner': {
+    sizingType: 'easyliner',
     overview: [
       'The EasyLiner\u00AE Prosthetic Liner is designed to provide comfort, skin protection, and dependable suspension for lower-limb prosthesis users. Engineered with a soft gel interface and durable outer fabric, the EasyLiner helps distribute pressure evenly while enhancing socket fit and daily wear comfort.',
       'The gel formulation adapts to the residual limb to help reduce localized pressure points and shear forces. Its flexible design promotes easier donning and doffing while maintaining a secure interface within the prosthetic socket.',
@@ -278,6 +283,7 @@ export const LINER_DESCRIPTIONS = {
   },
 
   'General Purpose': {
+    sizingType: 'alps-gp',
     overview: [
       'The ALPS\u00AE General Purpose Prosthetic Liner is designed to provide comfortable socket fit, reliable suspension, and adaptable cushioning for a wide variety of prosthesis users. Made with ALPS Grip Gel, this liner ensures optimum adhesion while comfortably conforming to the shape of the residual limb.',
       'The softer durometer Grip Gel is engineered for easier application, making it especially suitable for individuals with reduced hand dexterity. The liner elongates and gently conforms during ambulation, helping to reduce the potential for blood flow restriction, particularly for users with circulatory concerns.',
