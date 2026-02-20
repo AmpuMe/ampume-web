@@ -138,15 +138,14 @@ function MeasurementHero({ chartData }) {
     },
   ];
 
-  // Band + callout positions (% from top of image container)
-  // AK image: shorts end ~28%, limb ends ~87%. BK: knee ~40%, limb ends ~88%.
+  // Callout label positions (% from top of image) — align with measuring tapes in the photos
   const callouts = isDual
     ? [
-        { label: 'PROXIMAL', sublabel: '30 cm from end', bandTop: 43, bandWidth: 56 },
-        { label: 'DISTAL', sublabel: '4 cm from end', bandTop: 80, bandWidth: 40 },
+        { label: 'PROXIMAL', sublabel: '30 cm from end', top: 38 },
+        { label: 'DISTAL', sublabel: '4 cm from end', top: 62 },
       ]
     : [
-        { label: 'MEASURE HERE', sublabel: '6 cm from end', bandTop: 76, bandWidth: 42 },
+        { label: 'MEASURE HERE', sublabel: '6 cm from end', top: 45 },
       ];
 
   return (
@@ -168,29 +167,13 @@ function MeasurementHero({ chartData }) {
                   loading="lazy"
                 />
 
-                {/* Thick gold measurement bands on the limb */}
+                {/* Callout labels pointing to the measuring tapes in the photo */}
                 {callouts.map((callout, i) => (
-                  <div key={i} className="absolute left-0 right-0" style={{ top: `${callout.bandTop}%` }}>
-                    {/* Solid gold band — thick, visible, like real measuring tape */}
-                    <div
-                      className="mx-auto"
-                      style={{
-                        width: `${callout.bandWidth}%`,
-                        height: '10px',
-                        borderRadius: '10px',
-                        background: '#C6A87C',
-                        opacity: 0.9,
-                        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.15)',
-                      }}
-                    />
-
-                    {/* Callout line + label */}
-                    <div className="absolute right-1 md:right-3 top-1/2 -translate-y-1/2 flex items-center gap-1">
-                      <div className="w-4 md:w-8 h-[2px] bg-brand-gold" />
-                      <div className="bg-white/95 backdrop-blur-sm rounded-md px-2.5 py-1.5 shadow-sm border border-brand-gold/20">
-                        <p className="text-[11px] md:text-xs font-bold text-brand-gold leading-none whitespace-nowrap">{callout.label}</p>
-                        <p className="text-[10px] md:text-[11px] text-gray-500 leading-tight whitespace-nowrap">{callout.sublabel}</p>
-                      </div>
+                  <div key={i} className="absolute right-2 md:right-4 flex items-center gap-1.5" style={{ top: `${callout.top}%`, transform: 'translateY(-50%)' }}>
+                    <div className="w-4 md:w-8 h-[2px] bg-brand-gold" />
+                    <div className="bg-white/95 backdrop-blur-sm rounded-md px-2.5 py-1.5 shadow-sm border border-brand-gold/20">
+                      <p className="text-[11px] md:text-xs font-bold text-brand-gold leading-none whitespace-nowrap">{callout.label}</p>
+                      <p className="text-[10px] md:text-[11px] text-gray-500 leading-tight whitespace-nowrap mt-0.5">{callout.sublabel}</p>
                     </div>
                   </div>
                 ))}
