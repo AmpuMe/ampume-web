@@ -179,16 +179,83 @@ export default function CategoryPage() {
           )}
         </section>
 
-        {/* Filter Bar */}
+        {/* Guided Selection (liners) or Filter Bar (other categories) */}
         <section className="px-6 md:px-12 mb-8">
-          {copy?.filterHelper && (
-            <p className="text-sm text-gray-500 mb-4">{copy.filterHelper}</p>
+          {categoryId === 'liners' ? (
+            <FadeIn className="max-w-2xl">
+              {/* Step 1: Amputation Level */}
+              <div className="mb-8">
+                <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">
+                  Step 1 — Select Your Amputation Level
+                </p>
+                <div className="flex gap-3">
+                  {[
+                    { value: 'AK', label: 'Above Knee (AK)' },
+                    { value: 'BK', label: 'Below Knee (BK)' },
+                  ].map((opt) => {
+                    const isActive = activeFilters.ampLevel === opt.value;
+                    return (
+                      <button
+                        key={opt.value}
+                        onClick={() => handleFilterChange('ampLevel', isActive ? 'all' : opt.value)}
+                        className={`
+                          flex-1 py-4 px-6 rounded-lg text-sm font-medium transition-all border
+                          ${isActive
+                            ? 'bg-black text-white border-black'
+                            : 'bg-white text-gray-700 border-gray-200 hover:border-gray-400'
+                          }
+                        `}
+                      >
+                        {opt.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Step 2: Suspension Type — appears after step 1 */}
+              {activeFilters.ampLevel && activeFilters.ampLevel !== 'all' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">
+                    Step 2 — Select Suspension Type
+                  </p>
+                  <div className="flex gap-3">
+                    {[
+                      { value: 'cushion', label: 'Cushion' },
+                      { value: 'locking', label: 'Locking' },
+                    ].map((opt) => {
+                      const isActive = activeFilters.suspension === opt.value;
+                      return (
+                        <button
+                          key={opt.value}
+                          onClick={() => handleFilterChange('suspension', isActive ? 'all' : opt.value)}
+                          className={`
+                            flex-1 py-4 px-6 rounded-lg text-sm font-medium transition-all border
+                            ${isActive
+                              ? 'bg-black text-white border-black'
+                              : 'bg-white text-gray-700 border-gray-200 hover:border-gray-400'
+                            }
+                          `}
+                        >
+                          {opt.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </motion.div>
+              )}
+            </FadeIn>
+          ) : (
+            <FilterBar
+              categoryId={categoryId}
+              activeFilters={activeFilters}
+              onFilterChange={handleFilterChange}
+            />
           )}
-          <FilterBar
-            categoryId={categoryId}
-            activeFilters={activeFilters}
-            onFilterChange={handleFilterChange}
-          />
         </section>
 
         {/* Products Grid */}
