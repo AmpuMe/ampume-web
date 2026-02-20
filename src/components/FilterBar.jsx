@@ -13,8 +13,9 @@ const FILTER_CONFIGS = {
       match: (product, value) => {
         if (value === 'all') return true;
         const title = product.title.toLowerCase();
-        if (value === 'AK') return title.includes('above-knee') || title.includes('above knee') || title.includes(' ak ') || title.startsWith('ak ');
-        if (value === 'BK') return title.includes('below-knee') || title.includes('below knee') || title.includes(' bk ') || title.startsWith('bk ');
+        const optionValues = (product.options || []).flatMap(o => o.values || []).map(v => v.toLowerCase());
+        if (value === 'AK') return title.includes('above-knee') || title.includes('above knee') || title.includes(' ak ') || title.startsWith('ak ') || optionValues.some(v => v === 'ak' || v.includes('above'));
+        if (value === 'BK') return title.includes('below-knee') || title.includes('below knee') || title.includes(' bk ') || title.startsWith('bk ') || optionValues.some(v => v === 'bk' || v.includes('below'));
         return true;
       },
     },
@@ -30,7 +31,8 @@ const FILTER_CONFIGS = {
         if (value === 'all') return true;
         const title = product.title.toLowerCase();
         const tags = (product.tags || []).map(t => t.toLowerCase());
-        return title.includes(value) || tags.includes(value);
+        const optionValues = (product.options || []).flatMap(o => o.values || []).map(v => v.toLowerCase());
+        return title.includes(value) || tags.includes(value) || optionValues.some(v => v.includes(value));
       },
     },
     {
