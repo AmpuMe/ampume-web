@@ -115,24 +115,6 @@ function RecommendationResult({ recommendation }) {
   );
 }
 
-/* ── Measurement Callout Label ─────────────────────────────────── */
-
-function CalloutLabel({ label, distance, position }) {
-  // position: percentage from top of image where the gold band sits
-  return (
-    <div
-      className="absolute right-0 flex items-center gap-2 translate-x-[calc(100%+8px)]"
-      style={{ top: `${position}%`, transform: `translateY(-50%) translateX(calc(100% + 8px))` }}
-    >
-      <div className="w-6 h-px bg-brand-gold" />
-      <div className="whitespace-nowrap">
-        <p className="text-xs font-bold uppercase tracking-widest text-brand-gold leading-none">{label}</p>
-        <p className="text-xs text-gray-400 mt-0.5">{distance}</p>
-      </div>
-    </div>
-  );
-}
-
 /* ── Measurement Hero (Integrated Diagram) ────────────────────── */
 
 function MeasurementHero({ chartData }) {
@@ -156,14 +138,15 @@ function MeasurementHero({ chartData }) {
     },
   ];
 
-  // Callout positions (% from top of image) for each measurement type
+  // Band + callout positions (% from top of image container)
+  // These are tuned to where the liner sits in the generated photos
   const callouts = isDual
     ? [
-        { label: 'Proximal', distance: '30 cm from end', position: 35 },
-        { label: 'Distal', distance: '4 cm from end', position: 70 },
+        { label: 'TOP', sublabel: 'Proximal \u2014 30 cm', desc: 'Measure circumference 30 cm up from the end of your residual limb.', bandTop: 28, bandWidth: 58 },
+        { label: 'BOTTOM', sublabel: 'Distal \u2014 4 cm', desc: 'Measure circumference 4 cm (1.5 in) up from the end of your residual limb.', bandTop: 78, bandWidth: 38 },
       ]
     : [
-        { label: 'Circumference', distance: '6 cm from end', position: 55 },
+        { label: 'MEASURE HERE', sublabel: 'Circumference \u2014 6 cm', desc: 'Measure the circumference 6 cm above the distal end.', bandTop: 68, bandWidth: 48 },
       ];
 
   return (
@@ -173,48 +156,47 @@ function MeasurementHero({ chartData }) {
       </h3>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-        {/* Figure with callout labels — shows first on mobile */}
+        {/* Annotated diagram — shows first on mobile */}
         <div className="order-1 lg:order-2 flex justify-center">
-          <div className="relative">
+          <div className="relative bg-brand-offwhite rounded-lg p-4 md:p-6 w-full max-w-sm">
             {chartData.measurementImage && (
-              <div className="bg-brand-offwhite rounded-lg p-4 md:p-6">
+              <div className="relative">
                 <img
                   src={chartData.measurementImage}
                   alt={`${chartData.title} \u2014 where to measure`}
-                  className="w-full max-w-[280px] h-auto mx-auto"
+                  className="w-full h-auto"
                   loading="lazy"
                 />
+
+                {/* Gold band overlays + callout labels on the image */}
+                {callouts.map((callout, i) => (
+                  <div key={i} className="absolute left-0 right-0" style={{ top: `${callout.bandTop}%` }}>
+                    {/* Gold measurement band */}
+                    <div
+                      className="mx-auto h-[6px] rounded-full opacity-90"
+                      style={{
+                        width: `${callout.bandWidth}%`,
+                        background: 'linear-gradient(90deg, transparent, #C6A87C 15%, #C6A87C 85%, transparent)',
+                      }}
+                    />
+
+                    {/* Callout line + label extending right */}
+                    <div className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+                      <div className="w-4 md:w-8 h-px bg-brand-gold" />
+                      <div className="bg-white/90 backdrop-blur-sm rounded px-2 py-1 shadow-sm">
+                        <p className="text-[10px] md:text-xs font-bold text-brand-gold leading-none whitespace-nowrap">{callout.label}</p>
+                        <p className="text-[9px] md:text-[10px] text-gray-500 leading-tight whitespace-nowrap">{callout.sublabel}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
-            {/* Callout labels — desktop only, positioned alongside image */}
-            <div className="hidden lg:block">
-              {callouts.map((callout) => (
-                <CalloutLabel
-                  key={callout.label}
-                  label={callout.label}
-                  distance={callout.distance}
-                  position={callout.position}
-                />
-              ))}
-            </div>
           </div>
         </div>
 
-        {/* Mobile callout labels */}
-        <div className="order-2 lg:hidden flex justify-center gap-6 -mt-4 mb-2">
-          {callouts.map((callout) => (
-            <div key={callout.label} className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-brand-gold flex-shrink-0" />
-              <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-brand-gold leading-none">{callout.label}</p>
-                <p className="text-xs text-gray-400">{callout.distance}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
         {/* Steps — shows second on mobile, left column on desktop */}
-        <div className="order-3 lg:order-1 space-y-5 lg:pt-4">
+        <div className="order-2 lg:order-1 space-y-5 lg:pt-4">
           {steps.map((step, i) => (
             <div key={step.number} className="flex items-start gap-4 relative">
               {/* Vertical connecting line */}
