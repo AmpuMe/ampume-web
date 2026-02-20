@@ -5,6 +5,7 @@ export const SIZING_CHARTS = {
   'alpha-ak': {
     title: 'Alpha Classic AK Sizing',
     measurementMethod: 'dual-circumference',
+    measurementImage: '/images/sizing/ak-measurement-guide.png',
     measurementPoints: [
       {
         label: 'Distal Measurement',
@@ -35,6 +36,7 @@ export const SIZING_CHARTS = {
   'alpha-bk': {
     title: 'Alpha Classic BK Sizing',
     measurementMethod: 'dual-circumference',
+    measurementImage: '/images/sizing/bk-measurement-guide.png',
     measurementPoints: [
       {
         label: 'Distal Measurement',
@@ -67,6 +69,7 @@ export const SIZING_CHARTS = {
   'easyliner': {
     title: 'EasyLiner Sizing',
     measurementMethod: 'single-circumference',
+    measurementImage: '/images/sizing/circumference-measurement-guide.png',
     measurementPoints: [
       {
         label: 'Circumference',
@@ -98,6 +101,7 @@ export const SIZING_CHARTS = {
   'alps-gp': {
     title: 'ALPS General Purpose Sizing',
     measurementMethod: 'single-circumference',
+    measurementImage: '/images/sizing/circumference-measurement-guide.png',
     measurementPoints: [
       {
         label: 'Circumference',

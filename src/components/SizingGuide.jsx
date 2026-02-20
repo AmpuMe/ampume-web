@@ -36,7 +36,7 @@ function MeasurementSteps({ chartData }) {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {steps.map((step) => (
         <div key={step.number} className="bg-brand-offwhite rounded-lg p-5">
           <div className="w-9 h-9 rounded-full bg-black text-white flex items-center justify-center text-sm font-bold mb-4">
@@ -218,7 +218,28 @@ export default function SizingGuide({ sizingType, measuringGuide }) {
         <FadeIn>
           <div className="mb-12">
             <h3 className="text-sm font-bold uppercase tracking-widest mb-6">How to Measure</h3>
-            <MeasurementSteps chartData={chartData} />
+            {chartData.measurementImage ? (
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div className="lg:col-span-4 flex justify-center">
+                  <div className="bg-brand-offwhite rounded-lg p-6 w-full max-w-sm">
+                    <img
+                      src={chartData.measurementImage}
+                      alt={`${chartData.title} — where to measure`}
+                      className="w-full h-auto"
+                      loading="lazy"
+                    />
+                    <p className="text-xs text-gray-400 text-center mt-3">
+                      Measurement reference guide
+                    </p>
+                  </div>
+                </div>
+                <div className="lg:col-span-8">
+                  <MeasurementSteps chartData={chartData} />
+                </div>
+              </div>
+            ) : (
+              <MeasurementSteps chartData={chartData} />
+            )}
           </div>
         </FadeIn>
 
