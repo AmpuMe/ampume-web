@@ -7,6 +7,17 @@ import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import { useCart } from '../context/CartContext';
 import { fetchProducts, groupProducts, categorizeGroups, CATEGORY_ORDER } from '../lib/shopify';
+import linersImage from '../assets/shop/category-liners.webp';
+import socksImage from '../assets/shop/category-socks.webp';
+import sleevesImage from '../assets/shop/category-sleeves.webp';
+import accessoriesImage from '../assets/shop/category-accessories.webp';
+
+const CATEGORY_IMAGES = {
+  liners: linersImage,
+  socks: socksImage,
+  sleeves: sleevesImage,
+  accessories: accessoriesImage,
+};
 
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
   <motion.div
@@ -66,7 +77,6 @@ function CategoryCard({ category, productCount, image, index }) {
 
 export default function ShopPage() {
   const [categoryCounts, setCategoryCounts] = useState({});
-  const [categoryImages, setCategoryImages] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const { cartCount, openCart } = useCart();
 
@@ -79,16 +89,10 @@ export default function ShopPage() {
         const categories = categorizeGroups(groups);
 
         const counts = {};
-        const images = {};
         for (const cat of categories) {
           counts[cat.id] = cat.groups.length;
-          // Grab the first product image for this category
-          const firstProduct = cat.groups[0]?.primaryProduct || cat.groups[0]?.products?.[0];
-          const img = firstProduct?.images?.edges?.[0]?.node?.url;
-          if (img) images[cat.id] = img;
         }
         setCategoryCounts(counts);
-        setCategoryImages(images);
       } catch (err) {
         console.error('Error loading product counts:', err);
       } finally {
@@ -176,7 +180,7 @@ export default function ShopPage() {
                   key={category.id}
                   category={category}
                   productCount={categoryCounts[category.id] || 0}
-                  image={categoryImages[category.id]}
+                  image={CATEGORY_IMAGES[category.id]}
                   index={index}
                 />
               ))}
