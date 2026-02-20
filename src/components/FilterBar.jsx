@@ -74,11 +74,11 @@ export default function FilterBar({ categoryId, activeFilters, onFilterChange })
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
-      className="flex flex-wrap items-center gap-6 py-6 border-y border-gray-100"
+      className="flex flex-wrap gap-6 py-6 border-y border-gray-100"
     >
       {filters.map((filter) => (
-        <div key={filter.key} className="flex items-center gap-2">
-          <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mr-1">
+        <div key={filter.key} className="flex flex-col gap-2">
+          <span className="text-xs font-bold uppercase tracking-widest text-gray-400">
             {filter.label}
           </span>
           <div className="flex flex-wrap gap-1.5">
