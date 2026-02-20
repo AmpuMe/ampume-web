@@ -170,9 +170,6 @@ export default function CategoryPage() {
                       <p className="text-sm text-gray-600 leading-relaxed font-medium">{copy.sizingNote}</p>
                     )}
                   </div>
-                  {copy.tip && (
-                    <p className="text-sm text-gray-500 italic">{copy.tip}</p>
-                  )}
                 </motion.div>
               )}
             </FadeIn>
@@ -246,6 +243,11 @@ export default function CategoryPage() {
                       );
                     })}
                   </div>
+
+                  {/* Tip line — shown after step 2 appears */}
+                  {copy?.tip && (
+                    <p className="text-sm text-gray-500 italic mt-6">{copy.tip}</p>
+                  )}
                 </motion.div>
               )}
             </FadeIn>
