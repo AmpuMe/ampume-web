@@ -11,14 +11,12 @@ import linersImage from '../assets/shop/category-liners.webp';
 import socksImage from '../assets/shop/category-socks.webp';
 import sleevesImage from '../assets/shop/category-sleeves.webp';
 import accessoriesImage from '../assets/shop/category-accessories.webp';
-import performanceImage from '../assets/shop/category-performance-recovery.webp';
 
 const CATEGORY_IMAGES = {
   liners: linersImage,
   socks: socksImage,
   sleeves: sleevesImage,
   accessories: accessoriesImage,
-  'performance-recovery': performanceImage,
 };
 
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (

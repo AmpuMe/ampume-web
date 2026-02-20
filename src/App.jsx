@@ -51,7 +51,6 @@ const App = () => {
           <Route path="/shop/socks" element={<CategoryPage />} />
           <Route path="/shop/sleeves" element={<CategoryPage />} />
           <Route path="/shop/accessories" element={<CategoryPage />} />
-          <Route path="/shop/performance-recovery" element={<CategoryPage />} />
           <Route path="/shop/:handle" element={<ProductPage />} />
           <Route path="/resources" element={<ResourcesHub />} />
           <Route path="/resources/:pillarSlug" element={<PillarPage />} />
