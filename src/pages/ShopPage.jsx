@@ -11,12 +11,14 @@ import linersImage from '../assets/shop/category-liners.webp';
 import socksImage from '../assets/shop/category-socks.webp';
 import sleevesImage from '../assets/shop/category-sleeves.webp';
 import accessoriesImage from '../assets/shop/category-accessories.webp';
+import performanceImage from '../assets/shop/category-performance-recovery.webp';
 
 const CATEGORY_IMAGES = {
   liners: linersImage,
   socks: socksImage,
   sleeves: sleevesImage,
   accessories: accessoriesImage,
+  'performance-recovery': performanceImage,
 };
 
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
@@ -137,13 +139,25 @@ export default function ShopPage() {
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight mb-6">
               Curated by prosthetic professionals.
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-              Every product hand-selected to support your comfort, mobility, and independence.
+            <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-4">
+              The AmpuMe Shop was built to ensure individuals affected by limb loss have
+              convenient access to high-quality prosthetic supplies, accessories, and performance products.
+            </p>
+            <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-4">
+              Every product is carefully selected by prosthetic professionals to support
+              optimal fit, function, and durability.
+            </p>
+            <p className="text-sm text-gray-500 leading-relaxed">
+              Don't see what you need?{' '}
+              <a href="mailto:info@ampume.com" className="underline hover:text-black transition-colors">
+                Contact us
+              </a>{' '}
+              — we may be able to special order it for you.
             </p>
           </FadeIn>
 
           {/* Insurance Notice */}
-          <FadeIn delay={0.15} className="mt-4 max-w-3xl">
+          <FadeIn delay={0.1} className="mt-8 max-w-3xl">
             <div className="border border-gray-100 p-6 rounded-lg">
               <p className="text-sm text-gray-600 leading-relaxed">
                 <strong className="text-black">Have insurance coverage?</strong> Many prosthetic supplies
@@ -163,7 +177,7 @@ export default function ShopPage() {
         <section className="px-6 md:px-12">
           <FadeIn className="mb-8">
             <h2 className="text-sm font-bold uppercase tracking-widest text-gray-400">
-              Shop by Category
+              Choose a category to explore products tailored to your needs
             </h2>
           </FadeIn>
 

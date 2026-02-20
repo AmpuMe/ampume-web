@@ -558,6 +558,13 @@ export const CATEGORY_ORDER = [
     description: 'Cleaners, lubricants, and other supplies to maintain your prosthetic.',
     icon: 'Package',
   },
+  {
+    key: 'Performance & Recovery',
+    label: 'Performance & Recovery',
+    id: 'performance-recovery',
+    description: 'Products to support your active lifestyle, rehabilitation, and recovery.',
+    icon: 'Activity',
+  },
 ];
 
 export function getCategoryById(id) {

@@ -26,8 +26,11 @@ const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
 const CATEGORY_COPY = {
   liners: {
     tagline: 'Professionally Curated. Patient-Focused.',
-    intro: 'Choosing the right prosthetic liner is one of the most important decisions for comfort and function. We recommend working with your prosthetist to determine the best liner for your needs. If you\'re ordering independently, each product page includes sizing guides and detailed specifications to help you make an informed choice.',
-    tip: 'Already have a liner you like? Check the model number printed on your current liner to find the same or similar product below.',
+    intro: 'AmpuMe\'s curated selection of prosthetic liners is designed to support users across different amputation levels, suspension systems, and activity needs.',
+    guidance: 'Whenever possible, we recommend working directly with your prosthetist when selecting a liner. Proper measurement and clinical guidance help ensure optimal fit, comfort, and performance. However, we understand that appointments aren\'t always feasible — and insurance may not cover backup or replacement liners.',
+    sizingNote: 'If you are ordering independently, please review the sizing guide provided on each product page carefully before purchasing.',
+    tip: 'Not sure which liner you currently use? Check the side of your existing liner for the model number, or contact us for assistance.',
+    filterHelper: 'Not sure what you need? Start by selecting your amputation level and suspension type.',
   },
 };
 
@@ -143,10 +146,20 @@ export default function CategoryPage() {
           {/* Category-specific intro copy */}
           {copy?.intro && (
             <FadeIn delay={0.1} className="mt-8 max-w-3xl">
-              <div className="bg-brand-offwhite border border-gray-100 p-6 rounded-lg">
+              <div className="bg-brand-offwhite border border-gray-100 p-6 rounded-lg space-y-4">
                 <p className="text-sm text-gray-600 leading-relaxed">
                   {copy.intro}
                 </p>
+                {copy.guidance && (
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    {copy.guidance}
+                  </p>
+                )}
+                {copy.sizingNote && (
+                  <p className="text-sm text-gray-600 leading-relaxed font-medium">
+                    {copy.sizingNote}
+                  </p>
+                )}
               </div>
             </FadeIn>
           )}
@@ -163,6 +176,9 @@ export default function CategoryPage() {
 
         {/* Filter Bar */}
         <section className="px-6 md:px-12 mb-8">
+          {copy?.filterHelper && (
+            <p className="text-sm text-gray-500 mb-4">{copy.filterHelper}</p>
+          )}
           <FilterBar
             categoryId={categoryId}
             activeFilters={activeFilters}
