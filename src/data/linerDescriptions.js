@@ -354,11 +354,21 @@ export const LINER_DESCRIPTIONS = {
   },
 };
 
+// Normalize product names for matching (Shopify uses "Above-Knee"/"Below-Knee", keys use "AK"/"BK")
+function normalize(str) {
+  return str
+    .replace(/Above[- ]Knee/gi, 'AK')
+    .replace(/Below[- ]Knee/gi, 'BK')
+    .replace(/\s+Liner$/i, '')
+    .replace(/Prosthetic\s+/gi, '');
+}
+
 // Find a matching description for a product by checking the base name
 export function findLinerDescription(baseName) {
   if (!baseName) return null;
+  const normalized = normalize(baseName);
   const entry = Object.entries(LINER_DESCRIPTIONS).find(
-    ([key]) => baseName.includes(key)
+    ([key]) => normalized.includes(key)
   );
   return entry ? entry[1] : null;
 }
