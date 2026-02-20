@@ -25,11 +25,11 @@ const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
 
 const CATEGORY_COPY = {
   liners: {
-    tagline: 'Professionally Curated. Patient-Focused.',
+    tagline: 'Curated by Professionals',
     intro: 'AmpuMe\'s curated selection of prosthetic liners is designed to support users across different amputation levels, suspension systems, and activity needs.',
     guidance: 'Whenever possible, we recommend working directly with your prosthetist when selecting a liner. Proper measurement and clinical guidance help ensure optimal fit, comfort, and performance. However, we understand that appointments aren\'t always feasible — and insurance may not cover backup or replacement liners.',
     sizingNote: 'If you are ordering independently, please review the sizing guide provided on each product page carefully before purchasing.',
-    tip: 'Not sure which liner you currently use? Check the side of your existing liner for the model number, or contact us for assistance.',
+    tip: true,
     filterHelper: 'Not sure what you need? Start by selecting your amputation level and suspension type.',
   },
 };
@@ -246,7 +246,11 @@ export default function CategoryPage() {
 
                   {/* Tip line — shown after step 2 appears */}
                   {copy?.tip && (
-                    <p className="text-sm text-gray-500 italic mt-6">{copy.tip}</p>
+                    <p className="text-sm text-gray-500 italic mt-6">
+                      Not sure which liner you currently use? Check the side of your existing liner for the model number, or{' '}
+                      <a href="mailto:info@ampume.com" className="underline hover:text-black transition-colors">contact us</a>{' '}
+                      for assistance.
+                    </p>
                   )}
                 </motion.div>
               )}
