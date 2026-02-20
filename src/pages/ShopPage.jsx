@@ -169,9 +169,9 @@ export default function ShopPage() {
                 </div>
                 <p className="text-sm text-gray-500 leading-relaxed">
                   Don't see what you need?{' '}
-                  <a href="mailto:info@ampume.com" className="underline hover:text-black transition-colors">
+                  <Link to="/contact" className="underline hover:text-black transition-colors">
                     Contact us
-                  </a>{' '}
+                  </Link>{' '}
                   — we may be able to special order it for you.
                 </p>
               </motion.div>

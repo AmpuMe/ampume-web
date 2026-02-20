@@ -15,6 +15,7 @@ const AccessibilityStatement = lazy(() => import('./pages/AccessibilityStatement
 const ShopPage = lazy(() => import('./pages/ShopPage'));
 const CategoryPage = lazy(() => import('./pages/CategoryPage'));
 const ProductPage = lazy(() => import('./pages/ProductPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
 
 // Lazy load resource pages
 const ResourcesHub = lazy(() => import('./pages/ResourcesHub'));
@@ -55,6 +56,7 @@ const App = () => {
           <Route path="/resources" element={<ResourcesHub />} />
           <Route path="/resources/:pillarSlug" element={<PillarPage />} />
           <Route path="/resources/:pillarSlug/:resourceSlug" element={<ResourceDetail />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/accessibility-statement" element={<AccessibilityStatement />} />

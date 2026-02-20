@@ -248,7 +248,7 @@ export default function CategoryPage() {
                   {copy?.tip && (
                     <p className="text-sm text-gray-500 italic mt-6">
                       Not sure which liner you currently use? Check the side of your existing liner for the model number, or{' '}
-                      <a href="mailto:info@ampume.com" className="underline hover:text-black transition-colors">contact us</a>{' '}
+                      <Link to="/contact" className="underline hover:text-black transition-colors">contact us</Link>{' '}
                       for assistance.
                     </p>
                   )}
