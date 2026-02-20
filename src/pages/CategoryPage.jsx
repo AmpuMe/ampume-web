@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ShoppingBag } from 'lucide-react';
+import { ArrowLeft, ShoppingBag, ChevronDown } from 'lucide-react';
 import SimpleNavbar from '../components/SimpleNavbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
@@ -43,6 +43,7 @@ export default function CategoryPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeFilters, setActiveFilters] = useState({});
+  const [showGuidance, setShowGuidance] = useState(false);
 
   const { cartCount, openCart } = useCart();
 
@@ -143,33 +144,37 @@ export default function CategoryPage() {
             </p>
           </FadeIn>
 
-          {/* Category-specific intro copy */}
-          {copy?.intro && (
-            <FadeIn delay={0.1} className="mt-8 max-w-3xl">
-              <div className="bg-brand-offwhite border border-gray-100 p-6 rounded-lg space-y-4">
-                <p className="text-sm text-gray-600 leading-relaxed">
-                  {copy.intro}
-                </p>
-                {copy.guidance && (
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    {copy.guidance}
-                  </p>
-                )}
-                {copy.sizingNote && (
-                  <p className="text-sm text-gray-600 leading-relaxed font-medium">
-                    {copy.sizingNote}
-                  </p>
-                )}
-              </div>
-            </FadeIn>
-          )}
+          {/* Collapsible guidance */}
+          {copy && (
+            <FadeIn delay={0.1} className="mt-4 max-w-3xl">
+              <button
+                onClick={() => setShowGuidance(!showGuidance)}
+                className="inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-black transition-colors"
+              >
+                {showGuidance ? 'Less info' : 'Sizing & ordering help'}
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showGuidance ? 'rotate-180' : ''}`} />
+              </button>
 
-          {/* Tip line */}
-          {copy?.tip && (
-            <FadeIn delay={0.15} className="mt-4 max-w-3xl">
-              <p className="text-sm text-gray-500 italic">
-                {copy.tip}
-              </p>
+              {showGuidance && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  className="mt-4 space-y-4 overflow-hidden"
+                >
+                  <div className="bg-brand-offwhite border border-gray-100 p-5 rounded-lg space-y-3">
+                    <p className="text-sm text-gray-600 leading-relaxed">{copy.intro}</p>
+                    {copy.guidance && (
+                      <p className="text-sm text-gray-600 leading-relaxed">{copy.guidance}</p>
+                    )}
+                    {copy.sizingNote && (
+                      <p className="text-sm text-gray-600 leading-relaxed font-medium">{copy.sizingNote}</p>
+                    )}
+                  </div>
+                  {copy.tip && (
+                    <p className="text-sm text-gray-500 italic">{copy.tip}</p>
+                  )}
+                </motion.div>
+              )}
             </FadeIn>
           )}
         </section>

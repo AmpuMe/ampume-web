@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ShoppingBag, ArrowRight } from 'lucide-react';
+import { ShoppingBag, ArrowRight, ChevronDown } from 'lucide-react';
 import SimpleNavbar from '../components/SimpleNavbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
@@ -80,6 +80,7 @@ function CategoryCard({ category, productCount, image, index }) {
 export default function ShopPage() {
   const [categoryCounts, setCategoryCounts] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [showMore, setShowMore] = useState(false);
   const { cartCount, openCart } = useCart();
 
   useEffect(() => {
@@ -139,37 +140,44 @@ export default function ShopPage() {
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight mb-6">
               Curated by prosthetic professionals.
             </h1>
-            <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-4">
-              The AmpuMe Shop was built to ensure individuals affected by limb loss have
-              convenient access to high-quality prosthetic supplies, accessories, and performance products.
+            <p className="text-lg text-gray-600 leading-relaxed">
+              High-quality prosthetic supplies, accessories, and performance products — every item selected for optimal fit, function, and durability.
             </p>
-            <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-4">
-              Every product is carefully selected by prosthetic professionals to support
-              optimal fit, function, and durability.
-            </p>
-            <p className="text-sm text-gray-500 leading-relaxed">
-              Don't see what you need?{' '}
-              <a href="mailto:info@ampume.com" className="underline hover:text-black transition-colors">
-                Contact us
-              </a>{' '}
-              — we may be able to special order it for you.
-            </p>
-          </FadeIn>
 
-          {/* Insurance Notice */}
-          <FadeIn delay={0.1} className="mt-8 max-w-3xl">
-            <div className="border border-gray-100 p-6 rounded-lg">
-              <p className="text-sm text-gray-600 leading-relaxed">
-                <strong className="text-black">Have insurance coverage?</strong> Many prosthetic supplies
-                are covered by insurance plans. We recommend checking your benefits before purchasing
-                out-of-pocket.{' '}
-                <Link to="/resources/ask-an-insurance-expert" className="underline hover:text-black transition-colors">
-                  Ask an insurance expert
-                </Link>{' '}
-                to find out what's covered. These products are also ideal for backup supplies, travel, or when you need
-                items outside your coverage period.
-              </p>
-            </div>
+            <button
+              onClick={() => setShowMore(!showMore)}
+              className="inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-black transition-colors mt-4"
+            >
+              {showMore ? 'Less info' : 'Insurance & ordering info'}
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showMore ? 'rotate-180' : ''}`} />
+            </button>
+
+            {showMore && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                className="mt-4 space-y-4 overflow-hidden"
+              >
+                <div className="border border-gray-100 p-5 rounded-lg">
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    <strong className="text-black">Have insurance coverage?</strong> Many prosthetic supplies
+                    are covered by insurance plans. We recommend checking your benefits before purchasing
+                    out-of-pocket.{' '}
+                    <Link to="/resources/ask-an-insurance-expert" className="underline hover:text-black transition-colors">
+                      Ask an insurance expert
+                    </Link>{' '}
+                    to find out what's covered.
+                  </p>
+                </div>
+                <p className="text-sm text-gray-500 leading-relaxed">
+                  Don't see what you need?{' '}
+                  <a href="mailto:info@ampume.com" className="underline hover:text-black transition-colors">
+                    Contact us
+                  </a>{' '}
+                  — we may be able to special order it for you.
+                </p>
+              </motion.div>
+            )}
           </FadeIn>
         </section>
 
