@@ -139,14 +139,14 @@ function MeasurementHero({ chartData }) {
   ];
 
   // Band + callout positions (% from top of image container)
-  // Tuned to actual limb anatomy in the generated photos
+  // AK image: shorts end ~28%, limb ends ~87%. BK: knee ~40%, limb ends ~88%.
   const callouts = isDual
     ? [
-        { label: 'PROXIMAL', sublabel: '30 cm from end', bandTop: 38, bandWidth: 62 },
-        { label: 'DISTAL', sublabel: '4 cm from end', bandTop: 84, bandWidth: 42 },
+        { label: 'PROXIMAL', sublabel: '30 cm from end', bandTop: 43, bandWidth: 56 },
+        { label: 'DISTAL', sublabel: '4 cm from end', bandTop: 80, bandWidth: 40 },
       ]
     : [
-        { label: 'MEASURE HERE', sublabel: '6 cm from end', bandTop: 78, bandWidth: 44 },
+        { label: 'MEASURE HERE', sublabel: '6 cm from end', bandTop: 76, bandWidth: 42 },
       ];
 
   return (
@@ -168,28 +168,28 @@ function MeasurementHero({ chartData }) {
                   loading="lazy"
                 />
 
-                {/* Measurement tape bands wrapped around the limb */}
+                {/* Thick gold measurement bands on the limb */}
                 {callouts.map((callout, i) => (
                   <div key={i} className="absolute left-0 right-0" style={{ top: `${callout.bandTop}%` }}>
-                    {/* Elliptical band — simulates tape wrapped around the limb */}
+                    {/* Solid gold band — thick, visible, like real measuring tape */}
                     <div
                       className="mx-auto"
                       style={{
                         width: `${callout.bandWidth}%`,
-                        height: '14px',
-                        borderRadius: '50%',
-                        border: '2.5px solid #C6A87C',
-                        background: 'rgba(198, 168, 124, 0.18)',
-                        boxShadow: '0 1px 6px rgba(198, 168, 124, 0.35)',
+                        height: '10px',
+                        borderRadius: '10px',
+                        background: '#C6A87C',
+                        opacity: 0.9,
+                        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.15)',
                       }}
                     />
 
                     {/* Callout line + label */}
                     <div className="absolute right-1 md:right-3 top-1/2 -translate-y-1/2 flex items-center gap-1">
-                      <div className="w-3 md:w-6 h-px bg-brand-gold" />
-                      <div className="bg-white/95 backdrop-blur-sm rounded px-2 py-1 shadow-sm border border-brand-gold/20">
-                        <p className="text-[10px] md:text-xs font-bold text-brand-gold leading-none whitespace-nowrap">{callout.label}</p>
-                        <p className="text-[9px] md:text-[10px] text-gray-500 leading-tight whitespace-nowrap">{callout.sublabel}</p>
+                      <div className="w-4 md:w-8 h-[2px] bg-brand-gold" />
+                      <div className="bg-white/95 backdrop-blur-sm rounded-md px-2.5 py-1.5 shadow-sm border border-brand-gold/20">
+                        <p className="text-[11px] md:text-xs font-bold text-brand-gold leading-none whitespace-nowrap">{callout.label}</p>
+                        <p className="text-[10px] md:text-[11px] text-gray-500 leading-tight whitespace-nowrap">{callout.sublabel}</p>
                       </div>
                     </div>
                   </div>
