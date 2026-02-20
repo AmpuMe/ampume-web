@@ -2,15 +2,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
-import WaitlistModal from './WaitlistModal';
 
 const SimpleNavbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <>
-      <WaitlistModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
       <nav className="fixed top-0 w-full z-50 bg-white text-black shadow-sm py-6">
         <div className="px-6 md:px-12 grid grid-cols-12 items-center h-full gap-4">
           <div className="col-span-3">
@@ -18,7 +15,7 @@ const SimpleNavbar = () => {
               AmpuMe.
             </Link>
           </div>
-          
+
           <div className="hidden lg:flex col-span-6 justify-center gap-12">
             <Link to="/" className="text-sm font-medium hover:opacity-70 transition-opacity">Home</Link>
             <Link to="/shop" className="text-sm font-medium hover:opacity-70 transition-opacity">Shop</Link>
@@ -27,12 +24,12 @@ const SimpleNavbar = () => {
           </div>
 
           <div className="hidden lg:flex col-span-3 justify-end items-center">
-             <button 
-               onClick={() => setModalOpen(true)}
+             <Link
+               to="/contact"
                className="px-6 py-3 rounded-full font-bold text-xs uppercase tracking-widest bg-black text-white hover:bg-gray-800 transition-colors"
              >
-              Join the Waitlist
-            </button>
+              Contact
+            </Link>
           </div>
 
           <div className="lg:hidden col-span-9 flex justify-end">
@@ -55,6 +52,7 @@ const SimpleNavbar = () => {
               <Link to="/shop" onClick={() => setMobileMenuOpen(false)}>Shop</Link>
               <Link to="/resources" onClick={() => setMobileMenuOpen(false)}>Resources</Link>
               <Link to="/ai-support" onClick={() => setMobileMenuOpen(false)}>AI Support</Link>
+              <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
             </div>
           </motion.div>
         )}

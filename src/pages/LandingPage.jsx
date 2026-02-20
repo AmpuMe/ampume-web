@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Menu, X, ChevronRight, ArrowUpRight } from 'lucide-react';
 import SEO from '../components/SEO';
 import Footer from '../components/Footer';
-import WaitlistModal from '../components/WaitlistModal';
+import NewsletterModal from '../components/NewsletterModal';
 import { useSubscribe } from '../hooks/useSubscribe';
 import heroImage from '../assets/new-hero-3.webp';
 import marketplaceImage from '../assets/shop.webp';
@@ -76,6 +76,7 @@ const LandingPage = () => {
     { name: 'Shop', href: '/shop' },
     { name: 'Resources', href: '/resources' },
     { name: 'AI Support', href: '/ai-support' },
+    { name: 'Contact', href: '/contact' },
   ];
 
   const handleNavClick = (href) => {
@@ -95,7 +96,7 @@ const LandingPage = () => {
         title="Home"
         description="AmpuMe is the all-in-one platform for life after limb loss. Discover our Shop, Telehealth services, Resources, and AI Support."
       />
-      <WaitlistModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+      <NewsletterModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
       
       {/* Navigation - Hunter Style: Full width, clean, top aligned */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white text-black shadow-sm py-6' : 'bg-transparent text-white py-6'}`}>
@@ -118,11 +119,11 @@ const LandingPage = () => {
 
           {/* Right Actions - Right Aligned */}
           <div className="hidden lg:flex col-span-3 justify-end items-center">
-            <button 
+            <button
               onClick={() => setModalOpen(true)}
               className={`px-6 py-3 rounded-full font-bold text-xs uppercase tracking-widest transition-colors ${scrolled ? 'bg-black text-white hover:bg-gray-800' : 'bg-white text-black hover:bg-gray-200'}`}
             >
-              Join the Waitlist
+              Subscribe
             </button>
           </div>
 
@@ -150,8 +151,7 @@ const LandingPage = () => {
                 </button>
               ))}
               <hr className="border-gray-100 my-4"/>
-              <button onClick={() => { setMobileMenuOpen(false); setModalOpen(true); }} className="text-left">Login</button>
-              <button onClick={() => { setMobileMenuOpen(false); setModalOpen(true); }} className="text-left">Contact</button>
+              <button onClick={() => { setMobileMenuOpen(false); setModalOpen(true); }} className="text-left">Subscribe</button>
             </div>
           </motion.div>
         )}
@@ -172,11 +172,11 @@ const LandingPage = () => {
               The all-in-one platform <span className="text-brand-white opacity-90">for life after limb&nbsp;loss.</span>
             </h1>
             <div className="flex flex-col md:flex-row gap-8 items-start md:items-center mt-12">
-               <button 
+               <button
                 onClick={() => setModalOpen(true)}
                 className="bg-white text-black px-10 py-4 rounded-full font-medium text-sm hover:bg-brand-offwhite transition-colors whitespace-nowrap"
               >
-                Join the Waitlist
+                Stay Updated
               </button>
               <p className="text-lg font-light text-white/80 max-w-sm leading-relaxed">
                 We're building a single place to find products, resources, providers, and support.
@@ -321,47 +321,47 @@ const LandingPage = () => {
         </FadeIn>
       </section>
 
-      {/* Waitlist / CTA - Clean Minimalist Style */}
-      <section id="waitlist" className="py-20 md:py-32 px-6 md:px-12 bg-gray-50 text-black border-t border-gray-100">
+      {/* Newsletter / CTA */}
+      <section id="newsletter" className="py-20 md:py-32 px-6 md:px-12 bg-gray-50 text-black border-t border-gray-100">
         <div className="grid grid-cols-12 gap-6 items-center">
           <div className="col-span-12 lg:col-span-6">
              <h2 className="text-5xl md:text-7xl font-medium tracking-tight mb-8">
-              Join us from <br /> the start.
+              Stay in <br /> the loop.
             </h2>
             <p className="text-xl text-gray-500 font-light max-w-md leading-relaxed">
-              We're building the future of limb loss care. Sign up for early access and updates.
+              New products, resources, and platform updates — delivered to your inbox.
             </p>
           </div>
-          
+
           <div className="col-span-12 lg:col-span-5 lg:col-start-8 mt-12 lg:mt-0">
             {success ? (
               <div className="bg-white p-8 md:p-12 border border-gray-100 text-center">
-                <h3 className="text-2xl font-medium mb-4">You're on the list!</h3>
-                <p className="text-gray-500">We'll let you know as soon as we launch.</p>
+                <h3 className="text-2xl font-medium mb-4">You're subscribed!</h3>
+                <p className="text-gray-500">We'll keep you in the loop with updates, new products, and resources.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-6 bg-white p-8 md:p-12 border border-gray-100">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="firstName" className="block text-xs font-bold uppercase tracking-widest mb-4">First Name</label>
-                    <input 
+                    <input
                       id="firstName"
-                      type="text" 
+                      type="text"
                       value={formData.firstName}
                       onChange={handleChange}
-                      placeholder="Jane" 
+                      placeholder="Jane"
                       className="w-full bg-transparent border-b border-gray-200 py-4 text-left text-xl placeholder:text-gray-400 focus:outline-none focus:border-black transition-colors"
                       required
                     />
                   </div>
                   <div>
                     <label htmlFor="lastName" className="block text-xs font-bold uppercase tracking-widest mb-4">Last Name</label>
-                    <input 
+                    <input
                       id="lastName"
-                      type="text" 
+                      type="text"
                       value={formData.lastName}
                       onChange={handleChange}
-                      placeholder="Doe" 
+                      placeholder="Doe"
                       className="w-full bg-transparent border-b border-gray-200 py-4 text-left text-xl placeholder:text-gray-400 focus:outline-none focus:border-black transition-colors"
                       required
                     />
@@ -369,24 +369,24 @@ const LandingPage = () => {
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-xs font-bold uppercase tracking-widest mb-4">Email Address</label>
-                  <input 
+                  <input
                     id="email"
-                    type="email" 
+                    type="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="name@example.com" 
+                    placeholder="name@example.com"
                     className="w-full bg-transparent border-b border-gray-200 py-4 text-left text-xl placeholder:text-gray-400 focus:outline-none focus:border-black transition-colors"
                     required
                   />
                 </div>
                 {error && <p className="text-red-500 text-xs">{error}</p>}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mt-4">
-                  <button 
+                  <button
                     type="submit"
                     disabled={loading}
                     className="bg-black text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-gray-800 transition-colors w-full md:w-auto disabled:opacity-50"
                   >
-                    {loading ? 'Joining...' : 'Join Waitlist'}
+                    {loading ? 'Subscribing...' : 'Subscribe'}
                   </button>
                    <p className="text-xs text-gray-500">
                     No spam. Unsubscribe anytime.

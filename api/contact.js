@@ -13,7 +13,6 @@ export default async function handler(req, res) {
   }
 
   const API_KEY = process.env.MAILERLITE_API_KEY;
-  const GROUP_ID = process.env.MAILERLITE_CONTACT_GROUP_ID;
 
   if (!API_KEY) {
     return res.status(500).json({ error: 'Server configuration error' });
@@ -38,7 +37,7 @@ export default async function handler(req, res) {
           ...(subject ? { contact_subject: subject } : {}),
           ...(message ? { contact_message: message } : {}),
         },
-        groups: GROUP_ID ? [GROUP_ID] : [],
+        groups: [],
       }),
     });
 

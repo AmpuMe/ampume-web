@@ -12,10 +12,10 @@ const PrivacyPolicy = () => {
         <h1 className="text-4xl font-bold mb-8">Privacy Policy</h1>
         <p className="mb-4 text-gray-500">Last Updated: December 2025</p>
         <div className="prose max-w-none">
-            <p className="mb-4">At AmpuMe, we value your privacy. This Privacy Policy outlines how we collect, use, and protect your information when you use our website and join our waitlist.</p>
+            <p className="mb-4">At AmpuMe, we value your privacy. This Privacy Policy outlines how we collect, use, and protect your information when you use our website and subscribe to our newsletter.</p>
             
             <h2 className="text-2xl font-bold mt-8 mb-4">1. Information We Collect</h2>
-            <p className="mb-4">We currently only collect information that you voluntarily provide to us, such as your name and email address when you join our waitlist.</p>
+            <p className="mb-4">We currently only collect information that you voluntarily provide to us, such as your name and email address when you subscribe to our newsletter.</p>
 
             <h2 className="text-2xl font-bold mt-8 mb-4">2. How We Use Your Information</h2>
             <p className="mb-4">We use your information to communicate with you about our launch, updates, and relevant news regarding AmpuMe.</p>

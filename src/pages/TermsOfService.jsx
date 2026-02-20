@@ -12,7 +12,7 @@ const TermsOfService = () => {
         <h1 className="text-4xl font-bold mb-8">Terms of Service</h1>
         <p className="mb-4 text-gray-500">Last Updated: December 2025</p>
         <div className="prose max-w-none">
-            <p className="mb-4">Welcome to AmpuMe. By accessing our website and joining our waitlist, you agree to be bound by these Terms of Service.</p>
+            <p className="mb-4">Welcome to AmpuMe. By accessing our website and subscribing to our newsletter, you agree to be bound by these Terms of Service.</p>
             
             <h2 className="text-2xl font-bold mt-8 mb-4">1. Use of Service</h2>
             <p className="mb-4">You agree to use our website only for lawful purposes and in a way that does not infringe the rights of, restrict or inhibit anyone else's use and enjoyment of the website.</p>
