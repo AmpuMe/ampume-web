@@ -115,9 +115,29 @@ function RecommendationResult({ recommendation }) {
   );
 }
 
-/* ── Measurement Hero (Image + Steps) ──────────────────────────── */
+/* ── Measurement Callout Label ─────────────────────────────────── */
+
+function CalloutLabel({ label, distance, position }) {
+  // position: percentage from top of image where the gold band sits
+  return (
+    <div
+      className="absolute right-0 flex items-center gap-2 translate-x-[calc(100%+8px)]"
+      style={{ top: `${position}%`, transform: `translateY(-50%) translateX(calc(100% + 8px))` }}
+    >
+      <div className="w-6 h-px bg-brand-gold" />
+      <div className="whitespace-nowrap">
+        <p className="text-xs font-bold uppercase tracking-widest text-brand-gold leading-none">{label}</p>
+        <p className="text-xs text-gray-400 mt-0.5">{distance}</p>
+      </div>
+    </div>
+  );
+}
+
+/* ── Measurement Hero (Integrated Diagram) ────────────────────── */
 
 function MeasurementHero({ chartData }) {
+  const isDual = chartData.measurementMethod === 'dual-circumference';
+
   const steps = [
     {
       number: 1,
@@ -132,11 +152,19 @@ function MeasurementHero({ chartData }) {
     {
       number: chartData.measurementPoints.length + 2,
       title: 'Enter Below',
-      desc: 'Type your measurements into the size finder to get your recommended size instantly.',
+      desc: 'Use the size finder to get your recommended size instantly.',
     },
   ];
 
-  const stepCols = steps.length <= 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-2';
+  // Callout positions (% from top of image) for each measurement type
+  const callouts = isDual
+    ? [
+        { label: 'Proximal', distance: '30 cm from end', position: 35 },
+        { label: 'Distal', distance: '4 cm from end', position: 70 },
+      ]
+    : [
+        { label: 'Circumference', distance: '6 cm from end', position: 55 },
+      ];
 
   return (
     <FadeIn className="mb-12 md:mb-16">
@@ -144,31 +172,65 @@ function MeasurementHero({ chartData }) {
         How to Measure
       </h3>
 
-      {chartData.measurementImage && (
-        <div className="flex justify-center mb-10">
-          <div className="bg-brand-offwhite rounded-lg p-6 md:p-8 w-full max-w-sm">
-            <img
-              src={chartData.measurementImage}
-              alt={`${chartData.title} \u2014 where to measure`}
-              className="w-full h-auto"
-              loading="lazy"
-            />
-          </div>
-        </div>
-      )}
-
-      <div className={`grid grid-cols-1 sm:grid-cols-2 ${stepCols} gap-6`}>
-        {steps.map((step) => (
-          <div key={step.number} className="flex items-start gap-4">
-            <span className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
-              {step.number}
-            </span>
-            <div>
-              <h4 className="text-sm font-bold mb-1">{step.title}</h4>
-              <p className="text-sm text-gray-500 leading-relaxed">{step.desc}</p>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+        {/* Figure with callout labels — shows first on mobile */}
+        <div className="order-1 lg:order-2 flex justify-center">
+          <div className="relative">
+            {chartData.measurementImage && (
+              <div className="bg-brand-offwhite rounded-lg p-4 md:p-6">
+                <img
+                  src={chartData.measurementImage}
+                  alt={`${chartData.title} \u2014 where to measure`}
+                  className="w-full max-w-[280px] h-auto mx-auto"
+                  loading="lazy"
+                />
+              </div>
+            )}
+            {/* Callout labels — desktop only, positioned alongside image */}
+            <div className="hidden lg:block">
+              {callouts.map((callout) => (
+                <CalloutLabel
+                  key={callout.label}
+                  label={callout.label}
+                  distance={callout.distance}
+                  position={callout.position}
+                />
+              ))}
             </div>
           </div>
-        ))}
+        </div>
+
+        {/* Mobile callout labels */}
+        <div className="order-2 lg:hidden flex justify-center gap-6 -mt-4 mb-2">
+          {callouts.map((callout) => (
+            <div key={callout.label} className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-brand-gold flex-shrink-0" />
+              <div>
+                <p className="text-xs font-bold uppercase tracking-widest text-brand-gold leading-none">{callout.label}</p>
+                <p className="text-xs text-gray-400">{callout.distance}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Steps — shows second on mobile, left column on desktop */}
+        <div className="order-3 lg:order-1 space-y-5 lg:pt-4">
+          {steps.map((step, i) => (
+            <div key={step.number} className="flex items-start gap-4 relative">
+              {/* Vertical connecting line */}
+              {i < steps.length - 1 && (
+                <div className="absolute left-[15px] top-10 bottom-0 w-px bg-gray-200 -mb-5" style={{ height: 'calc(100% - 8px)' }} />
+              )}
+              <span className="relative z-10 w-8 h-8 rounded-full bg-brand-gold text-white flex items-center justify-center text-sm font-bold flex-shrink-0">
+                {step.number}
+              </span>
+              <div className="pb-1">
+                <h4 className="text-sm font-bold mb-1">{step.title}</h4>
+                <p className="text-sm text-gray-500 leading-relaxed">{step.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </FadeIn>
   );
