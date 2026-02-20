@@ -13,9 +13,9 @@ const FILTER_CONFIGS = {
       match: (product, value) => {
         if (value === 'all') return true;
         const title = product.title.toLowerCase();
-        const optionValues = (product.options || []).flatMap(o => o.values || []).map(v => v.toLowerCase());
-        if (value === 'AK') return title.includes('above-knee') || title.includes('above knee') || title.includes(' ak ') || title.startsWith('ak ') || optionValues.some(v => v === 'ak' || v.includes('above'));
-        if (value === 'BK') return title.includes('below-knee') || title.includes('below knee') || title.includes(' bk ') || title.startsWith('bk ') || optionValues.some(v => v === 'bk' || v.includes('below'));
+        const tags = (product.tags || []).map(t => t.toLowerCase());
+        if (value === 'AK') return title.includes('above-knee') || title.includes('above knee') || tags.includes('ak') || tags.includes('above-knee');
+        if (value === 'BK') return title.includes('below-knee') || title.includes('below knee') || tags.includes('bk') || tags.includes('below-knee');
         return true;
       },
     },
