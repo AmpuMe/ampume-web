@@ -149,7 +149,7 @@ function MeasurementHero({ chartData }) {
       ];
 
   return (
-    <FadeIn className="mb-12 md:mb-16">
+    <FadeIn className="mb-8 md:mb-10">
       <h3 className="text-xs font-bold uppercase tracking-widest mb-8 text-center">
         How to Measure
       </h3>
@@ -163,7 +163,7 @@ function MeasurementHero({ chartData }) {
                 <img
                   src={chartData.measurementImage}
                   alt={`${chartData.title} \u2014 where to measure`}
-                  className="w-full h-auto"
+                  className="w-full h-auto rounded-lg"
                   loading="lazy"
                 />
 
