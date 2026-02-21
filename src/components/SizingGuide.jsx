@@ -157,7 +157,7 @@ function MeasurementHero({ chartData }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
         {/* Annotated diagram — shows first on mobile */}
         <div className="order-1 lg:order-2 flex justify-center">
-          <div className="relative bg-brand-offwhite rounded-lg p-4 md:p-6 w-full max-w-sm">
+          <div className="relative w-full max-w-sm">
             {chartData.measurementImage && (
               <div className="relative">
                 <img
