@@ -138,12 +138,18 @@ function MeasurementHero({ chartData }) {
     },
   ];
 
-  // Callout label positions (% from top of image) — aligned with tape loops in photos
+  // Callout label positions (% from top of image) — tuned per image
+  const isAK = chartData.measurementImage?.includes('ak-');
   const callouts = isDual
-    ? [
-        { label: 'PROXIMAL', sublabel: '30 cm from end', top: 34 },
-        { label: 'DISTAL', sublabel: '4 cm from end', top: 74 },
-      ]
+    ? isAK
+      ? [
+          { label: 'PROXIMAL', sublabel: '30 cm from end', top: 34 },
+          { label: 'DISTAL', sublabel: '4 cm from end', top: 74 },
+        ]
+      : [
+          { label: 'PROXIMAL', sublabel: '30 cm from end', top: 48 },
+          { label: 'DISTAL', sublabel: '4 cm from end', top: 70 },
+        ]
     : [
         { label: 'MEASURE HERE', sublabel: '6 cm from end', top: 48 },
       ];
