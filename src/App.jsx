@@ -38,6 +38,29 @@ const App = () => {
   const location = useLocation();
   const showChatWidget = location.pathname !== '/ai-support' && !location.pathname.startsWith('/shop');
 
+  // Force-hide the CustomGPT widget on pages where it shouldn't show (it can persist after unmount)
+  useEffect(() => {
+    if (!showChatWidget) {
+      const hide = () => {
+        const el = document.getElementById('customgpt_chat_widget');
+        if (el) el.style.display = 'none';
+        document.querySelectorAll('body > iframe').forEach(f => {
+          if (f.src && f.src.includes('customgpt')) f.style.display = 'none';
+        });
+      };
+      hide();
+      // Re-check after a delay in case the widget loads late
+      const t = setTimeout(hide, 2000);
+      return () => clearTimeout(t);
+    } else {
+      const el = document.getElementById('customgpt_chat_widget');
+      if (el) el.style.display = '';
+      document.querySelectorAll('body > iframe').forEach(f => {
+        if (f.src && f.src.includes('customgpt')) f.style.display = '';
+      });
+    }
+  }, [showChatWidget]);
+
   return (
     <CartProvider>
       <ScrollToTop />

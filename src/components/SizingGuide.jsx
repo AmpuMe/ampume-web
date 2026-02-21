@@ -142,7 +142,7 @@ function MeasurementHero({ chartData }) {
   const callouts = isDual
     ? [
         { label: 'PROXIMAL', sublabel: '30 cm from end', top: 34 },
-        { label: 'DISTAL', sublabel: '4 cm from end', top: 64 },
+        { label: 'DISTAL', sublabel: '4 cm from end', top: 74 },
       ]
     : [
         { label: 'MEASURE HERE', sublabel: '6 cm from end', top: 48 },
