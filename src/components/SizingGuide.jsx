@@ -147,8 +147,8 @@ function MeasurementHero({ chartData }) {
           { label: 'DISTAL', sublabel: '4 cm from end', top: 74 },
         ]
       : [
-          { label: 'PROXIMAL', sublabel: '30 cm from end', top: 48 },
-          { label: 'DISTAL', sublabel: '4 cm from end', top: 70 },
+          { label: 'PROXIMAL', sublabel: '30 cm from end', top: 46 },
+          { label: 'DISTAL', sublabel: '4 cm from end', top: 66 },
         ]
     : [
         { label: 'MEASURE HERE', sublabel: '6 cm from end', top: 48 },
