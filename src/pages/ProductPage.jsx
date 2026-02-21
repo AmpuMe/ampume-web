@@ -425,22 +425,25 @@ export default function ProductPage() {
                       </div>
                     </a>
                   )}
+
+                  {/* Liner: Sizing Guide anchor link */}
+                  {isLiner && (
+                    <a
+                      href="#sizing-guide"
+                      className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:border-brand-gold transition-colors group"
+                    >
+                      <Ruler className="w-5 h-5 text-brand-gold flex-shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium group-hover:text-brand-gold transition-colors">View Sizing Guide</p>
+                        <p className="text-xs text-gray-400">Find your perfect fit</p>
+                      </div>
+                      <ChevronDown className="w-4 h-4 text-gray-300 ml-auto" />
+                    </a>
+                  )}
                 </div>
 
-                {/* Liner: Sizing Guide anchor link / Non-liner: Description */}
-                {isLiner ? (
-                  <a
-                    href="#sizing-guide"
-                    className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:border-brand-gold transition-colors group"
-                  >
-                    <Ruler className="w-5 h-5 text-brand-gold flex-shrink-0" />
-                    <div>
-                      <p className="text-sm font-medium group-hover:text-brand-gold transition-colors">View Sizing Guide</p>
-                      <p className="text-xs text-gray-400">Find your perfect fit</p>
-                    </div>
-                    <ChevronDown className="w-4 h-4 text-gray-300 ml-auto" />
-                  </a>
-                ) : product.descriptionHtml ? (
+                {/* Non-liner: Description */}
+                {!isLiner && product.descriptionHtml ? (
                   <div className="border-t border-gray-100 pt-8">
                     <h3 className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">
                       Description
