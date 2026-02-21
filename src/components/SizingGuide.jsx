@@ -141,11 +141,11 @@ function MeasurementHero({ chartData }) {
   // Callout label positions (% from top of image) — aligned with tape loops in photos
   const callouts = isDual
     ? [
-        { label: 'PROXIMAL', sublabel: '30 cm from end', top: 36 },
-        { label: 'DISTAL', sublabel: '4 cm from end', top: 68 },
+        { label: 'PROXIMAL', sublabel: '30 cm from end', top: 34 },
+        { label: 'DISTAL', sublabel: '4 cm from end', top: 64 },
       ]
     : [
-        { label: 'MEASURE HERE', sublabel: '6 cm from end', top: 52 },
+        { label: 'MEASURE HERE', sublabel: '6 cm from end', top: 48 },
       ];
 
   return (
