@@ -141,7 +141,7 @@ function MeasurementSteps({ chartData }) {
       <h3 className="text-xs font-bold uppercase tracking-widest mb-6">
         How to Measure
       </h3>
-      <div className="space-y-6">
+      <div className="space-y-5">
         {steps.map((step, i) => (
           <div key={step.number} className="flex items-start gap-4 relative">
             {i < steps.length - 1 && (
@@ -504,10 +504,10 @@ export default function SizingGuide({ sizingType }) {
 
   return (
     <section id="sizing-guide" className="py-16 md:py-20 border-t border-gray-100">
-      <div className="max-w-6xl mx-auto px-6 md:px-12">
+      <div className="max-w-4xl mx-auto px-6 md:px-12">
         {/* Header */}
         <FadeIn>
-          <div className="text-center mb-12 md:mb-16">
+          <div className="text-center mb-8 md:mb-10">
             <span className="text-xs font-bold uppercase tracking-widest text-brand-gold mb-3 block">
               Sizing & Fit
             </span>
