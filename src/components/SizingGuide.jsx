@@ -115,11 +115,9 @@ function RecommendationResult({ recommendation }) {
   );
 }
 
-/* ── Measurement Hero (Integrated Diagram) ────────────────────── */
+/* ── Measurement Steps (Left Column) ──────────────────────────── */
 
-function MeasurementHero({ chartData }) {
-  const isDual = chartData.measurementMethod === 'dual-circumference';
-
+function MeasurementSteps({ chartData }) {
   const steps = [
     {
       number: 1,
@@ -133,12 +131,41 @@ function MeasurementHero({ chartData }) {
     })),
     {
       number: chartData.measurementPoints.length + 2,
-      title: 'Enter Below',
+      title: 'Enter Your Measurements',
       desc: 'Use the size finder to get your recommended size instantly.',
     },
   ];
 
-  // Callout label positions (% from top of image) — tuned per image
+  return (
+    <FadeIn>
+      <h3 className="text-xs font-bold uppercase tracking-widest mb-6">
+        How to Measure
+      </h3>
+      <div className="space-y-5">
+        {steps.map((step, i) => (
+          <div key={step.number} className="flex items-start gap-4 relative">
+            {i < steps.length - 1 && (
+              <div className="absolute left-[15px] top-10 bottom-0 w-px bg-gray-200" style={{ height: 'calc(100% - 8px)' }} />
+            )}
+            <span className="relative z-10 w-8 h-8 rounded-full bg-brand-gold text-white flex items-center justify-center text-sm font-bold flex-shrink-0">
+              {step.number}
+            </span>
+            <div className="pb-1">
+              <h4 className="text-sm font-bold mb-1">{step.title}</h4>
+              <p className="text-sm text-gray-500 leading-relaxed">{step.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </FadeIn>
+  );
+}
+
+/* ── Measurement Image + Size Finder (Right Column) ──────────── */
+
+function MeasurementImageAndFinder({ chartData, ...finderProps }) {
+  const isDual = chartData.measurementMethod === 'dual-circumference';
+
   const isAK = chartData.measurementImage?.includes('ak-');
   const callouts = isDual
     ? isAK
@@ -155,55 +182,32 @@ function MeasurementHero({ chartData }) {
       ];
 
   return (
-    <FadeIn>
-      <h3 className="text-xs font-bold uppercase tracking-widest mb-6">
-        How to Measure
-      </h3>
-
+    <FadeIn className="space-y-6">
       {/* Annotated diagram */}
-      <div className="flex justify-center mb-6">
-        <div className="relative w-full max-w-sm">
-          {chartData.measurementImage && (
-            <div className="relative">
-              <img
-                src={chartData.measurementImage}
-                alt={`${chartData.title} \u2014 where to measure`}
-                className="w-full h-auto rounded-lg"
-                loading="lazy"
-              />
-
-              {/* Callout labels pointing to the measuring tapes in the photo */}
-              {callouts.map((callout, i) => (
-                <div key={i} className="absolute right-2 md:right-4 flex items-center gap-1.5" style={{ top: `${callout.top}%`, transform: 'translateY(-50%)' }}>
-                  <div className="w-4 md:w-8 h-[2px] bg-brand-gold" />
-                  <div className="bg-white/95 backdrop-blur-sm rounded-md px-2.5 py-1.5 shadow-sm border border-brand-gold/20">
-                    <p className="text-[11px] md:text-xs font-bold text-brand-gold leading-none whitespace-nowrap">{callout.label}</p>
-                    <p className="text-[10px] md:text-[11px] text-gray-500 leading-tight whitespace-nowrap mt-0.5">{callout.sublabel}</p>
-                  </div>
+      {chartData.measurementImage && (
+        <div className="flex justify-center">
+          <div className="relative w-full max-w-xs">
+            <img
+              src={chartData.measurementImage}
+              alt={`${chartData.title} \u2014 where to measure`}
+              className="w-full h-auto rounded-lg"
+              loading="lazy"
+            />
+            {callouts.map((callout, i) => (
+              <div key={i} className="absolute right-2 md:right-4 flex items-center gap-1.5" style={{ top: `${callout.top}%`, transform: 'translateY(-50%)' }}>
+                <div className="w-4 md:w-8 h-[2px] bg-brand-gold" />
+                <div className="bg-white/95 backdrop-blur-sm rounded-md px-2.5 py-1.5 shadow-sm border border-brand-gold/20">
+                  <p className="text-[11px] md:text-xs font-bold text-brand-gold leading-none whitespace-nowrap">{callout.label}</p>
+                  <p className="text-[10px] md:text-[11px] text-gray-500 leading-tight whitespace-nowrap mt-0.5">{callout.sublabel}</p>
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Steps */}
-      <div className="space-y-4">
-        {steps.map((step, i) => (
-          <div key={step.number} className="flex items-start gap-3 relative">
-            {i < steps.length - 1 && (
-              <div className="absolute left-[13px] top-8 bottom-0 w-px bg-gray-200" style={{ height: 'calc(100% - 4px)' }} />
-            )}
-            <span className="relative z-10 w-7 h-7 rounded-full bg-brand-gold text-white flex items-center justify-center text-xs font-bold flex-shrink-0">
-              {step.number}
-            </span>
-            <div className="pb-1">
-              <h4 className="text-sm font-bold mb-0.5">{step.title}</h4>
-              <p className="text-xs text-gray-500 leading-relaxed">{step.desc}</p>
-            </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      )}
+
+      {/* Size Finder */}
+      <SizeFinder chartData={chartData} {...finderProps} />
     </FadeIn>
   );
 }
@@ -225,11 +229,10 @@ function SizeFinder({
   const hasInput = isDual ? (distalCm && proximalCm) : circumferenceCm;
 
   return (
-    <FadeIn>
-      <div className="bg-brand-offwhite rounded-lg p-6 md:p-8 h-full">
-        <h3 className="text-xs font-bold uppercase tracking-widest mb-1">
-          Size Finder
-        </h3>
+    <div className="bg-brand-offwhite rounded-lg p-6 md:p-8">
+      <h3 className="text-xs font-bold uppercase tracking-widest mb-1">
+        Size Finder
+      </h3>
         <p className="text-sm text-gray-500 mb-6">
           Enter your measurements to get a personalized size recommendation.
         </p>
@@ -283,8 +286,7 @@ function SizeFinder({
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
-    </FadeIn>
+    </div>
   );
 }
 
@@ -429,19 +431,28 @@ export default function SizingGuide({ sizingType }) {
       const proximal = parseFloat(proximalCm);
       if (isNaN(distal) || isNaN(proximal)) return;
 
-      // Exact match: both measurements within a single size's ranges
-      const exactMatch = sizes.find(
+      // Find ALL sizes where both measurements fall within range
+      const matches = sizes.filter(
         (s) =>
           distal >= s.distal[0] && distal <= s.distal[1] &&
           proximal >= s.proximal[0] && proximal <= s.proximal[1]
       );
 
-      if (exactMatch) {
-        setRecommendation({ size: exactMatch, between: null, noMatch: false });
+      if (matches.length === 1) {
+        // Single match — recommend it directly
+        setRecommendation({ size: matches[0], between: null, noMatch: false });
         return;
       }
 
-      // Find the smallest size that can accommodate both measurements
+      if (matches.length > 1) {
+        // Multiple sizes fit — recommend the larger one (size up)
+        const larger = matches[matches.length - 1];
+        const smaller = matches[0];
+        setRecommendation({ size: larger, between: [smaller, larger], noMatch: false });
+        return;
+      }
+
+      // No exact match — find the smallest size that can accommodate both measurements
       let bestIdx = -1;
       for (let i = 0; i < sizes.length; i++) {
         if (distal <= sizes[i].distal[1] && proximal <= sizes[i].proximal[1]) {
@@ -467,17 +478,24 @@ export default function SizingGuide({ sizingType }) {
       const circ = parseFloat(circumferenceCm);
       if (isNaN(circ)) return;
 
-      // Exact match
-      const exactMatch = sizes.find(
+      // Find ALL sizes where measurement falls within range
+      const matches = sizes.filter(
         (s) => circ >= s.circumference[0] && circ <= s.circumference[1]
       );
 
-      if (exactMatch) {
-        setRecommendation({ size: exactMatch, between: null, noMatch: false });
+      if (matches.length === 1) {
+        setRecommendation({ size: matches[0], between: null, noMatch: false });
         return;
       }
 
-      // Between sizes — find the gap
+      if (matches.length > 1) {
+        const larger = matches[matches.length - 1];
+        const smaller = matches[0];
+        setRecommendation({ size: larger, between: [smaller, larger], noMatch: false });
+        return;
+      }
+
+      // Between sizes — find the gap and recommend the larger
       for (let i = 0; i < sizes.length - 1; i++) {
         if (circ > sizes[i].circumference[1] && circ < sizes[i + 1].circumference[0]) {
           setRecommendation({ size: sizes[i + 1], between: [sizes[i], sizes[i + 1]], noMatch: false });
@@ -511,10 +529,10 @@ export default function SizingGuide({ sizingType }) {
           </div>
         </FadeIn>
 
-        {/* Side-by-side: Measurement Guide (left) + Size Finder (right) */}
+        {/* Side-by-side: Steps (left) + Image & Size Finder (right) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-12 md:mb-16">
-          <MeasurementHero chartData={chartData} />
-          <SizeFinder
+          <MeasurementSteps chartData={chartData} />
+          <MeasurementImageAndFinder
             chartData={chartData}
             recommendation={recommendation}
             onFindSize={findRecommendedSize}
