@@ -184,7 +184,7 @@ function MeasurementImage({ chartData }) {
   if (!chartData.measurementImage) return null;
 
   return (
-    <FadeIn className="relative w-full rounded-lg overflow-hidden">
+    <FadeIn className="relative w-full max-w-[340px] rounded-lg overflow-hidden">
       <img
         src={chartData.measurementImage}
         alt={`${chartData.title} \u2014 where to measure`}
@@ -504,7 +504,7 @@ export default function SizingGuide({ sizingType }) {
 
   return (
     <section id="sizing-guide" className="py-16 md:py-20 border-t border-gray-100">
-      <div className="max-w-4xl mx-auto px-6 md:px-12">
+      <div className="max-w-6xl mx-auto px-6 md:px-12">
         {/* Header */}
         <FadeIn>
           <div className="text-center mb-8 md:mb-10">
@@ -521,8 +521,8 @@ export default function SizingGuide({ sizingType }) {
           </div>
         </FadeIn>
 
-        {/* Side-by-side: Steps (left) + Image (right) */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-8 md:mb-10">
+        {/* Side-by-side: Steps (left, wider) + Image (right, narrower) */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr,auto] gap-6 lg:gap-10 mb-8 md:mb-10">
           <MeasurementSteps chartData={chartData} />
           <MeasurementImage chartData={chartData} />
         </div>
