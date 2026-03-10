@@ -53,7 +53,7 @@ function CategoryCard({ category, productCount, image, index }) {
         ) : (
           <div className="w-full h-full bg-gray-100" />
         )}
-        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-500" />
+        <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500" />
         <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
           <h3 className="text-2xl md:text-3xl font-medium mb-2">{category.label}</h3>
           <p className="text-sm text-white/80 leading-relaxed mb-3">
