@@ -184,24 +184,22 @@ function MeasurementImage({ chartData }) {
   if (!chartData.measurementImage) return null;
 
   return (
-    <FadeIn className="flex justify-center items-start">
-      <div className="relative w-full max-w-[280px]">
-        <img
-          src={chartData.measurementImage}
-          alt={`${chartData.title} \u2014 where to measure`}
-          className="w-full h-auto rounded-lg"
-          loading="lazy"
-        />
-        {callouts.map((callout, i) => (
-          <div key={i} className="absolute right-2 md:right-4 flex items-center gap-1.5" style={{ top: `${callout.top}%`, transform: 'translateY(-50%)' }}>
-            <div className="w-4 md:w-8 h-[2px] bg-brand-gold" />
-            <div className="bg-white/95 backdrop-blur-sm rounded-md px-2.5 py-1.5 shadow-sm border border-brand-gold/20">
-              <p className="text-[11px] md:text-xs font-bold text-brand-gold leading-none whitespace-nowrap">{callout.label}</p>
-              <p className="text-[10px] md:text-[11px] text-gray-500 leading-tight whitespace-nowrap mt-0.5">{callout.sublabel}</p>
-            </div>
+    <FadeIn className="relative w-full overflow-hidden rounded-lg">
+      <img
+        src={chartData.measurementImage}
+        alt={`${chartData.title} \u2014 where to measure`}
+        className="w-full h-full object-cover"
+        loading="lazy"
+      />
+      {callouts.map((callout, i) => (
+        <div key={i} className="absolute right-3 md:right-6 flex items-center gap-1.5" style={{ top: `${callout.top}%`, transform: 'translateY(-50%)' }}>
+          <div className="w-4 md:w-8 h-[2px] bg-brand-gold" />
+          <div className="bg-white/95 backdrop-blur-sm rounded-md px-2.5 py-1.5 shadow-sm border border-brand-gold/20">
+            <p className="text-[11px] md:text-xs font-bold text-brand-gold leading-none whitespace-nowrap">{callout.label}</p>
+            <p className="text-[10px] md:text-[11px] text-gray-500 leading-tight whitespace-nowrap mt-0.5">{callout.sublabel}</p>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </FadeIn>
   );
 }
@@ -524,7 +522,7 @@ export default function SizingGuide({ sizingType }) {
         </FadeIn>
 
         {/* Side-by-side: Steps (left) + Image (right) */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 mb-8 md:mb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-8 md:mb-10 items-stretch">
           <MeasurementSteps chartData={chartData} />
           <MeasurementImage chartData={chartData} />
         </div>
