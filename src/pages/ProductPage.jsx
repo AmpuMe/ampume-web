@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ShoppingBag, Check, ChevronDown, FileDown, Ruler } from 'lucide-react';
+import { ArrowLeft, ShoppingBag, Check, ChevronDown } from 'lucide-react';
 import SimpleNavbar from '../components/SimpleNavbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
@@ -315,9 +315,16 @@ export default function ProductPage() {
                 )}
 
                 {/* Price */}
-                <p className="text-2xl font-bold mb-6">
+                <p className="text-2xl font-bold mb-4">
                   {price && price !== '0.00' ? formatPrice(price) : 'Price TBD'}
                 </p>
+
+                {/* Short description for liner products */}
+                {isLiner && linerDesc?.overview?.[0] && (
+                  <p className="text-sm text-gray-600 leading-relaxed mb-6">
+                    {linerDesc.overview[0]}
+                  </p>
+                )}
 
                 {/* Options */}
                 {product.options?.map(option => (
@@ -410,36 +417,6 @@ export default function ProductPage() {
                     </p>
                   </div>
 
-                  {/* PDF Download for Alpha/WillowWood liners */}
-                  {(product.vendor === 'WillowWood' || product.vendor === 'Ohio Willow Wood' || (product.tags || []).some(t => t.toLowerCase().includes('alpha'))) && (
-                    <a
-                      href="/Important-Instructions-for-Amputees.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:border-gray-400 transition-colors"
-                    >
-                      <FileDown className="w-5 h-5 text-gray-500 flex-shrink-0" />
-                      <div>
-                        <p className="text-sm font-medium">Important Instructions for Amputees</p>
-                        <p className="text-xs text-gray-400">PDF Download</p>
-                      </div>
-                    </a>
-                  )}
-
-                  {/* Liner: Sizing Guide anchor link */}
-                  {isLiner && (
-                    <a
-                      href="#sizing-guide"
-                      className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:border-brand-gold transition-colors group"
-                    >
-                      <Ruler className="w-5 h-5 text-brand-gold flex-shrink-0" />
-                      <div>
-                        <p className="text-sm font-medium group-hover:text-brand-gold transition-colors">View Sizing Guide</p>
-                        <p className="text-xs text-gray-400">Find your perfect fit</p>
-                      </div>
-                      <ChevronDown className="w-4 h-4 text-gray-300 ml-auto" />
-                    </a>
-                  )}
                 </div>
 
                 {/* Non-liner: Description */}
@@ -460,11 +437,36 @@ export default function ProductPage() {
         </div>
       </main>
 
+      {/* Horizontal Anchor Bar */}
+      {isLiner && linerDesc && (
+        <nav className="sticky top-0 z-30 bg-white border-b border-gray-100 shadow-sm">
+          <div className="max-w-6xl mx-auto px-6 md:px-12 flex gap-8 overflow-x-auto">
+            {[
+              { label: 'Overview', id: 'overview' },
+              { label: 'Sizing & Fit', id: 'sizing-guide' },
+              { label: 'Features', id: 'features' },
+              { label: 'Care & Maintenance', id: 'care-maintenance' },
+            ].map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                className="py-4 text-sm font-medium text-gray-500 hover:text-black transition-colors whitespace-nowrap border-b-2 border-transparent hover:border-black"
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </nav>
+      )}
+
       {/* Full-width liner content sections */}
       {isLiner && linerDesc && (
         <>
           <SizingGuide sizingType={linerDesc.sizingType} measuringGuide={linerDesc.measuringGuide} />
-          <LinerContentSections linerDesc={linerDesc} />
+          <LinerContentSections
+            linerDesc={linerDesc}
+            showPdfDownload={product.vendor === 'WillowWood' || product.vendor === 'Ohio Willow Wood' || (product.tags || []).some(t => t.toLowerCase().includes('alpha'))}
+          />
         </>
       )}
 

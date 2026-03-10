@@ -14,6 +14,8 @@ const FILTER_CONFIGS = {
         if (value === 'all') return true;
         const title = product.title.toLowerCase();
         const tags = (product.tags || []).map(t => t.toLowerCase());
+        // EasyLiner and ALPS GP support both AK and BK — always show them
+        if (title.includes('easyliner') || title.includes('easy liner') || title.includes('general purpose') || tags.includes('universal')) return true;
         if (value === 'AK') return title.includes('above-knee') || title.includes('above knee') || tags.includes('ak') || tags.includes('above-knee');
         if (value === 'BK') return title.includes('below-knee') || title.includes('below knee') || tags.includes('bk') || tags.includes('below-knee');
         return true;

@@ -136,17 +136,17 @@ export default function ShopPage() {
               The AmpuMe Shop
             </span>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight mb-6">
-              Curated by prosthetic professionals.
+              Prosthetic essentials for everyday performance.
             </h1>
             <p className="text-lg text-gray-600 leading-relaxed">
-              High-quality prosthetic supplies, accessories, and performance products — every item selected for optimal fit, function, and durability.
+              Liners, sleeves, socks, and performance accessories — thoughtfully selected for optimal fit, function, and durability.
             </p>
 
             <button
               onClick={() => setShowMore(!showMore)}
               className="inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-black transition-colors mt-4"
             >
-              {showMore ? 'Less info' : 'Insurance & ordering info'}
+              {showMore ? 'Less info' : 'Before you order'}
               <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showMore ? 'rotate-180' : ''}`} />
             </button>
 
@@ -156,24 +156,18 @@ export default function ShopPage() {
                 animate={{ opacity: 1, height: 'auto' }}
                 className="mt-4 space-y-4 overflow-hidden"
               >
-                <div className="border border-gray-100 p-5 rounded-lg">
+                <div className="border border-gray-100 p-5 rounded-lg space-y-3">
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    <strong className="text-black">Have insurance coverage?</strong> Many prosthetic supplies
-                    are covered by insurance plans. We recommend checking your benefits before purchasing
-                    out-of-pocket.{' '}
+                    Many prosthetic supplies are covered by insurance and can often be ordered directly through your prosthetist. We encourage patients to work with their prosthetist to ensure proper fit, clinical oversight, and coverage.
+                  </p>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    AmpuMe offers direct access to select items for those paying out-of-pocket, seeking backup supplies, or without convenient access to a clinic. If you're unsure about your benefits,{' '}
                     <Link to="/resources/ask-an-insurance-expert" className="underline hover:text-black transition-colors">
-                      Ask an insurance expert
+                      we can help you understand your options
                     </Link>{' '}
-                    to find out what's covered.
+                    before purchasing.
                   </p>
                 </div>
-                <p className="text-sm text-gray-500 leading-relaxed">
-                  Don't see what you need?{' '}
-                  <Link to="/contact" className="underline hover:text-black transition-colors">
-                    Contact us
-                  </Link>{' '}
-                  — we may be able to special order it for you.
-                </p>
               </motion.div>
             )}
           </FadeIn>

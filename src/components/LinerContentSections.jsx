@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Check, AlertTriangle } from 'lucide-react';
+import { Check, AlertTriangle, FileDown } from 'lucide-react';
 
 const FadeIn = ({ children, className = "", ...props }) => (
   <motion.div
@@ -14,13 +14,13 @@ const FadeIn = ({ children, className = "", ...props }) => (
   </motion.div>
 );
 
-export default function LinerContentSections({ linerDesc }) {
+export default function LinerContentSections({ linerDesc, showPdfDownload }) {
   if (!linerDesc) return null;
 
   return (
     <>
       {/* Product Overview */}
-      <section className="py-16 md:py-20 border-t border-gray-100">
+      <section id="overview" className="py-16 md:py-20 border-t border-gray-100">
         <FadeIn className="max-w-6xl mx-auto px-6 md:px-12">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
             <div className="md:col-span-4">
@@ -41,7 +41,7 @@ export default function LinerContentSections({ linerDesc }) {
       </section>
 
       {/* Key Features & Benefits */}
-      <section className="py-16 md:py-20 bg-brand-offwhite">
+      <section id="features" className="py-16 md:py-20 bg-brand-offwhite">
         <FadeIn className="max-w-6xl mx-auto px-6 md:px-12">
           <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-8 block">
             Key Features & Benefits
@@ -145,37 +145,11 @@ export default function LinerContentSections({ linerDesc }) {
         </section>
       )}
 
-      {/* Specifications */}
-      <section className="py-16 md:py-20 border-t border-gray-100">
-        <FadeIn className="max-w-6xl mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
-            <div className="md:col-span-4">
-              <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 block">
-                Specifications
-              </span>
-              <h2 className="text-2xl md:text-3xl font-light tracking-tight">
-                Technical Details
-              </h2>
-            </div>
-            <div className="md:col-span-7 md:col-start-6">
-              <div className="divide-y divide-gray-100">
-                {Object.entries(linerDesc.specs).map(([label, value]) => (
-                  <div key={label} className="flex justify-between items-baseline py-3 gap-4">
-                    <span className="text-sm text-gray-400 flex-shrink-0">{label}</span>
-                    <span className="text-sm text-black font-medium text-right">{value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </FadeIn>
-      </section>
-
-      {/* Care & Use */}
-      <section className="py-16 md:py-20 bg-brand-offwhite">
+      {/* Care & Maintenance */}
+      <section id="care-maintenance" className="py-16 md:py-20 bg-brand-offwhite">
         <FadeIn className="max-w-6xl mx-auto px-6 md:px-12">
           <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-8 block">
-            Care & Use
+            Care & Maintenance
           </span>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Application Instructions */}
@@ -221,6 +195,24 @@ export default function LinerContentSections({ linerDesc }) {
               </ul>
             </div>
           </div>
+
+          {/* PDF Download */}
+          {showPdfDownload && (
+            <div className="mt-8 pt-8 border-t border-gray-200">
+              <a
+                href="/Important-Instructions-for-Amputees.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:border-gray-400 transition-colors bg-white"
+              >
+                <FileDown className="w-5 h-5 text-gray-500 flex-shrink-0" />
+                <div>
+                  <p className="text-sm font-medium">Important Instructions for Amputees</p>
+                  <p className="text-xs text-gray-400">PDF Download</p>
+                </div>
+              </a>
+            </div>
+          )}
         </FadeIn>
       </section>
     </>

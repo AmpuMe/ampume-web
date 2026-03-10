@@ -155,57 +155,54 @@ function MeasurementHero({ chartData }) {
       ];
 
   return (
-    <FadeIn className="mb-8 md:mb-10">
-      <h3 className="text-xs font-bold uppercase tracking-widest mb-8 text-center">
+    <FadeIn>
+      <h3 className="text-xs font-bold uppercase tracking-widest mb-6">
         How to Measure
       </h3>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-        {/* Annotated diagram — shows first on mobile */}
-        <div className="order-1 lg:order-2 flex justify-center">
-          <div className="relative w-full max-w-sm">
-            {chartData.measurementImage && (
-              <div className="relative">
-                <img
-                  src={chartData.measurementImage}
-                  alt={`${chartData.title} \u2014 where to measure`}
-                  className="w-full h-auto rounded-lg"
-                  loading="lazy"
-                />
+      {/* Annotated diagram */}
+      <div className="flex justify-center mb-6">
+        <div className="relative w-full max-w-sm">
+          {chartData.measurementImage && (
+            <div className="relative">
+              <img
+                src={chartData.measurementImage}
+                alt={`${chartData.title} \u2014 where to measure`}
+                className="w-full h-auto rounded-lg"
+                loading="lazy"
+              />
 
-                {/* Callout labels pointing to the measuring tapes in the photo */}
-                {callouts.map((callout, i) => (
-                  <div key={i} className="absolute right-2 md:right-4 flex items-center gap-1.5" style={{ top: `${callout.top}%`, transform: 'translateY(-50%)' }}>
-                    <div className="w-4 md:w-8 h-[2px] bg-brand-gold" />
-                    <div className="bg-white/95 backdrop-blur-sm rounded-md px-2.5 py-1.5 shadow-sm border border-brand-gold/20">
-                      <p className="text-[11px] md:text-xs font-bold text-brand-gold leading-none whitespace-nowrap">{callout.label}</p>
-                      <p className="text-[10px] md:text-[11px] text-gray-500 leading-tight whitespace-nowrap mt-0.5">{callout.sublabel}</p>
-                    </div>
+              {/* Callout labels pointing to the measuring tapes in the photo */}
+              {callouts.map((callout, i) => (
+                <div key={i} className="absolute right-2 md:right-4 flex items-center gap-1.5" style={{ top: `${callout.top}%`, transform: 'translateY(-50%)' }}>
+                  <div className="w-4 md:w-8 h-[2px] bg-brand-gold" />
+                  <div className="bg-white/95 backdrop-blur-sm rounded-md px-2.5 py-1.5 shadow-sm border border-brand-gold/20">
+                    <p className="text-[11px] md:text-xs font-bold text-brand-gold leading-none whitespace-nowrap">{callout.label}</p>
+                    <p className="text-[10px] md:text-[11px] text-gray-500 leading-tight whitespace-nowrap mt-0.5">{callout.sublabel}</p>
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Steps — shows second on mobile, left column on desktop */}
-        <div className="order-2 lg:order-1 space-y-5 lg:pt-4">
-          {steps.map((step, i) => (
-            <div key={step.number} className="flex items-start gap-4 relative">
-              {/* Vertical connecting line */}
-              {i < steps.length - 1 && (
-                <div className="absolute left-[15px] top-10 bottom-0 w-px bg-gray-200 -mb-5" style={{ height: 'calc(100% - 8px)' }} />
-              )}
-              <span className="relative z-10 w-8 h-8 rounded-full bg-brand-gold text-white flex items-center justify-center text-sm font-bold flex-shrink-0">
-                {step.number}
-              </span>
-              <div className="pb-1">
-                <h4 className="text-sm font-bold mb-1">{step.title}</h4>
-                <p className="text-sm text-gray-500 leading-relaxed">{step.desc}</p>
-              </div>
+                </div>
+              ))}
             </div>
-          ))}
+          )}
         </div>
+      </div>
+
+      {/* Steps */}
+      <div className="space-y-4">
+        {steps.map((step, i) => (
+          <div key={step.number} className="flex items-start gap-3 relative">
+            {i < steps.length - 1 && (
+              <div className="absolute left-[13px] top-8 bottom-0 w-px bg-gray-200" style={{ height: 'calc(100% - 4px)' }} />
+            )}
+            <span className="relative z-10 w-7 h-7 rounded-full bg-brand-gold text-white flex items-center justify-center text-xs font-bold flex-shrink-0">
+              {step.number}
+            </span>
+            <div className="pb-1">
+              <h4 className="text-sm font-bold mb-0.5">{step.title}</h4>
+              <p className="text-xs text-gray-500 leading-relaxed">{step.desc}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </FadeIn>
   );
@@ -228,8 +225,8 @@ function SizeFinder({
   const hasInput = isDual ? (distalCm && proximalCm) : circumferenceCm;
 
   return (
-    <FadeIn className="mb-12 md:mb-16">
-      <div className="bg-brand-offwhite rounded-lg p-6 md:p-8">
+    <FadeIn>
+      <div className="bg-brand-offwhite rounded-lg p-6 md:p-8 h-full">
         <h3 className="text-xs font-bold uppercase tracking-widest mb-1">
           Size Finder
         </h3>
@@ -291,28 +288,10 @@ function SizeFinder({
   );
 }
 
-/* ── Range Bar ─────────────────────────────────────────────────── */
-
-function RangeBar({ min, max, globalMin, globalMax }) {
-  const range = globalMax - globalMin;
-  const left = ((min - globalMin) / range) * 100;
-  const width = ((max - min) / range) * 100;
-
-  return (
-    <div className="h-1.5 rounded-full bg-gray-100 w-full relative mt-1.5">
-      <div
-        className="h-full rounded-full bg-brand-gold"
-        style={{ width: `${width}%`, marginLeft: `${left}%` }}
-      />
-    </div>
-  );
-}
-
 /* ── Size Chart Table ──────────────────────────────────────────── */
 
 function SizingChartTable({ chartData, highlightedLabel }) {
   const isDual = chartData.measurementMethod === 'dual-circumference';
-  const { globalMin, globalMax } = chartData;
 
   return (
     <>
@@ -357,18 +336,15 @@ function SizingChartTable({ chartData, highlightedLabel }) {
                   <div className="py-4 px-4">
                     <span className="text-sm font-medium">{size.distal[0]} &ndash; {size.distal[1]} cm</span>
                     <span className="text-xs text-gray-400 ml-2">({size.distalIn[0]} &ndash; {size.distalIn[1]} in)</span>
-                    <RangeBar min={size.distal[0]} max={size.distal[1]} globalMin={globalMin} globalMax={globalMax} />
                   </div>
                   <div className="py-4 px-4">
                     <span className="text-sm font-medium">{size.proximal[0]} &ndash; {size.proximal[1]} cm</span>
                     <span className="text-xs text-gray-400 ml-2">({size.proximalIn[0]} &ndash; {size.proximalIn[1]} in)</span>
-                    <RangeBar min={size.proximal[0]} max={size.proximal[1]} globalMin={globalMin} globalMax={globalMax} />
                   </div>
                 </>
               ) : (
                 <div className="py-4 px-4">
                   <span className="text-sm font-medium">{size.circumference[0]} &ndash; {size.circumference[1]} cm</span>
-                  <RangeBar min={size.circumference[0]} max={size.circumference[1]} globalMin={globalMin} globalMax={globalMax} />
                 </div>
               )}
             </div>
@@ -518,12 +494,12 @@ export default function SizingGuide({ sizingType }) {
 
   return (
     <section id="sizing-guide" className="py-16 md:py-20 border-t border-gray-100">
-      <div className="max-w-4xl mx-auto px-6 md:px-12">
+      <div className="max-w-6xl mx-auto px-6 md:px-12">
         {/* Header */}
         <FadeIn>
           <div className="text-center mb-12 md:mb-16">
             <span className="text-xs font-bold uppercase tracking-widest text-brand-gold mb-3 block">
-              Sizing Guide
+              Sizing & Fit
             </span>
             <h2 className="text-3xl md:text-4xl font-light tracking-tight mb-3">
               Find Your Perfect Fit
@@ -535,23 +511,23 @@ export default function SizingGuide({ sizingType }) {
           </div>
         </FadeIn>
 
-        {/* How to Measure */}
-        <MeasurementHero chartData={chartData} />
+        {/* Side-by-side: Measurement Guide (left) + Size Finder (right) */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-12 md:mb-16">
+          <MeasurementHero chartData={chartData} />
+          <SizeFinder
+            chartData={chartData}
+            recommendation={recommendation}
+            onFindSize={findRecommendedSize}
+            distalCm={distalCm}
+            proximalCm={proximalCm}
+            circumferenceCm={circumferenceCm}
+            onDistalChange={(v) => { setDistalCm(v); setRecommendation(null); }}
+            onProximalChange={(v) => { setProximalCm(v); setRecommendation(null); }}
+            onCircumferenceChange={(v) => { setCircumferenceCm(v); setRecommendation(null); }}
+          />
+        </div>
 
-        {/* Interactive Size Finder */}
-        <SizeFinder
-          chartData={chartData}
-          recommendation={recommendation}
-          onFindSize={findRecommendedSize}
-          distalCm={distalCm}
-          proximalCm={proximalCm}
-          circumferenceCm={circumferenceCm}
-          onDistalChange={(v) => { setDistalCm(v); setRecommendation(null); }}
-          onProximalChange={(v) => { setProximalCm(v); setRecommendation(null); }}
-          onCircumferenceChange={(v) => { setCircumferenceCm(v); setRecommendation(null); }}
-        />
-
-        {/* Size Chart */}
+        {/* Size Chart — full width below */}
         <FadeIn>
           <h3 className="text-xs font-bold uppercase tracking-widest mb-6 text-center">
             Size Chart

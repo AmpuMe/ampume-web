@@ -25,12 +25,12 @@ const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
 
 const CATEGORY_COPY = {
   liners: {
-    tagline: 'Curated by Professionals',
-    intro: 'AmpuMe\'s curated selection of prosthetic liners is designed to support users across different amputation levels, suspension systems, and activity needs.',
-    guidance: 'Whenever possible, we recommend working directly with your prosthetist when selecting a liner. Proper measurement and clinical guidance help ensure optimal fit, comfort, and performance. However, we understand that appointments aren\'t always feasible — and insurance may not cover backup or replacement liners.',
-    sizingNote: 'If you are ordering independently, please review the sizing guide provided on each product page carefully before purchasing.',
-    tip: true,
-    filterHelper: 'Not sure what you need? Start by selecting your amputation level and suspension type.',
+    tagline: 'Expertly Curated Prosthetic Liners',
+    description: 'A curated selection of cushion and locking liners from leading manufacturers — chosen for comfort, suspension, skin protection, and long-term durability.',
+    intro: 'AmpuMe\'s curated selection of prosthetic liners is designed to support a range of amputation levels, suspension systems, and activity needs.',
+    guidance: 'Whenever possible, we recommend working directly with your prosthetist when selecting a liner. Proper measurement and clinical guidance help ensure optimal fit, comfort, and performance.',
+    sizingNote: 'AmpuMe provides access for those purchasing independently or seeking backup liners. If you are ordering on your own, please review the sizing guide on the product page and confirm your measurements before purchasing.',
+    tip: 'Not sure which liner you currently use? Check the side of your existing liner for the model number, or',
   },
 };
 
@@ -140,18 +140,18 @@ export default function CategoryPage() {
               {category.label}
             </h1>
             <p className="text-lg text-gray-600 leading-relaxed">
-              {category.description}
+              {copy?.description || category.description}
             </p>
           </FadeIn>
 
-          {/* Collapsible guidance */}
+          {/* Collapsible guidance — "Before you order" */}
           {copy && (
             <FadeIn delay={0.1} className="mt-4 max-w-3xl">
               <button
                 onClick={() => setShowGuidance(!showGuidance)}
                 className="inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-black transition-colors"
               >
-                {showGuidance ? 'Less info' : 'Sizing & ordering help'}
+                {showGuidance ? 'Less info' : 'Before you order'}
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showGuidance ? 'rotate-180' : ''}`} />
               </button>
 
@@ -167,7 +167,14 @@ export default function CategoryPage() {
                       <p className="text-sm text-gray-600 leading-relaxed">{copy.guidance}</p>
                     )}
                     {copy.sizingNote && (
-                      <p className="text-sm text-gray-600 leading-relaxed font-medium">{copy.sizingNote}</p>
+                      <p className="text-sm text-gray-600 leading-relaxed">{copy.sizingNote}</p>
+                    )}
+                    {copy.tip && (
+                      <p className="text-sm text-gray-500 italic">
+                        {copy.tip}{' '}
+                        <Link to="/contact" className="underline hover:text-black transition-colors">contact us</Link>{' '}
+                        for assistance.
+                      </p>
                     )}
                   </div>
                 </motion.div>
@@ -176,92 +183,13 @@ export default function CategoryPage() {
           )}
         </section>
 
-        {/* Guided Selection (liners) or Filter Bar (other categories) */}
+        {/* Filters */}
         <section className="px-6 md:px-12 mb-8">
-          {categoryId === 'liners' ? (
-            <FadeIn className="max-w-2xl">
-              {/* Step 1: Amputation Level */}
-              <div className="mb-8">
-                <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">
-                  Step 1 — Select Your Amputation Level
-                </p>
-                <div className="flex gap-3">
-                  {[
-                    { value: 'AK', label: 'Above Knee (AK)' },
-                    { value: 'BK', label: 'Below Knee (BK)' },
-                  ].map((opt) => {
-                    const isActive = activeFilters.ampLevel === opt.value;
-                    return (
-                      <button
-                        key={opt.value}
-                        onClick={() => handleFilterChange('ampLevel', isActive ? 'all' : opt.value)}
-                        className={`
-                          flex-1 py-4 px-6 rounded-lg text-sm font-medium transition-all border
-                          ${isActive
-                            ? 'bg-black text-white border-black'
-                            : 'bg-white text-gray-700 border-gray-200 hover:border-gray-400'
-                          }
-                        `}
-                      >
-                        {opt.label}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Step 2: Suspension Type — appears after step 1 */}
-              {activeFilters.ampLevel && activeFilters.ampLevel !== 'all' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">
-                    Step 2 — Select Suspension Type
-                  </p>
-                  <div className="flex gap-3">
-                    {[
-                      { value: 'cushion', label: 'Cushion' },
-                      { value: 'locking', label: 'Locking' },
-                    ].map((opt) => {
-                      const isActive = activeFilters.suspension === opt.value;
-                      return (
-                        <button
-                          key={opt.value}
-                          onClick={() => handleFilterChange('suspension', isActive ? 'all' : opt.value)}
-                          className={`
-                            flex-1 py-4 px-6 rounded-lg text-sm font-medium transition-all border
-                            ${isActive
-                              ? 'bg-black text-white border-black'
-                              : 'bg-white text-gray-700 border-gray-200 hover:border-gray-400'
-                            }
-                          `}
-                        >
-                          {opt.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  {/* Tip line — shown after step 2 appears */}
-                  {copy?.tip && (
-                    <p className="text-sm text-gray-500 italic mt-6">
-                      Not sure which liner you currently use? Check the side of your existing liner for the model number, or{' '}
-                      <Link to="/contact" className="underline hover:text-black transition-colors">contact us</Link>{' '}
-                      for assistance.
-                    </p>
-                  )}
-                </motion.div>
-              )}
-            </FadeIn>
-          ) : (
-            <FilterBar
-              categoryId={categoryId}
-              activeFilters={activeFilters}
-              onFilterChange={handleFilterChange}
-            />
-          )}
+          <FilterBar
+            categoryId={categoryId}
+            activeFilters={activeFilters}
+            onFilterChange={handleFilterChange}
+          />
         </section>
 
         {/* Products Grid */}
