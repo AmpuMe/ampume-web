@@ -138,21 +138,21 @@ function MeasurementSteps({ chartData }) {
 
   return (
     <FadeIn>
-      <h3 className="text-xs font-bold uppercase tracking-widest mb-4">
+      <h3 className="text-xs font-bold uppercase tracking-widest mb-6">
         How to Measure
       </h3>
-      <div className="space-y-3">
+      <div className="space-y-6">
         {steps.map((step, i) => (
-          <div key={step.number} className="flex items-start gap-3 relative">
+          <div key={step.number} className="flex items-start gap-4 relative">
             {i < steps.length - 1 && (
-              <div className="absolute left-[11px] top-7 bottom-0 w-px bg-gray-200" style={{ height: 'calc(100% - 4px)' }} />
+              <div className="absolute left-[15px] top-10 bottom-0 w-px bg-gray-200" style={{ height: 'calc(100% - 8px)' }} />
             )}
-            <span className="relative z-10 w-6 h-6 rounded-full bg-brand-gold text-white flex items-center justify-center text-xs font-bold flex-shrink-0">
+            <span className="relative z-10 w-8 h-8 rounded-full bg-brand-gold text-white flex items-center justify-center text-sm font-bold flex-shrink-0">
               {step.number}
             </span>
-            <div>
-              <h4 className="text-sm font-bold mb-0.5">{step.title}</h4>
-              <p className="text-xs text-gray-500 leading-relaxed">{step.desc}</p>
+            <div className="pt-0.5">
+              <h4 className="text-sm font-bold mb-1">{step.title}</h4>
+              <p className="text-sm text-gray-500 leading-relaxed">{step.desc}</p>
             </div>
           </div>
         ))}
@@ -184,11 +184,11 @@ function MeasurementImage({ chartData }) {
   if (!chartData.measurementImage) return null;
 
   return (
-    <FadeIn className="relative w-full max-h-[360px] overflow-hidden rounded-lg bg-gray-50">
+    <FadeIn className="relative w-full rounded-lg overflow-hidden">
       <img
         src={chartData.measurementImage}
         alt={`${chartData.title} \u2014 where to measure`}
-        className="w-full h-full object-cover object-top"
+        className="w-full h-auto rounded-lg"
         loading="lazy"
       />
       {callouts.map((callout, i) => (
