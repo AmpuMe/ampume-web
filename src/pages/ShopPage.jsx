@@ -55,19 +55,21 @@ function CategoryCard({ category, productCount, image, index }) {
         )}
         <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500" />
         <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
-          <h3 className="text-2xl md:text-3xl font-medium mb-2">{category.label}</h3>
-          <p className="text-sm text-white/80 leading-relaxed mb-3">
-            {category.description}
-          </p>
-          <div className="flex items-center justify-between">
-            {productCount > 0 && (
-              <span className="text-xs font-bold uppercase tracking-widest text-white/60">
-                {productCount} product{productCount !== 1 ? 's' : ''}
+          <h3 className="text-2xl md:text-3xl font-medium mb-3">{category.label}</h3>
+          <div className="h-auto md:h-0 md:group-hover:h-auto overflow-hidden transition-all duration-500">
+            <p className="text-sm text-white/90 leading-relaxed mb-4">
+              {category.description}
+            </p>
+            <div className="flex items-center justify-between">
+              {productCount > 0 && (
+                <span className="text-xs font-bold uppercase tracking-widest text-white/60">
+                  {productCount} product{productCount !== 1 ? 's' : ''}
+                </span>
+              )}
+              <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1 group-hover:border-white transition-colors">
+                Browse <ArrowRight size={14} />
               </span>
-            )}
-            <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1 group-hover:border-white transition-colors">
-              Browse <ArrowRight size={14} />
-            </span>
+            </div>
           </div>
         </div>
       </Link>
