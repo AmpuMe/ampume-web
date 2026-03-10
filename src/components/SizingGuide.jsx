@@ -161,9 +161,9 @@ function MeasurementSteps({ chartData }) {
   );
 }
 
-/* ── Measurement Image + Size Finder (Right Column) ──────────── */
+/* ── Measurement Image (Left Column) ─────────────────────────── */
 
-function MeasurementImageAndFinder({ chartData, ...finderProps }) {
+function MeasurementImage({ chartData }) {
   const isDual = chartData.measurementMethod === 'dual-circumference';
 
   const isAK = chartData.measurementImage?.includes('ak-');
@@ -181,33 +181,27 @@ function MeasurementImageAndFinder({ chartData, ...finderProps }) {
         { label: 'MEASURE HERE', sublabel: '6 cm from end', top: 72 },
       ];
 
-  return (
-    <FadeIn className="space-y-6">
-      {/* Annotated diagram */}
-      {chartData.measurementImage && (
-        <div className="flex justify-center">
-          <div className="relative w-full max-w-xs">
-            <img
-              src={chartData.measurementImage}
-              alt={`${chartData.title} \u2014 where to measure`}
-              className="w-full h-auto rounded-lg"
-              loading="lazy"
-            />
-            {callouts.map((callout, i) => (
-              <div key={i} className="absolute right-2 md:right-4 flex items-center gap-1.5" style={{ top: `${callout.top}%`, transform: 'translateY(-50%)' }}>
-                <div className="w-4 md:w-8 h-[2px] bg-brand-gold" />
-                <div className="bg-white/95 backdrop-blur-sm rounded-md px-2.5 py-1.5 shadow-sm border border-brand-gold/20">
-                  <p className="text-[11px] md:text-xs font-bold text-brand-gold leading-none whitespace-nowrap">{callout.label}</p>
-                  <p className="text-[10px] md:text-[11px] text-gray-500 leading-tight whitespace-nowrap mt-0.5">{callout.sublabel}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+  if (!chartData.measurementImage) return null;
 
-      {/* Size Finder */}
-      <SizeFinder chartData={chartData} {...finderProps} />
+  return (
+    <FadeIn className="flex justify-center">
+      <div className="relative w-full max-w-sm">
+        <img
+          src={chartData.measurementImage}
+          alt={`${chartData.title} \u2014 where to measure`}
+          className="w-full h-auto rounded-lg"
+          loading="lazy"
+        />
+        {callouts.map((callout, i) => (
+          <div key={i} className="absolute right-2 md:right-4 flex items-center gap-1.5" style={{ top: `${callout.top}%`, transform: 'translateY(-50%)' }}>
+            <div className="w-4 md:w-8 h-[2px] bg-brand-gold" />
+            <div className="bg-white/95 backdrop-blur-sm rounded-md px-2.5 py-1.5 shadow-sm border border-brand-gold/20">
+              <p className="text-[11px] md:text-xs font-bold text-brand-gold leading-none whitespace-nowrap">{callout.label}</p>
+              <p className="text-[10px] md:text-[11px] text-gray-500 leading-tight whitespace-nowrap mt-0.5">{callout.sublabel}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </FadeIn>
   );
 }
@@ -529,10 +523,15 @@ export default function SizingGuide({ sizingType }) {
           </div>
         </FadeIn>
 
-        {/* Side-by-side: Steps (left) + Image & Size Finder (right) */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-12 md:mb-16">
+        {/* How to Measure steps */}
+        <div className="mb-12 md:mb-16">
           <MeasurementSteps chartData={chartData} />
-          <MeasurementImageAndFinder
+        </div>
+
+        {/* Side-by-side: Measurement guide (left) + Size Finder (right) */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-12 md:mb-16">
+          <MeasurementImage chartData={chartData} />
+          <SizeFinder
             chartData={chartData}
             recommendation={recommendation}
             onFindSize={findRecommendedSize}
