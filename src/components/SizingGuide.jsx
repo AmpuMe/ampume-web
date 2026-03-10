@@ -523,14 +523,14 @@ export default function SizingGuide({ sizingType }) {
           </div>
         </FadeIn>
 
-        {/* How to Measure steps */}
-        <div className="mb-12 md:mb-16">
+        {/* Side-by-side: Steps (left) + Image (right) */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-10 md:mb-12">
           <MeasurementSteps chartData={chartData} />
+          <MeasurementImage chartData={chartData} />
         </div>
 
-        {/* Side-by-side: Measurement guide (left) + Size Finder (right) */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-12 md:mb-16">
-          <MeasurementImage chartData={chartData} />
+        {/* Size Finder — compact, full width */}
+        <div className="mb-10 md:mb-12">
           <SizeFinder
             chartData={chartData}
             recommendation={recommendation}
