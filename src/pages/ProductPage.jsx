@@ -439,18 +439,18 @@ export default function ProductPage() {
 
       {/* Horizontal Anchor Bar */}
       {isLiner && linerDesc && (
-        <nav className="sticky top-0 z-30 bg-white border-b border-gray-100 shadow-sm">
-          <div className="max-w-6xl mx-auto px-6 md:px-12 flex gap-8 overflow-x-auto">
+        <nav className="sticky top-0 z-30 bg-white border-b border-gray-100 shadow-sm pt-2">
+          <div className="max-w-6xl mx-auto px-6 md:px-12 flex justify-center gap-6 md:gap-8 overflow-x-auto scrollbar-hide">
             {[
               { label: 'Overview', id: 'overview' },
-              { label: 'Sizing & Fit', id: 'sizing-guide' },
               { label: 'Features', id: 'features' },
+              { label: 'Sizing & Fit', id: 'sizing-guide' },
               { label: 'Care & Maintenance', id: 'care-maintenance' },
             ].map((item) => (
               <a
                 key={item.id}
                 href={`#${item.id}`}
-                className="py-4 text-sm font-medium text-gray-500 hover:text-black transition-colors whitespace-nowrap border-b-2 border-transparent hover:border-black"
+                className="py-4 text-sm font-medium text-gray-500 hover:text-black transition-colors whitespace-nowrap border-b-2 border-transparent hover:border-black flex-shrink-0"
               >
                 {item.label}
               </a>
