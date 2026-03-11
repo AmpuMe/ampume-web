@@ -163,7 +163,7 @@ function MeasurementSteps({ chartData }) {
 
 /* ── Measurement Image (Left Column) ─────────────────────────── */
 
-function MeasurementImage({ chartData }) {
+function MeasurementImage({ chartData, className = "" }) {
   const isDual = chartData.measurementMethod === 'dual-circumference';
 
   const isAK = chartData.measurementImage?.includes('ak-');
@@ -184,11 +184,11 @@ function MeasurementImage({ chartData }) {
   if (!chartData.measurementImage) return null;
 
   return (
-    <FadeIn className="relative w-full h-full rounded-lg overflow-hidden">
+    <FadeIn className={`relative w-full lg:h-full rounded-lg overflow-hidden ${className}`}>
       <img
         src={chartData.measurementImage}
         alt={`${chartData.title} \u2014 where to measure`}
-        className="w-full h-full object-cover object-center rounded-lg"
+        className="w-full h-auto lg:h-full lg:object-cover lg:object-center rounded-lg"
         loading="lazy"
       />
       {callouts.map((callout, i) => (
@@ -522,10 +522,11 @@ export default function SizingGuide({ sizingType }) {
         </FadeIn>
 
         {/* Side-by-side: Steps + Finder (left) | Image (right) */}
+        {/* On mobile: Steps → Image → Finder (stacked). On desktop: (Steps + Finder) | Image */}
         <div className="grid grid-cols-1 lg:grid-cols-[11fr,9fr] gap-6 lg:gap-10 mb-8 md:mb-10">
-          <div>
+          <div className="order-1">
             <MeasurementSteps chartData={chartData} />
-            <div className="mt-8">
+            <div className="hidden lg:block mt-8">
               <SizeFinder
                 chartData={chartData}
                 recommendation={recommendation}
@@ -539,7 +540,20 @@ export default function SizingGuide({ sizingType }) {
               />
             </div>
           </div>
-          <MeasurementImage chartData={chartData} />
+          <MeasurementImage chartData={chartData} className="order-2" />
+          <div className="order-3 lg:hidden">
+            <SizeFinder
+              chartData={chartData}
+              recommendation={recommendation}
+              onFindSize={findRecommendedSize}
+              distalCm={distalCm}
+              proximalCm={proximalCm}
+              circumferenceCm={circumferenceCm}
+              onDistalChange={(v) => { setDistalCm(v); setRecommendation(null); }}
+              onProximalChange={(v) => { setProximalCm(v); setRecommendation(null); }}
+              onCircumferenceChange={(v) => { setCircumferenceCm(v); setRecommendation(null); }}
+            />
+          </div>
         </div>
 
         {/* Size Chart — full width below */}
