@@ -184,11 +184,11 @@ function MeasurementImage({ chartData }) {
   if (!chartData.measurementImage) return null;
 
   return (
-    <FadeIn className="relative w-full rounded-lg overflow-hidden">
+    <FadeIn className="relative w-full h-full rounded-lg overflow-hidden">
       <img
         src={chartData.measurementImage}
         alt={`${chartData.title} \u2014 where to measure`}
-        className="w-full h-auto rounded-lg"
+        className="w-full h-full object-cover object-center rounded-lg"
         loading="lazy"
       />
       {callouts.map((callout, i) => (
