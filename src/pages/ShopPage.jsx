@@ -164,7 +164,7 @@ export default function ShopPage() {
                   </p>
                   <p className="text-sm text-gray-600 leading-relaxed">
                     AmpuMe offers direct access to select items for those paying out-of-pocket, seeking backup supplies, or without convenient access to a clinic. If you're unsure about your benefits,{' '}
-                    <Link to="/resources/ask-an-insurance-expert" className="underline hover:text-black transition-colors">
+                    <Link to="/resources/insurance-and-coverage" className="underline hover:text-black transition-colors">
                       we can help you understand your options
                     </Link>{' '}
                     before purchasing.

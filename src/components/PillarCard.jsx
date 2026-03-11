@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Heart, Cog, Sun, Users, BookOpen, Shield } from 'lucide-react';
+import { Heart, Cog, Sun, Users, BookOpen, Shield, Activity } from 'lucide-react';
 
 const iconMap = {
   Heart,
@@ -9,6 +9,7 @@ const iconMap = {
   Users,
   BookOpen,
   Shield,
+  Activity,
 };
 
 export default function PillarCard({ pillar, index = 0 }) {

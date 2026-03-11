@@ -47,7 +47,7 @@ export default function PillarPage() {
     loadPillar();
   }, [pillarSlug]);
 
-  const isInsurancePillar = pillarSlug === 'ask-an-insurance-expert';
+  const isInsurancePillar = pillarSlug === 'insurance-and-coverage';
 
   if (isLoading) {
     return (
