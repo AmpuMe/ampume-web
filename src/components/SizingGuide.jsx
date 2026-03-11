@@ -184,7 +184,7 @@ function MeasurementImage({ chartData }) {
   if (!chartData.measurementImage) return null;
 
   return (
-    <FadeIn className="relative w-full max-w-[420px] lg:mx-auto rounded-lg overflow-hidden">
+    <FadeIn className="relative w-full rounded-lg overflow-hidden">
       <img
         src={chartData.measurementImage}
         alt={`${chartData.title} \u2014 where to measure`}
