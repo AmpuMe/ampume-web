@@ -440,7 +440,7 @@ export default function ProductPage() {
       {/* Horizontal Anchor Bar */}
       {isLiner && linerDesc && (
         <nav className="sticky top-0 z-30 bg-white border-b border-gray-100 shadow-sm pt-2">
-          <div className="max-w-6xl mx-auto px-6 md:px-12 flex justify-center gap-6 md:gap-8 overflow-x-auto scrollbar-hide">
+          <div className="max-w-6xl mx-auto px-4 md:px-12 flex justify-center gap-4 sm:gap-6 md:gap-8 flex-wrap">
             {[
               { label: 'Sizing & Fit', id: 'sizing-guide' },
               { label: 'Overview', id: 'overview' },
@@ -459,7 +459,7 @@ export default function ProductPage() {
                     window.scrollTo({ top, behavior: 'smooth' });
                   }
                 }}
-                className="py-4 text-sm font-medium text-gray-500 hover:text-black transition-colors whitespace-nowrap border-b-2 border-transparent hover:border-black flex-shrink-0"
+                className="py-3 md:py-4 text-xs md:text-sm font-medium text-gray-500 hover:text-black transition-colors whitespace-nowrap border-b-2 border-transparent hover:border-black"
               >
                 {item.label}
               </a>
