@@ -49,27 +49,29 @@ export default function ResourcesHub() {
 
       <SimpleNavbar />
 
-      <main className="pt-32 pb-20">
-        {/* Hero — split layout */}
-        <section className="px-6 md:px-12 mb-16 md:mb-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center max-w-6xl">
-            <FadeIn>
-              <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">
+      <main className="pb-20">
+        {/* Hero — full-width image with text overlay (mirrors homepage hero, shorter) */}
+        <section className="relative h-[75vh] md:h-[65vh] w-full overflow-hidden bg-black">
+          <div className="absolute inset-0">
+            <img
+              src={heroImage}
+              alt="Two amputees sharing knowledge and support"
+              className="w-full h-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
+          </div>
+          <div className="relative z-10 h-full px-6 md:px-12 grid grid-cols-12 items-end pb-12 md:pb-16 text-white">
+            <FadeIn className="col-span-12 md:col-span-8 lg:col-span-7">
+              <p className="text-xs font-bold uppercase tracking-widest text-white/60 mb-4">
                 Resource Library
               </p>
-              <h1 className="text-4xl md:text-5xl font-light tracking-tight mb-6">
-                Trusted guidance for life with limb loss.
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight mb-4">
+                Trusted guidance for life with limb&nbsp;loss.
               </h1>
-              <p className="text-lg text-gray-500 leading-relaxed">
+              <p className="text-base md:text-lg font-light text-white/80 max-w-lg leading-relaxed">
                 Structured resources across performance, prosthetic care, insurance, and everyday life — designed to help you move forward with confidence.
               </p>
-            </FadeIn>
-            <FadeIn delay={0.15}>
-              <img
-                src={heroImage}
-                alt="Two amputees sharing knowledge and support"
-                className="w-full rounded-lg object-cover aspect-[4/3]"
-              />
             </FadeIn>
           </div>
         </section>
