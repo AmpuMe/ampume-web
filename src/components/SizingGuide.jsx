@@ -170,8 +170,8 @@ function MeasurementImage({ chartData, className = "" }) {
   const callouts = isDual
     ? isAK
       ? [
-          { label: 'PROXIMAL', sublabel: '30 cm from end', top: 40 },
-          { label: 'DISTAL', sublabel: '4 cm from end', top: 60 },
+          { label: 'PROXIMAL', sublabel: '30 cm from end', top: 36 },
+          { label: 'DISTAL', sublabel: '4 cm from end', top: 55 },
         ]
       : [
           { label: 'PROXIMAL', sublabel: '30 cm from end', top: 33 },
