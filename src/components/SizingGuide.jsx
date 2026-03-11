@@ -138,10 +138,10 @@ function MeasurementSteps({ chartData }) {
 
   return (
     <FadeIn>
-      <h3 className="text-xs font-bold uppercase tracking-widest mb-4">
+      <h3 className="text-xs font-bold uppercase tracking-widest mb-5">
         How to Measure
       </h3>
-      <div className="space-y-3">
+      <div className="space-y-4">
         {steps.map((step, i) => (
           <div key={step.number} className="flex items-start gap-4 relative">
             {i < steps.length - 1 && (
@@ -221,7 +221,7 @@ function SizeFinder({
   const hasInput = isDual ? (distalCm && proximalCm) : circumferenceCm;
 
   return (
-    <div className="bg-brand-offwhite rounded-lg p-5">
+    <div className="bg-brand-offwhite rounded-lg p-5 md:p-6">
       <h3 className="text-xs font-bold uppercase tracking-widest mb-1">
         Size Finder
       </h3>
@@ -522,7 +522,7 @@ export default function SizingGuide({ sizingType }) {
         </FadeIn>
 
         {/* Side-by-side: Steps + Finder (left) | Image (right) */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 mb-8 md:mb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[11fr,9fr] gap-6 lg:gap-10 mb-8 md:mb-10">
           <div>
             <MeasurementSteps chartData={chartData} />
             <div className="mt-6">
