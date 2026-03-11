@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 
-const SimpleNavbar = () => {
+const SimpleNavbar = ({ transparent = false }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    if (!transparent) return;
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [transparent]);
+
+  const isTransparent = transparent && !scrolled;
 
   return (
     <>
-      <nav className="fixed top-0 w-full z-50 bg-white text-black shadow-sm py-6">
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 py-6 ${isTransparent ? 'bg-transparent text-white' : 'bg-white text-black shadow-sm'}`}>
         <div className="px-6 md:px-12 grid grid-cols-12 items-center h-full gap-4">
           <div className="col-span-3">
             <Link to="/" className="text-xl md:text-2xl font-semibold tracking-tight uppercase z-50">
@@ -26,7 +36,7 @@ const SimpleNavbar = () => {
           <div className="hidden lg:flex col-span-3 justify-end items-center">
              <Link
                to="/contact"
-               className="px-6 py-3 rounded-full font-bold text-xs uppercase tracking-widest bg-black text-white hover:bg-gray-800 transition-colors"
+               className={`px-6 py-3 rounded-full font-bold text-xs uppercase tracking-widest transition-colors ${isTransparent ? 'bg-white text-black hover:bg-gray-200' : 'bg-black text-white hover:bg-gray-800'}`}
              >
               Contact
             </Link>

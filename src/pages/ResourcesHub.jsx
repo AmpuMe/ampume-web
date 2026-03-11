@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import PillarCard from '../components/PillarCard';
 import { fetchPillars } from '../lib/sanity';
-import heroImage from '../assets/resources-hero.png';
+import heroImage from '../assets/resources-hero.webp';
 
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
   <motion.div
@@ -47,7 +47,7 @@ export default function ResourcesHub() {
         url="https://ampume.com/resources"
       />
 
-      <SimpleNavbar />
+      <SimpleNavbar transparent />
 
       <main className="pb-20">
         {/* Hero — full-width image with text overlay (mirrors homepage hero, shorter) */}
@@ -77,7 +77,7 @@ export default function ResourcesHub() {
         </section>
 
         {/* Pillar Grid */}
-        <section className="px-6 md:px-12">
+        <section className="px-6 md:px-12 pt-16 md:pt-20">
           {isLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {[...Array(5)].map((_, i) => (
