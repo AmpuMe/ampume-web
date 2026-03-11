@@ -141,7 +141,7 @@ function MeasurementSteps({ chartData }) {
       <h3 className="text-xs font-bold uppercase tracking-widest mb-5">
         How to Measure
       </h3>
-      <div className="space-y-4">
+      <div className="space-y-5">
         {steps.map((step, i) => (
           <div key={step.number} className="flex items-start gap-4 relative">
             {i < steps.length - 1 && (
@@ -184,7 +184,7 @@ function MeasurementImage({ chartData }) {
   if (!chartData.measurementImage) return null;
 
   return (
-    <FadeIn className="relative w-full rounded-lg overflow-hidden">
+    <FadeIn className="relative w-full max-w-[380px] lg:mx-auto rounded-lg overflow-hidden">
       <img
         src={chartData.measurementImage}
         alt={`${chartData.title} \u2014 where to measure`}
@@ -522,10 +522,10 @@ export default function SizingGuide({ sizingType }) {
         </FadeIn>
 
         {/* Side-by-side: Steps + Finder (left) | Image (right) */}
-        <div className="grid grid-cols-1 lg:grid-cols-[11fr,9fr] gap-6 lg:gap-10 mb-8 md:mb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[3fr,2fr] gap-6 lg:gap-10 mb-8 md:mb-10">
           <div>
             <MeasurementSteps chartData={chartData} />
-            <div className="mt-6">
+            <div className="mt-8">
               <SizeFinder
                 chartData={chartData}
                 recommendation={recommendation}
