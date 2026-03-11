@@ -138,10 +138,10 @@ function MeasurementSteps({ chartData }) {
 
   return (
     <FadeIn>
-      <h3 className="text-xs font-bold uppercase tracking-widest mb-6">
+      <h3 className="text-xs font-bold uppercase tracking-widest mb-4">
         How to Measure
       </h3>
-      <div className="space-y-5">
+      <div className="space-y-3">
         {steps.map((step, i) => (
           <div key={step.number} className="flex items-start gap-4 relative">
             {i < steps.length - 1 && (
@@ -221,15 +221,15 @@ function SizeFinder({
   const hasInput = isDual ? (distalCm && proximalCm) : circumferenceCm;
 
   return (
-    <div className="bg-brand-offwhite rounded-lg p-6 md:p-8">
+    <div className="bg-brand-offwhite rounded-lg p-5">
       <h3 className="text-xs font-bold uppercase tracking-widest mb-1">
         Size Finder
       </h3>
-        <p className="text-sm text-gray-500 mb-6">
-          Enter your measurements to get a personalized size recommendation.
+        <p className="text-sm text-gray-500 mb-4">
+          Enter your measurements below.
         </p>
 
-        <div className={`grid ${isDual ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1 max-w-xs'} gap-4 mb-6`}>
+        <div className="grid grid-cols-1 gap-3 mb-4">
           {isDual ? (
             <>
               <MeasurementInput
@@ -258,7 +258,7 @@ function SizeFinder({
         <button
           onClick={onFindSize}
           disabled={!hasInput}
-          className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-bold text-xs uppercase tracking-widest bg-black text-white hover:bg-gray-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-xs uppercase tracking-widest bg-black text-white hover:bg-gray-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
         >
           <Ruler className="w-4 h-4" />
           Find My Size
@@ -521,25 +521,25 @@ export default function SizingGuide({ sizingType }) {
           </div>
         </FadeIn>
 
-        {/* Side-by-side: Steps (left ~60%) + Image (right ~40%) */}
-        <div className="grid grid-cols-1 lg:grid-cols-[3fr,2fr] gap-6 lg:gap-10 mb-8 md:mb-10">
-          <MeasurementSteps chartData={chartData} />
+        {/* Side-by-side: Steps + Finder (left) | Image (right) */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 mb-8 md:mb-10">
+          <div>
+            <MeasurementSteps chartData={chartData} />
+            <div className="mt-6">
+              <SizeFinder
+                chartData={chartData}
+                recommendation={recommendation}
+                onFindSize={findRecommendedSize}
+                distalCm={distalCm}
+                proximalCm={proximalCm}
+                circumferenceCm={circumferenceCm}
+                onDistalChange={(v) => { setDistalCm(v); setRecommendation(null); }}
+                onProximalChange={(v) => { setProximalCm(v); setRecommendation(null); }}
+                onCircumferenceChange={(v) => { setCircumferenceCm(v); setRecommendation(null); }}
+              />
+            </div>
+          </div>
           <MeasurementImage chartData={chartData} />
-        </div>
-
-        {/* Size Finder — compact, full width */}
-        <div className="mb-8 md:mb-10">
-          <SizeFinder
-            chartData={chartData}
-            recommendation={recommendation}
-            onFindSize={findRecommendedSize}
-            distalCm={distalCm}
-            proximalCm={proximalCm}
-            circumferenceCm={circumferenceCm}
-            onDistalChange={(v) => { setDistalCm(v); setRecommendation(null); }}
-            onProximalChange={(v) => { setProximalCm(v); setRecommendation(null); }}
-            onCircumferenceChange={(v) => { setCircumferenceCm(v); setRecommendation(null); }}
-          />
         </div>
 
         {/* Size Chart — full width below */}
