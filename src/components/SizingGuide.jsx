@@ -566,11 +566,11 @@ export default function SizingGuide({ sizingType }) {
 
         {/* Reassurance Footer */}
         <FadeIn>
-          <div className="mt-8 pt-8 border-t border-gray-100 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div className="mt-8 pt-8 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-center gap-4 text-center sm:text-left">
             <div className="w-10 h-10 rounded-full bg-brand-gold/20 flex items-center justify-center flex-shrink-0">
               <Ruler className="w-5 h-5 text-brand-gold" />
             </div>
-            <div className="flex-1">
+            <div>
               <p className="text-sm text-gray-600">
                 <strong>Between sizes?</strong> We recommend sizing up for a more comfortable fit.
                 Need help?{' '}

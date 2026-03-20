@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import SimpleNavbar from '../components/SimpleNavbar';
@@ -23,6 +23,7 @@ const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
 
 export default function PillarPage() {
   const { pillarSlug } = useParams();
+  const navigate = useNavigate();
   const [pillar, setPillar] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -106,13 +107,13 @@ export default function PillarPage() {
       <main className="pt-32 pb-20 px-6 md:px-12">
         {/* Back Link */}
         <FadeIn className="mb-8">
-          <Link
-            to="/resources"
+          <button
+            onClick={() => window.history.length > 1 ? navigate(-1) : navigate('/resources')}
             className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-black transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            All Resources
-          </Link>
+            Back
+          </button>
         </FadeIn>
 
         {/* Pillar Hero */}

@@ -11,6 +11,35 @@ import { useCart } from '../context/CartContext';
 import { fetchProductByHandle, fetchProducts, formatPrice, groupProducts, extractBaseName, extractVariantLabel, getCategoryByProductType } from '../lib/shopify';
 import { findLinerDescription } from '../data/linerDescriptions';
 
+// Sort size values from smallest to largest
+const SIZE_ORDER = [
+  'x-small', 'extra small', 'xs',
+  'small', 's',
+  'medium', 'med', 'm',
+  'medium+', 'med+', 'm+',
+  'large', 'lrg', 'l',
+  'large+', 'lrg+', 'l+',
+  'x-large', 'extra large', 'xl',
+  'extra large+', 'xl+',
+  'xx-large', 'xxl', '2xl',
+  'lightweight', '1-ply', '1 ply',
+  '3-ply', '3 ply',
+  '5-ply', '5 ply',
+  'short', 'medium', 'long', 'extra long',
+  '3', '6', '9',
+];
+
+function sortOptionValues(values) {
+  return [...values].sort((a, b) => {
+    const ai = SIZE_ORDER.findIndex(s => a.toLowerCase().includes(s));
+    const bi = SIZE_ORDER.findIndex(s => b.toLowerCase().includes(s));
+    if (ai !== -1 && bi !== -1) return ai - bi;
+    if (ai !== -1) return -1;
+    if (bi !== -1) return 1;
+    return a.localeCompare(b);
+  });
+}
+
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
@@ -60,10 +89,10 @@ export default function ProductPage() {
         const result = await fetchProductByHandle(handle);
         if (result) {
           setProduct(result);
-          // Initialize selected options with first values
+          // Initialize selected options — pills auto-select first, dropdowns default to placeholder
           const initialOptions = {};
           result.options?.forEach(option => {
-            initialOptions[option.name] = option.values[0];
+            initialOptions[option.name] = option.values.length <= 6 ? option.values[0] : '';
           });
           setSelectedOptions(initialOptions);
         } else {
@@ -320,9 +349,9 @@ export default function ProductPage() {
                 </p>
 
                 {/* Short description for liner products */}
-                {isLiner && linerDesc?.overview?.[0] && (
+                {isLiner && linerDesc && (
                   <p className="text-sm text-gray-600 leading-relaxed mb-6">
-                    {linerDesc.overview[0]}
+                    {linerDesc.shortDescription || linerDesc.overview[0]}
                   </p>
                 )}
 
@@ -331,13 +360,13 @@ export default function ProductPage() {
                   option.values.length > 1 && (
                     <div key={option.id} className="mb-6">
                       <label className="block text-sm font-medium mb-3">
-                        {option.name}: <span className="font-normal text-gray-600">{selectedOptions[option.name]}</span>
+                        {option.name}: <span className="font-normal text-gray-600">{selectedOptions[option.name] || ''}</span>
                       </label>
 
                       {option.values.length <= 6 ? (
                         // Button style for few options
                         <div className="flex flex-wrap gap-2">
-                          {option.values.map(value => (
+                          {sortOptionValues(option.values).map(value => (
                             <button
                               key={value}
                               onClick={() => handleOptionChange(option.name, value)}
@@ -361,7 +390,8 @@ export default function ProductPage() {
                             onChange={(e) => handleOptionChange(option.name, e.target.value)}
                             className="w-full appearance-none px-4 py-3 pr-10 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-black transition-colors"
                           >
-                            {option.values.map(value => (
+                            <option value="" disabled>Select a size</option>
+                            {sortOptionValues(option.values).map(value => (
                               <option key={value} value={value}>
                                 {value}
                               </option>
@@ -412,8 +442,11 @@ export default function ProductPage() {
                   {/* Insurance Notice */}
                   <div className="bg-brand-offwhite p-4 rounded-lg">
                     <p className="text-xs text-gray-600 leading-relaxed">
-                      <strong>Insurance Coverage:</strong> Many prosthetic supplies are covered by insurance.
-                      Check your benefits before purchasing.
+                      <strong>Insurance Coverage:</strong> Many prosthetic supplies are covered by insurance.{' '}
+                      <Link to="/resources/insurance-and-coverage" className="underline hover:text-black transition-colors">
+                        Check your benefits
+                      </Link>{' '}
+                      before purchasing.
                     </p>
                   </div>
 

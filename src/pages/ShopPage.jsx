@@ -148,7 +148,7 @@ export default function ShopPage() {
               onClick={() => setShowMore(!showMore)}
               className="inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-black transition-colors mt-4"
             >
-              {showMore ? 'Less info' : 'Before you order'}
+              {showMore ? 'Close' : 'Before you order'}
               <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showMore ? 'rotate-180' : ''}`} />
             </button>
 

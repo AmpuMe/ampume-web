@@ -67,7 +67,7 @@ export default function LinerContentSections({ linerDesc, showPdfDownload }) {
                   Fabric Options
                 </span>
                 <h2 className="text-2xl md:text-3xl font-light tracking-tight">
-                  Choose Your Fabric
+                  Fabric Options
                 </h2>
               </div>
               <div className="md:col-span-7 md:col-start-6">
@@ -146,7 +146,7 @@ export default function LinerContentSections({ linerDesc, showPdfDownload }) {
       )}
 
       {/* Care & Maintenance */}
-      <section id="care-maintenance" className="py-16 md:py-20 bg-brand-offwhite">
+      <section id="care-maintenance" className="py-16 md:py-20 border-t border-gray-100">
         <FadeIn className="max-w-6xl mx-auto px-6 md:px-12">
           <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-8 block">
             Care & Maintenance
