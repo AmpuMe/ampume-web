@@ -73,7 +73,7 @@ export const FEATURED_RESOURCES_QUERY = `
 `;
 
 export const LATEST_RESOURCES_QUERY = `
-  *[_type == "resource"] | order(publishedAt desc) [0...6] {
+  *[_type == "resource"] | order(publishedAt desc) [0...3] {
     _id,
     title,
     slug,

@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import SimpleNavbar from '../components/SimpleNavbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import PillarCard from '../components/PillarCard';
-import ResourceCard from '../components/ResourceCard';
 import { fetchPillars, fetchLatestResources } from '../lib/sanity';
 import heroImage from '../assets/resources-hero.webp';
 
@@ -57,12 +57,12 @@ export default function ResourcesHub() {
 
       <main className="pb-20">
         {/* Hero — full-width image with text overlay (mirrors homepage hero, shorter) */}
-        <section className="relative h-[75vh] md:h-[65vh] w-full overflow-hidden bg-black">
+        <section className="relative h-[60vh] sm:h-[65vh] md:h-[60vh] lg:h-[65vh] w-full overflow-hidden bg-black">
           <div className="absolute inset-0">
             <img
               src={heroImage}
               alt="Two amputees sharing knowledge and support"
-              className="w-full h-full object-cover object-[70%_center] lg:object-center"
+              className="w-full h-full object-cover object-[80%_center] sm:object-[75%_center] lg:object-center"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
@@ -82,23 +82,59 @@ export default function ResourcesHub() {
           </div>
         </section>
 
-        {/* Latest Resources */}
+        {/* Latest Resources — visual featured cards */}
         {latestResources.length > 0 && (
           <section className="px-6 md:px-12 pt-16 md:pt-20">
             <FadeIn>
               <div className="flex justify-between items-end mb-8">
-                <h2 className="text-2xl font-medium">Latest Resources</h2>
+                <h2 className="text-2xl font-medium">Latest</h2>
               </div>
             </FadeIn>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-16 md:mb-20">
-              {latestResources.map((resource, index) => (
-                <ResourceCard
-                  key={resource._id}
-                  resource={resource}
-                  pillarSlug={resource.pillar?.slug?.current}
-                  index={index}
-                />
-              ))}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 md:mb-20">
+              {latestResources.slice(0, 3).map((resource, index) => {
+                const pillarSlug = resource.pillar?.slug?.current;
+                const pillarTitle = resource.pillar?.title;
+                const isExternal = resource.contentType === 'externalLink' && resource.externalUrl;
+                const href = isExternal
+                  ? resource.externalUrl
+                  : `/resources/${pillarSlug}/${resource.slug?.current}`;
+
+                const card = (
+                  <FadeIn key={resource._id} delay={index * 0.1} className={`group ${index === 0 ? 'md:col-span-2 md:row-span-2' : ''}`}>
+                    <div className={`relative overflow-hidden rounded-lg bg-gray-50 ${index === 0 ? 'h-[300px] md:h-full' : 'h-[240px]'}`}>
+                      {/* Pillar color accent bar */}
+                      <div className="absolute top-0 left-0 w-full h-1 bg-black z-10" />
+                      {/* Content overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-[1]" />
+                      <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end z-[2] text-white">
+                        {pillarTitle && (
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-white/60 mb-2">
+                            {pillarTitle}
+                          </span>
+                        )}
+                        <h3 className={`font-medium leading-tight mb-2 group-hover:text-white/80 transition-colors ${index === 0 ? 'text-xl md:text-2xl' : 'text-base'}`}>
+                          {resource.title}
+                        </h3>
+                        {resource.editorialSummary && (
+                          <p className={`text-white/70 leading-relaxed ${index === 0 ? 'text-sm line-clamp-3' : 'text-xs line-clamp-2'}`}>
+                            {resource.editorialSummary}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </FadeIn>
+                );
+
+                return isExternal ? (
+                  <a key={resource._id} href={href} target="_blank" rel="noopener noreferrer" className={index === 0 ? 'md:col-span-2 md:row-span-2' : ''}>
+                    {card}
+                  </a>
+                ) : (
+                  <Link key={resource._id} to={href} className={index === 0 ? 'md:col-span-2 md:row-span-2' : ''}>
+                    {card}
+                  </Link>
+                );
+              })}
             </div>
           </section>
         )}
