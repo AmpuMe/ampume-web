@@ -82,7 +82,7 @@ export default function ResourcesHub() {
           </div>
         </section>
 
-        {/* Latest Resources — visual featured cards */}
+        {/* Latest Resources */}
         {latestResources.length > 0 && (
           <section className="px-6 md:px-12 pt-16 md:pt-20">
             <FadeIn>
@@ -99,39 +99,38 @@ export default function ResourcesHub() {
                   ? resource.externalUrl
                   : `/resources/${pillarSlug}/${resource.slug?.current}`;
 
-                const card = (
-                  <FadeIn key={resource._id} delay={index * 0.1} className={`group ${index === 0 ? 'md:col-span-2 md:row-span-2' : ''}`}>
-                    <div className={`relative overflow-hidden rounded-lg bg-gray-50 ${index === 0 ? 'h-[300px] md:h-full' : 'h-[240px]'}`}>
-                      {/* Pillar color accent bar */}
-                      <div className="absolute top-0 left-0 w-full h-1 bg-black z-10" />
-                      {/* Content overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-[1]" />
-                      <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end z-[2] text-white">
-                        {pillarTitle && (
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-white/60 mb-2">
-                            {pillarTitle}
-                          </span>
-                        )}
-                        <h3 className={`font-medium leading-tight mb-2 group-hover:text-white/80 transition-colors ${index === 0 ? 'text-xl md:text-2xl' : 'text-base'}`}>
-                          {resource.title}
-                        </h3>
-                        {resource.editorialSummary && (
-                          <p className={`text-white/70 leading-relaxed ${index === 0 ? 'text-sm line-clamp-3' : 'text-xs line-clamp-2'}`}>
-                            {resource.editorialSummary}
-                          </p>
-                        )}
+                const inner = (
+                  <FadeIn delay={index * 0.1} className="group h-full">
+                    <div className="border border-gray-100 rounded-lg p-6 md:p-8 hover:border-gray-300 transition-all duration-300 h-full flex flex-col">
+                      {pillarTitle && (
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3 block">
+                          {pillarTitle}
+                        </span>
+                      )}
+                      <h3 className="text-lg font-medium leading-tight mb-3 group-hover:text-gray-600 transition-colors">
+                        {resource.title}
+                      </h3>
+                      {resource.editorialSummary && (
+                        <p className="text-sm text-gray-500 leading-relaxed line-clamp-3 flex-1">
+                          {resource.editorialSummary}
+                        </p>
+                      )}
+                      <div className="mt-4 pt-4 border-t border-gray-50">
+                        <span className="text-xs font-medium text-black group-hover:text-gray-500 transition-colors">
+                          Read more →
+                        </span>
                       </div>
                     </div>
                   </FadeIn>
                 );
 
                 return isExternal ? (
-                  <a key={resource._id} href={href} target="_blank" rel="noopener noreferrer" className={index === 0 ? 'md:col-span-2 md:row-span-2' : ''}>
-                    {card}
+                  <a key={resource._id} href={href} target="_blank" rel="noopener noreferrer" className="block">
+                    {inner}
                   </a>
                 ) : (
-                  <Link key={resource._id} to={href} className={index === 0 ? 'md:col-span-2 md:row-span-2' : ''}>
-                    {card}
+                  <Link key={resource._id} to={href} className="block">
+                    {inner}
                   </Link>
                 );
               })}
