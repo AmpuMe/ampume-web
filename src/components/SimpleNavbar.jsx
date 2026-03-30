@@ -35,7 +35,7 @@ const SimpleNavbar = ({ transparent = false }) => {
           <div className="hidden lg:flex col-span-3 justify-end items-center">
              <Link
                to="/contact"
-               className={`px-6 py-3 rounded-full font-bold text-xs uppercase tracking-widest transition-colors inline-flex items-center justify-center ${isTransparent ? 'bg-white text-black hover:bg-gray-200' : 'bg-black text-white hover:bg-gray-800'}`}
+               className={`px-6 pt-[14px] pb-[12px] rounded-full font-bold text-xs uppercase tracking-widest leading-none transition-colors inline-flex items-center justify-center ${isTransparent ? 'bg-white text-black hover:bg-gray-200' : 'bg-black text-white hover:bg-gray-800'}`}
              >
               Contact
             </Link>

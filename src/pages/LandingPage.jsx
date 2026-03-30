@@ -10,6 +10,7 @@ import marketplaceImage from '../assets/shop.webp';
 import peopleImage from '../assets/people.webp';
 import friendsImage from '../assets/friends.webp';
 import cardPhoto from '../assets/support.webp';
+import telehealthImage from '../assets/telehealth.webp';
 
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
   <motion.div
@@ -100,7 +101,7 @@ const LandingPage = () => {
           <div className="hidden lg:flex col-span-3 justify-end items-center">
             <button
               onClick={() => handleNavClick('/contact')}
-              className={`px-6 py-3 rounded-full font-bold text-xs uppercase tracking-widest transition-colors inline-flex items-center justify-center ${scrolled ? 'bg-black text-white hover:bg-gray-800' : 'bg-white text-black hover:bg-gray-200'}`}
+              className={`px-6 pt-[14px] pb-[12px] rounded-full font-bold text-xs uppercase tracking-widest leading-none transition-colors inline-flex items-center justify-center ${scrolled ? 'bg-black text-white hover:bg-gray-800' : 'bg-white text-black hover:bg-gray-200'}`}
             >
               Contact
             </button>
@@ -231,7 +232,7 @@ const LandingPage = () => {
 
             {/* Telehealth — Position 4 */}
             <FadeIn id="telehealth" onClick={() => setModalOpen(true)} delay={0.3} className="group relative h-[500px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
-              <img src={cardPhoto} loading="lazy" alt="Telehealth" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={telehealthImage} loading="lazy" alt="Telehealth" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
               <div className="absolute top-8 left-8 z-10 flex gap-2">
                 <span className="text-[11px] font-bold uppercase tracking-widest bg-white text-black px-3 pt-[7px] pb-[5px] leading-none">Care</span>
