@@ -30,7 +30,6 @@ const SimpleNavbar = ({ transparent = false }) => {
             <Link to="/shop" className="text-sm font-medium hover:opacity-70 transition-opacity">Shop</Link>
             <Link to="/resources" className="text-sm font-medium hover:opacity-70 transition-opacity">Resources</Link>
             <Link to="/ai-support" className="text-sm font-medium hover:opacity-70 transition-opacity">AI Support</Link>
-            <Link to="/contact" className="text-sm font-medium hover:opacity-70 transition-opacity">Contact</Link>
           </div>
 
           <div className="hidden lg:flex col-span-3 justify-end items-center">

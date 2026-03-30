@@ -128,6 +128,9 @@ const LandingPage = () => {
                   {link.name}
                 </button>
               ))}
+              <button onClick={() => { setMobileMenuOpen(false); handleNavClick('/contact'); }} className="text-left">
+                Contact
+              </button>
             </div>
           </motion.div>
         )}
@@ -175,7 +178,7 @@ const LandingPage = () => {
               <img src={friendsImage} loading="lazy" alt="AI Support" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
               <div className="absolute top-8 left-8 z-10 flex gap-2">
-                <span className="text-xs font-bold uppercase tracking-widest bg-white text-black px-3 py-1.5 leading-none inline-flex items-center">Ask</span>
+                <span className="text-[11px] font-bold uppercase tracking-widest bg-white text-black px-3 pt-[7px] pb-[5px] leading-none">Ask</span>
               </div>
               <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
                 <h4 className="text-3xl font-medium mb-3">Ask Anything</h4>
@@ -194,7 +197,7 @@ const LandingPage = () => {
                 <img src={marketplaceImage} loading="lazy" alt="Shop" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
                 <div className="absolute top-8 left-8 z-10 flex gap-2">
-                  <span className="text-xs font-bold uppercase tracking-widest bg-white text-black px-3 py-1.5 leading-none inline-flex items-center">Shop</span>
+                  <span className="text-[11px] font-bold uppercase tracking-widest bg-white text-black px-3 pt-[7px] pb-[5px] leading-none">Shop</span>
                 </div>
                 <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
                   <h4 className="text-3xl font-medium mb-3">Shop Prosthetic Essentials</h4>
@@ -213,7 +216,7 @@ const LandingPage = () => {
               <img src={peopleImage} loading="lazy" alt="Resources" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
               <div className="absolute top-8 left-8 z-10 flex gap-2">
-                <span className="text-xs font-bold uppercase tracking-widest bg-white text-black px-3 py-1.5 leading-none inline-flex items-center">Learn and Connect</span>
+                <span className="text-[11px] font-bold uppercase tracking-widest bg-white text-black px-3 pt-[7px] pb-[5px] leading-none">Learn and Connect</span>
               </div>
               <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
                 <h4 className="text-3xl font-medium mb-3">Knowledge Hub</h4>
@@ -231,7 +234,7 @@ const LandingPage = () => {
               <img src={cardPhoto} loading="lazy" alt="Telehealth" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
               <div className="absolute top-8 left-8 z-10 flex gap-2">
-                <span className="text-xs font-bold uppercase tracking-widest bg-white text-black px-3 py-1.5 leading-none inline-flex items-center">Care</span>
+                <span className="text-[11px] font-bold uppercase tracking-widest bg-white text-black px-3 pt-[7px] pb-[5px] leading-none">Care</span>
               </div>
               <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
                 <h4 className="text-3xl font-medium mb-3">Telehealth</h4>
