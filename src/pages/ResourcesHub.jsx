@@ -56,7 +56,7 @@ export default function ResourcesHub() {
             <img
               src={heroImage}
               alt="Two amputees sharing knowledge and support"
-              className="w-full h-full object-cover object-center"
+              className="w-full h-full object-cover object-[70%_center] lg:object-center"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
