@@ -27,7 +27,6 @@ const SimpleNavbar = ({ transparent = false }) => {
           </div>
 
           <div className="hidden lg:flex col-span-6 justify-center gap-12">
-            <Link to="/" className="text-sm font-medium hover:opacity-70 transition-opacity">Home</Link>
             <Link to="/shop" className="text-sm font-medium hover:opacity-70 transition-opacity">Shop</Link>
             <Link to="/resources" className="text-sm font-medium hover:opacity-70 transition-opacity">Resources</Link>
             <Link to="/ai-support" className="text-sm font-medium hover:opacity-70 transition-opacity">AI Support</Link>
@@ -58,7 +57,6 @@ const SimpleNavbar = ({ transparent = false }) => {
               <button onClick={() => setMobileMenuOpen(false)} aria-label="Close menu"><X size={24} /></button>
             </div>
             <div className="flex flex-col gap-6 text-xl font-medium">
-              <Link to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
               <Link to="/shop" onClick={() => setMobileMenuOpen(false)}>Shop</Link>
               <Link to="/resources" onClick={() => setMobileMenuOpen(false)}>Resources</Link>
               <Link to="/ai-support" onClick={() => setMobileMenuOpen(false)}>AI Support</Link>
