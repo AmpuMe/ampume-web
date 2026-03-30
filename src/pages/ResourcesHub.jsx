@@ -4,7 +4,8 @@ import SimpleNavbar from '../components/SimpleNavbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import PillarCard from '../components/PillarCard';
-import { fetchPillars } from '../lib/sanity';
+import ResourceCard from '../components/ResourceCard';
+import { fetchPillars, fetchLatestResources } from '../lib/sanity';
 import heroImage from '../assets/resources-hero.webp';
 
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
@@ -21,22 +22,27 @@ const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
 
 export default function ResourcesHub() {
   const [pillars, setPillars] = useState([]);
+  const [latestResources, setLatestResources] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const loadPillars = async () => {
+    const loadData = async () => {
       try {
-        const result = await fetchPillars();
-        setPillars(result || []);
+        const [pillarsResult, latestResult] = await Promise.all([
+          fetchPillars(),
+          fetchLatestResources(),
+        ]);
+        setPillars(pillarsResult || []);
+        setLatestResources(latestResult || []);
       } catch (err) {
-        console.error('Error loading pillars:', err);
+        console.error('Error loading resources:', err);
         setError(err.message);
       } finally {
         setIsLoading(false);
       }
     };
-    loadPillars();
+    loadData();
   }, []);
 
   return (
@@ -76,8 +82,32 @@ export default function ResourcesHub() {
           </div>
         </section>
 
-        {/* Pillar Grid */}
+        {/* Latest Resources */}
+        {latestResources.length > 0 && (
+          <section className="px-6 md:px-12 pt-16 md:pt-20">
+            <FadeIn>
+              <div className="flex justify-between items-end mb-8">
+                <h2 className="text-2xl font-medium">Latest Resources</h2>
+              </div>
+            </FadeIn>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-16 md:mb-20">
+              {latestResources.map((resource, index) => (
+                <ResourceCard
+                  key={resource._id}
+                  resource={resource}
+                  pillarSlug={resource.pillar?.slug?.current}
+                  index={index}
+                />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Browse by Category */}
         <section className="px-6 md:px-12 pt-16 md:pt-20">
+          <FadeIn className="mb-8">
+            <h2 className="text-2xl font-medium">Browse by Category</h2>
+          </FadeIn>
           {isLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {[...Array(5)].map((_, i) => (

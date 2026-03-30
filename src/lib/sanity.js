@@ -72,6 +72,24 @@ export const FEATURED_RESOURCES_QUERY = `
   }
 `;
 
+export const LATEST_RESOURCES_QUERY = `
+  *[_type == "resource"] | order(publishedAt desc) [0...6] {
+    _id,
+    title,
+    slug,
+    contentType,
+    editorialSummary,
+    externalUrl,
+    "thumbnailImage": thumbnail.asset->url,
+    thumbnailUrl,
+    source,
+    featured,
+    tags,
+    publishedAt,
+    "pillar": pillar->{ title, slug }
+  }
+`;
+
 export const RESOURCE_DETAIL_QUERY = `
   *[_type == "resource" && slug.current == $slug][0] {
     _id,
@@ -104,6 +122,10 @@ export async function fetchPillarWithResources(slug) {
 
 export async function fetchFeaturedResources() {
   return sanityFetch(FEATURED_RESOURCES_QUERY);
+}
+
+export async function fetchLatestResources() {
+  return sanityFetch(LATEST_RESOURCES_QUERY);
 }
 
 export async function fetchResourceDetail(slug) {
