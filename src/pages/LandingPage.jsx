@@ -57,7 +57,6 @@ const LandingPage = () => {
     { name: 'Shop', href: '/shop' },
     { name: 'Resources', href: '/resources' },
     { name: 'AI Support', href: '/ai-support' },
-    { name: 'Contact', href: '/contact' },
   ];
 
   const handleNavClick = (href) => {
@@ -67,7 +66,9 @@ const LandingPage = () => {
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const offset = 80;
+      const top = element.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
     }
   };
 
@@ -99,7 +100,7 @@ const LandingPage = () => {
           <div className="hidden lg:flex col-span-3 justify-end items-center">
             <button
               onClick={() => handleNavClick('/contact')}
-              className={`px-6 py-3 rounded-full font-bold text-xs uppercase tracking-widest transition-colors ${scrolled ? 'bg-black text-white hover:bg-gray-800' : 'bg-white text-black hover:bg-gray-200'}`}
+              className={`px-6 py-3 rounded-full font-bold text-xs uppercase tracking-widest transition-colors inline-flex items-center justify-center ${scrolled ? 'bg-black text-white hover:bg-gray-800' : 'bg-white text-black hover:bg-gray-200'}`}
             >
               Contact
             </button>
@@ -174,7 +175,7 @@ const LandingPage = () => {
               <img src={friendsImage} loading="lazy" alt="AI Support" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
               <div className="absolute top-8 left-8 z-10 flex gap-2">
-                <span className="text-xs font-bold uppercase tracking-widest bg-white text-black px-3 py-1">Ask</span>
+                <span className="text-xs font-bold uppercase tracking-widest bg-white text-black px-3 py-1.5 leading-none inline-flex items-center">Ask</span>
               </div>
               <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
                 <h4 className="text-3xl font-medium mb-3">Ask Anything</h4>
@@ -193,7 +194,7 @@ const LandingPage = () => {
                 <img src={marketplaceImage} loading="lazy" alt="Shop" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
                 <div className="absolute top-8 left-8 z-10 flex gap-2">
-                  <span className="text-xs font-bold uppercase tracking-widest bg-white text-black px-3 py-1">Shop</span>
+                  <span className="text-xs font-bold uppercase tracking-widest bg-white text-black px-3 py-1.5 leading-none inline-flex items-center">Shop</span>
                 </div>
                 <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
                   <h4 className="text-3xl font-medium mb-3">Shop Prosthetic Essentials</h4>
@@ -212,7 +213,7 @@ const LandingPage = () => {
               <img src={peopleImage} loading="lazy" alt="Resources" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
               <div className="absolute top-8 left-8 z-10 flex gap-2">
-                <span className="text-xs font-bold uppercase tracking-widest bg-white text-black px-3 py-1">Learn and Connect</span>
+                <span className="text-xs font-bold uppercase tracking-widest bg-white text-black px-3 py-1.5 leading-none inline-flex items-center">Learn and Connect</span>
               </div>
               <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
                 <h4 className="text-3xl font-medium mb-3">Knowledge Hub</h4>
@@ -230,7 +231,7 @@ const LandingPage = () => {
               <img src={cardPhoto} loading="lazy" alt="Telehealth" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
               <div className="absolute top-8 left-8 z-10 flex gap-2">
-                <span className="text-xs font-bold uppercase tracking-widest bg-white text-black px-3 py-1">Care</span>
+                <span className="text-xs font-bold uppercase tracking-widest bg-white text-black px-3 py-1.5 leading-none inline-flex items-center">Care</span>
               </div>
               <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
                 <h4 className="text-3xl font-medium mb-3">Telehealth</h4>

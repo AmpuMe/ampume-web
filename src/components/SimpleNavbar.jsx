@@ -26,16 +26,17 @@ const SimpleNavbar = ({ transparent = false }) => {
             </Link>
           </div>
 
-          <div className="hidden lg:flex col-span-6 justify-center gap-12">
+          <div className="hidden lg:flex col-span-6 justify-center gap-6 xl:gap-12">
             <Link to="/shop" className="text-sm font-medium hover:opacity-70 transition-opacity">Shop</Link>
             <Link to="/resources" className="text-sm font-medium hover:opacity-70 transition-opacity">Resources</Link>
             <Link to="/ai-support" className="text-sm font-medium hover:opacity-70 transition-opacity">AI Support</Link>
+            <Link to="/contact" className="text-sm font-medium hover:opacity-70 transition-opacity">Contact</Link>
           </div>
 
           <div className="hidden lg:flex col-span-3 justify-end items-center">
              <Link
                to="/contact"
-               className={`px-6 py-3 rounded-full font-bold text-xs uppercase tracking-widest transition-colors ${isTransparent ? 'bg-white text-black hover:bg-gray-200' : 'bg-black text-white hover:bg-gray-800'}`}
+               className={`px-6 py-3 rounded-full font-bold text-xs uppercase tracking-widest transition-colors inline-flex items-center justify-center ${isTransparent ? 'bg-white text-black hover:bg-gray-200' : 'bg-black text-white hover:bg-gray-800'}`}
              >
               Contact
             </Link>

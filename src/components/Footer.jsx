@@ -13,7 +13,7 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="col-span-6 md:col-span-2 md:col-start-5">
+        <div className="col-span-6 md:col-span-2 md:col-start-10">
           <h3 className="text-xs font-bold uppercase tracking-widest mb-8 text-gray-400">Platform</h3>
           <ul className="space-y-4 text-sm font-medium">
             <li><Link to="/shop" className="hover:text-white transition-colors text-gray-300">Shop</Link></li>
