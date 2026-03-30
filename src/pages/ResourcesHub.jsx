@@ -101,24 +101,36 @@ export default function ResourcesHub() {
 
                 const inner = (
                   <FadeIn delay={index * 0.1} className="group h-full">
-                    <div className="border border-gray-100 rounded-lg p-6 md:p-8 hover:border-gray-300 transition-all duration-300 h-full flex flex-col">
-                      {pillarTitle && (
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3 block">
-                          {pillarTitle}
-                        </span>
+                    <div className="border border-gray-100 rounded-lg overflow-hidden hover:border-gray-300 transition-all duration-300 h-full flex flex-col">
+                      {(resource.thumbnailImage || resource.thumbnailUrl) && (
+                        <div className="aspect-[16/9] bg-gray-50 overflow-hidden">
+                          <img
+                            src={resource.thumbnailImage || resource.thumbnailUrl}
+                            alt=""
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            loading="lazy"
+                          />
+                        </div>
                       )}
-                      <h3 className="text-lg font-medium leading-tight mb-3 group-hover:text-gray-600 transition-colors">
-                        {resource.title}
-                      </h3>
-                      {resource.editorialSummary && (
-                        <p className="text-sm text-gray-500 leading-relaxed line-clamp-3 flex-1">
-                          {resource.editorialSummary}
-                        </p>
-                      )}
-                      <div className="mt-4 pt-4 border-t border-gray-50">
-                        <span className="text-xs font-medium text-black group-hover:text-gray-500 transition-colors">
-                          Read more →
-                        </span>
+                      <div className="p-6 md:p-8 flex flex-col flex-1">
+                        {pillarTitle && (
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3 block">
+                            {pillarTitle}
+                          </span>
+                        )}
+                        <h3 className="text-lg font-medium leading-tight mb-3 group-hover:text-gray-600 transition-colors">
+                          {resource.title}
+                        </h3>
+                        {resource.editorialSummary && (
+                          <p className="text-sm text-gray-500 leading-relaxed line-clamp-3 flex-1">
+                            {resource.editorialSummary}
+                          </p>
+                        )}
+                        <div className="mt-4 pt-4 border-t border-gray-50">
+                          <span className="text-xs font-medium text-black group-hover:text-gray-500 transition-colors">
+                            Read more →
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </FadeIn>
