@@ -120,8 +120,17 @@ export default function ProductPage() {
     })?.node;
   }, [product, selectedOptions]);
 
-  // Get images
-  const images = product?.images?.edges?.map(edge => edge.node) || [];
+  // Get images — remove 3rd image from Alpha Classic BK products (not applicable to BK profile)
+  const rawImages = product?.images?.edges?.map(edge => edge.node) || [];
+  const images = useMemo(() => {
+    const title = (product?.title || '').toLowerCase();
+    const isAlphaClassicBK = title.includes('alpha') && title.includes('classic') &&
+      (title.includes('below-knee') || title.includes('below knee') || title.includes('bk'));
+    if (isAlphaClassicBK && rawImages.length >= 3) {
+      return rawImages.filter((_, i) => i !== 2);
+    }
+    return rawImages;
+  }, [product, rawImages]);
 
   // Handle option change
   const handleOptionChange = (optionName, value) => {
@@ -304,9 +313,27 @@ export default function ProductPage() {
                 {/* Color/Fabric Navigation */}
                 {currentGroup && (
                   <div className="mb-6 pb-6 border-b border-gray-100">
-                    <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">
-                      Color / Fabric
-                    </p>
+                    <div className="flex items-center gap-2 mb-3">
+                      <p className="text-xs font-bold uppercase tracking-widest text-gray-400">
+                        Color / Fabric
+                      </p>
+                      {linerDesc?.fabricOptions && (
+                        <a
+                          href="#fabric"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            const el = document.getElementById('fabric');
+                            if (el) {
+                              const top = el.getBoundingClientRect().top + window.scrollY - 80;
+                              window.scrollTo({ top, behavior: 'smooth' });
+                            }
+                          }}
+                          className="text-xs text-gray-400 hover:text-black transition-colors underline underline-offset-2"
+                        >
+                          What's the difference?
+                        </a>
+                      )}
+                    </div>
                     <div className="flex flex-wrap gap-2">
                       {currentGroup.products.map((sibling) => {
                         const label = extractVariantLabel(sibling.title, currentGroup.baseName);
@@ -476,6 +503,7 @@ export default function ProductPage() {
           <div className="max-w-6xl mx-auto px-4 md:px-12 flex justify-center gap-4 sm:gap-6 md:gap-8 flex-wrap">
             {[
               { label: 'Sizing & Fit', id: 'sizing-guide' },
+              ...(linerDesc.fabricOptions ? [{ label: 'Fabric', id: 'fabric' }] : []),
               { label: 'Overview', id: 'overview' },
               { label: 'Features', id: 'features' },
               { label: 'Care & Maintenance', id: 'care-maintenance' },

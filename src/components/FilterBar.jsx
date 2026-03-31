@@ -37,19 +37,6 @@ const FILTER_CONFIGS = {
         return title.includes(value) || tags.includes(value) || optionValues.some(v => v.includes(value));
       },
     },
-    {
-      key: 'brand',
-      label: 'Brand',
-      options: [
-        { value: 'all', label: 'All' },
-        { value: 'WillowWood', label: 'WillowWood' },
-        { value: 'ALPS', label: 'ALPS' },
-      ],
-      match: (product, value) => {
-        if (value === 'all') return true;
-        return (product.vendor || '').toLowerCase() === value.toLowerCase();
-      },
-    },
   ],
 };
 

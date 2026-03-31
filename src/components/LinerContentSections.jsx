@@ -19,6 +19,34 @@ export default function LinerContentSections({ linerDesc, showPdfDownload }) {
 
   return (
     <>
+      {/* Fabric Options - BK liners only, positioned before Overview per client request */}
+      {linerDesc.fabricOptions && (
+        <section id="fabric" className="py-16 md:py-20 border-t border-gray-100">
+          <FadeIn className="max-w-6xl mx-auto px-6 md:px-12">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
+              <div className="md:col-span-4">
+                <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 block">
+                  Fabric Options
+                </span>
+                <h2 className="text-2xl md:text-3xl font-light tracking-tight">
+                  Fabric Options
+                </h2>
+              </div>
+              <div className="md:col-span-7 md:col-start-6">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {linerDesc.fabricOptions.map((opt, i) => (
+                    <div key={i} className="bg-brand-offwhite rounded-lg p-5">
+                      <h4 className="text-sm font-bold mb-2">{opt.name}</h4>
+                      <p className="text-sm text-gray-600 leading-relaxed">{opt.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </FadeIn>
+        </section>
+      )}
+
       {/* Product Overview */}
       <section id="overview" className="py-16 md:py-20 border-t border-gray-100">
         <FadeIn className="max-w-6xl mx-auto px-6 md:px-12">
@@ -56,34 +84,6 @@ export default function LinerContentSections({ linerDesc, showPdfDownload }) {
           </div>
         </FadeIn>
       </section>
-
-      {/* Fabric Options - BK liners only */}
-      {linerDesc.fabricOptions && (
-        <section className="py-16 md:py-20 border-t border-gray-100">
-          <FadeIn className="max-w-6xl mx-auto px-6 md:px-12">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
-              <div className="md:col-span-4">
-                <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 block">
-                  Fabric Options
-                </span>
-                <h2 className="text-2xl md:text-3xl font-light tracking-tight">
-                  Fabric Options
-                </h2>
-              </div>
-              <div className="md:col-span-7 md:col-start-6">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {linerDesc.fabricOptions.map((opt, i) => (
-                    <div key={i} className="bg-brand-offwhite rounded-lg p-5">
-                      <h4 className="text-sm font-bold mb-2">{opt.name}</h4>
-                      <p className="text-sm text-gray-600 leading-relaxed">{opt.desc}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </FadeIn>
-        </section>
-      )}
 
       {/* Technology - ALPS GP only */}
       {(linerDesc.gelTechnology || linerDesc.fabricTechnology) && (
