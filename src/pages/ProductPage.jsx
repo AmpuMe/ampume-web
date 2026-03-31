@@ -169,20 +169,17 @@ export default function ProductPage() {
       imgs = imgs.filter((_, i) => i !== 2);
     }
 
-    // Inject sizing chart and measurement guide images for liner products
+    // Inject sizing chart image into gallery for liner products
     if (linerDesc?.sizingType) {
       const chartMap = {
-        'alpha-ak': { chart: '/images/sizing/ak-sizing-chart.webp', guide: '/images/sizing/ak-measurement-guide.png' },
-        'alpha-bk': { chart: '/images/sizing/bk-sizing-chart.webp', guide: '/images/sizing/bk-measurement-guide.png' },
-        'easyliner': { chart: '/images/sizing/easyliner-sizing-chart.webp', guide: '/images/sizing/bk-measurement-guide.png' },
-        'alps-gp': { chart: '/images/sizing/alps-gp-sizing-chart.webp', guide: '/images/sizing/bk-measurement-guide.png' },
+        'alpha-ak': '/images/sizing/ak-sizing-chart.webp',
+        'alpha-bk': '/images/sizing/bk-sizing-chart.webp',
+        'easyliner': '/images/sizing/easyliner-sizing-chart.webp',
+        'alps-gp': '/images/sizing/alps-gp-sizing-chart.webp',
       };
-      const sizing = chartMap[linerDesc.sizingType];
-      if (sizing) {
-        imgs.push(
-          { url: sizing.guide, altText: 'How to measure for this liner' },
-          { url: sizing.chart, altText: 'Sizing chart' },
-        );
+      const chartUrl = chartMap[linerDesc.sizingType];
+      if (chartUrl) {
+        imgs.push({ url: chartUrl, altText: 'Sizing chart' });
       }
     }
 
