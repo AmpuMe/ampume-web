@@ -533,8 +533,8 @@ export default function ProductPage() {
         <nav className="sticky top-0 z-30 bg-white border-b border-gray-100 shadow-sm pt-2">
           <div className="max-w-6xl mx-auto px-4 md:px-12 flex justify-center gap-4 sm:gap-6 md:gap-8 flex-wrap">
             {[
-              { label: 'Sizing & Fit', id: 'sizing-guide' },
               ...(linerDesc.fabricOptions ? [{ label: 'Fabric', id: 'fabric' }] : []),
+              { label: 'Sizing & Fit', id: 'sizing-guide' },
               { label: 'Overview', id: 'overview' },
               { label: 'Features', id: 'features' },
               { label: 'Care & Maintenance', id: 'care-maintenance' },
@@ -563,10 +563,17 @@ export default function ProductPage() {
       {/* Full-width liner content sections */}
       {isLiner && linerDesc && (
         <>
+          {/* Fabric section renders before Sizing for BK products with fabric options */}
+          <LinerContentSections
+            linerDesc={linerDesc}
+            showPdfDownload={product.vendor === 'WillowWood' || product.vendor === 'Ohio Willow Wood' || (product.tags || []).some(t => t.toLowerCase().includes('alpha'))}
+            renderFabricOnly
+          />
           <SizingGuide sizingType={linerDesc.sizingType} measuringGuide={linerDesc.measuringGuide} />
           <LinerContentSections
             linerDesc={linerDesc}
             showPdfDownload={product.vendor === 'WillowWood' || product.vendor === 'Ohio Willow Wood' || (product.tags || []).some(t => t.toLowerCase().includes('alpha'))}
+            skipFabric
           />
         </>
       )}
