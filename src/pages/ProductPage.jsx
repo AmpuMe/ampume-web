@@ -348,7 +348,7 @@ export default function ProductPage() {
                               window.scrollTo({ top, behavior: 'smooth' });
                             }
                           }}
-                          className="text-xs text-gray-400 hover:text-black transition-colors underline underline-offset-2"
+                          className="text-xs text-black hover:text-gray-500 transition-colors underline underline-offset-2"
                         >
                           What's the difference?
                         </a>
