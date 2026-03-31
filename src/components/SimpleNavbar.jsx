@@ -53,7 +53,7 @@ const SimpleNavbar = ({ transparent = false }) => {
         {mobileMenuOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[60] bg-white text-black p-6 flex flex-col">
             <div className="flex justify-between items-center mb-12">
-              <span className="text-2xl font-bold uppercase">AmpuMe.</span>
+              <span className="text-xl font-semibold tracking-tight uppercase">AmpuMe.</span>
               <button onClick={() => setMobileMenuOpen(false)} aria-label="Close menu"><X size={24} /></button>
             </div>
             <div className="flex flex-col gap-6 text-xl font-medium">
