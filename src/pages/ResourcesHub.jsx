@@ -82,72 +82,115 @@ export default function ResourcesHub() {
           </div>
         </section>
 
-        {/* Latest Resources */}
-        {latestResources.length > 0 && (
+        {/* Latest Resources — featured hero + secondary cards */}
+        {latestResources.length > 0 && (() => {
+          const makeHref = (r) => {
+            const ps = r.pillar?.slug?.current;
+            return r.contentType === 'externalLink' && r.externalUrl
+              ? r.externalUrl : `/resources/${ps}/${r.slug?.current}`;
+          };
+          const isExt = (r) => r.contentType === 'externalLink' && r.externalUrl;
+          const Wrap = ({ resource, children, className = '' }) => {
+            const href = makeHref(resource);
+            return isExt(resource)
+              ? <a href={href} target="_blank" rel="noopener noreferrer" className={className}>{children}</a>
+              : <Link to={href} className={className}>{children}</Link>;
+          };
+          const featured = latestResources[0];
+          const secondary = latestResources.slice(1, 3);
+          const thumb = (r) => r.thumbnailImage || r.thumbnailUrl;
+
+          return (
           <section className="px-6 md:px-12 pt-16 md:pt-20">
             <FadeIn>
               <div className="flex justify-between items-end mb-8">
                 <h2 className="text-2xl font-medium">Latest</h2>
+                <Link to="/resources" className="text-sm text-gray-400 hover:text-black transition-colors">View all</Link>
               </div>
             </FadeIn>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 md:mb-20">
-              {latestResources.slice(0, 3).map((resource, index) => {
-                const pillarSlug = resource.pillar?.slug?.current;
-                const pillarTitle = resource.pillar?.title;
-                const isExternal = resource.contentType === 'externalLink' && resource.externalUrl;
-                const href = isExternal
-                  ? resource.externalUrl
-                  : `/resources/${pillarSlug}/${resource.slug?.current}`;
 
-                const inner = (
-                  <FadeIn delay={index * 0.1} className="group h-full">
-                    <div className="border border-gray-100 rounded-lg overflow-hidden hover:border-gray-300 transition-all duration-300 h-full flex flex-col">
-                      {(resource.thumbnailImage || resource.thumbnailUrl) && (
-                        <div className="aspect-[16/9] bg-gray-50 overflow-hidden">
-                          <img
-                            src={resource.thumbnailImage || resource.thumbnailUrl}
-                            alt=""
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            loading="lazy"
-                          />
-                        </div>
-                      )}
-                      <div className="p-6 md:p-8 flex flex-col flex-1">
-                        {pillarTitle && (
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3 block">
-                            {pillarTitle}
-                          </span>
+            {/* Featured article — large horizontal card */}
+            <FadeIn className="mb-6">
+              <Wrap resource={featured} className="group block">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-gray-100 rounded-lg overflow-hidden hover:border-gray-300 transition-all duration-300">
+                  {thumb(featured) && (
+                    <div className="aspect-[16/9] md:aspect-auto bg-gray-50 overflow-hidden">
+                      <img
+                        src={thumb(featured)}
+                        alt=""
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+                  <div className="p-6 md:p-10 flex flex-col justify-center">
+                    {featured.pillar?.title && (
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3 block">
+                        {featured.pillar.title}
+                      </span>
+                    )}
+                    <h3 className="text-xl md:text-2xl font-medium leading-tight mb-3 group-hover:text-gray-600 transition-colors">
+                      {featured.title}
+                    </h3>
+                    {featured.editorialSummary && (
+                      <p className="text-sm text-gray-500 leading-relaxed mb-4 line-clamp-3">
+                        {featured.editorialSummary}
+                      </p>
+                    )}
+                    <span className="text-sm font-medium text-black group-hover:text-gray-500 transition-colors">
+                      Read article →
+                    </span>
+                  </div>
+                </div>
+              </Wrap>
+            </FadeIn>
+
+            {/* Secondary articles — 2 smaller cards */}
+            {secondary.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16 md:mb-20">
+                {secondary.map((resource, index) => (
+                  <FadeIn key={resource._id} delay={(index + 1) * 0.1}>
+                    <Wrap resource={resource} className="group block h-full">
+                      <div className="border border-gray-100 rounded-lg overflow-hidden hover:border-gray-300 transition-all duration-300 h-full flex flex-col">
+                        {thumb(resource) && (
+                          <div className="aspect-[16/9] bg-gray-50 overflow-hidden">
+                            <img
+                              src={thumb(resource)}
+                              alt=""
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                              loading="lazy"
+                            />
+                          </div>
                         )}
-                        <h3 className="text-lg font-medium leading-tight mb-3 group-hover:text-gray-600 transition-colors">
-                          {resource.title}
-                        </h3>
-                        {resource.editorialSummary && (
-                          <p className="text-sm text-gray-500 leading-relaxed line-clamp-3 flex-1">
-                            {resource.editorialSummary}
-                          </p>
-                        )}
-                        <div className="mt-4 pt-4 border-t border-gray-50">
-                          <span className="text-xs font-medium text-black group-hover:text-gray-500 transition-colors">
-                            Read more →
-                          </span>
+                        <div className="p-6 flex flex-col flex-1">
+                          {resource.pillar?.title && (
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
+                              {resource.pillar.title}
+                            </span>
+                          )}
+                          <h3 className="text-base font-medium leading-tight mb-2 group-hover:text-gray-600 transition-colors">
+                            {resource.title}
+                          </h3>
+                          {resource.editorialSummary && (
+                            <p className="text-xs text-gray-500 leading-relaxed line-clamp-2 flex-1">
+                              {resource.editorialSummary}
+                            </p>
+                          )}
+                          <div className="mt-3 pt-3 border-t border-gray-50">
+                            <span className="text-xs font-medium text-black group-hover:text-gray-500 transition-colors">
+                              Read more →
+                            </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </Wrap>
                   </FadeIn>
-                );
-
-                return isExternal ? (
-                  <a key={resource._id} href={href} target="_blank" rel="noopener noreferrer" className="block">
-                    {inner}
-                  </a>
-                ) : (
-                  <Link key={resource._id} to={href} className="block">
-                    {inner}
-                  </Link>
-                );
-              })}
-            </div>
+                ))}
+              </div>
+            )}
           </section>
+          );
+        })()}
         )}
 
         {/* Browse by Category */}
