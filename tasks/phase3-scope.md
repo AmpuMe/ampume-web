@@ -29,7 +29,7 @@
 
 ## D. Resources & Content
 - [x] 1. "Latest Resources" section on hub page
-- [ ] 2. Latest section design: match blog reference patterns (featured hero card + smaller cards)
+- [x] 2. Latest section design: featured hero card + 2 secondary cards, shadow depth, dates, hover
 - [x] 3. Content backfill: 20 articles across pillars (10 batch 1 + 10 batch 2)
 - [x] 4. Article cover images generated for all 20 articles
 - [ ] 5. 3 new resource links — BLOCKED: need URLs from Alex
@@ -37,8 +37,8 @@
       - The Ultimate Guide for Residual Limb Skin Care
       - Adaptive Fitness with Amy Bream: Strength, Training, and Life as an Adaptive Athlete
 - [x] 6. Resources hero image (spring scene, dress, responsive positioning)
-- [ ] 7. Verify resource-to-pillar mapping matches Alex's intended mapping
-- [ ] 8. Review blog reference designs for hub page layout improvements:
+- [x] 7. Verify resource-to-pillar mapping matches Alex's intended mapping (verified — all 17 external links correct)
+- [x] 8. Review blog reference designs for hub page layout improvements:
       - Mark Manson blog
       - https://dribbble.com/stories
       - https://www.nateliason.com/blog
