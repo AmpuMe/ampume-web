@@ -99,6 +99,7 @@ export default function ResourcesHub() {
           const featured = latestResources[0];
           const secondary = latestResources.slice(1, 3);
           const thumb = (r) => r.thumbnailImage || r.thumbnailUrl;
+          const fmtDate = (d) => d ? new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : null;
 
           return (
           <section className="px-6 md:px-12 pt-16 md:pt-20">
@@ -112,28 +113,33 @@ export default function ResourcesHub() {
             {/* Featured article — large horizontal card */}
             <FadeIn className="mb-6">
               <Wrap resource={featured} className="group block">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-gray-100 rounded-lg overflow-hidden hover:border-gray-300 transition-all duration-300">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-0 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 hover:border-gray-200">
                   {thumb(featured) && (
-                    <div className="aspect-[16/9] md:aspect-auto bg-gray-50 overflow-hidden">
+                    <div className="aspect-[16/9] md:aspect-auto md:min-h-[320px] bg-gray-50 overflow-hidden">
                       <img
                         src={thumb(featured)}
                         alt=""
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                         loading="lazy"
                       />
                     </div>
                   )}
                   <div className="p-6 md:p-10 flex flex-col justify-center">
-                    {featured.pillar?.title && (
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3 block">
-                        {featured.pillar.title}
-                      </span>
-                    )}
+                    <div className="flex items-center gap-3 mb-3">
+                      {featured.pillar?.title && (
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                          {featured.pillar.title}
+                        </span>
+                      )}
+                      {featured.publishedAt && (
+                        <span className="text-[10px] text-gray-300">{fmtDate(featured.publishedAt)}</span>
+                      )}
+                    </div>
                     <h3 className="text-xl md:text-2xl font-medium leading-tight mb-3 group-hover:text-gray-600 transition-colors">
                       {featured.title}
                     </h3>
                     {featured.editorialSummary && (
-                      <p className="text-sm text-gray-500 leading-relaxed mb-4 line-clamp-3">
+                      <p className="text-sm text-gray-500 leading-relaxed mb-5 line-clamp-3">
                         {featured.editorialSummary}
                       </p>
                     )}
@@ -151,23 +157,28 @@ export default function ResourcesHub() {
                 {secondary.map((resource, index) => (
                   <FadeIn key={resource._id} delay={(index + 1) * 0.1}>
                     <Wrap resource={resource} className="group block h-full">
-                      <div className="border border-gray-100 rounded-lg overflow-hidden hover:border-gray-300 transition-all duration-300 h-full flex flex-col">
+                      <div className="border border-gray-100 rounded-lg overflow-hidden hover:border-gray-200 hover:shadow-sm transition-all duration-300 h-full flex flex-col">
                         {thumb(resource) && (
                           <div className="aspect-[16/9] bg-gray-50 overflow-hidden">
                             <img
                               src={thumb(resource)}
                               alt=""
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                              className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                               loading="lazy"
                             />
                           </div>
                         )}
                         <div className="p-6 flex flex-col flex-1">
-                          {resource.pillar?.title && (
-                            <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">
-                              {resource.pillar.title}
-                            </span>
-                          )}
+                          <div className="flex items-center gap-3 mb-2">
+                            {resource.pillar?.title && (
+                              <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                                {resource.pillar.title}
+                              </span>
+                            )}
+                            {resource.publishedAt && (
+                              <span className="text-[10px] text-gray-300">{fmtDate(resource.publishedAt)}</span>
+                            )}
+                          </div>
                           <h3 className="text-base font-medium leading-tight mb-2 group-hover:text-gray-600 transition-colors">
                             {resource.title}
                           </h3>
