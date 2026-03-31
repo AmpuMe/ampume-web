@@ -120,38 +120,8 @@ export default function ProductPage() {
     })?.node;
   }, [product, selectedOptions]);
 
-  // Get images — filter and inject sizing chart/measurement images
+  // Get raw images from Shopify
   const rawImages = product?.images?.edges?.map(edge => edge.node) || [];
-  const images = useMemo(() => {
-    const title = (product?.title || '').toLowerCase();
-    let imgs = [...rawImages];
-
-    // Remove 3rd image from Alpha Classic BK products (not applicable to BK profile)
-    const isAlphaClassicBK = title.includes('alpha') && title.includes('classic') &&
-      (title.includes('below-knee') || title.includes('below knee') || title.includes('bk'));
-    if (isAlphaClassicBK && imgs.length >= 3) {
-      imgs = imgs.filter((_, i) => i !== 2);
-    }
-
-    // Inject sizing chart and measurement guide images for liner products
-    if (linerDesc?.sizingType) {
-      const chartMap = {
-        'alpha-ak': { chart: '/images/sizing/ak-sizing-chart.webp', guide: '/images/sizing/ak-measurement-guide.png' },
-        'alpha-bk': { chart: '/images/sizing/bk-sizing-chart.webp', guide: '/images/sizing/bk-measurement-guide.png' },
-        'easyliner': { chart: '/images/sizing/easyliner-sizing-chart.webp', guide: '/images/sizing/bk-measurement-guide.png' },
-        'alps-gp': { chart: '/images/sizing/alps-gp-sizing-chart.webp', guide: '/images/sizing/bk-measurement-guide.png' },
-      };
-      const sizing = chartMap[linerDesc.sizingType];
-      if (sizing) {
-        imgs.push(
-          { url: sizing.guide, altText: 'How to measure for this liner' },
-          { url: sizing.chart, altText: 'Sizing chart' },
-        );
-      }
-    }
-
-    return imgs;
-  }, [product, rawImages, linerDesc]);
 
   // Handle option change
   const handleOptionChange = (optionName, value) => {
@@ -186,6 +156,38 @@ export default function ProductPage() {
   const baseName = currentGroup ? currentGroup.baseName : product?.title;
   const linerDesc = baseName ? findLinerDescription(baseName) : null;
   const isLiner = !!linerDesc;
+
+  // Filter and inject sizing chart/measurement images into gallery
+  const images = useMemo(() => {
+    const title = (product?.title || '').toLowerCase();
+    let imgs = [...rawImages];
+
+    // Remove 3rd image from Alpha Classic BK products (not applicable to BK profile)
+    const isAlphaClassicBK = title.includes('alpha') && title.includes('classic') &&
+      (title.includes('below-knee') || title.includes('below knee') || title.includes('bk'));
+    if (isAlphaClassicBK && imgs.length >= 3) {
+      imgs = imgs.filter((_, i) => i !== 2);
+    }
+
+    // Inject sizing chart and measurement guide images for liner products
+    if (linerDesc?.sizingType) {
+      const chartMap = {
+        'alpha-ak': { chart: '/images/sizing/ak-sizing-chart.webp', guide: '/images/sizing/ak-measurement-guide.png' },
+        'alpha-bk': { chart: '/images/sizing/bk-sizing-chart.webp', guide: '/images/sizing/bk-measurement-guide.png' },
+        'easyliner': { chart: '/images/sizing/easyliner-sizing-chart.webp', guide: '/images/sizing/bk-measurement-guide.png' },
+        'alps-gp': { chart: '/images/sizing/alps-gp-sizing-chart.webp', guide: '/images/sizing/bk-measurement-guide.png' },
+      };
+      const sizing = chartMap[linerDesc.sizingType];
+      if (sizing) {
+        imgs.push(
+          { url: sizing.guide, altText: 'How to measure for this liner' },
+          { url: sizing.chart, altText: 'Sizing chart' },
+        );
+      }
+    }
+
+    return imgs;
+  }, [product, rawImages, linerDesc]);
 
   if (isLoading) {
     return (
