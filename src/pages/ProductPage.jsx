@@ -120,17 +120,38 @@ export default function ProductPage() {
     })?.node;
   }, [product, selectedOptions]);
 
-  // Get images — remove 3rd image from Alpha Classic BK products (not applicable to BK profile)
+  // Get images — filter and inject sizing chart/measurement images
   const rawImages = product?.images?.edges?.map(edge => edge.node) || [];
   const images = useMemo(() => {
     const title = (product?.title || '').toLowerCase();
+    let imgs = [...rawImages];
+
+    // Remove 3rd image from Alpha Classic BK products (not applicable to BK profile)
     const isAlphaClassicBK = title.includes('alpha') && title.includes('classic') &&
       (title.includes('below-knee') || title.includes('below knee') || title.includes('bk'));
-    if (isAlphaClassicBK && rawImages.length >= 3) {
-      return rawImages.filter((_, i) => i !== 2);
+    if (isAlphaClassicBK && imgs.length >= 3) {
+      imgs = imgs.filter((_, i) => i !== 2);
     }
-    return rawImages;
-  }, [product, rawImages]);
+
+    // Inject sizing chart and measurement guide images for liner products
+    if (linerDesc?.sizingType) {
+      const chartMap = {
+        'alpha-ak': { chart: '/images/sizing/ak-sizing-chart.webp', guide: '/images/sizing/ak-measurement-guide.png' },
+        'alpha-bk': { chart: '/images/sizing/bk-sizing-chart.webp', guide: '/images/sizing/bk-measurement-guide.png' },
+        'easyliner': { chart: '/images/sizing/easyliner-sizing-chart.webp', guide: '/images/sizing/bk-measurement-guide.png' },
+        'alps-gp': { chart: '/images/sizing/alps-gp-sizing-chart.webp', guide: '/images/sizing/bk-measurement-guide.png' },
+      };
+      const sizing = chartMap[linerDesc.sizingType];
+      if (sizing) {
+        imgs.push(
+          { url: sizing.guide, altText: 'How to measure for this liner' },
+          { url: sizing.chart, altText: 'Sizing chart' },
+        );
+      }
+    }
+
+    return imgs;
+  }, [product, rawImages, linerDesc]);
 
   // Handle option change
   const handleOptionChange = (optionName, value) => {
@@ -335,7 +356,18 @@ export default function ProductPage() {
                       )}
                     </div>
                     <div className="flex flex-wrap gap-2">
-                      {currentGroup.products.map((sibling) => {
+                      {[...currentGroup.products].sort((a, b) => {
+                        // Sort fabric variants: Original first, then Spirit, then MAX, then alphabetical
+                        const la = extractVariantLabel(a.title, currentGroup.baseName).toLowerCase();
+                        const lb = extractVariantLabel(b.title, currentGroup.baseName).toLowerCase();
+                        const fabricOrder = ['original', 'spirit', 'max'];
+                        const ai = fabricOrder.findIndex(f => la.includes(f));
+                        const bi = fabricOrder.findIndex(f => lb.includes(f));
+                        if (ai !== -1 && bi !== -1) return ai - bi;
+                        if (ai !== -1) return -1;
+                        if (bi !== -1) return 1;
+                        return la.localeCompare(lb);
+                      }).map((sibling) => {
                         const label = extractVariantLabel(sibling.title, currentGroup.baseName);
                         const isCurrent = sibling.handle === handle;
                         return (
