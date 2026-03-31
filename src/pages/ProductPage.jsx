@@ -11,32 +11,41 @@ import { useCart } from '../context/CartContext';
 import { fetchProductByHandle, fetchProducts, formatPrice, groupProducts, extractBaseName, extractVariantLabel, getCategoryByProductType } from '../lib/shopify';
 import { findLinerDescription } from '../data/linerDescriptions';
 
-// Sort size values from smallest to largest
-const SIZE_ORDER = [
-  'x-small', 'extra small', 'xs',
-  'small', 's',
-  'medium', 'med', 'm',
-  'medium+', 'med+', 'm+',
-  'large', 'lrg', 'l',
-  'large+', 'lrg+', 'l+',
-  'x-large', 'extra large', 'xl',
-  'extra large+', 'xl+',
-  'xx-large', 'xxl', '2xl',
+// Sort option values: sizes smallest→largest, fabrics Original→Spirit→MAX, thickness 3→6→9
+const OPTION_ORDER = [
+  // Fabric
+  'original', 'spirit', 'max',
+  // Thickness
+  '3mm', '6mm', '9mm',
+  '3', '6', '9',
+  // Ply
   'lightweight', '1-ply', '1 ply',
   '3-ply', '3 ply',
   '5-ply', '5 ply',
-  'short', 'medium', 'long', 'extra long',
-  '3', '6', '9',
+  // Sizes
+  'x-small', 'extra small', 'xs',
+  'small',
+  'medium',
+  'medium+', 'med+',
+  'large',
+  'large+', 'lrg+',
+  'x-large', 'extra large', 'xl',
+  'extra large+', 'xl+',
+  'xx-large', 'xxl', '2xl',
+  // Lengths
+  'short', 'long', 'extra long',
 ];
 
 function sortOptionValues(values) {
   return [...values].sort((a, b) => {
-    const ai = SIZE_ORDER.findIndex(s => a.toLowerCase().includes(s));
-    const bi = SIZE_ORDER.findIndex(s => b.toLowerCase().includes(s));
+    const al = a.toLowerCase();
+    const bl = b.toLowerCase();
+    const ai = OPTION_ORDER.findIndex(s => al === s || al.includes(s));
+    const bi = OPTION_ORDER.findIndex(s => bl === s || bl.includes(s));
     if (ai !== -1 && bi !== -1) return ai - bi;
     if (ai !== -1) return -1;
     if (bi !== -1) return 1;
-    return a.localeCompare(b);
+    return al.localeCompare(bl);
   });
 }
 
@@ -417,9 +426,27 @@ export default function ProductPage() {
                 {product.options?.map(option => (
                   option.values.length > 1 && (
                     <div key={option.id} className="mb-6">
-                      <label className="block text-sm font-medium mb-3">
-                        {option.name}: <span className="font-normal text-gray-600">{selectedOptions[option.name] || ''}</span>
-                      </label>
+                      <div className="flex items-center gap-2 mb-3">
+                        <label className="text-sm font-medium">
+                          {option.name}: <span className="font-normal text-gray-600">{selectedOptions[option.name] || ''}</span>
+                        </label>
+                        {option.name.toLowerCase() === 'fabric' && linerDesc?.fabricOptions && (
+                          <a
+                            href="#fabric"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const el = document.getElementById('fabric');
+                              if (el) {
+                                const top = el.getBoundingClientRect().top + window.scrollY - 80;
+                                window.scrollTo({ top, behavior: 'smooth' });
+                              }
+                            }}
+                            className="text-xs text-black hover:text-gray-500 transition-colors underline underline-offset-2"
+                          >
+                            What's the difference?
+                          </a>
+                        )}
+                      </div>
 
                       {option.values.length <= 6 ? (
                         // Button style for few options
