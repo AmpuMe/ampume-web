@@ -180,7 +180,38 @@
 - Content quality references for backfill review
 - CustomGPT API key or team member access
 - Contact page updated copy
-- Sock product split in Shopify (Pin Lock vs Suction) — may need Alex to create in Shopify admin
+
+---
+
+## Shopify Admin Tasks (CSV / Admin Panel Updates)
+These require changes in Shopify directly — not code. Batch together for Alex.
+
+### Product Renames
+- [ ] EasyLiner → "EasyLiner Above and Below Knee Prosthetic Liner" (C16)
+- [ ] ALPS General Purpose → "ALPS General Purpose Above and Below Knee Prosthetic Liner" (C21)
+
+### Sock Products — Split & Reorganize
+- [ ] Split current prosthetic socks into two separate products (D3):
+      1. "Knit-Rite Prosthetic Socks for Pin Lock Systems" — includes distal hole for pin
+      2. "Knit-Rite Prosthetic Socks for Suction Systems" — closed end for airtight seal
+- [ ] Each product should have variants ordered: Ply (Lightweight/1-ply first → 3-ply → 5-ply), then Size (small → large) (D4/D5)
+- [ ] Width variants: Narrow, Regular, Wide for each
+
+### Sleeve Products
+- [ ] Rename size variants if currently "Size 1", "Size 2" etc. → use actual size names (Small, Medium, Large, X-Large) matching the sizing chart
+
+### Image Removals
+- [ ] Alpha Classic BK product: remove the 3rd product image in Shopify (not applicable to BK profile) (C15 — currently filtered in frontend code, should also be removed at source)
+
+### New Product Addition
+- [ ] Alex to provide replacement product for discontinued personal aid/antiperspirant (for Care & Accessories category)
+- [ ] Once provided: add to Shopify, create product listing, assign to "Prosthetic Accessory" product type
+
+### EasyLiner / ALPS GP Sizing Visuals
+- [ ] EasyLiner: remove second measuring tape from sizing image (only one measurement at 6cm) (C19)
+- [ ] Consider creating separate AK and BK measurement visuals for EasyLiner and ALPS GP (C20/C23)
+
+---
 
 ## Deferred (Post-Phase 3)
 - Content agent (autonomous article writer) — see backfill quality first
