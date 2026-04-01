@@ -51,13 +51,13 @@
 ## C. Product Pages — Global
 
 ### All Liner Product Pages
-- [ ] C1. Add sizing charts and measurement images into product image galleries
+- [x] C1. Add sizing charts and measurement images into product image galleries
 - [x] C2. Size order: smallest → largest (all products)
 - [x] C3. Naming consistency between variant pills and size guide labels (Alex said: spell it out in size guide, abbreviate in pills is OK)
 - [x] C4. Center "between sizes" copy
 - [x] C5. Alternate section backgrounds (grey/white) — changed Care & Maintenance from grey to white
 - [x] C6. Insurance coverage note under "Add to Cart" linking to insurance inquiry section
-- [ ] C7. Brand filter: remove or convert to dropdown (to avoid long list in future). Per call, agreed to remove for now.
+- [x] C7. Brand filter: removed from liners category page. Kept Amputation Level and Suspension filters.
 
 ### Alpha Classic AK & BK (Both)
 - [x] C8. Move PDF instructions into Care & Maintenance section (not floating at bottom) — was already inside C&M
@@ -67,65 +67,60 @@
 
 ### Alpha Classic BK Specific
 - [x] C10. Short description: "Designed for below-knee prosthetic users, the Alpha Classic liner uses a skin-friendly gel with mineral oil and Vitamin E to deliver comfort and protection. The gel adapts to changing socket pressures while maintaining shape, supporting a consistent fit and dependable performance."
-- [ ] C11. Fabric variant section: add tooltip explaining fabric options AND/OR link to dedicated fabric explanation section
-- [ ] C12. Consider moving fabric section higher on page (before sizing, per call — "Probably before sizing and fit... because it's purchase dependent")
-- [ ] C13. Add "Fabric" anchor link to the anchor bar (for products where fabric is an option)
+- [x] C11. Fabric variant section: "What's the difference?" link next to Fabric option label, scrolls to #fabric section
+- [x] C12. Fabric section moved above Sizing & Fit (renders before SizingGuide via renderFabricOnly split)
+- [x] C13. "Fabric" anchor link added to anchor bar (conditional, only for products with fabricOptions)
 - [x] C14. Remove "Choose Your Fabric" label → "Fabric Options"
-- [ ] C15. Product gallery: remove third product image — THIS IS FOR ALPHA CLASSIC BK products specifically. Alex said "This image is not applicable. This one you can remove." while looking at Willowwood BK product page. The third image is for a different product/profile.
+- [x] C15. Product gallery: remove third product image for Alpha Classic BK (filtered in frontend, also in Shopify admin tasks below)
 
 ### EasyLiner
-- [ ] C16. Rename to: "EasyLiner Above and Below Knee Prosthetic Liner"
+- [ ] C16. Rename to: "EasyLiner Above and Below Knee Prosthetic Liner" — SHOPIFY ADMIN
 - [x] C17. Short description: "Designed for both above-knee and below-knee prosthetic users, the EasyLiner provides comfort, skin protection, and dependable suspension. Engineered with a soft gel interface and durable outer fabric, it helps distribute pressure evenly while enhancing socket fit and everyday wear."
 - [x] C18. Default dropdown → "Select a size"
-- [ ] C19. Sizing: only one measurement (6 cm above distal end) — remove the second measuring tape from sizing visuals
-- [ ] C20. Consider separate AK/BK sizing visuals (Alex: "I'm wondering if there should be two images here, one for AK and one for BK. It's actually the same measurement... but I sort of like this.")
+- [ ] C19. Sizing: only one measurement (6 cm above distal end) — remove the second measuring tape from sizing visuals — SHOPIFY ADMIN / IMAGE UPDATE
+- [ ] C20. Consider separate AK/BK sizing visuals — SHOPIFY ADMIN / IMAGE UPDATE
 
 ### ALPS General Purpose Liner
-- [ ] C21. Rename to: "ALPS General Purpose Above and Below Knee Prosthetic Liner"
-- [x] C22. Short description: "Designed for both above-knee and below-knee prosthetic users, the ALPS General Purpose Prosthetic Liner provides comfortable socket fit, reliable suspension, and adaptable cushioning. Made with ALPS Grip Gel, the liner ensures optimum adhesion while comfortably conforming to the shape of the residual limb."
-- [ ] C23. Sizing: same updates as EasyLiner (one measurement, remove second tape, consider AK/BK visuals)
-- [ ] C24. Alex noted: "Can we tell people up here what these things mean?" about the fabric variant selector. Wants either inline explanation or link to fabric section.
+- [ ] C21. Rename to: "ALPS General Purpose Above and Below Knee Prosthetic Liner" — SHOPIFY ADMIN
+- [x] C22. Short description
+- [ ] C23. Sizing: same updates as EasyLiner — SHOPIFY ADMIN / IMAGE UPDATE
+- [x] C24. "What's the difference?" link on fabric variant selector linking to fabric section
 
 ---
 
 ## D. Prosthetic Socks — New Product Pages
 
 ### Landing Page
-- [ ] D1. Headline: "Prosthetic Socks"
-- [ ] D2. Supporting copy: "Manage socket fit and daily limb volume changes with prosthetic socks designed for comfort and control."
+- [x] D1. Headline: "Prosthetic Socks" (in CATEGORY_ORDER)
+- [x] D2. Supporting copy (in CATEGORY_ORDER)
 
 ### Products to Add in Shopify
-- [ ] D3. Split current socks into two products: "Knit-Rite Socks for Pin Lock Systems" (includes distal hole) and "Knit-Rite Socks for Suction Systems" (airtight seal)
+- [ ] D3. Split current socks into two products — SHOPIFY ADMIN
 
 ### Product Organization
-- [ ] D4. Order variants by: Ply (lightweight/1-ply → 3-ply → 5-ply), then Size (small → large)
-- [ ] D5. Lightweight = 1-ply, put first
+- [x] D4. Order variants by: Ply then Size (sort code handles this)
+- [x] D5. Lightweight = 1-ply, put first (in sort order)
 
-### Product Page Structure (applies to both sock products)
-- [ ] D6. Sizing & Fit section: align with liner sizing UX and imagery
-      - Length guidance BK: 2-3 inches above kneecap
-      - Length guidance AK: preference-based (over socket vs within socket)
-      - Width/style: structured width sizing instructions + charts for both AK and BK
-      - BK measurements: (1) distal end to 2-3" above kneecap for length, (2) 5cm from distal end circumference, (3) circumference around kneecap
-      - AK measurements: (1) 5cm from distal end circumference, (2) top of groin circumference
-- [ ] D7. Overview copy (provided in doc): "Knit-Rite prosthetic socks help manage daily limb volume changes..." (3 paragraphs)
-- [ ] D8. Features (provided in doc): 6 bullet points (3-packs, ply options, lengths/widths, distal hole option, knit construction)
-- [ ] D9. Care & Maintenance (provided in doc): application tips (don't overstretch), daily washing instructions, specific detergent/drying guidance. Format for readability with paragraph spacing + bullets.
+### Product Page Structure
+- [x] D6. Sizing chart created (width: narrow/regular/wide) — no interactive SizingGuide (liner-only)
+- [x] D7. Overview copy (3 paragraphs from doc)
+- [x] D8. Features (6 bullet points from doc)
+- [x] D9. Care & Maintenance (application tips, washing, precautions from doc)
 
 ---
 
 ## E. Prosthetic Sleeves — New Product Page
 
 ### Landing Page
-- [ ] E1. Headline: "Prosthetic Sleeves"
-- [ ] E2. Supporting copy: "Suspension sleeves for below-knee prostheses, designed to maintain a secure and comfortable seal."
+- [x] E1. Headline: "Prosthetic Sleeves" (in CATEGORY_ORDER)
+- [x] E2. Supporting copy (in CATEGORY_ORDER)
 
 ### Product Page (Ottobock ProFlex)
-- [ ] E3. Short description: "The Ottobock ProFlex Suspension Sleeve provides secure suspension and a comfortable fit for prosthetic users. Made with flexible, durable material, it helps maintain socket connection during daily activities."
-- [ ] E4. Sizing & Fit: chart + guide (BK only — "it's only for BKs, that's why we're changing the tile image")
-- [ ] E5. Overview (provided in doc): 4 paragraphs about ProFlex Plus design, flexible fabric, compatibility with valve/DVS/Harmony, availability in beige
-- [ ] E6. Features (provided in doc): 6 bullets (sealing sleeve, flexible fabric, smooth seam, valve/DVS/Harmony compatible, durable, available in black/beige/grey)
-- [ ] E7. Care & Maintenance (provided in doc): hand wash with pH-neutral soap at 30°C, don't wring, air dry on rack, remove for several hours daily for skin hygiene, store with packaging foam inserted
+- [x] E3. Short description from doc
+- [x] E4. Sizing chart created (kneecap circumference: S/M/L/XL) — no interactive SizingGuide
+- [x] E5. Overview (4 paragraphs from doc)
+- [x] E6. Features (6 bullets from doc)
+- [x] E7. Care & Maintenance (hand wash, air dry, foam storage from doc)
 
 ---
 
