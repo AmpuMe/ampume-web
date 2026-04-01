@@ -126,6 +126,57 @@ export const SIZING_CHARTS = {
     globalMin: 16,
     globalMax: 53,
   },
+
+  'sock-bk': {
+    title: 'Prosthetic Sock Sizing (Below-Knee)',
+    measurementMethod: 'single-circumference',
+    measurementImage: '/images/sizing/bk-measurement-guide.png',
+    measurementPoints: [
+      {
+        label: 'Width Measurement',
+        distance: '5 cm',
+        description: 'Measure the circumference of your residual limb 5 cm from the distal end to determine width (narrow, regular, or wide).',
+      },
+    ],
+    sizes: [
+      { label: 'Narrow', circumference: [0, 25] },
+      { label: 'Regular', circumference: [25, 35] },
+      { label: 'Wide', circumference: [35, 50] },
+    ],
+    columns: [
+      { key: 'label', header: 'Width' },
+      { key: 'circumference', header: 'Circumference at 5 cm' },
+    ],
+    note: 'For length: BK socks should extend 2-3 inches above the kneecap. Available in Lightweight (1-ply), 3-Ply, and 5-Ply.',
+    globalMin: 0,
+    globalMax: 50,
+  },
+
+  'sleeve-bk': {
+    title: 'Suspension Sleeve Sizing (Below-Knee)',
+    measurementMethod: 'single-circumference',
+    measurementImage: '/images/sizing/bk-measurement-guide.png',
+    measurementPoints: [
+      {
+        label: 'Kneecap Circumference',
+        distance: 'Around kneecap',
+        description: 'Measure the circumference around your kneecap (patella) to determine your sleeve size.',
+      },
+    ],
+    sizes: [
+      { label: 'Small', circumference: [30, 36] },
+      { label: 'Medium', circumference: [36, 42] },
+      { label: 'Large', circumference: [42, 48] },
+      { label: 'X-Large', circumference: [48, 55] },
+    ],
+    columns: [
+      { key: 'label', header: 'Size' },
+      { key: 'circumference', header: 'Kneecap Circumference' },
+    ],
+    note: 'ProFlex sleeves are designed for below-knee prosthetic suspension only. Compatible with valve, DVS, and Harmony systems.',
+    globalMin: 30,
+    globalMax: 55,
+  },
 };
 
 export function getSizingChart(sizingType) {

@@ -10,6 +10,7 @@ import LinerContentSections from '../components/LinerContentSections';
 import { useCart } from '../context/CartContext';
 import { fetchProductByHandle, fetchProducts, formatPrice, groupProducts, extractBaseName, extractVariantLabel, getCategoryByProductType } from '../lib/shopify';
 import { findLinerDescription } from '../data/linerDescriptions';
+import { findProductDescription } from '../data/productDescriptions';
 
 // Sort option values: sizes smallest→largest, fabrics Original→Spirit→MAX, thickness 3→6→9
 const OPTION_ORDER = [
@@ -161,10 +162,14 @@ export default function ProductPage() {
   const isAvailable = selectedVariant?.availableForSale ?? false;
   const price = selectedVariant?.price?.amount;
 
-  // Detect liner products for enhanced layout
+  // Detect product type for enhanced layout
   const baseName = currentGroup ? currentGroup.baseName : product?.title;
   const linerDesc = baseName ? findLinerDescription(baseName) : null;
+  const productDesc = !linerDesc && product?.title ? findProductDescription(product.title) : null;
   const isLiner = !!linerDesc;
+  const hasEnhancedLayout = isLiner || !!productDesc;
+  // Use whichever description is available for shared logic
+  const activeDesc = linerDesc || productDesc;
 
   // Filter and inject sizing chart/measurement images into gallery
   const images = useMemo(() => {
@@ -178,15 +183,18 @@ export default function ProductPage() {
       imgs = imgs.filter((_, i) => i !== 2);
     }
 
-    // Inject sizing chart image into gallery for liner products
-    if (linerDesc?.sizingType) {
+    // Inject sizing chart image into gallery for products with sizing data
+    const sizingType = activeDesc?.sizingType;
+    if (sizingType) {
       const chartMap = {
         'alpha-ak': '/images/sizing/ak-sizing-chart.webp',
         'alpha-bk': '/images/sizing/bk-sizing-chart.webp',
         'easyliner': '/images/sizing/easyliner-sizing-chart.webp',
         'alps-gp': '/images/sizing/alps-gp-sizing-chart.webp',
+        'sock-bk': '/images/sizing/sock-sizing-chart.webp',
+        'sleeve-bk': '/images/sizing/sleeve-sizing-chart.webp',
       };
-      const chartUrl = chartMap[linerDesc.sizingType];
+      const chartUrl = chartMap[sizingType];
       if (chartUrl) {
         imgs.push({ url: chartUrl, altText: 'Sizing chart' });
       }
@@ -258,7 +266,7 @@ export default function ProductPage() {
         )}
       </button>
 
-      <main className={`pt-32 px-6 md:px-12 ${isLiner ? 'pb-8' : 'pb-20'}`}>
+      <main className={`pt-32 px-6 md:px-12 ${hasEnhancedLayout ? 'pb-8' : 'pb-20'}`}>
         {/* Back Link */}
         <FadeIn className="mb-8">
           {(() => {
@@ -416,9 +424,9 @@ export default function ProductPage() {
                 </p>
 
                 {/* Short description for liner products */}
-                {isLiner && linerDesc && (
+                {activeDesc && (
                   <p className="text-sm text-gray-600 leading-relaxed mb-6">
-                    {linerDesc.shortDescription || linerDesc.overview[0]}
+                    {activeDesc.shortDescription || activeDesc.overview?.[0]}
                   </p>
                 )}
 
@@ -538,7 +546,7 @@ export default function ProductPage() {
                 </div>
 
                 {/* Non-liner: Description */}
-                {!isLiner && product.descriptionHtml ? (
+                {!hasEnhancedLayout && product.descriptionHtml ? (
                   <div className="border-t border-gray-100 pt-8">
                     <h3 className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-4">
                       Description
@@ -555,13 +563,13 @@ export default function ProductPage() {
         </div>
       </main>
 
-      {/* Horizontal Anchor Bar */}
-      {isLiner && linerDesc && (
+      {/* Horizontal Anchor Bar — for any product with enhanced layout */}
+      {hasEnhancedLayout && activeDesc && (
         <nav className="sticky top-0 z-30 bg-white border-b border-gray-100 shadow-sm pt-2">
           <div className="max-w-6xl mx-auto px-4 md:px-12 flex justify-center gap-4 sm:gap-6 md:gap-8 flex-wrap">
             {[
-              ...(linerDesc.fabricOptions ? [{ label: 'Fabric', id: 'fabric' }] : []),
-              { label: 'Sizing & Fit', id: 'sizing-guide' },
+              ...(activeDesc.fabricOptions ? [{ label: 'Fabric', id: 'fabric' }] : []),
+              ...(activeDesc.sizingType ? [{ label: 'Sizing & Fit', id: 'sizing-guide' }] : []),
               { label: 'Overview', id: 'overview' },
               { label: 'Features', id: 'features' },
               { label: 'Care & Maintenance', id: 'care-maintenance' },
@@ -587,19 +595,23 @@ export default function ProductPage() {
         </nav>
       )}
 
-      {/* Full-width liner content sections */}
-      {isLiner && linerDesc && (
+      {/* Full-width product content sections */}
+      {hasEnhancedLayout && activeDesc && (
         <>
-          {/* Fabric section renders before Sizing for BK products with fabric options */}
+          {/* Fabric section renders before Sizing for BK liner products with fabric options */}
+          {isLiner && (
+            <LinerContentSections
+              linerDesc={activeDesc}
+              showPdfDownload={product.vendor === 'WillowWood' || product.vendor === 'Ohio Willow Wood' || (product.tags || []).some(t => t.toLowerCase().includes('alpha'))}
+              renderFabricOnly
+            />
+          )}
+          {activeDesc.sizingType && (
+            <SizingGuide sizingType={activeDesc.sizingType} measuringGuide={activeDesc.measuringGuide} />
+          )}
           <LinerContentSections
-            linerDesc={linerDesc}
-            showPdfDownload={product.vendor === 'WillowWood' || product.vendor === 'Ohio Willow Wood' || (product.tags || []).some(t => t.toLowerCase().includes('alpha'))}
-            renderFabricOnly
-          />
-          <SizingGuide sizingType={linerDesc.sizingType} measuringGuide={linerDesc.measuringGuide} />
-          <LinerContentSections
-            linerDesc={linerDesc}
-            showPdfDownload={product.vendor === 'WillowWood' || product.vendor === 'Ohio Willow Wood' || (product.tags || []).some(t => t.toLowerCase().includes('alpha'))}
+            linerDesc={activeDesc}
+            showPdfDownload={isLiner && (product.vendor === 'WillowWood' || product.vendor === 'Ohio Willow Wood' || (product.tags || []).some(t => t.toLowerCase().includes('alpha')))}
             skipFabric
           />
         </>
