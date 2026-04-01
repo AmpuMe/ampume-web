@@ -59,7 +59,7 @@ export default function LinerContentSections({ linerDesc, showPdfDownload, rende
                 Overview
               </span>
               <h2 className="text-2xl md:text-3xl font-light tracking-tight">
-                About This Liner
+                About This Product
               </h2>
             </div>
             <div className="md:col-span-7 md:col-start-6 space-y-4">

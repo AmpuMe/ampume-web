@@ -18,12 +18,13 @@ const OPTION_ORDER = [
   'original', 'spirit', 'max',
   // Thickness
   '3mm', '6mm', '9mm',
-  '3', '6', '9',
   // Ply
   'lightweight', '1-ply', '1 ply',
   '3-ply', '3 ply',
   '5-ply', '5 ply',
-  // Sizes
+  // Widths (socks)
+  'narrow', 'regular', 'wide',
+  // Named sizes
   'x-small', 'extra small', 'xs',
   'small',
   'medium',
@@ -41,11 +42,19 @@ function sortOptionValues(values) {
   return [...values].sort((a, b) => {
     const al = a.toLowerCase();
     const bl = b.toLowerCase();
+
+    // Check named order first
     const ai = OPTION_ORDER.findIndex(s => al === s || al.includes(s));
     const bi = OPTION_ORDER.findIndex(s => bl === s || bl.includes(s));
     if (ai !== -1 && bi !== -1) return ai - bi;
     if (ai !== -1) return -1;
     if (bi !== -1) return 1;
+
+    // Try numeric sorting (handles "Size 1", "3", "6mm", etc.)
+    const aNum = parseFloat(a.replace(/[^\d.]/g, ''));
+    const bNum = parseFloat(b.replace(/[^\d.]/g, ''));
+    if (!isNaN(aNum) && !isNaN(bNum)) return aNum - bNum;
+
     return al.localeCompare(bl);
   });
 }
@@ -569,7 +578,7 @@ export default function ProductPage() {
           <div className="max-w-6xl mx-auto px-4 md:px-12 flex justify-center gap-4 sm:gap-6 md:gap-8 flex-wrap">
             {[
               ...(activeDesc.fabricOptions ? [{ label: 'Fabric', id: 'fabric' }] : []),
-              ...(activeDesc.sizingType ? [{ label: 'Sizing & Fit', id: 'sizing-guide' }] : []),
+              ...(isLiner && activeDesc.sizingType ? [{ label: 'Sizing & Fit', id: 'sizing-guide' }] : []),
               { label: 'Overview', id: 'overview' },
               { label: 'Features', id: 'features' },
               { label: 'Care & Maintenance', id: 'care-maintenance' },
@@ -606,7 +615,7 @@ export default function ProductPage() {
               renderFabricOnly
             />
           )}
-          {activeDesc.sizingType && (
+          {isLiner && activeDesc.sizingType && (
             <SizingGuide sizingType={activeDesc.sizingType} measuringGuide={activeDesc.measuringGuide} />
           )}
           <LinerContentSections
