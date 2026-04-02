@@ -132,8 +132,8 @@ export const SIZING_CHARTS = {
   'sock': {
     title: 'Prosthetic Sock Width Sizing',
     measurementMethod: 'dual-circumference',
-    measurementImage: '/images/sizing/bk-measurement-guide.png',
-    measurementImageAK: '/images/sizing/ak-measurement-guide.png',
+    measurementImage: '/images/sizing/sock-bk-measurement-guide.png',
+    measurementImageAK: '/images/sizing/sock-ak-measurement-guide.png',
     // Custom labels for sock-specific measurement names
     labels: {
       proximal: 'Top',
