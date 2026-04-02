@@ -181,29 +181,42 @@ export const SIZING_CHARTS = {
   },
 
   'sleeve-bk': {
-    title: 'Suspension Sleeve Sizing (Below-Knee)',
-    measurementMethod: 'single-circumference',
-    measurementImage: '/images/sizing/bk-measurement-guide.png',
+    title: 'ProFlex Suspension Sleeve Sizing',
+    measurementMethod: 'dual-circumference',
+    measurementImage: '/images/sizing/sleeve-bk-measurement-guide.png',
+    labels: {
+      proximal: 'Top',
+      distal: 'Mid-Knee Cap',
+      proximalDesc: '8 in (20 cm) above kneecap',
+      distalDesc: 'Around middle of kneecap',
+      proximalTop: 28,
+      distalTop: 52,
+    },
     measurementPoints: [
       {
-        label: 'Kneecap Circumference',
+        label: 'Top Measurement',
+        distance: '8 in (20 cm) above kneecap',
+        description: 'Measure the circumference of your leg 8 inches (20 cm) above the center of your kneecap.',
+      },
+      {
+        label: 'Mid-Knee Cap',
         distance: 'Around kneecap',
-        description: 'Measure the circumference around your kneecap (patella) to determine your sleeve size.',
+        description: 'Measure the circumference around the middle of your kneecap.',
       },
     ],
     sizes: [
-      { label: 'Small', circumference: [30, 36] },
-      { label: 'Medium', circumference: [36, 42] },
-      { label: 'Large', circumference: [42, 48] },
-      { label: 'X-Large', circumference: [48, 55] },
+      { label: '1', name: 'Size 1', distal: [24, 32], proximal: [34, 46], distalIn: [9.4, 12.6], proximalIn: [13.4, 18.1] },
+      { label: '2', name: 'Size 2', distal: [30, 40], proximal: [40, 54], distalIn: [11.8, 15.7], proximalIn: [15.7, 21.3] },
+      { label: '3', name: 'Size 3', distal: [36, 47], proximal: [46, 66], distalIn: [14.2, 18.5], proximalIn: [18.1, 26.0] },
     ],
     columns: [
       { key: 'label', header: 'Size' },
-      { key: 'circumference', header: 'Kneecap Circumference' },
+      { key: 'distal', header: 'Knee Center (cm)' },
+      { key: 'proximal', header: '20 cm Proximal (cm)' },
     ],
-    note: 'ProFlex sleeves are designed for below-knee prosthetic suspension only. Compatible with valve, DVS, and Harmony systems.',
-    globalMin: 30,
-    globalMax: 55,
+    note: 'ProFlex sleeves are for below-knee prosthetic suspension only. Compatible with valve, DVS, and Harmony systems.',
+    globalMin: 24,
+    globalMax: 66,
   },
 };
 
