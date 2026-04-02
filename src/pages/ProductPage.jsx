@@ -12,45 +12,62 @@ import { fetchProductByHandle, fetchProducts, formatPrice, groupProducts, extrac
 import { findLinerDescription } from '../data/linerDescriptions';
 import { findProductDescription } from '../data/productDescriptions';
 
-// Sort option values: sizes smallest→largest, fabrics Original→Spirit→MAX, thickness 3→6→9
-const OPTION_ORDER = [
-  // Fabric
-  'original', 'spirit', 'max',
-  // Thickness
-  '3mm', '6mm', '9mm',
-  // Ply
-  'lightweight', '1-ply', '1 ply',
-  '3-ply', '3 ply',
-  '5-ply', '5 ply',
-  // Widths (socks)
-  'narrow', 'regular', 'wide',
-  // Named sizes
-  'x-small', 'extra small', 'xs',
-  'small',
-  'medium',
-  'medium+', 'med+',
-  'large',
-  'large+', 'lrg+',
-  'x-large', 'extra large', 'xl',
-  'extra large+', 'xl+',
-  'xx-large', 'xxl', '2xl',
-  // Lengths
-  'short', 'long', 'extra long',
+// Sort option values by option name context
+const SORT_ORDERS = {
+  fabric: ['original', 'spirit', 'max'],
+  thickness: ['3mm', '6mm', '9mm'],
+  ply: ['lightweight', '1-ply', '1 ply', '3-ply', '3 ply', '5-ply', '5 ply'],
+  width: ['narrow', 'regular', 'wide'],
+  length: ['xshort', 'x-short', 'extra short', 'short', 'medium', 'long', 'extra long'],
+  size: [
+    'x-small', 'extra small', 'xs',
+    'small',
+    'medium',
+    'medium+', 'med+',
+    'large',
+    'large+', 'lrg+',
+    'x-large', 'extra large', 'xl',
+    'extra large+', 'xl+',
+    'xx-large', 'xxl', '2xl',
+  ],
+};
+
+// Map option names to sort orders
+const OPTION_NAME_MAP = {
+  fabric: 'fabric',
+  thickness: 'thickness',
+  ply: 'ply',
+  width: 'width',
+  length: 'length',
+  size: 'size',
+};
+
+// Flat fallback order for unknown option names
+const FALLBACK_ORDER = [
+  ...SORT_ORDERS.fabric,
+  ...SORT_ORDERS.thickness,
+  ...SORT_ORDERS.ply,
+  ...SORT_ORDERS.width,
+  ...SORT_ORDERS.size,
+  ...SORT_ORDERS.length,
 ];
 
-function sortOptionValues(values) {
+function sortOptionValues(values, optionName = '') {
+  // Pick the right sort order based on option name
+  const key = OPTION_NAME_MAP[optionName.toLowerCase()];
+  const order = key ? SORT_ORDERS[key] : FALLBACK_ORDER;
+
   return [...values].sort((a, b) => {
     const al = a.toLowerCase();
     const bl = b.toLowerCase();
 
-    // Check named order first
-    const ai = OPTION_ORDER.findIndex(s => al === s || al.includes(s));
-    const bi = OPTION_ORDER.findIndex(s => bl === s || bl.includes(s));
+    const ai = order.findIndex(s => al === s || al.includes(s));
+    const bi = order.findIndex(s => bl === s || bl.includes(s));
     if (ai !== -1 && bi !== -1) return ai - bi;
     if (ai !== -1) return -1;
     if (bi !== -1) return 1;
 
-    // Try numeric sorting (handles "Size 1", "3", "6mm", etc.)
+    // Numeric fallback
     const aNum = parseFloat(a.replace(/[^\d.]/g, ''));
     const bNum = parseFloat(b.replace(/[^\d.]/g, ''));
     if (!isNaN(aNum) && !isNaN(bNum)) return aNum - bNum;
@@ -468,7 +485,7 @@ export default function ProductPage() {
                       {option.values.length <= 6 ? (
                         // Button style for few options
                         <div className="flex flex-wrap gap-2">
-                          {sortOptionValues(option.values).map(value => (
+                          {sortOptionValues(option.values, option.name).map(value => (
                             <button
                               key={value}
                               onClick={() => handleOptionChange(option.name, value)}
@@ -493,7 +510,7 @@ export default function ProductPage() {
                             className="w-full appearance-none px-4 py-3 pr-10 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-black transition-colors"
                           >
                             <option value="" disabled>Select a size</option>
-                            {sortOptionValues(option.values).map(value => (
+                            {sortOptionValues(option.values, option.name).map(value => (
                               <option key={value} value={value}>
                                 {value}
                               </option>

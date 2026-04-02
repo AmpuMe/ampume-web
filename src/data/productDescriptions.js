@@ -1,47 +1,70 @@
 // Product descriptions for socks and sleeves
 // Same data shape as linerDescriptions.js so LinerContentSections can render them
 
+// Shared sock fields
+const SOCK_SHARED = {
+  sizingType: 'sock-bk',
+  applicationInstructions: [
+    'Lay the sock smoothly over your residual limb rather than pulling it tight over the end.',
+    'Avoid stretching the fabric excessively over the distal end, as this reduces effective ply thickness where cushioning matters most.',
+    'A 5-ply sock pulled too tightly may function closer to a 3-ply at the distal end.',
+    'Start with fewer plies in the morning when your limb volume is largest.',
+    'Add plies throughout the day as your limb volume decreases.',
+  ],
+  careInstructions: [
+    'Wash prosthetic socks daily after each use.',
+    'Machine wash using standard laundry detergent.',
+    'Use non-chlorine bleach only when necessary and rinse thoroughly.',
+    'After washing, gently pull the sock taut from toe to top to restore its shape.',
+    'Tumble dry on low heat.',
+  ],
+  precautions: [
+    'Do not use liquid fabric softeners, as they can break down fibers and reduce effective ply thickness.',
+    'Replace socks when they feel thinner, the elastic has loosened, or volume management is no longer effective.',
+  ],
+  measuringGuide: [
+    'Measure the circumference of your residual limb 5 cm from the distal end for width sizing.',
+    'For BK: measure from the distal end to 2-3 inches above the kneecap for length, plus circumference around the kneecap.',
+    'For AK: measure 5 cm from the distal end circumference and at the top of the groin.',
+  ],
+};
+
 export const PRODUCT_DESCRIPTIONS = {
-  // Prosthetic Socks (applies to all Knit-Rite sock products)
-  'Knit-Rite': {
-    sizingType: 'sock-bk', // Will need sizing data entry
-    shortDescription: 'Manage socket fit and daily limb volume changes with prosthetic socks designed for comfort and control.',
+  // Pin Lock socks
+  'Pin Lock': {
+    ...SOCK_SHARED,
+    shortDescription: 'Prosthetic socks with a distal hole for pin lock suspension systems. Manage daily limb volume changes while maintaining a comfortable, secure socket fit.',
     overview: [
-      'Knit-Rite prosthetic socks help manage daily limb volume changes while maintaining a comfortable, secure socket fit. Worn over a prosthetic liner or directly against the skin depending on your suspension system, these socks allow you to make small adjustments throughout the day as your residual limb changes.',
-      'These socks are available for both pin-locking and suction suspension systems. Options with a distal hole accommodate pin-lock liners, while closed-end socks are designed for suction or vacuum systems that require an airtight seal.',
+      'Knit-Rite prosthetic socks for pin lock systems feature a distal hole that accommodates the pin mechanism on your liner. Worn over a prosthetic liner, these socks help manage daily limb volume changes while maintaining a comfortable, secure socket fit.',
+      'Available in multiple ply weights — Lightweight, 3-Ply, and 5-Ply — each sock allows precise volume management throughout the day. Start with fewer plies in the morning and add more as your limb volume decreases.',
       'Made with a soft, breathable knit construction, Knit-Rite socks provide comfort against the skin while helping wick moisture and conform to the shape of the limb.',
     ],
     features: [
+      'Distal hole accommodates pin lock liner systems',
       'Sold in convenient 3-packs',
       'Available in Lightweight, 3-Ply, and 5-Ply options for different levels of volume management',
       'Multiple lengths and widths available for an optimal fit',
-      'Offered with or without a distal hole depending on suspension system',
       'Soft, breathable knit construction designed for everyday wear',
       'Helps manage daily limb volume fluctuations for consistent socket fit',
     ],
-    applicationInstructions: [
-      'Lay the sock smoothly over your residual limb rather than pulling it tight over the end.',
-      'Avoid stretching the fabric excessively over the distal end, as this reduces effective ply thickness where cushioning matters most.',
-      'A 5-ply sock pulled too tightly may function closer to a 3-ply at the distal end.',
-      'Start with fewer plies in the morning when your limb volume is largest.',
-      'Add plies throughout the day as your limb volume decreases.',
+  },
+
+  // Suction socks
+  'Suction': {
+    ...SOCK_SHARED,
+    shortDescription: 'Prosthetic socks with a closed, airtight distal end for suction and vacuum suspension systems. Manage daily limb volume changes without compromising your seal.',
+    overview: [
+      'Knit-Rite prosthetic socks for suction systems feature a closed, airtight distal end that maintains the vacuum seal required by suction and elevated vacuum suspension systems. Worn over a prosthetic liner or directly against the skin, these socks help manage daily limb volume changes.',
+      'Available in multiple ply weights — Lightweight, 3-Ply, and 5-Ply — each sock allows precise volume management throughout the day. Start with fewer plies in the morning and add more as your limb volume decreases.',
+      'Made with a soft, breathable knit construction, Knit-Rite socks provide comfort against the skin while helping wick moisture and conform to the shape of the limb.',
     ],
-    careInstructions: [
-      'Wash prosthetic socks daily after each use.',
-      'Machine wash using standard laundry detergent.',
-      'Use non-chlorine bleach only when necessary and rinse thoroughly.',
-      'After washing, gently pull the sock taut from toe to top to restore its shape.',
-      'Tumble dry on low heat.',
-    ],
-    precautions: [
-      'Do not use liquid fabric softeners, as they can break down fibers and reduce effective ply thickness.',
-      'Replace socks when they feel thinner, the elastic has loosened, or volume management is no longer effective.',
-      'Confirm your suspension system type (pin lock or suction) before purchasing to get the correct distal end style.',
-    ],
-    measuringGuide: [
-      'Measure the circumference of your residual limb 5 cm from the distal end for width sizing.',
-      'For BK: measure from the distal end to 2-3 inches above the kneecap for length, plus circumference around the kneecap.',
-      'For AK: measure 5 cm from the distal end circumference and at the top of the groin.',
+    features: [
+      'Closed distal end maintains airtight seal for suction and vacuum systems',
+      'Sold in convenient 3-packs',
+      'Available in Lightweight, 3-Ply, and 5-Ply options for different levels of volume management',
+      'Multiple lengths and widths available for an optimal fit',
+      'Soft, breathable knit construction designed for everyday wear',
+      'Helps manage daily limb volume fluctuations for consistent socket fit',
     ],
   },
 
