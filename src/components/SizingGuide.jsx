@@ -165,8 +165,14 @@ function MeasurementSteps({ chartData }) {
 
 function MeasurementImage({ chartData, className = "" }) {
   const isDual = chartData.measurementMethod === 'dual-circumference';
+  const hasAKBKToggle = !isDual && !!chartData.measurementImageAK;
+  const [showAK, setShowAK] = useState(false);
 
-  const isAK = chartData.measurementImage?.includes('ak-');
+  const currentImage = hasAKBKToggle && showAK
+    ? chartData.measurementImageAK
+    : chartData.measurementImage;
+
+  const isAK = currentImage?.includes('ak-');
   const callouts = isDual
     ? isAK
       ? [
@@ -177,17 +183,38 @@ function MeasurementImage({ chartData, className = "" }) {
           { label: 'PROXIMAL', sublabel: '30 cm from end', top: 33 },
           { label: 'DISTAL', sublabel: '4 cm from end', top: 72 },
         ]
-    : [
-        { label: 'MEASURE HERE', sublabel: '6 cm from end', top: 72 },
-      ];
+    : isAK
+      ? [{ label: 'MEASURE HERE', sublabel: '6 cm from end', top: 62 }]
+      : [{ label: 'MEASURE HERE', sublabel: '6 cm from end', top: 72 }];
 
   if (!chartData.measurementImage) return null;
 
   return (
     <FadeIn className={`relative w-full lg:h-full rounded-lg overflow-hidden ${className}`}>
+      {/* AK / BK toggle — absolute positioned top-right of image */}
+      {hasAKBKToggle && (
+        <div className="absolute top-3 right-3 z-10 flex rounded-full bg-white/90 backdrop-blur-sm shadow-sm border border-gray-200 p-0.5">
+          <button
+            onClick={() => setShowAK(false)}
+            className={`px-3 py-1 text-[11px] font-bold rounded-full transition-colors ${
+              !showAK ? 'bg-black text-white' : 'text-gray-500 hover:text-black'
+            }`}
+          >
+            Below Knee
+          </button>
+          <button
+            onClick={() => setShowAK(true)}
+            className={`px-3 py-1 text-[11px] font-bold rounded-full transition-colors ${
+              showAK ? 'bg-black text-white' : 'text-gray-500 hover:text-black'
+            }`}
+          >
+            Above Knee
+          </button>
+        </div>
+      )}
       <img
-        src={chartData.measurementImage}
-        alt={`${chartData.title} \u2014 where to measure`}
+        src={currentImage}
+        alt={`${chartData.title} — where to measure${hasAKBKToggle ? (showAK ? ' (above knee)' : ' (below knee)') : ''}`}
         className="w-full h-auto lg:h-full lg:object-cover lg:object-center rounded-lg"
         loading="lazy"
       />

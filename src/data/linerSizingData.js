@@ -70,6 +70,7 @@ export const SIZING_CHARTS = {
     title: 'EasyLiner Sizing',
     measurementMethod: 'single-circumference',
     measurementImage: '/images/sizing/single-measurement-guide.png',
+    measurementImageAK: '/images/sizing/ak-single-measurement-guide.png',
     measurementPoints: [
       {
         label: 'Circumference',
@@ -102,6 +103,7 @@ export const SIZING_CHARTS = {
     title: 'ALPS General Purpose Sizing',
     measurementMethod: 'single-circumference',
     measurementImage: '/images/sizing/single-measurement-guide.png',
+    measurementImageAK: '/images/sizing/ak-single-measurement-guide.png',
     measurementPoints: [
       {
         label: 'Circumference',
