@@ -3,7 +3,7 @@
 
 // Shared sock fields
 const SOCK_SHARED = {
-  sizingType: 'sock-bk',
+  sizingType: 'sock',
   applicationInstructions: [
     'Lay the sock smoothly over your residual limb rather than pulling it tight over the end.',
     'Avoid stretching the fabric excessively over the distal end, as this reduces effective ply thickness where cushioning matters most.',

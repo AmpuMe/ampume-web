@@ -217,7 +217,7 @@ export default function ProductPage() {
         'alpha-bk': '/images/sizing/bk-sizing-chart.webp',
         'easyliner': '/images/sizing/easyliner-sizing-chart.webp',
         'alps-gp': '/images/sizing/alps-gp-sizing-chart.webp',
-        'sock-bk': '/images/sizing/sock-sizing-chart.webp',
+        'sock': '/images/sizing/sock-sizing-chart.webp',
         'sleeve-bk': '/images/sizing/sleeve-sizing-chart.webp',
       };
       const chartUrl = chartMap[sizingType];
@@ -595,7 +595,7 @@ export default function ProductPage() {
           <div className="max-w-6xl mx-auto px-4 md:px-12 flex justify-center gap-4 sm:gap-6 md:gap-8 flex-wrap">
             {[
               ...(activeDesc.fabricOptions ? [{ label: 'Fabric', id: 'fabric' }] : []),
-              ...(isLiner && activeDesc.sizingType ? [{ label: 'Sizing & Fit', id: 'sizing-guide' }] : []),
+              ...(activeDesc.sizingType ? [{ label: 'Sizing & Fit', id: 'sizing-guide' }] : []),
               { label: 'Overview', id: 'overview' },
               { label: 'Features', id: 'features' },
               { label: 'Care & Maintenance', id: 'care-maintenance' },
@@ -632,7 +632,7 @@ export default function ProductPage() {
               renderFabricOnly
             />
           )}
-          {isLiner && activeDesc.sizingType && (
+          {activeDesc.sizingType && (
             <SizingGuide sizingType={activeDesc.sizingType} measuringGuide={activeDesc.measuringGuide} />
           )}
           <LinerContentSections

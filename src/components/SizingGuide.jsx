@@ -165,24 +165,32 @@ function MeasurementSteps({ chartData }) {
 
 function MeasurementImage({ chartData, className = "" }) {
   const isDual = chartData.measurementMethod === 'dual-circumference';
-  const hasAKBKToggle = !isDual && !!chartData.measurementImageAK;
+  const hasAKBKToggle = !!chartData.measurementImageAK;
   const [showAK, setShowAK] = useState(false);
 
   const currentImage = hasAKBKToggle && showAK
     ? chartData.measurementImageAK
     : chartData.measurementImage;
 
-  const isAK = currentImage?.includes('ak-');
+  const isAK = currentImage?.includes('ak');
+  const customLabels = chartData.labels;
+
+  // Build callouts — use custom labels if provided, else defaults
   const callouts = isDual
-    ? isAK
+    ? customLabels
       ? [
-          { label: 'PROXIMAL', sublabel: '30 cm from end', top: 36 },
-          { label: 'DISTAL', sublabel: '4 cm from end', top: 55 },
+          { label: customLabels.proximal.toUpperCase(), sublabel: customLabels.proximalDesc, top: isAK ? 42 : 38 },
+          { label: customLabels.distal.toUpperCase(), sublabel: customLabels.distalDesc, top: isAK ? 62 : 68 },
         ]
-      : [
-          { label: 'PROXIMAL', sublabel: '30 cm from end', top: 33 },
-          { label: 'DISTAL', sublabel: '4 cm from end', top: 72 },
-        ]
+      : isAK
+        ? [
+            { label: 'PROXIMAL', sublabel: '30 cm from end', top: 36 },
+            { label: 'DISTAL', sublabel: '4 cm from end', top: 55 },
+          ]
+        : [
+            { label: 'PROXIMAL', sublabel: '30 cm from end', top: 33 },
+            { label: 'DISTAL', sublabel: '4 cm from end', top: 72 },
+          ]
     : isAK
       ? [{ label: 'MEASURE HERE', sublabel: '6 cm from end', top: 57 }]
       : [{ label: 'MEASURE HERE', sublabel: '6 cm from end', top: 72 }];
@@ -260,13 +268,13 @@ function SizeFinder({
           {isDual ? (
             <>
               <MeasurementInput
-                label="Distal (4 cm from end)"
+                label={chartData.labels ? `${chartData.labels.distal} (${chartData.labels.distalDesc})` : "Distal (4 cm from end)"}
                 value={distalCm}
                 onChange={onDistalChange}
                 placeholder="e.g. 26"
               />
               <MeasurementInput
-                label="Proximal (30 cm from end)"
+                label={chartData.labels ? `${chartData.labels.proximal} (${chartData.labels.proximalDesc})` : "Proximal (30 cm from end)"}
                 value={proximalCm}
                 onChange={onProximalChange}
                 placeholder="e.g. 42"
@@ -313,22 +321,40 @@ function SizeFinder({
 
 function SizingChartTable({ chartData, highlightedLabel }) {
   const isDual = chartData.measurementMethod === 'dual-circumference';
+  const labels = chartData.labels || {};
+  const inchPrimary = chartData.useInches;
+
+  // Column headers from data or defaults
+  const col1Header = chartData.columns?.[0]?.header || 'Size';
+  const col2Header = isDual ? (chartData.columns?.[2]?.header || `${labels.distal || 'Distal'} (4 cm)`) : `Circumference (${chartData.measurementPoints[0]?.distance})`;
+  const col3Header = isDual ? (chartData.columns?.[1]?.header || `${labels.proximal || 'Proximal'} (30 cm)`) : null;
+
+  const formatRange = (range, rangeIn) => {
+    if (inchPrimary && rangeIn) {
+      const suffix = rangeIn[1] >= 40 ? '+' : '';
+      return <span className="text-sm font-medium">{rangeIn[0]} &ndash; {rangeIn[1]}{suffix} in</span>;
+    }
+    return (
+      <>
+        <span className="text-sm font-medium">{range[0]} &ndash; {range[1]} cm</span>
+        {rangeIn && <span className="text-xs text-gray-400 ml-2">({rangeIn[0]} &ndash; {rangeIn[1]} in)</span>}
+      </>
+    );
+  };
 
   return (
     <>
       {/* Desktop table */}
       <div className="hidden md:block">
         <div className={`grid ${isDual ? 'grid-cols-3' : 'grid-cols-2'} border-b-2 border-black`}>
-          <div className="py-3 px-4 text-xs font-bold uppercase tracking-widest">Size</div>
+          <div className="py-3 px-4 text-xs font-bold uppercase tracking-widest">{col1Header}</div>
           {isDual ? (
             <>
-              <div className="py-3 px-4 text-xs font-bold uppercase tracking-widest">Distal (4 cm)</div>
-              <div className="py-3 px-4 text-xs font-bold uppercase tracking-widest">Proximal (30 cm)</div>
+              <div className="py-3 px-4 text-xs font-bold uppercase tracking-widest">{col2Header}</div>
+              <div className="py-3 px-4 text-xs font-bold uppercase tracking-widest">{col3Header}</div>
             </>
           ) : (
-            <div className="py-3 px-4 text-xs font-bold uppercase tracking-widest">
-              Circumference ({chartData.measurementPoints[0]?.distance})
-            </div>
+            <div className="py-3 px-4 text-xs font-bold uppercase tracking-widest">{col2Header}</div>
           )}
         </div>
 
@@ -354,14 +380,8 @@ function SizingChartTable({ chartData, highlightedLabel }) {
 
               {isDual ? (
                 <>
-                  <div className="py-4 px-4">
-                    <span className="text-sm font-medium">{size.distal[0]} &ndash; {size.distal[1]} cm</span>
-                    <span className="text-xs text-gray-400 ml-2">({size.distalIn[0]} &ndash; {size.distalIn[1]} in)</span>
-                  </div>
-                  <div className="py-4 px-4">
-                    <span className="text-sm font-medium">{size.proximal[0]} &ndash; {size.proximal[1]} cm</span>
-                    <span className="text-xs text-gray-400 ml-2">({size.proximalIn[0]} &ndash; {size.proximalIn[1]} in)</span>
-                  </div>
+                  <div className="py-4 px-4">{formatRange(size.distal, size.distalIn)}</div>
+                  <div className="py-4 px-4">{formatRange(size.proximal, size.proximalIn)}</div>
                 </>
               ) : (
                 <div className="py-4 px-4">
@@ -398,14 +418,12 @@ function SizingChartTable({ chartData, highlightedLabel }) {
               {isDual ? (
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <span className="text-xs font-bold uppercase tracking-widest text-gray-400 block mb-1">Distal</span>
-                    <p className="text-sm font-medium">{size.distal[0]} &ndash; {size.distal[1]} cm</p>
-                    <p className="text-xs text-gray-400">{size.distalIn[0]} &ndash; {size.distalIn[1]} in</p>
+                    <span className="text-xs font-bold uppercase tracking-widest text-gray-400 block mb-1">{labels.distal || 'Distal'}</span>
+                    <p>{formatRange(size.distal, size.distalIn)}</p>
                   </div>
                   <div>
-                    <span className="text-xs font-bold uppercase tracking-widest text-gray-400 block mb-1">Proximal</span>
-                    <p className="text-sm font-medium">{size.proximal[0]} &ndash; {size.proximal[1]} cm</p>
-                    <p className="text-xs text-gray-400">{size.proximalIn[0]} &ndash; {size.proximalIn[1]} in</p>
+                    <span className="text-xs font-bold uppercase tracking-widest text-gray-400 block mb-1">{labels.proximal || 'Proximal'}</span>
+                    <p>{formatRange(size.proximal, size.proximalIn)}</p>
                   </div>
                 </div>
               ) : (
@@ -424,6 +442,36 @@ function SizingChartTable({ chartData, highlightedLabel }) {
           <Info className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
           {chartData.note}
         </p>
+      )}
+
+      {/* Length chart (socks) */}
+      {chartData.lengthChart && (
+        <div className="mt-8 pt-8 border-t border-gray-100">
+          <h3 className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-1">Length Sizing</h3>
+          {chartData.lengthGuidance && (
+            <p className="text-sm text-gray-500 mb-4">{chartData.lengthGuidance}</p>
+          )}
+          <div className="hidden md:block">
+            <div className="grid grid-cols-2 border-b-2 border-black">
+              <div className="py-3 px-4 text-xs font-bold uppercase tracking-widest">Length</div>
+              <div className="py-3 px-4 text-xs font-bold uppercase tracking-widest">Inches</div>
+            </div>
+            {chartData.lengthChart.map((row, i) => (
+              <div key={row.label} className={`grid grid-cols-2 border-b border-gray-100 ${i % 2 === 0 ? 'bg-white' : 'bg-brand-offwhite'}`}>
+                <div className="py-4 px-4 text-sm font-medium">{row.label}</div>
+                <div className="py-4 px-4 text-sm">{row.range} in</div>
+              </div>
+            ))}
+          </div>
+          <div className="md:hidden grid grid-cols-2 gap-3">
+            {chartData.lengthChart.map((row) => (
+              <div key={row.label} className="bg-brand-offwhite rounded-lg p-4">
+                <p className="text-sm font-bold mb-1">{row.label}</p>
+                <p className="text-sm text-gray-600">{row.range} in</p>
+              </div>
+            ))}
+          </div>
+        </div>
       )}
     </>
   );

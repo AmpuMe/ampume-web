@@ -129,30 +129,53 @@ export const SIZING_CHARTS = {
     globalMax: 53,
   },
 
-  'sock-bk': {
-    title: 'Prosthetic Sock Sizing (Below-Knee)',
-    measurementMethod: 'single-circumference',
-    measurementImage: '/images/sizing/single-measurement-guide.png',
-    measurementImageAK: '/images/sizing/ak-single-measurement-guide.png',
+  'sock': {
+    title: 'Prosthetic Sock Width Sizing',
+    measurementMethod: 'dual-circumference',
+    measurementImage: '/images/sizing/sock-bk-measurement-guide.png',
+    measurementImageAK: '/images/sizing/sock-ak-measurement-guide.png',
+    // Custom labels for sock-specific measurement names
+    labels: {
+      proximal: 'Top',
+      distal: 'Bottom',
+      proximalDesc: 'Around kneecap (BK) or groin (AK)',
+      distalDesc: '2 in (5 cm) from end of residual limb',
+    },
     measurementPoints: [
       {
-        label: 'Width Measurement',
-        distance: '5 cm',
-        description: 'Measure the circumference of your residual limb 5 cm from the distal end to determine width (narrow, regular, or wide).',
+        label: 'Top Measurement',
+        distance: 'Around kneecap (BK) or groin (AK)',
+        description: 'BK: Measure the circumference around the middle of your kneecap. AK: Measure the circumference along the top of your groin.',
+      },
+      {
+        label: 'Bottom Measurement',
+        distance: '2 in (5 cm) from end',
+        description: 'Measure the circumference of your residual limb 2 inches (5 cm) up from the distal end.',
       },
     ],
     sizes: [
-      { label: 'Narrow', circumference: [0, 25] },
-      { label: 'Regular', circumference: [25, 35] },
-      { label: 'Wide', circumference: [35, 50] },
+      { label: 'Child', name: 'Child', proximal: [0, 20], distal: [0, 15], proximalIn: [0, 8], distalIn: [0, 6] },
+      { label: 'Narrow', name: 'Narrow', proximal: [28, 36], distal: [18, 20], proximalIn: [11, 14], distalIn: [7, 8] },
+      { label: 'Regular', name: 'Regular', proximal: [36, 41], distal: [20, 25], proximalIn: [14, 16], distalIn: [8, 10] },
+      { label: 'Wide', name: 'Wide', proximal: [46, 100], distal: [30, 100], proximalIn: [18, 40], distalIn: [12, 40] },
     ],
     columns: [
       { key: 'label', header: 'Width' },
-      { key: 'circumference', header: 'Circumference at 5 cm' },
+      { key: 'proximal', header: 'Top (inches)' },
+      { key: 'distal', header: 'Bottom (inches)' },
     ],
-    note: 'For length: BK socks should extend 2-3 inches above the kneecap. Available in Lightweight (1-ply), 3-Ply, and 5-Ply.',
+    // Use inches for display in the chart
+    useInches: true,
+    lengthChart: [
+      { label: 'Extra Short', range: '8 - 12' },
+      { label: 'Short', range: '10 - 14' },
+      { label: 'Medium', range: '16 - 20' },
+      { label: 'Long*', range: '22 - 28' },
+    ],
+    lengthGuidance: 'BK: Typically 2-3 inches above the kneecap. AK: Preference-based (over socket vs within socket).',
+    note: 'Width is determined by TOP and BOTTOM circumference. Most below-knee amputees fit a Regular width.',
     globalMin: 0,
-    globalMax: 50,
+    globalMax: 100,
   },
 
   'sleeve-bk': {
