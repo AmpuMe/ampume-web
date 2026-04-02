@@ -134,12 +134,14 @@ export const SIZING_CHARTS = {
     measurementMethod: 'dual-circumference',
     measurementImage: '/images/sizing/sock-bk-measurement-guide.png',
     measurementImageAK: '/images/sizing/sock-ak-measurement-guide.png',
-    // Custom labels for sock-specific measurement names
+    // Custom labels — BK and AK specific
     labels: {
       proximal: 'Top',
       distal: 'Bottom',
-      proximalDesc: 'Around kneecap (BK) or groin (AK)',
+      proximalDesc: 'Around middle of kneecap',
       distalDesc: '2 in (5 cm) from end of residual limb',
+      proximalDescAK: 'Around top of groin',
+      distalDescAK: '2 in (5 cm) from end of residual limb',
     },
     measurementPoints: [
       {
