@@ -184,7 +184,7 @@ function MeasurementImage({ chartData, className = "" }) {
           { label: 'DISTAL', sublabel: '4 cm from end', top: 72 },
         ]
     : isAK
-      ? [{ label: 'MEASURE HERE', sublabel: '6 cm from end', top: 62 }]
+      ? [{ label: 'MEASURE HERE', sublabel: '6 cm from end', top: 52 }]
       : [{ label: 'MEASURE HERE', sublabel: '6 cm from end', top: 72 }];
 
   if (!chartData.measurementImage) return null;
