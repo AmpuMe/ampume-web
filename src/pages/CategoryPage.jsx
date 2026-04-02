@@ -32,6 +32,24 @@ const CATEGORY_COPY = {
     sizingNote: 'AmpuMe provides access for those purchasing independently or seeking backup liners. If you are ordering on your own, please review the sizing guide on the product page and confirm your measurements before purchasing.',
     tip: 'Not sure which liner you currently use? Check the side of your existing liner for the model number, or',
   },
+  socks: {
+    tagline: 'Prosthetic Socks',
+    description: 'Manage socket fit and daily limb volume changes with prosthetic socks designed for comfort and control.',
+    intro: 'Prosthetic socks help manage daily limb volume changes while maintaining a comfortable, secure socket fit. Worn over a prosthetic liner or directly against the skin depending on your suspension system, socks allow you to make small adjustments throughout the day.',
+    guidance: 'Socks are available for both pin-locking and suction suspension systems. Options with a distal hole accommodate pin-lock liners, while closed-end socks are designed for suction or vacuum systems that require an airtight seal.',
+    sizingNote: 'Start with fewer plies in the morning when your limb volume is largest, and add plies throughout the day as volume decreases. Review the product page for width and length sizing guidance.',
+  },
+  sleeves: {
+    tagline: 'Prosthetic Sleeves',
+    description: 'Suspension sleeves for below-knee prostheses, designed to maintain a secure and comfortable seal.',
+    intro: 'Suspension sleeves create a secure seal between the prosthetic socket and the limb, providing reliable suspension during daily activities.',
+    guidance: 'Sleeves are designed for below-knee prosthetic systems. Measure the circumference around your kneecap to determine the correct size.',
+  },
+  accessories: {
+    tagline: 'Care and Accessories',
+    description: 'Care products and maintenance essentials to support skin health and prosthetic hygiene.',
+    intro: 'Keeping your prosthetic components clean and your skin healthy is essential for long-term comfort and performance.',
+  },
 };
 
 export default function CategoryPage() {

@@ -541,7 +541,7 @@ export const CATEGORY_ORDER = [
     key: 'Prosthetic Sock',
     label: 'Prosthetic Socks',
     id: 'socks',
-    description: 'Prosthetic socks designed to help manage limb volume and maintain a comfortable fit.',
+    description: 'Manage socket fit and daily limb volume changes with prosthetic socks designed for comfort and control.',
     icon: 'Layers',
   },
   {

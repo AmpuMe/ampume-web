@@ -132,7 +132,8 @@ export const SIZING_CHARTS = {
   'sock-bk': {
     title: 'Prosthetic Sock Sizing (Below-Knee)',
     measurementMethod: 'single-circumference',
-    measurementImage: '/images/sizing/bk-measurement-guide.png',
+    measurementImage: '/images/sizing/single-measurement-guide.png',
+    measurementImageAK: '/images/sizing/ak-single-measurement-guide.png',
     measurementPoints: [
       {
         label: 'Width Measurement',
