@@ -179,8 +179,8 @@ function MeasurementImage({ chartData, className = "" }) {
   const callouts = isDual
     ? customLabels
       ? [
-          { label: customLabels.proximal.toUpperCase(), sublabel: customLabels.proximalDesc, top: isAK ? 36 : 33 },
-          { label: customLabels.distal.toUpperCase(), sublabel: customLabels.distalDesc, top: isAK ? 55 : 72 },
+          { label: customLabels.proximal.toUpperCase(), sublabel: customLabels.proximalDesc, top: isAK ? 36 : 43 },
+          { label: customLabels.distal.toUpperCase(), sublabel: customLabels.distalDesc, top: isAK ? 55 : 78 },
         ]
       : isAK
         ? [
