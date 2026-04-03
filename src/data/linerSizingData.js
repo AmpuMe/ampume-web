@@ -189,8 +189,8 @@ export const SIZING_CHARTS = {
       distal: 'Mid-Knee Cap',
       proximalDesc: '8 in (20 cm) above kneecap',
       distalDesc: 'Around middle of kneecap',
-      proximalTop: 25,
-      distalTop: 50,
+      proximalTop: 23,
+      distalTop: 47,
     },
     measurementPoints: [
       {
@@ -205,9 +205,9 @@ export const SIZING_CHARTS = {
       },
     ],
     sizes: [
-      { label: '1', name: 'Size 1', distal: [24, 32], proximal: [34, 46], distalIn: [9.4, 12.6], proximalIn: [13.4, 18.1] },
-      { label: '2', name: 'Size 2', distal: [30, 40], proximal: [40, 54], distalIn: [11.8, 15.7], proximalIn: [15.7, 21.3] },
-      { label: '3', name: 'Size 3', distal: [36, 47], proximal: [46, 66], distalIn: [14.2, 18.5], proximalIn: [18.1, 26.0] },
+      { label: 'S', name: 'Small', distal: [24, 32], proximal: [34, 46], distalIn: [9.4, 12.6], proximalIn: [13.4, 18.1] },
+      { label: 'M', name: 'Medium', distal: [30, 40], proximal: [40, 54], distalIn: [11.8, 15.7], proximalIn: [15.7, 21.3] },
+      { label: 'L', name: 'Large', distal: [36, 47], proximal: [46, 66], distalIn: [14.2, 18.5], proximalIn: [18.1, 26.0] },
     ],
     columns: [
       { key: 'label', header: 'Size' },
