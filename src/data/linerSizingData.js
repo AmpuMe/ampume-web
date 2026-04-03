@@ -189,7 +189,7 @@ export const SIZING_CHARTS = {
       distal: 'Mid-Knee Cap',
       proximalDesc: '8 in (20 cm) above kneecap',
       distalDesc: 'Around middle of kneecap',
-      proximalTop: 30,
+      proximalTop: 25,
       distalTop: 50,
     },
     measurementPoints: [
