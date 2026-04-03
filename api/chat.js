@@ -46,26 +46,21 @@ export default async function handler(req, res) {
     }
 
     if (stream) {
-      // Stream SSE directly to client
       res.setHeader('Content-Type', 'text/event-stream');
       res.setHeader('Cache-Control', 'no-cache');
       res.setHeader('Connection', 'keep-alive');
 
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-
-      try {
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          const chunk = decoder.decode(value, { stream: true });
-          res.write(chunk);
-        }
-      } catch (streamError) {
-        console.error('Stream error:', streamError);
-      } finally {
+      // Pipe the Node.js readable stream directly to the response
+      response.body.on('data', (chunk) => {
+        res.write(chunk);
+      });
+      response.body.on('end', () => {
         res.end();
-      }
+      });
+      response.body.on('error', (err) => {
+        console.error('Stream error:', err);
+        res.end();
+      });
     } else {
       const data = await response.json();
       return res.status(200).json(data);
