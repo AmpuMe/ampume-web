@@ -232,22 +232,8 @@ const AISupport = () => {
       />
       <SimpleNavbar />
 
-      <main className="pt-32 pb-20 px-6 md:px-12">
-        <div className="max-w-4xl mx-auto flex flex-col gap-10">
-          {/* Header */}
-          <div className="text-center">
-            <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">
-              Available 24/7
-            </p>
-            <h1 className="text-4xl md:text-6xl font-light tracking-tight mb-4">
-              Ask anything.
-            </h1>
-            <p className="text-lg text-gray-500 font-light leading-relaxed max-w-xl mx-auto">
-              Questions about prosthetics, care, and daily life — get clear answers instantly.
-            </p>
-          </div>
-
-          {/* Chat */}
+      <main className="pt-28 pb-20 px-6 md:px-12">
+        <div className="max-w-4xl mx-auto">
           <ChatInterface />
         </div>
       </main>
