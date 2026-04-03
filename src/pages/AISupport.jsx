@@ -54,12 +54,13 @@ function TypingIndicator() {
 function ChatInterface() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
-  const [isStreaming, setIsStreaming] = useState(false);
-  const messagesEndRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const scrollAreaRef = useRef(null);
   const inputRef = useRef(null);
 
   const scrollToBottom = useCallback(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const el = scrollAreaRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
   }, []);
 
   useEffect(() => {
@@ -71,7 +72,7 @@ function ChatInterface() {
     const newMessages = [...messages, userMessage];
     setMessages(newMessages);
     setInput('');
-    setIsStreaming(true);
+    setIsLoading(true);
 
     try {
       const response = await fetch('/api/chat', {
@@ -79,7 +80,6 @@ function ChatInterface() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           messages: newMessages.map(m => ({ role: m.role, content: m.content })),
-          stream: true,
         }),
       });
 
@@ -87,83 +87,28 @@ function ChatInterface() {
         throw new Error(`Error: ${response.status}`);
       }
 
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let assistantContent = '';
-
-      // Add empty assistant message that we'll stream into
-      setMessages(prev => [...prev, { role: 'assistant', content: '' }]);
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        const chunk = decoder.decode(value, { stream: true });
-        const lines = chunk.split('\n');
-
-        for (const line of lines) {
-          if (!line.startsWith('data: ')) continue;
-          const data = line.slice(6).trim();
-          if (data === '[DONE]') break;
-
-          try {
-            const parsed = JSON.parse(data);
-            const delta = parsed.choices?.[0]?.delta?.content;
-            if (delta) {
-              assistantContent += delta;
-              setMessages(prev => {
-                const updated = [...prev];
-                updated[updated.length - 1] = {
-                  role: 'assistant',
-                  content: assistantContent,
-                };
-                return updated;
-              });
-            }
-          } catch {
-            // Skip malformed chunks
-          }
-        }
-      }
-
-      // If no content came through streaming, try non-streaming fallback
-      if (!assistantContent) {
-        setMessages(prev => prev.slice(0, -1)); // Remove empty assistant message
-        const fallbackResponse = await fetch('/api/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            messages: newMessages.map(m => ({ role: m.role, content: m.content })),
-            stream: false,
-          }),
-        });
-        const fallbackData = await fallbackResponse.json();
-        const content = fallbackData.choices?.[0]?.message?.content || 'Sorry, I was unable to generate a response.';
-        setMessages(prev => [...prev, { role: 'assistant', content }]);
-      }
+      const data = await response.json();
+      const content = data.choices?.[0]?.message?.content || 'Sorry, I was unable to generate a response.';
+      setMessages(prev => [...prev, { role: 'assistant', content }]);
     } catch (err) {
       console.error('Chat error:', err);
-      setMessages(prev => {
-        // Remove empty assistant message if it exists
-        const filtered = prev.filter(m => m.content !== '');
-        return [...filtered, {
-          role: 'assistant',
-          content: "I'm having trouble connecting right now. Please try again in a moment.",
-        }];
-      });
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: "I'm having trouble connecting right now. Please try again in a moment.",
+      }]);
     } finally {
-      setIsStreaming(false);
+      setIsLoading(false);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!input.trim() || isStreaming) return;
+    if (!input.trim() || isLoading) return;
     sendMessage(input);
   };
 
   const handlePromptClick = (prompt) => {
-    if (isStreaming) return;
+    if (isLoading) return;
     sendMessage(prompt);
   };
 
@@ -172,7 +117,7 @@ function ChatInterface() {
   return (
     <div className="flex flex-col bg-white border border-gray-200 rounded-2xl overflow-hidden" style={{ height: 'min(70vh, 640px)' }}>
       {/* Messages area */}
-      <div className="flex-1 overflow-y-auto px-4 md:px-6 py-6">
+      <div ref={scrollAreaRef} className="flex-1 overflow-y-auto px-4 md:px-6 py-6">
         {isEmpty ? (
           <div className="h-full flex flex-col items-center justify-center text-center px-4">
             <div className="w-14 h-14 rounded-full bg-gray-50 flex items-center justify-center mb-5">
@@ -199,10 +144,7 @@ function ChatInterface() {
             {messages.map((msg, i) => (
               <ChatMessage key={i} message={msg} />
             ))}
-            {isStreaming && messages[messages.length - 1]?.content === '' && (
-              <TypingIndicator />
-            )}
-            <div ref={messagesEndRef} />
+            {isLoading && <TypingIndicator />}
           </div>
         )}
       </div>
@@ -216,15 +158,15 @@ function ChatInterface() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask a question..."
-            disabled={isStreaming}
+            disabled={isLoading}
             className="flex-1 text-sm bg-gray-50 border border-gray-200 rounded-full px-4 py-3 focus:outline-none focus:border-gray-400 transition-colors disabled:opacity-50 placeholder:text-gray-400"
           />
           <button
             type="submit"
-            disabled={!input.trim() || isStreaming}
+            disabled={!input.trim() || isLoading}
             className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center flex-shrink-0 hover:bg-gray-800 transition-colors disabled:opacity-30"
           >
-            {isStreaming ? (
+            {isLoading ? (
               <Loader2 className="w-4 h-4 animate-spin" />
             ) : (
               <Send className="w-4 h-4" />
