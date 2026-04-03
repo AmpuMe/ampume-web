@@ -373,9 +373,9 @@ function SizingChartTable({ chartData, highlightedLabel }) {
                 <span className={`inline-flex items-center justify-center w-10 h-10 rounded-full text-sm font-bold flex-shrink-0 ${
                   isHighlighted ? 'bg-brand-gold text-white' : 'bg-black text-white'
                 }`}>
-                  {size.label}
+                  {size.label.charAt(0).toUpperCase()}
                 </span>
-                {size.name && <span className="text-sm text-gray-500">{size.name}</span>}
+                {(size.name || size.label) && <span className="text-sm text-gray-500">{size.name || size.label}</span>}
               </div>
 
               {isDual ? (
