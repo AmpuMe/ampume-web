@@ -51,12 +51,25 @@ function TypingIndicator() {
   );
 }
 
+const STORAGE_KEY = 'ampume-chat-history';
+
 function ChatInterface() {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      return saved ? JSON.parse(saved) : [];
+    } catch { return []; }
+  });
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const scrollAreaRef = useRef(null);
   const inputRef = useRef(null);
+
+  // Persist messages to localStorage
+  useEffect(() => {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(messages)); }
+    catch { /* quota exceeded or private browsing */ }
+  }, [messages]);
 
   const scrollToBottom = useCallback(() => {
     const el = scrollAreaRef.current;
@@ -107,6 +120,11 @@ function ChatInterface() {
     sendMessage(input);
   };
 
+  const clearChat = () => {
+    setMessages([]);
+    localStorage.removeItem(STORAGE_KEY);
+  };
+
   const handlePromptClick = (prompt) => {
     if (isLoading) return;
     sendMessage(prompt);
@@ -116,6 +134,17 @@ function ChatInterface() {
 
   return (
     <div className="flex flex-col bg-white border border-gray-200 rounded-2xl overflow-hidden" style={{ height: 'min(70vh, 640px)' }}>
+      {/* Header — new conversation button */}
+      {!isEmpty && (
+        <div className="flex justify-end px-4 pt-3 pb-0">
+          <button
+            onClick={clearChat}
+            className="text-[11px] text-gray-400 hover:text-black transition-colors"
+          >
+            New conversation
+          </button>
+        </div>
+      )}
       {/* Messages area */}
       <div ref={scrollAreaRef} className="flex-1 overflow-y-auto px-4 md:px-6 py-6">
         {isEmpty ? (
