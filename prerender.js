@@ -13,6 +13,8 @@ const templatePath = toAbsolute('dist/index.html')
 const routesToPrerender = [
     '/',
     '/ai-support',
+    '/shop',
+    '/resources',
     '/privacy-policy',
     '/terms-of-service',
     '/accessibility-statement'
@@ -25,7 +27,11 @@ const routesToPrerender = [
   }
     
   const template = fs.readFileSync(templatePath, 'utf-8')
-  
+
+  // Save bare app shell as SPA fallback (no prerendered content)
+  fs.writeFileSync(toAbsolute('dist/200.html'), template)
+  console.log('saved SPA fallback: dist/200.html')
+
   // Import from built server entry
   // This requires npm run build:server to have run
   const { render } = await import('./dist/server/entry-server.js')

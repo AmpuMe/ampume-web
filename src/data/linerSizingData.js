@@ -1,0 +1,225 @@
+// Sizing chart data for prosthetic liners
+// Each liner in linerDescriptions.js references a sizingType that maps to an entry here
+
+export const SIZING_CHARTS = {
+  'alpha-ak': {
+    title: 'Alpha Classic AK Sizing',
+    measurementMethod: 'dual-circumference',
+    measurementImage: '/images/sizing/ak-measurement-guide.png',
+    measurementPoints: [
+      {
+        label: 'Distal Measurement',
+        distance: '4 cm (1.5 in)',
+        description: 'Measure the circumference of your residual limb 4 cm (1.5 inches) from the end.',
+      },
+      {
+        label: 'Proximal Measurement',
+        distance: '30 cm (12 in)',
+        description: 'Measure the circumference 30 cm (12 inches) from the end of your residual limb.',
+      },
+    ],
+    sizes: [
+      { label: 'M+', name: 'Medium Plus', proximal: [34, 54], distal: [20, 32], proximalIn: [13.5, 21.5], distalIn: [8, 12.5] },
+      { label: 'L', name: 'Large', proximal: [37, 64], distal: [28, 36], proximalIn: [14.5, 25], distalIn: [11, 14] },
+      { label: 'L+', name: 'Large Plus', proximal: [44, 80], distal: [32, 47], proximalIn: [17.5, 31.5], distalIn: [12.5, 18.5] },
+      { label: 'XL', name: 'Extra Large', proximal: [48, 90], distal: [37, 55], proximalIn: [19, 35.5], distalIn: [14.5, 22] },
+    ],
+    columns: [
+      { key: 'label', header: 'Size' },
+      { key: 'distal', header: 'Distal (4 cm)' },
+      { key: 'proximal', header: 'Proximal (30 cm)' },
+    ],
+    globalMin: 8,
+    globalMax: 90,
+  },
+
+  'alpha-bk': {
+    title: 'Alpha Classic BK Sizing',
+    measurementMethod: 'dual-circumference',
+    measurementImage: '/images/sizing/bk-measurement-guide.png',
+    measurementPoints: [
+      {
+        label: 'Distal Measurement',
+        distance: '4 cm (1.5 in)',
+        description: 'Measure the circumference of your residual limb 4 cm (1.5 inches) from the end.',
+      },
+      {
+        label: 'Proximal Measurement',
+        distance: '30 cm (12 in)',
+        description: 'Measure the circumference 30 cm (12 inches) from the end of your residual limb.',
+      },
+    ],
+    sizes: [
+      { label: 'S', name: 'Small', proximal: [20, 27], distal: [15, 22], proximalIn: [8, 10.5], distalIn: [6, 8.5] },
+      { label: 'M', name: 'Medium', proximal: [23, 36], distal: [18, 26], proximalIn: [9, 14], distalIn: [7, 10] },
+      { label: 'M+', name: 'Medium Plus', proximal: [33, 50], distal: [20, 28], proximalIn: [13, 20], distalIn: [8, 11] },
+      { label: 'L', name: 'Large', proximal: [36, 55], distal: [28, 33], proximalIn: [14, 21.5], distalIn: [10, 13] },
+      { label: 'L+', name: 'Large Plus', proximal: [40, 60], distal: [28, 40], proximalIn: [15.5, 23.5], distalIn: [11, 15.5] },
+      { label: 'XL', name: 'Extra Large', proximal: [43, 65], distal: [33, 45], proximalIn: [17, 25.5], distalIn: [13, 17.5] },
+    ],
+    columns: [
+      { key: 'label', header: 'Size' },
+      { key: 'distal', header: 'Distal (4 cm)' },
+      { key: 'proximal', header: 'Proximal (30 cm)' },
+    ],
+    globalMin: 6,
+    globalMax: 65,
+  },
+
+  'easyliner': {
+    title: 'EasyLiner Sizing',
+    measurementMethod: 'single-circumference',
+    measurementImage: '/images/sizing/single-measurement-guide.png',
+    measurementImageAK: '/images/sizing/ak-single-measurement-guide.png',
+    measurementPoints: [
+      {
+        label: 'Circumference',
+        distance: '6 cm',
+        description: 'Measure the circumference of your residual limb 6 cm above the distal end.',
+      },
+    ],
+    sizes: [
+      { label: '10', circumference: [10, 15] },
+      { label: '16', circumference: [16, 19] },
+      { label: '20', circumference: [20, 23] },
+      { label: '24', circumference: [24, 25] },
+      { label: '26', circumference: [26, 27] },
+      { label: '28', circumference: [28, 31] },
+      { label: '32', circumference: [32, 34] },
+      { label: '35', circumference: [35, 37] },
+      { label: '38', circumference: [38, 43] },
+      { label: '44', circumference: [44, 53] },
+    ],
+    columns: [
+      { key: 'label', header: 'Size' },
+      { key: 'circumference', header: 'Circumference at 6 cm' },
+    ],
+    note: 'Each size is available in Locking and/or Cushion configurations with multiple thickness options.',
+    globalMin: 10,
+    globalMax: 53,
+  },
+
+  'alps-gp': {
+    title: 'ALPS General Purpose Sizing',
+    measurementMethod: 'single-circumference',
+    measurementImage: '/images/sizing/single-measurement-guide.png',
+    measurementImageAK: '/images/sizing/ak-single-measurement-guide.png',
+    measurementPoints: [
+      {
+        label: 'Circumference',
+        distance: '6 cm',
+        description: 'Measure the circumference of your residual limb 6 cm above the distal end.',
+      },
+    ],
+    sizes: [
+      { label: '16', circumference: [16, 19] },
+      { label: '20', circumference: [20, 23] },
+      { label: '24', circumference: [24, 27] },
+      { label: '28', circumference: [28, 31] },
+      { label: '32', circumference: [32, 37] },
+      { label: '38', circumference: [38, 43] },
+      { label: '44', circumference: [44, 53] },
+    ],
+    columns: [
+      { key: 'label', header: 'Size' },
+      { key: 'circumference', header: 'Circumference at 6 cm' },
+    ],
+    note: 'Available in 3 mm and 6 mm uniform thickness. Cushion and Locking configurations.',
+    globalMin: 16,
+    globalMax: 53,
+  },
+
+  'sock': {
+    title: 'Prosthetic Sock Width Sizing',
+    measurementMethod: 'dual-circumference',
+    measurementImage: '/images/sizing/sock-bk-measurement-guide.png',
+    measurementImageAK: '/images/sizing/sock-ak-measurement-guide.png',
+    // Custom labels — BK and AK specific
+    labels: {
+      proximal: 'Top',
+      distal: 'Bottom',
+      proximalDesc: 'Around middle of kneecap',
+      distalDesc: '2 in (5 cm) from end of residual limb',
+      proximalDescAK: 'Around top of groin',
+      distalDescAK: '2 in (5 cm) from end of residual limb',
+    },
+    measurementPoints: [
+      {
+        label: 'Top Measurement',
+        distance: 'Around kneecap (BK) or groin (AK)',
+        description: 'BK: Measure the circumference around the middle of your kneecap. AK: Measure the circumference along the top of your groin.',
+      },
+      {
+        label: 'Bottom Measurement',
+        distance: '2 in (5 cm) from end',
+        description: 'Measure the circumference of your residual limb 2 inches (5 cm) up from the distal end.',
+      },
+    ],
+    sizes: [
+      { label: 'Child', name: 'Child', proximal: [0, 20], distal: [0, 15], proximalIn: [0, 8], distalIn: [0, 6] },
+      { label: 'Narrow', name: 'Narrow', proximal: [28, 36], distal: [18, 20], proximalIn: [11, 14], distalIn: [7, 8] },
+      { label: 'Regular', name: 'Regular', proximal: [36, 41], distal: [20, 25], proximalIn: [14, 16], distalIn: [8, 10] },
+      { label: 'Wide', name: 'Wide', proximal: [46, 100], distal: [30, 100], proximalIn: [18, 40], distalIn: [12, 40] },
+    ],
+    columns: [
+      { key: 'label', header: 'Width' },
+      { key: 'proximal', header: 'Top (inches)' },
+      { key: 'distal', header: 'Bottom (inches)' },
+    ],
+    // Use inches for display in the chart
+    useInches: true,
+    lengthChart: [
+      { label: 'Extra Short', range: '8 - 12' },
+      { label: 'Short', range: '10 - 14' },
+      { label: 'Medium', range: '16 - 20' },
+      { label: 'Long*', range: '22 - 28' },
+    ],
+    lengthGuidance: 'BK: Typically 2-3 inches above the kneecap. AK: Preference-based (over socket vs within socket).',
+    note: 'Width is determined by TOP and BOTTOM circumference. Most below-knee amputees fit a Regular width.',
+    globalMin: 0,
+    globalMax: 100,
+  },
+
+  'sleeve-bk': {
+    title: 'ProFlex Suspension Sleeve Sizing',
+    measurementMethod: 'dual-circumference',
+    measurementImage: '/images/sizing/sleeve-bk-measurement-guide.png',
+    labels: {
+      proximal: 'Top',
+      distal: 'Mid-Knee Cap',
+      proximalDesc: '8 in (20 cm) above kneecap',
+      distalDesc: 'Around middle of kneecap',
+      proximalTop: 23,
+      distalTop: 47,
+    },
+    measurementPoints: [
+      {
+        label: 'Top Measurement',
+        distance: '8 in (20 cm) above kneecap',
+        description: 'Measure the circumference of your leg 8 inches (20 cm) above the center of your kneecap.',
+      },
+      {
+        label: 'Mid-Knee Cap',
+        distance: 'Around kneecap',
+        description: 'Measure the circumference around the middle of your kneecap.',
+      },
+    ],
+    sizes: [
+      { label: 'S', name: 'Small', distal: [24, 32], proximal: [34, 46], distalIn: [9.4, 12.6], proximalIn: [13.4, 18.1] },
+      { label: 'M', name: 'Medium', distal: [30, 40], proximal: [40, 54], distalIn: [11.8, 15.7], proximalIn: [15.7, 21.3] },
+      { label: 'L', name: 'Large', distal: [36, 47], proximal: [46, 66], distalIn: [14.2, 18.5], proximalIn: [18.1, 26.0] },
+    ],
+    columns: [
+      { key: 'label', header: 'Size' },
+      { key: 'distal', header: 'Knee Center (cm)' },
+      { key: 'proximal', header: '20 cm Proximal (cm)' },
+    ],
+    note: 'ProFlex sleeves are for below-knee prosthetic suspension only. Compatible with valve, DVS, and Harmony systems.',
+    globalMin: 24,
+    globalMax: 66,
+  },
+};
+
+export function getSizingChart(sizingType) {
+  return SIZING_CHARTS[sizingType] || null;
+}
