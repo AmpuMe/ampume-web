@@ -1,7 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ShoppingBag, Check, ChevronDown } from 'lucide-react';
+import { ArrowLeft, ShoppingBag, Check } from 'lucide-react';
+import Select from '../components/Select';
 import SimpleNavbar from '../components/SimpleNavbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
@@ -502,22 +503,13 @@ export default function ProductPage() {
                           ))}
                         </div>
                       ) : (
-                        // Dropdown for many options
-                        <div className="relative">
-                          <select
-                            value={selectedOptions[option.name]}
-                            onChange={(e) => handleOptionChange(option.name, e.target.value)}
-                            className="w-full appearance-none px-4 py-3 pr-10 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-black transition-colors"
-                          >
-                            <option value="" disabled>Select a size</option>
-                            {sortOptionValues(option.values, option.name).map(value => (
-                              <option key={value} value={value}>
-                                {value}
-                              </option>
-                            ))}
-                          </select>
-                          <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-                        </div>
+                        // Custom dropdown for many options
+                        <Select
+                          options={sortOptionValues(option.values, option.name).map(v => ({ value: v, label: v }))}
+                          value={selectedOptions[option.name]}
+                          onChange={(v) => handleOptionChange(option.name, v)}
+                          placeholder="Select a size"
+                        />
                       )}
                     </div>
                   )
