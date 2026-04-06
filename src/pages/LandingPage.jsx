@@ -319,20 +319,14 @@ const LandingPage = () => {
               { pillar: 'Performance & Recovery', title: 'Gait Training Exercises for Lower Limb Amputees', desc: 'Balance, weight shifting, and walking patterns for rehabilitation and ongoing fitness.', img: '/images/articles/gait-training-cover.webp', href: '/resources' },
             ].map((item, i) => (
               <FadeIn key={i} delay={i * 0.1}>
-                <Link to={item.href} className="group relative block h-[500px] md:h-[600px] overflow-hidden cursor-pointer">
-                  <img src={item.img} alt="" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500" />
-                  <span className="absolute top-8 left-8 z-10 text-[11px] font-bold uppercase tracking-widest bg-white text-black px-3 pt-[7px] pb-[5px] leading-none">
-                    {item.pillar}
-                  </span>
-                  <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
-                    <h4 className="text-3xl font-medium mb-3">{item.title}</h4>
-                    <div className="h-auto md:h-0 md:group-hover:h-auto overflow-hidden transition-all duration-500">
-                      <p className="text-sm text-white/90 leading-relaxed mb-4">{item.desc}</p>
-                      <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1 group-hover:border-white transition-colors">
-                        Read More <ArrowRight size={14} />
-                      </span>
-                    </div>
+                <Link to={item.href} className="group block bg-white overflow-hidden hover:shadow-md transition-shadow duration-300">
+                  <div className="aspect-[16/10] overflow-hidden">
+                    <img src={item.img} alt="" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  </div>
+                  <div className="p-6">
+                    <span className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-3 block">{item.pillar}</span>
+                    <h4 className="text-lg font-medium leading-snug mb-2 group-hover:text-gray-500 transition-colors">{item.title}</h4>
+                    <p className="text-sm text-gray-400 leading-relaxed">{item.desc}</p>
                   </div>
                 </Link>
               </FadeIn>
@@ -358,63 +352,26 @@ const LandingPage = () => {
               Try AI Support <ArrowRight size={14} />
             </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Chat mockup card — same dimensions as tile cards */}
-            <FadeIn>
-              <Link to="/ai-support" className="group relative block h-[500px] md:h-[600px] bg-black overflow-hidden cursor-pointer">
-                <span className="absolute top-8 left-8 z-10 text-[11px] font-bold uppercase tracking-widest bg-white text-black px-3 pt-[7px] pb-[5px] leading-none">
-                  AI Support
-                </span>
-                <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between">
-                  <div className="mt-14 space-y-4">
-                    <div className="flex gap-3 flex-row-reverse">
-                      <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                        <User className="w-3.5 h-3.5 text-white" />
-                      </div>
-                      <div className="bg-white/10 text-white rounded-2xl rounded-tr-sm px-4 py-2.5">
-                        <p className="text-sm">How often should I replace my liner?</p>
-                      </div>
-                    </div>
-                    <div className="flex gap-3">
-                      <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                        <Bot className="w-3.5 h-3.5 text-white" />
-                      </div>
-                      <div className="bg-white/10 text-white/90 rounded-2xl rounded-tl-sm px-4 py-2.5">
-                        <p className="text-sm leading-relaxed">Most prosthetic liners should be replaced every <strong className="text-white">6 to 12 months</strong>, depending on usage, activity level, and material wear. Signs it's time include visible gel breakdown, reduced cushioning, or changes in socket fit.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="pt-4 border-t border-white/10 flex items-center gap-3">
-                    <div className="flex-1 text-sm text-white/30">Ask a question...</div>
-                    <Send className="w-4 h-4 text-white/30" />
-                  </div>
-                </div>
-              </Link>
-            </FadeIn>
-            {/* Prompts + description card */}
-            <FadeIn delay={0.1}>
-              <div className="h-[500px] md:h-[600px] bg-brand-offwhite p-6 md:p-8 flex flex-col justify-center">
-                <span className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-6 block">Available 24/7</span>
-                <h4 className="text-3xl font-medium mb-4">Clear answers, instantly.</h4>
-                <p className="text-sm text-gray-500 leading-relaxed mb-8">
-                  Our AI assistant is trained on expert prosthetic resources to help you with questions about recovery, daily care, insurance coverage, and more.
+          <FadeIn>
+            <Link to="/ai-support" className="group block bg-black p-8 md:p-12 hover:bg-gray-900 transition-colors">
+              <div className="max-w-2xl">
+                <span className="text-[11px] font-bold uppercase tracking-widest text-white/40 mb-6 block">Available 24/7</span>
+                <p className="text-xl md:text-2xl font-light text-white leading-relaxed mb-8">
+                  Our AI assistant is trained on expert prosthetic resources — ask about recovery, daily care, insurance coverage, and more.
                 </p>
-                <div className="space-y-3 mb-8">
+                <div className="flex flex-wrap gap-2 mb-8">
                   {['How often should I replace my liner?', 'Why is my residual limb irritated?', 'What does Medicare cover for prosthetics?'].map((prompt, i) => (
-                    <Link key={i} to="/ai-support" className="group flex items-center gap-3 text-sm text-gray-600 hover:text-black transition-colors">
-                      <span className="w-6 h-6 rounded-full bg-white group-hover:bg-black group-hover:text-white flex items-center justify-center flex-shrink-0 transition-colors">
-                        <ArrowRight className="w-3 h-3" />
-                      </span>
+                    <span key={i} className="text-xs bg-white/10 text-white/70 rounded-full px-4 py-2">
                       {prompt}
-                    </Link>
+                    </span>
                   ))}
                 </div>
-                <Link to="/ai-support" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
+                <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white border-b border-white/50 pb-1 group-hover:border-white transition-colors">
                   Try AI Support <ArrowRight size={14} />
-                </Link>
+                </span>
               </div>
-            </FadeIn>
-          </div>
+            </Link>
+          </FadeIn>
         </div>
       </section>
 
