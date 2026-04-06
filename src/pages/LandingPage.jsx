@@ -255,154 +255,150 @@ const LandingPage = () => {
       </section>
 
       {/* ── Proof of Platform: Shop ─────────────────────────────── */}
-      <section className="py-20 md:py-32 px-6 md:px-12 bg-white border-t border-gray-100">
-        <FadeIn className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            {/* Left — copy */}
-            <div className="lg:col-span-4 lg:sticky lg:top-32">
-              <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 block">Shop</span>
-              <h3 className="text-3xl md:text-5xl font-light tracking-tight mb-5 leading-[1.1]">
-                Prosthetic<br />essentials,<br />delivered.
-              </h3>
-              <p className="text-gray-500 leading-relaxed mb-8 max-w-sm">
-                Liners, sleeves, socks, and care products — thoughtfully selected for fit, function, and durability.
-              </p>
-              <Link to="/shop" className="inline-flex items-center gap-2 bg-black text-white text-xs font-bold uppercase tracking-widest px-6 py-3 rounded-full hover:bg-gray-800 transition-colors">
-                Browse Shop <ArrowRight size={14} />
-              </Link>
-            </div>
-            {/* Right — product cards */}
-            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-5">
-              {[
-                { name: 'Prosthetic Liners', desc: 'Adaptive gel for comfort and secure suspension.', href: '/shop/liners', img: categoryLiners },
-                { name: 'Suspension Sleeves', desc: 'Maintain a secure seal for below-knee systems.', href: '/shop/sleeves', img: categorySleeves },
-                { name: 'Prosthetic Socks', desc: 'Manage limb volume with breathable knit construction.', href: '/shop/socks', img: categorySocks },
-              ].map((product, i) => (
-                <FadeIn key={i} delay={i * 0.1}>
-                  <Link to={product.href} className="group block">
-                    <div className="aspect-[3/4] bg-brand-offwhite rounded-xl overflow-hidden mb-4">
-                      <img
-                        src={product.img}
-                        alt={product.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
+      <section className="py-16 md:py-20 px-6 md:px-12 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <FadeIn className="flex justify-between items-end mb-10 md:mb-16">
+            <h3 className="text-2xl font-medium">Prosthetic Essentials</h3>
+            <Link to="/shop" className="hidden md:inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
+              Browse Shop <ArrowRight size={14} />
+            </Link>
+          </FadeIn>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { tag: 'Liners', name: 'Prosthetic Liners', desc: 'Adaptive gel for comfort and secure suspension.', href: '/shop/liners', img: categoryLiners },
+              { tag: 'Sleeves', name: 'Suspension Sleeves', desc: 'Maintain a secure seal for below-knee systems.', href: '/shop/sleeves', img: categorySleeves },
+              { tag: 'Socks', name: 'Prosthetic Socks', desc: 'Manage limb volume with breathable knit construction.', href: '/shop/socks', img: categorySocks },
+            ].map((product, i) => (
+              <FadeIn key={i} delay={i * 0.1}>
+                <Link to={product.href} className="group relative block h-[400px] md:h-[480px] overflow-hidden cursor-pointer">
+                  <img
+                    src={product.img}
+                    alt={product.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-colors duration-500" />
+                  <span className="absolute top-6 left-6 z-10 text-[11px] font-bold uppercase tracking-widest bg-white text-black px-3 pt-[7px] pb-[5px] leading-none">
+                    {product.tag}
+                  </span>
+                  <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
+                    <h4 className="text-xl md:text-2xl font-medium mb-2">{product.name}</h4>
+                    <div className="h-auto md:h-0 md:group-hover:h-auto overflow-hidden transition-all duration-500">
+                      <p className="text-sm text-white/90 leading-relaxed mb-3">{product.desc}</p>
+                      <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1 group-hover:border-white transition-colors">
+                        Shop Now <ArrowRight size={14} />
+                      </span>
                     </div>
-                    <h4 className="text-sm font-bold mb-1 group-hover:text-gray-500 transition-colors">{product.name}</h4>
-                    <p className="text-xs text-gray-400 leading-relaxed">{product.desc}</p>
-                  </Link>
-                </FadeIn>
-              ))}
-            </div>
+                  </div>
+                </Link>
+              </FadeIn>
+            ))}
           </div>
-        </FadeIn>
+          <FadeIn className="mt-8 md:hidden text-center">
+            <Link to="/shop" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
+              Browse Shop <ArrowRight size={14} />
+            </Link>
+          </FadeIn>
+        </div>
       </section>
 
       {/* ── Proof of Platform: Resources ──────────────────────── */}
-      <section className="py-20 md:py-32 px-6 md:px-12 bg-brand-offwhite">
-        <FadeIn className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            {/* Left — copy */}
-            <div className="lg:col-span-4">
-              <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 block">Resources</span>
-              <h3 className="text-3xl md:text-5xl font-light tracking-tight mb-5 leading-[1.1]">
-                Expert guidance<br />at your pace.
-              </h3>
-              <p className="text-gray-500 leading-relaxed mb-8 max-w-sm">
-                Articles, videos, and guides covering prosthetic care, recovery, insurance, and everyday life.
-              </p>
-              <Link to="/resources" className="inline-flex items-center gap-2 bg-black text-white text-xs font-bold uppercase tracking-widest px-6 py-3 rounded-full hover:bg-gray-800 transition-colors">
-                Explore Resources <ArrowRight size={14} />
-              </Link>
-            </div>
-            {/* Right — resource cards */}
-            <div className="lg:col-span-8 space-y-4">
-              {[
-                { type: 'article', icon: FileText, pillar: 'Prosthetic Care', title: 'A Daily Prosthetic Care Routine That Actually Works', desc: 'Build a practical daily routine for liner cleaning, skin inspection, and socket maintenance.', img: '/images/articles/care-routine-cover.webp' },
-                { type: 'article', icon: FileText, pillar: 'Everyday Life', title: 'Your First 30 Days with a Prosthesis', desc: 'What to expect and how to adapt during the critical first month.', img: '/images/articles/first-30-days-cover.webp' },
-                { type: 'video', icon: Play, pillar: 'Performance & Recovery', title: 'Gait Training Exercises for Lower Limb Amputees', desc: 'Balance, weight shifting, and walking patterns for rehabilitation.', img: '/images/articles/gait-training-cover.webp' },
-              ].map((item, i) => (
-                <FadeIn key={i} delay={i * 0.08}>
-                  <Link to="/resources" className="group flex gap-5 bg-white rounded-xl p-4 border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all">
-                    <div className="w-24 h-24 md:w-32 md:h-24 rounded-lg overflow-hidden flex-shrink-0 bg-gray-50">
-                      <img src={item.img} alt="" className="w-full h-full object-cover" />
-                    </div>
-                    <div className="flex-1 min-w-0 py-0.5">
-                      <div className="flex items-center gap-2 mb-1.5">
-                        <item.icon className="w-3 h-3 text-gray-400" />
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">{item.pillar}</span>
-                      </div>
-                      <h4 className="text-sm font-medium mb-1 group-hover:text-gray-500 transition-colors leading-snug">{item.title}</h4>
-                      <p className="text-xs text-gray-400 leading-relaxed hidden sm:block">{item.desc}</p>
-                    </div>
-                    <ArrowUpRight className="w-4 h-4 text-gray-300 group-hover:text-black transition-colors flex-shrink-0 mt-1" />
-                  </Link>
-                </FadeIn>
-              ))}
-            </div>
+      <section className="py-16 md:py-20 px-6 md:px-12 bg-brand-offwhite">
+        <div className="max-w-6xl mx-auto">
+          <FadeIn className="flex justify-between items-end mb-10 md:mb-16">
+            <h3 className="text-2xl font-medium">Expert Guidance</h3>
+            <Link to="/resources" className="hidden md:inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
+              Explore Resources <ArrowRight size={14} />
+            </Link>
+          </FadeIn>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { pillar: 'Prosthetic Care', title: 'A Daily Prosthetic Care Routine That Actually Works', img: '/images/articles/care-routine-cover.webp', href: '/resources' },
+              { pillar: 'Everyday Life', title: 'Your First 30 Days with a Prosthesis', img: '/images/articles/first-30-days-cover.webp', href: '/resources' },
+              { pillar: 'Performance & Recovery', title: 'Gait Training Exercises for Lower Limb Amputees', img: '/images/articles/gait-training-cover.webp', href: '/resources' },
+            ].map((item, i) => (
+              <FadeIn key={i} delay={i * 0.1}>
+                <Link to={item.href} className="group block">
+                  <div className="relative h-[220px] md:h-[260px] overflow-hidden mb-4">
+                    <img src={item.img} alt="" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                    <div className="absolute inset-0 bg-black/5 group-hover:bg-black/15 transition-colors duration-500" />
+                  </div>
+                  <span className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">{item.pillar}</span>
+                  <h4 className="text-base font-medium leading-snug group-hover:text-gray-500 transition-colors">{item.title}</h4>
+                </Link>
+              </FadeIn>
+            ))}
           </div>
-        </FadeIn>
+          <FadeIn className="mt-8 md:hidden text-center">
+            <Link to="/resources" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
+              Explore Resources <ArrowRight size={14} />
+            </Link>
+          </FadeIn>
+        </div>
       </section>
 
       {/* ── Proof of Platform: AI Support ──────────────────────── */}
-      <section className="py-20 md:py-32 px-6 md:px-12 bg-white border-t border-gray-100">
-        <FadeIn className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            {/* Left — copy */}
-            <div className="lg:col-span-5">
-              <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 block">AI Support</span>
-              <h3 className="text-3xl md:text-5xl font-light tracking-tight mb-5 leading-[1.1]">
-                Clear answers,<br />instantly.
-              </h3>
-              <p className="text-gray-500 leading-relaxed mb-8 max-w-md">
-                Ask questions about prosthetics, care, and daily life — and get reliable, AI-powered answers trained on expert resources. Available 24/7.
-              </p>
-              <Link to="/ai-support" className="inline-flex items-center gap-2 bg-black text-white text-xs font-bold uppercase tracking-widest px-6 py-3 rounded-full hover:bg-gray-800 transition-colors">
-                Try AI Support <ArrowRight size={14} />
-              </Link>
-            </div>
-            {/* Right — chat mockup */}
-            <div className="lg:col-span-7 lg:col-start-6">
-              <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
-                {/* Messages */}
-                <div className="p-5 md:p-6 space-y-4">
-                  {/* User message */}
+      <section className="py-16 md:py-20 px-6 md:px-12 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <FadeIn className="flex justify-between items-end mb-10 md:mb-16">
+            <h3 className="text-2xl font-medium">Ask Anything</h3>
+            <Link to="/ai-support" className="hidden md:inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
+              Try AI Support <ArrowRight size={14} />
+            </Link>
+          </FadeIn>
+          <FadeIn className="grid grid-cols-1 md:grid-cols-2 gap-6" delay={0.1}>
+            {/* Chat mockup */}
+            <Link to="/ai-support" className="group relative block h-[400px] md:h-[480px] bg-black overflow-hidden cursor-pointer">
+              <div className="absolute inset-0 p-6 md:p-8 flex flex-col">
+                <div className="flex-1 space-y-4 overflow-hidden">
                   <div className="flex gap-3 flex-row-reverse">
-                    <div className="w-7 h-7 rounded-full bg-black flex items-center justify-center flex-shrink-0">
+                    <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
                       <User className="w-3.5 h-3.5 text-white" />
                     </div>
-                    <div className="bg-black text-white rounded-2xl rounded-tr-sm px-4 py-2.5 max-w-[75%]">
-                      <p className="text-sm">How often should I replace my prosthetic liner?</p>
+                    <div className="bg-white/10 text-white rounded-2xl rounded-tr-sm px-4 py-2.5">
+                      <p className="text-sm">How often should I replace my liner?</p>
                     </div>
                   </div>
-                  {/* AI response */}
                   <div className="flex gap-3">
-                    <div className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
-                      <Bot className="w-3.5 h-3.5 text-gray-600" />
+                    <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                      <Bot className="w-3.5 h-3.5 text-white" />
                     </div>
-                    <div className="bg-gray-50 border border-gray-100 rounded-2xl rounded-tl-sm px-4 py-2.5 max-w-[85%]">
-                      <p className="text-sm text-gray-700 leading-relaxed">Most prosthetic liners should be replaced every <strong>6 to 12 months</strong>, depending on your activity level and how the material is wearing. Signs it's time to replace include visible gel breakdown, reduced cushioning, persistent odor despite cleaning, or changes in socket fit. Your prosthetist can help evaluate liner condition during regular checkups.</p>
+                    <div className="bg-white/10 text-white/90 rounded-2xl rounded-tl-sm px-4 py-2.5">
+                      <p className="text-sm leading-relaxed">Most prosthetic liners should be replaced every <strong className="text-white">6 to 12 months</strong>, depending on usage, activity level, and material wear. Signs it's time include visible gel breakdown, reduced cushioning, or changes in socket fit.</p>
                     </div>
                   </div>
                 </div>
-                {/* Suggested prompts */}
-                <div className="px-5 md:px-6 pb-4 flex flex-wrap gap-2">
-                  {['Why is my residual limb irritated?', 'What does Medicare cover for prosthetics?', 'How do I manage phantom limb pain?'].map((prompt, i) => (
-                    <Link key={i} to="/ai-support" className="text-xs bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5 text-gray-500 hover:border-gray-400 hover:text-black transition-colors">
-                      {prompt}
-                    </Link>
-                  ))}
-                </div>
-                {/* Input bar */}
-                <div className="border-t border-gray-100 px-5 md:px-6 py-3 flex items-center gap-3">
-                  <div className="flex-1 text-sm text-gray-300">Ask a question...</div>
-                  <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
-                    <Send className="w-3.5 h-3.5 text-gray-400" />
-                  </div>
+                <div className="mt-auto pt-4 border-t border-white/10 flex items-center gap-3">
+                  <div className="flex-1 text-sm text-white/30">Ask a question...</div>
+                  <Send className="w-4 h-4 text-white/30" />
                 </div>
               </div>
+              <span className="absolute top-6 left-6 z-10 text-[11px] font-bold uppercase tracking-widest bg-white text-black px-3 pt-[7px] pb-[5px] leading-none">
+                AI Support
+              </span>
+            </Link>
+            {/* Prompts */}
+            <div className="flex flex-col justify-center gap-6">
+              <p className="text-gray-500 leading-relaxed">
+                Ask questions about prosthetics, care, and daily life — and get clear answers instantly. Available 24/7.
+              </p>
+              <div className="space-y-3">
+                {['How often should I replace my liner?', 'Why is my residual limb irritated?', 'What does Medicare cover for prosthetics?'].map((prompt, i) => (
+                  <Link key={i} to="/ai-support" className="group flex items-center gap-3 text-sm text-gray-600 hover:text-black transition-colors">
+                    <span className="w-6 h-6 rounded-full bg-gray-100 group-hover:bg-black group-hover:text-white flex items-center justify-center flex-shrink-0 transition-colors">
+                      <ArrowRight className="w-3 h-3" />
+                    </span>
+                    {prompt}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
-        </FadeIn>
+          </FadeIn>
+          <FadeIn className="mt-8 md:hidden text-center">
+            <Link to="/ai-support" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
+              Try AI Support <ArrowRight size={14} />
+            </Link>
+          </FadeIn>
+        </div>
       </section>
 
       <Footer />
