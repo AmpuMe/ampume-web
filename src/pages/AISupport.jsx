@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Send, User, Bot, Loader2, MessageCircle } from 'lucide-react';
 import SimpleNavbar from '../components/SimpleNavbar';
 import Footer from '../components/Footer';
@@ -53,7 +54,7 @@ function TypingIndicator() {
 
 const STORAGE_KEY = 'ampume-chat-history';
 
-function ChatInterface() {
+function ChatInterface({ initialPrompt }) {
   const [messages, setMessages] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -62,8 +63,20 @@ function ChatInterface() {
   });
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [hasUsedInitialPrompt, setHasUsedInitialPrompt] = useState(false);
   const scrollAreaRef = useRef(null);
   const inputRef = useRef(null);
+
+  // Auto-send initial prompt from navigation state (e.g. homepage prompt click)
+  useEffect(() => {
+    if (initialPrompt && !hasUsedInitialPrompt && !isLoading) {
+      setHasUsedInitialPrompt(true);
+      // Clear previous chat and send the prompt
+      localStorage.removeItem(STORAGE_KEY);
+      setMessages([]);
+      setTimeout(() => sendMessage(initialPrompt), 100);
+    }
+  }, [initialPrompt, hasUsedInitialPrompt]);
 
   // Persist messages to localStorage
   useEffect(() => {
@@ -211,6 +224,8 @@ function ChatInterface() {
 }
 
 const AISupport = () => {
+  const location = useLocation();
+  const initialPrompt = location.state?.prompt || null;
   const { subscribe, loading, success, error } = useSubscribe();
   const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '' });
 
@@ -234,7 +249,7 @@ const AISupport = () => {
 
       <main className="pt-28 pb-20 px-6 md:px-12">
         <div className="max-w-4xl mx-auto">
-          <ChatInterface />
+          <ChatInterface initialPrompt={initialPrompt} />
         </div>
       </main>
 

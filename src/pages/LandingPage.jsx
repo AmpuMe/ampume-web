@@ -353,7 +353,7 @@ const LandingPage = () => {
             </Link>
           </div>
           <FadeIn>
-            <Link to="/ai-support" className="group block bg-black p-8 md:p-12 hover:bg-gray-900 transition-colors">
+            <div className="bg-black p-8 md:p-12">
               <div className="max-w-2xl">
                 <span className="text-[11px] font-bold uppercase tracking-widest text-white/40 mb-6 block">Available 24/7</span>
                 <p className="text-xl md:text-2xl font-light text-white leading-relaxed mb-8">
@@ -361,16 +361,20 @@ const LandingPage = () => {
                 </p>
                 <div className="flex flex-wrap gap-2 mb-8">
                   {['How often should I replace my liner?', 'Why is my residual limb irritated?', 'What does Medicare cover for prosthetics?'].map((prompt, i) => (
-                    <span key={i} className="text-xs bg-white/10 text-white/70 rounded-full px-4 py-2">
+                    <button
+                      key={i}
+                      onClick={() => navigate('/ai-support', { state: { prompt } })}
+                      className="text-xs bg-white/10 text-white/70 rounded-full px-4 py-2 hover:bg-white/20 hover:text-white transition-colors text-left cursor-pointer"
+                    >
                       {prompt}
-                    </span>
+                    </button>
                   ))}
                 </div>
-                <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white border-b border-white/50 pb-1 group-hover:border-white transition-colors">
+                <Link to="/ai-support" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white border-b border-white/50 pb-1 hover:border-white transition-colors">
                   Try AI Support <ArrowRight size={14} />
-                </span>
+                </Link>
               </div>
-            </Link>
+            </div>
           </FadeIn>
         </div>
       </section>
