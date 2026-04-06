@@ -4,7 +4,6 @@ import { Send, User, Bot, Loader2, MessageCircle } from 'lucide-react';
 import SimpleNavbar from '../components/SimpleNavbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
-import { useSubscribe } from '../hooks/useSubscribe';
 
 const SUGGESTED_PROMPTS = [
   'How often should I replace my prosthetic liner?',
@@ -226,17 +225,6 @@ function ChatInterface({ initialPrompt }) {
 const AISupport = () => {
   const location = useLocation();
   const initialPrompt = location.state?.prompt || null;
-  const { subscribe, loading, success, error } = useSubscribe();
-  const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '' });
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await subscribe(formData);
-  };
 
   return (
     <div className="min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white">
@@ -252,83 +240,6 @@ const AISupport = () => {
           <ChatInterface initialPrompt={initialPrompt} />
         </div>
       </main>
-
-      {/* Newsletter / CTA */}
-      <section id="newsletter" className="py-32 px-6 md:px-12 bg-gray-50 text-black border-t border-gray-100">
-        <div className="grid grid-cols-12 gap-6 items-center">
-          <div className="col-span-12 lg:col-span-6">
-             <h2 className="text-5xl md:text-7xl font-medium tracking-tight mb-8">
-              Stay in <br /> the loop.
-            </h2>
-            <p className="text-xl text-gray-500 font-light max-w-md leading-relaxed">
-              New products, resources, and platform updates — delivered to your inbox.
-            </p>
-          </div>
-
-          <div className="col-span-12 lg:col-span-5 lg:col-start-8 mt-12 lg:mt-0">
-            {success ? (
-              <div className="bg-white p-8 md:p-12 border border-gray-100 text-center">
-                <h3 className="text-2xl font-medium mb-4">You're subscribed!</h3>
-                <p className="text-gray-500">We'll keep you in the loop with updates, new products, and resources.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-6 bg-white p-8 md:p-12 border border-gray-100">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="firstName" className="block text-xs font-bold uppercase tracking-widest mb-4">First Name</label>
-                    <input
-                      id="firstName"
-                      type="text"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      placeholder="Jane"
-                      className="w-full bg-transparent border-b border-gray-200 py-4 text-left text-xl placeholder:text-gray-300 focus:outline-none focus:border-black transition-colors"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="lastName" className="block text-xs font-bold uppercase tracking-widest mb-4">Last Name</label>
-                    <input
-                      id="lastName"
-                      type="text"
-                      value={formData.lastName}
-                      onChange={handleChange}
-                      placeholder="Doe"
-                      className="w-full bg-transparent border-b border-gray-200 py-4 text-left text-xl placeholder:text-gray-300 focus:outline-none focus:border-black transition-colors"
-                      required
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-xs font-bold uppercase tracking-widest mb-4">Email Address</label>
-                  <input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="name@example.com"
-                    className="w-full bg-transparent border-b border-gray-200 py-4 text-left text-xl placeholder:text-gray-300 focus:outline-none focus:border-black transition-colors"
-                    required
-                  />
-                </div>
-                {error && <p className="text-red-500 text-xs">{error}</p>}
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mt-4">
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="bg-black text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-gray-800 transition-colors w-full md:w-auto disabled:opacity-50"
-                  >
-                    {loading ? 'Subscribing...' : 'Subscribe'}
-                  </button>
-                   <p className="text-xs text-gray-400">
-                    No spam. Unsubscribe anytime.
-                  </p>
-                </div>
-              </form>
-            )}
-          </div>
-        </div>
-      </section>
 
       <Footer />
     </div>
