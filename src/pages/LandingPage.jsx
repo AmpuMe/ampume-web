@@ -319,7 +319,7 @@ const LandingPage = () => {
               { pillar: 'Performance & Recovery', title: 'Gait Training Exercises for Lower Limb Amputees', desc: 'Balance, weight shifting, and walking patterns for rehabilitation and ongoing fitness.', img: '/images/articles/gait-training-cover.webp', href: '/resources' },
             ].map((item, i) => (
               <FadeIn key={i} delay={i * 0.1}>
-                <Link to={item.href} className="group block bg-white overflow-hidden hover:shadow-md transition-shadow duration-300">
+                <Link to={item.href} className="group flex flex-col bg-white overflow-hidden hover:shadow-md transition-shadow duration-300 h-full">
                   <div className="aspect-[16/10] overflow-hidden">
                     <img src={item.img} alt="" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                   </div>
