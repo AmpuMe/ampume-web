@@ -90,16 +90,15 @@ function ChatInterface({ initialPrompt }) {
 
   const lastUserMsgRef = useRef(null);
 
-  // Gentle scroll: only when content overflows, nudge to top of latest exchange
+  // Gentle scroll within chat container only — no page scrolling
   useEffect(() => {
-    const el = scrollAreaRef.current;
-    if (!el || messages.length < 2) return;
-    // Only scroll if the container is actually overflowing
-    if (el.scrollHeight <= el.clientHeight) return;
-    // Nudge the last user message into view at the top
-    if (lastUserMsgRef.current) {
-      lastUserMsgRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    const container = scrollAreaRef.current;
+    const target = lastUserMsgRef.current;
+    if (!container || !target || messages.length < 2) return;
+    if (container.scrollHeight <= container.clientHeight) return;
+    // Calculate target position relative to the scroll container
+    const targetTop = target.offsetTop - container.offsetTop;
+    container.scrollTo({ top: targetTop, behavior: 'smooth' });
   }, [messages]);
 
   const sendMessage = async (text) => {
