@@ -315,9 +315,9 @@ const LandingPage = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { pillar: 'Prosthetic Care', title: 'A Daily Prosthetic Care Routine That Actually Works', desc: 'Build a practical daily routine for liner cleaning, skin inspection, and socket maintenance.', img: '/images/articles/care-routine-cover.webp', href: '/resources/prosthetic-care/daily-prosthetic-care-routine' },
-              { pillar: 'Everyday Life', title: 'Your First 30 Days After Amputation', desc: 'What to expect and how to adapt during the critical first month with a new prosthesis.', img: '/images/articles/first-30-days-cover.webp', href: '/resources/performance-and-recovery/first-30-days-after-amputation' },
-              { pillar: 'Performance & Recovery', title: 'Gait Training After Amputation', desc: 'What to expect in physical therapy — balance, weight shifting, and walking patterns.', img: '/images/articles/gait-training-cover.webp', href: '/resources/performance-and-recovery/gait-training-after-amputation' },
+              { pillar: 'Prosthetic Care', title: 'A Daily Prosthetic Care Routine That Actually Works', desc: 'Build a practical daily routine for liner cleaning, skin inspection, and socket maintenance.', img: '/images/articles/care-routine-cover.webp', href: '/resources/prosthetic-care/daily-prosthetic-care-routine', date: 'Mar 18, 2026' },
+              { pillar: 'Everyday Life', title: 'Your First 30 Days After Amputation', desc: 'What to expect and how to adapt during the critical first month with a new prosthesis.', img: '/images/articles/first-30-days-cover.webp', href: '/resources/performance-and-recovery/first-30-days-after-amputation', date: 'Mar 18, 2026' },
+              { pillar: 'Performance & Recovery', title: 'Gait Training After Amputation', desc: 'What to expect in physical therapy — balance, weight shifting, and walking patterns.', img: '/images/articles/gait-training-cover.webp', href: '/resources/performance-and-recovery/gait-training-after-amputation', date: 'Mar 18, 2026' },
             ].map((item, i) => (
               <FadeIn key={i} delay={i * 0.1}>
                 <Link to={item.href} className="group flex flex-col bg-white overflow-hidden hover:shadow-md transition-shadow duration-300 h-full">
@@ -325,7 +325,10 @@ const LandingPage = () => {
                     <img src={item.img} alt="" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                   </div>
                   <div className="p-6">
-                    <span className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-3 block">{item.pillar}</span>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-[11px] font-bold uppercase tracking-widest text-gray-400">{item.pillar}</span>
+                      <span className="text-[11px] text-gray-400">{item.date}</span>
+                    </div>
                     <h4 className="text-lg font-medium leading-snug mb-2 group-hover:text-gray-500 transition-colors">{item.title}</h4>
                     <p className="text-sm text-gray-400 leading-relaxed">{item.desc}</p>
                   </div>
