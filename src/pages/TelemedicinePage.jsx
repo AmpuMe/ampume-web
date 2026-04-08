@@ -41,36 +41,42 @@ const APPOINTMENT_TYPES = [
 
 // Demo clinician data for the password-protected preview
 const DEMO_CLINICIANS = [
-  { name: 'Dr. Sarah Mitchell', specialty: 'Prosthetic Rehabilitation', state: 'New York', types: ['Functional Assessment', 'Liner Replacement Visit'], image: null },
-  { name: 'Dr. James Chen', specialty: 'Osseointegration', state: 'California', types: ['Osseointegration Consultation', 'Functional Assessment'], image: null },
-  { name: 'Dr. Amanda Torres', specialty: 'Limb Loss Counseling', state: 'Texas', types: ['Mental Health Counseling'], image: null },
-  { name: 'Dr. Robert Kim', specialty: 'Physical Medicine & Rehab', state: 'Florida', types: ['Functional Assessment', 'Liner Replacement Visit', 'Other Specialized Care'], image: null },
-  { name: 'Dr. Emily Watson', specialty: 'Prosthetics & Orthotics', state: 'Pennsylvania', types: ['Functional Assessment', 'Liner Replacement Visit', 'Osseointegration Consultation'], image: null },
-  { name: 'Dr. Michael Davis', specialty: 'Psychology — Limb Loss', state: 'New York', types: ['Mental Health Counseling'], image: null },
+  { name: 'Dr. Sarah Mitchell', credential: 'MD, PM&R', specialty: 'Prosthetic Rehabilitation', bio: 'Board-certified physiatrist specializing in amputee rehabilitation and functional restoration. 15+ years of clinical experience.', state: 'New York', types: ['Functional Assessment', 'Liner Replacement Visit'], image: '/images/clinicians/clinician-1.webp' },
+  { name: 'Dr. James Chen', credential: 'MD, Orthopedic Surgery', specialty: 'Osseointegration', bio: 'Fellowship-trained orthopedic surgeon focused on osseointegration procedures and post-surgical rehabilitation for limb loss patients.', state: 'California', types: ['Osseointegration Consultation', 'Functional Assessment'], image: '/images/clinicians/clinician-2.webp' },
+  { name: 'Dr. Amanda Torres', credential: 'PsyD, Clinical Psychology', specialty: 'Limb Loss Counseling', bio: 'Licensed clinical psychologist with expertise in adjustment to limb loss, phantom limb pain management, and body image counseling.', state: 'Texas', types: ['Mental Health Counseling'], image: '/images/clinicians/clinician-3.webp' },
+  { name: 'Dr. Robert Kim', credential: 'MD, PM&R', specialty: 'Physical Medicine & Rehab', bio: 'Specializes in comprehensive prosthetic care including gait analysis, socket optimization, and return-to-activity programs.', state: 'Florida', types: ['Functional Assessment', 'Liner Replacement Visit', 'Other Specialized Care'], image: '/images/clinicians/clinician-4.webp' },
+  { name: 'Dr. Emily Watson', credential: 'CPO, FAAOP', specialty: 'Prosthetics & Orthotics', bio: 'Certified prosthetist-orthotist and Fellow of the American Academy of Orthotists and Prosthetists. Expert in advanced socket design and component selection.', state: 'Pennsylvania', types: ['Functional Assessment', 'Liner Replacement Visit', 'Osseointegration Consultation'], image: '/images/clinicians/clinician-5.webp' },
+  { name: 'Dr. Michael Davis', credential: 'PhD, Rehabilitation Psychology', specialty: 'Psychology — Limb Loss', bio: 'Rehabilitation psychologist focused on peer support, coping strategies, and long-term mental health outcomes for individuals with limb loss.', state: 'New York', types: ['Mental Health Counseling'], image: '/images/clinicians/clinician-6.webp' },
 ];
 
 function ClinicianCard({ clinician }) {
   return (
     <div className="border border-gray-100 rounded-lg p-6 hover:border-gray-300 transition-colors">
-      <div className="flex items-start gap-4">
-        <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
-          <User className="w-6 h-6 text-gray-400" />
-        </div>
+      <div className="flex items-start gap-4 mb-4">
+        {clinician.image ? (
+          <img src={clinician.image} alt={clinician.name} className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
+        ) : (
+          <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
+            <User className="w-6 h-6 text-gray-400" />
+          </div>
+        )}
         <div className="flex-1 min-w-0">
-          <h3 className="text-base font-medium mb-1">{clinician.name}</h3>
-          <p className="text-sm text-gray-500 mb-2">{clinician.specialty}</p>
-          <div className="flex items-center gap-1.5 text-xs text-gray-400 mb-3">
-            <MapPin className="w-3 h-3" />
-            {clinician.state}
-          </div>
-          <div className="flex flex-wrap gap-1.5">
-            {clinician.types.map((type) => (
-              <span key={type} className="text-[10px] bg-gray-50 text-gray-500 px-2 py-1 rounded-full">{type}</span>
-            ))}
-          </div>
+          <h3 className="text-base font-medium">{clinician.name}</h3>
+          <p className="text-xs text-gray-400">{clinician.credential}</p>
+          <p className="text-sm text-gray-500 mt-0.5">{clinician.specialty}</p>
         </div>
       </div>
-      <button className="mt-4 w-full text-center text-xs font-bold uppercase tracking-widest bg-black text-white py-3 rounded-full hover:bg-gray-800 transition-colors">
+      <p className="text-sm text-gray-500 leading-relaxed mb-4">{clinician.bio}</p>
+      <div className="flex items-center gap-1.5 text-xs text-gray-400 mb-4">
+        <MapPin className="w-3 h-3" />
+        {clinician.state}
+      </div>
+      <div className="flex flex-wrap gap-1.5 mb-5">
+        {clinician.types.map((type) => (
+          <span key={type} className="text-[10px] bg-gray-50 text-gray-500 px-2 py-1 rounded-full">{type}</span>
+        ))}
+      </div>
+      <button className="w-full text-center text-xs font-bold uppercase tracking-widest bg-black text-white py-3 rounded-full hover:bg-gray-800 transition-colors">
         Schedule Appointment
       </button>
     </div>
