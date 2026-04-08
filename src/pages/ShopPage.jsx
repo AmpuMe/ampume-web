@@ -8,8 +8,8 @@ import SEO from '../components/SEO';
 import { useCart } from '../context/CartContext';
 import { fetchProducts, groupProducts, categorizeGroups, CATEGORY_ORDER } from '../lib/shopify';
 import linersImage from '../assets/shop/category-liners.webp';
-import socksImage from '../assets/shop/category-socks.webp';
-import sleevesImage from '../assets/shop/category-sleeves.webp';
+import socksImage from '../assets/shop/category-socks-v2.webp';
+import sleevesImage from '../assets/shop/category-sleeves-v2.webp';
 import accessoriesImage from '../assets/shop/category-accessories.webp';
 
 const CATEGORY_IMAGES = {
@@ -48,7 +48,7 @@ function CategoryCard({ category, productCount, image, index }) {
           <img
             src={image}
             alt={category.label}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
           />
         ) : (
           <div className="w-full h-full bg-gray-100" />

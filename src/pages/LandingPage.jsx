@@ -12,8 +12,8 @@ import friendsImage from '../assets/friends.webp';
 import cardPhoto from '../assets/support.webp';
 import telehealthImage from '../assets/telehealth-v2.webp';
 import categoryLiners from '../assets/shop/category-liners.webp';
-import categorySleeves from '../assets/shop/category-sleeves.webp';
-import categorySocks from '../assets/shop/category-socks.webp';
+import categorySleeves from '../assets/shop/category-sleeves-v2.webp';
+import categorySocks from '../assets/shop/category-socks-v2.webp';
 
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
   <motion.div
@@ -315,9 +315,9 @@ const LandingPage = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { pillar: 'Prosthetic Care', title: 'A Daily Prosthetic Care Routine That Actually Works', desc: 'Build a practical daily routine for liner cleaning, skin inspection, and socket maintenance.', img: '/images/articles/care-routine-cover.webp', href: '/resources' },
-              { pillar: 'Everyday Life', title: 'Your First 30 Days with a Prosthesis', desc: 'What to expect and how to adapt during the critical first month with a new prosthesis.', img: '/images/articles/first-30-days-cover.webp', href: '/resources' },
-              { pillar: 'Performance & Recovery', title: 'Gait Training Exercises for Lower Limb Amputees', desc: 'Balance, weight shifting, and walking patterns for rehabilitation and ongoing fitness.', img: '/images/articles/gait-training-cover.webp', href: '/resources' },
+              { pillar: 'Prosthetic Care', title: 'A Daily Prosthetic Care Routine That Actually Works', desc: 'Build a practical daily routine for liner cleaning, skin inspection, and socket maintenance.', img: '/images/articles/care-routine-cover.webp', href: '/resources/prosthetic-care/daily-prosthetic-care-routine' },
+              { pillar: 'Everyday Life', title: 'Your First 30 Days After Amputation', desc: 'What to expect and how to adapt during the critical first month with a new prosthesis.', img: '/images/articles/first-30-days-cover.webp', href: '/resources/performance-and-recovery/first-30-days-after-amputation' },
+              { pillar: 'Performance & Recovery', title: 'Gait Training After Amputation', desc: 'What to expect in physical therapy — balance, weight shifting, and walking patterns.', img: '/images/articles/gait-training-cover.webp', href: '/resources/performance-and-recovery/gait-training-after-amputation' },
             ].map((item, i) => (
               <FadeIn key={i} delay={i * 0.1}>
                 <Link to={item.href} className="group flex flex-col bg-white overflow-hidden hover:shadow-md transition-shadow duration-300 h-full">
