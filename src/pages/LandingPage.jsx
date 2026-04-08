@@ -236,7 +236,7 @@ const LandingPage = () => {
 
             {/* Telehealth — Position 4 */}
             <FadeIn id="telehealth" onClick={() => setModalOpen(true)} delay={0.3} className="group relative h-[500px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
-              <img src={telehealthImage} loading="lazy" alt="Telehealth" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
+              <img src={telehealthImage} loading="lazy" alt="Telehealth" className="w-full h-full object-cover object-[70%_center] md:object-center transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
               <div className="absolute top-8 left-8 z-10 flex gap-2">
                 <span className="text-[11px] font-bold uppercase tracking-widest bg-white text-black px-3 pt-[7px] pb-[5px] leading-none">Care</span>
