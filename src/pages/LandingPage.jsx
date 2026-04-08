@@ -10,7 +10,7 @@ import marketplaceImage from '../assets/shop.webp';
 import peopleImage from '../assets/people.webp';
 import friendsImage from '../assets/friends.webp';
 import cardPhoto from '../assets/support.webp';
-import telehealthImage from '../assets/telehealth.webp';
+import telehealthImage from '../assets/telehealth-v2.webp';
 import categoryLiners from '../assets/shop/category-liners.webp';
 import categorySleeves from '../assets/shop/category-sleeves.webp';
 import categorySocks from '../assets/shop/category-socks.webp';
@@ -236,7 +236,7 @@ const LandingPage = () => {
 
             {/* Telehealth — Position 4 */}
             <FadeIn id="telehealth" onClick={() => setModalOpen(true)} delay={0.3} className="group relative h-[500px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
-              <img src={telehealthImage} loading="lazy" alt="Telehealth" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={telehealthImage} loading="lazy" alt="Telehealth" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
               <div className="absolute top-8 left-8 z-10 flex gap-2">
                 <span className="text-[11px] font-bold uppercase tracking-widest bg-white text-black px-3 pt-[7px] pb-[5px] leading-none">Care</span>
@@ -274,7 +274,7 @@ const LandingPage = () => {
               { tag: 'Socks', name: 'Prosthetic Socks', desc: 'Manage limb volume with breathable knit construction.', href: '/shop/socks', img: categorySocks },
             ].map((product, i) => (
               <FadeIn key={i} delay={i * 0.1}>
-                <Link to={product.href} className="group relative block h-[500px] md:h-[600px] overflow-hidden cursor-pointer">
+                <Link to={product.href} className="group relative block h-[350px] md:h-[500px] overflow-hidden cursor-pointer">
                   <img src={product.img} alt={product.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500" />
                   <span className="absolute top-8 left-8 z-10 text-[11px] font-bold uppercase tracking-widest bg-white text-black px-3 pt-[7px] pb-[5px] leading-none">
