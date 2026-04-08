@@ -82,6 +82,7 @@ function PreLaunchGate({ onUnlock }) {
   const [email, setEmail] = useState('');
   const [passwordError, setPasswordError] = useState(false);
   const [emailSubmitted, setEmailSubmitted] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handlePassword = (e) => {
     e.preventDefault();
@@ -113,37 +114,10 @@ function PreLaunchGate({ onUnlock }) {
             <Stethoscope className="w-5 h-5 text-white" />
           </div>
           <h2 className="text-2xl font-medium mb-2">Telemedicine is launching soon</h2>
-          <p className="text-sm text-gray-500">Get early access with a password, or sign up below to be notified when we go live.</p>
+          <p className="text-sm text-gray-500">Be the first to know when you can connect with limb loss specialists through AmpuMe.</p>
         </div>
 
-        {/* Password entry */}
-        <form onSubmit={handlePassword} className="mb-6">
-          <div className="flex gap-2">
-            <div className="relative flex-1">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter password"
-                className={`w-full pl-10 pr-4 py-3 border rounded-lg text-sm focus:outline-none transition-colors ${
-                  passwordError ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-black'
-                }`}
-              />
-            </div>
-            <button type="submit" className="px-5 py-3 bg-black text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors">
-              Enter
-            </button>
-          </div>
-          {passwordError && <p className="text-xs text-red-500 mt-2">Incorrect password.</p>}
-        </form>
-
-        <div className="relative mb-6">
-          <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-200" /></div>
-          <div className="relative flex justify-center"><span className="bg-white px-3 text-xs text-gray-400">or</span></div>
-        </div>
-
-        {/* Email waitlist */}
+        {/* Email waitlist — primary action */}
         {emailSubmitted ? (
           <div className="text-center py-4">
             <div className="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-3">
@@ -166,12 +140,46 @@ function PreLaunchGate({ onUnlock }) {
                   className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-black transition-colors"
                 />
               </div>
-              <button type="submit" className="px-5 py-3 bg-gray-100 text-black text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors whitespace-nowrap">
+              <button type="submit" className="px-5 py-3 bg-black text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors whitespace-nowrap">
                 Notify Me
               </button>
             </div>
           </form>
         )}
+
+        {/* Password toggle — secondary, tucked away for partners */}
+        <div className="mt-6 pt-6 border-t border-gray-100">
+          {!showPassword ? (
+            <button
+              onClick={() => setShowPassword(true)}
+              className="w-full text-center text-xs text-gray-400 hover:text-black transition-colors"
+            >
+              Have an access code?
+            </button>
+          ) : (
+            <form onSubmit={handlePassword}>
+              <div className="flex gap-2">
+                <div className="relative flex-1">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Access code"
+                    autoFocus
+                    className={`w-full pl-10 pr-4 py-3 border rounded-lg text-sm focus:outline-none transition-colors ${
+                      passwordError ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-black'
+                    }`}
+                  />
+                </div>
+                <button type="submit" className="px-5 py-3 bg-gray-100 text-black text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors">
+                  Enter
+                </button>
+              </div>
+              {passwordError && <p className="text-xs text-red-500 mt-2">Incorrect code.</p>}
+            </form>
+          )}
+        </div>
       </motion.div>
     </div>
   );
