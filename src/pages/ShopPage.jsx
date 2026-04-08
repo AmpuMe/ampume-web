@@ -13,10 +13,10 @@ import sleevesImage from '../assets/shop/category-sleeves-v2.webp';
 import accessoriesImage from '../assets/shop/category-accessories.webp';
 
 const CATEGORY_IMAGES = {
-  liners: linersImage,
-  socks: socksImage,
-  sleeves: sleevesImage,
-  accessories: accessoriesImage,
+  liners: { src: linersImage, position: 'object-center' },
+  socks: { src: socksImage, position: 'object-center' },
+  sleeves: { src: sleevesImage, position: 'object-[30%_center]' },
+  accessories: { src: accessoriesImage, position: 'object-center' },
 };
 
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
@@ -46,9 +46,9 @@ function CategoryCard({ category, productCount, image, index }) {
       >
         {image ? (
           <img
-            src={image}
+            src={image.src || image}
             alt={category.label}
-            className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+            className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${image.position || 'object-center'}`}
           />
         ) : (
           <div className="w-full h-full bg-gray-100" />
