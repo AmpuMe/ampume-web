@@ -90,18 +90,6 @@ function ChatInterface({ initialPrompt }) {
 
   const lastUserMsgRef = useRef(null);
 
-  // After a new assistant message, scroll to the top of the user's question (not the bottom)
-  useEffect(() => {
-    if (messages.length >= 2 && messages[messages.length - 1].role === 'assistant') {
-      // Scroll so the user's message is at the top of the visible area
-      lastUserMsgRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } else {
-      // For user messages / loading, scroll to bottom
-      const el = scrollAreaRef.current;
-      if (el) el.scrollTop = el.scrollHeight;
-    }
-  }, [messages, isLoading]);
-
   const sendMessage = async (text) => {
     const userMessage = { role: 'user', content: text.trim() };
     const newMessages = [...messages, userMessage];
