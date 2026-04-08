@@ -11,6 +11,7 @@ export const LINER_DESCRIPTIONS = {
       'Constructed from thermoplastic elastomer (TPE) enriched with medical-grade mineral oil and Vitamin E, the Classic Gel formulation features high flow and low rebound properties. The gel adapts dynamically to pressure changes while maintaining its shape over time.',
       'This cushion version utilizes Spirit fabric, offering flexibility during donning and doffing and compatibility with Velcro\u00AE-type suspension systems.',
       'Originally introduced in 1996, Alpha Classic was the first liner in the Alpha family and remains trusted for consistent performance and skin-friendly comfort.',
+      'Standard Configuration: This liner is sold with Spirit fabric and Buff color. Alternate fabric or color options may be available by special order\u2014please contact us for assistance.',
     ],
     features: [
       'Designed for transfemoral (AK) prosthesis users',
@@ -67,6 +68,7 @@ export const LINER_DESCRIPTIONS = {
       'Constructed from thermoplastic elastomer (TPE) enriched with medical-grade mineral oil and Vitamin E, the Classic Gel formulation features high flow and low rebound properties. The gel adapts dynamically to pressure changes while maintaining its shape over time.',
       'This locking version uses MAX fabric (one-way stretch) to reduce vertical pistoning and enhance suspension stability within the socket.',
       'Originally introduced in 1996, Alpha Classic was the first liner in the Alpha family and remains trusted for consistent performance and skin-friendly comfort.',
+      'Standard Configuration: This liner is sold with MAX fabric, Buff color, and a Standard lock size. Alternative fabric, color, or lock options may be available by special order\u2014please contact us for assistance.',
     ],
     features: [
       'Designed for transfemoral (AK) prosthesis users',
@@ -121,6 +123,7 @@ export const LINER_DESCRIPTIONS = {
       'Constructed from thermoplastic elastomer (TPE) enriched with medical-grade mineral oil and Vitamin E, the Classic Gel formulation features high flow and low rebound properties. The gel adapts dynamically to pressure changes while maintaining its shape over time.',
       'Below-knee liners are available in 3 mm, 6 mm, and 9 mm gel thickness options, with 3 mm thickness along the posterior (back) aspect of the liner.',
       'Originally introduced in 1996, Alpha Classic was the first liner in the Alpha family and remains trusted for consistent performance and skin-friendly comfort.',
+      'Standard Configuration: This liner is sold with Buff color and a Uniform profile. Alternative color or profile options may be available by special order\u2014please contact us for assistance.',
     ],
     features: [
       'Designed for transtibial (below-knee) prosthesis users',
@@ -180,6 +183,7 @@ export const LINER_DESCRIPTIONS = {
       'Constructed from thermoplastic elastomer (TPE) enriched with medical-grade mineral oil and Vitamin E, the Classic Gel formulation features high flow and low rebound properties. The gel adapts dynamically to pressure changes while maintaining its shape over time.',
       'Below-knee liners are available in 3 mm, 6 mm, and 9 mm gel thickness options, with 3 mm thickness along the posterior (back) aspect of the liner.',
       'The locking configuration provides secure distal engagement within compatible pin-lock suspension systems.',
+      'Standard Configuration: This liner is sold with Buff color, Uniform profile, and a Standard lock size. Alternative color, profile, or lock options may be available by special order\u2014please contact us for assistance.',
     ],
     features: [
       'Designed for transtibial (below-knee) prosthesis users',
@@ -239,6 +243,7 @@ export const LINER_DESCRIPTIONS = {
       'The EasyLiner\u00AE Prosthetic Liner is designed to provide comfort, skin protection, and dependable suspension for lower-limb prosthesis users. Engineered with a soft gel interface and durable outer fabric, the EasyLiner helps distribute pressure evenly while enhancing socket fit and daily wear comfort.',
       'The gel formulation adapts to the residual limb to help reduce localized pressure points and shear forces. Its flexible design promotes easier donning and doffing while maintaining a secure interface within the prosthetic socket.',
       'EasyLiner is available in Cushion and Locking configurations and multiple thickness options to accommodate varying user needs.',
+      'Standard Configuration: This liner is sold with a Uniform profile. Tapered profile options may be available by special order\u2014please contact us for assistance.',
     ],
     features: [
       'Designed for lower-limb prosthesis users',
@@ -314,12 +319,7 @@ export const LINER_DESCRIPTIONS = {
       'Locking pin not included',
       'Not vacuum approved as a replacement liner for vacuum suspension systems',
     ],
-    gelTechnology: 'The General Purpose Liner is constructed from ALPS Grip Gel (Thermoplastic Elastomer \u2013 TPE). The tackiness of Grip Gel helps reduce bunching in the popliteal area while ensuring ideal adhesion. The gel provides softness, strength, and cushioning, helping relieve the residual limb from stress generated by vertical and shear forces.',
-    fabricTechnology: 'The seamless beige knit outer fabric offers both vertical and horizontal stretch. Its superior elongation allows the liner to conform gently to the residual limb while helping minimize circulatory restriction. The durable knit construction helps extend the life of the liner.',
-    suspensionOptions: [
-      { name: 'Cushion Suspension', desc: 'Standard cushion configuration' },
-      { name: 'Locking Suspension (Reinforced Matrix)', desc: 'Designed to help prevent distal pistoning and contain redundant tissue' },
-    ],
+    // gelTechnology and suspensionOptions removed per Alex feedback (8.9/8.10)
     specs: {
       'Amputation Level': 'Above-Knee (AK) and Below-Knee (BK)',
       'Activity Level': 'Recommended for K1\u2013K4',

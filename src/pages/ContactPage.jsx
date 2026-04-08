@@ -87,7 +87,7 @@ export default function ContactPage() {
               How can we help?
             </h1>
             <p className="text-gray-600 leading-relaxed mb-8">
-              Have a question about a product, need help with sizing, or want to place a special order? Send us a message and we'll get back to you.
+              Have a question about products, clinical care, or using AmpuMe? Send us a message and our team will get back to you shortly.
             </p>
           </FadeIn>
 

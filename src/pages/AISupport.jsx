@@ -28,7 +28,12 @@ function ChatMessage({ message }) {
           ? 'bg-black text-white rounded-tr-sm'
           : 'bg-gray-50 text-gray-800 border border-gray-100 rounded-tl-sm'
       }`}>
-        <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
+        <div className="text-sm leading-relaxed whitespace-pre-wrap [&_strong]:font-bold" dangerouslySetInnerHTML={{ __html: message.content
+          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+          .replace(/\n\n/g, '<br/><br/>')
+          .replace(/^- /gm, '• ')
+          .replace(/^(\d+)\. /gm, '$1. ')
+        }} />
       </div>
     </div>
   );
@@ -83,14 +88,19 @@ function ChatInterface({ initialPrompt }) {
     catch { /* quota exceeded or private browsing */ }
   }, [messages]);
 
-  const scrollToBottom = useCallback(() => {
-    const el = scrollAreaRef.current;
-    if (el) el.scrollTop = el.scrollHeight;
-  }, []);
+  const lastUserMsgRef = useRef(null);
 
+  // After a new assistant message, scroll to the top of the user's question (not the bottom)
   useEffect(() => {
-    scrollToBottom();
-  }, [messages, scrollToBottom]);
+    if (messages.length >= 2 && messages[messages.length - 1].role === 'assistant') {
+      // Scroll so the user's message is at the top of the visible area
+      lastUserMsgRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      // For user messages / loading, scroll to bottom
+      const el = scrollAreaRef.current;
+      if (el) el.scrollTop = el.scrollHeight;
+    }
+  }, [messages, isLoading]);
 
   const sendMessage = async (text) => {
     const userMessage = { role: 'user', content: text.trim() };
@@ -99,6 +109,10 @@ function ChatInterface({ initialPrompt }) {
     setInput('');
     setIsLoading(true);
 
+    // Timeout after 30 seconds
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000);
+
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
@@ -106,7 +120,10 @@ function ChatInterface({ initialPrompt }) {
         body: JSON.stringify({
           messages: newMessages.map(m => ({ role: m.role, content: m.content })),
         }),
+        signal: controller.signal,
       });
+
+      clearTimeout(timeout);
 
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
@@ -116,10 +133,14 @@ function ChatInterface({ initialPrompt }) {
       const content = data.choices?.[0]?.message?.content || 'Sorry, I was unable to generate a response.';
       setMessages(prev => [...prev, { role: 'assistant', content }]);
     } catch (err) {
+      clearTimeout(timeout);
       console.error('Chat error:', err);
+      const isTimeout = err.name === 'AbortError';
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: "I'm having trouble connecting right now. Please try again in a moment.",
+        content: isTimeout
+          ? "The response took too long. Please try again."
+          : "I'm having trouble connecting right now. Please try again in a moment.",
       }]);
     } finally {
       setIsLoading(false);
@@ -151,7 +172,7 @@ function ChatInterface({ initialPrompt }) {
         <div className="flex justify-end px-4 pt-3 pb-0">
           <button
             onClick={clearChat}
-            className="text-[11px] text-gray-400 hover:text-black transition-colors"
+            className="text-xs font-medium text-gray-500 hover:text-black bg-gray-50 hover:bg-gray-100 px-3 py-1.5 rounded-full transition-colors"
           >
             New conversation
           </button>
@@ -182,9 +203,15 @@ function ChatInterface({ initialPrompt }) {
           </div>
         ) : (
           <div className="space-y-4">
-            {messages.map((msg, i) => (
-              <ChatMessage key={i} message={msg} />
-            ))}
+            {messages.map((msg, i) => {
+              // Track the last user message for scroll anchoring
+              const isLastUser = msg.role === 'user' && (i === messages.length - 1 || (i === messages.length - 2 && messages[messages.length - 1].role === 'assistant'));
+              return (
+                <div key={i} ref={isLastUser ? lastUserMsgRef : null}>
+                  <ChatMessage message={msg} />
+                </div>
+              );
+            })}
             {isLoading && <TypingIndicator />}
           </div>
         )}
