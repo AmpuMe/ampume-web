@@ -87,7 +87,7 @@ export default function PillarPage() {
             className="inline-flex items-center gap-2 text-sm font-medium hover:text-gray-600"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to Resources
+            Back to Knowledge Base
           </Link>
         </div>
       </div>
@@ -97,7 +97,7 @@ export default function PillarPage() {
   return (
     <div className="min-h-screen bg-white text-black font-sans">
       <SEO
-        title={`${pillar.title} | AmpuMe Resources`}
+        title={`${pillar.title} | AmpuMe Knowledge Base`}
         description={pillar.description || `Browse ${pillar.title} resources at AmpuMe`}
         url={`https://ampume.com/resources/${pillarSlug}`}
       />

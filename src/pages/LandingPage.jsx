@@ -59,8 +59,9 @@ const LandingPage = () => {
 
   const navLinks = [
     { name: 'Shop', href: '/shop' },
-    { name: 'Resources', href: '/resources' },
+    { name: 'Knowledge Base', href: '/resources' },
     { name: 'AI Support', href: '/ai-support' },
+    { name: 'Telemedicine', href: '/telemedicine' },
   ];
 
   const handleNavClick = (href) => {
@@ -80,7 +81,7 @@ const LandingPage = () => {
     <div className="min-h-screen bg-brand-white text-brand-black font-sans">
       <SEO
         title="Home"
-        description="AmpuMe is the all-in-one platform for life after limb loss. Explore prosthetic essentials, expert guidance, AI support, and a growing community."
+        description="AmpuMe is the all-in-one platform for life with limb loss. Explore prosthetic essentials, expert guidance, AI support, and a growing community."
       />
       <NewsletterModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
 
@@ -151,7 +152,7 @@ const LandingPage = () => {
         <div className="relative z-10 h-full px-6 md:px-12 grid grid-cols-12 items-end pb-24 text-white">
           <FadeIn className="col-span-12 md:col-span-8 lg:col-span-7">
             <h1 className="text-4xl sm:text-5xl md:text-7xl min-[1070px]:text-8xl 2xl:text-[6.5rem] font-medium leading-[1.1] md:leading-[0.9] tracking-tight mb-8">
-              The all-in-one platform <span className="text-brand-white opacity-90">for life after limb&nbsp;loss.</span>
+              The all-in-one platform <span className="text-brand-white opacity-90">for life with limb&nbsp;loss.</span>
             </h1>
             <div className="flex flex-col md:flex-row gap-8 items-start md:items-center mt-12">
               <button
@@ -223,7 +224,7 @@ const LandingPage = () => {
                 <span className="text-[11px] font-bold uppercase tracking-widest bg-white text-black px-3 pt-[7px] pb-[5px] leading-none">Learn and Connect</span>
               </div>
               <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
-                <h4 className="text-3xl font-medium mb-3">Knowledge Hub</h4>
+                <h4 className="text-3xl font-medium mb-3">Knowledge Base</h4>
                 <div className="h-auto md:h-0 md:group-hover:h-auto overflow-hidden transition-all duration-500">
                   <p className="text-sm text-white/90 leading-relaxed mb-4">
                     Articles, expert guidance, and community resources for life with limb loss.
@@ -259,7 +260,7 @@ const LandingPage = () => {
         <div className="max-w-full mx-auto">
           <div className="flex justify-between items-end mb-10 md:mb-16">
             <div>
-              <h3 className="text-2xl font-medium">Prosthetic Essentials</h3>
+              <h3 className="text-2xl font-medium">Shop Prosthetic Essentials</h3>
               <p className="text-sm text-gray-400 mt-2 max-w-lg hidden md:block">Liners, sleeves, socks, and care products — thoughtfully selected for fit, function, and durability.</p>
             </div>
             <Link to="/shop" className="hidden md:inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
@@ -305,11 +306,11 @@ const LandingPage = () => {
         <div className="max-w-full mx-auto">
           <div className="flex justify-between items-end mb-10 md:mb-16">
             <div>
-              <h3 className="text-2xl font-medium">Expert Guidance</h3>
+              <h3 className="text-2xl font-medium">Knowledge Base</h3>
               <p className="text-sm text-gray-400 mt-2 max-w-lg hidden md:block">Articles, videos, and guides covering prosthetic care, recovery, insurance, and everyday life.</p>
             </div>
             <Link to="/resources" className="hidden md:inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
-              Explore Resources <ArrowRight size={14} />
+              Explore Knowledge Base <ArrowRight size={14} />
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -334,7 +335,7 @@ const LandingPage = () => {
           </div>
           <div className="mt-8 md:hidden text-center">
             <Link to="/resources" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
-              Explore Resources <ArrowRight size={14} />
+              Explore Knowledge Base <ArrowRight size={14} />
             </Link>
           </div>
         </div>

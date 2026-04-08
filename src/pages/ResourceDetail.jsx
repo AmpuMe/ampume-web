@@ -77,7 +77,7 @@ export default function ResourceDetail() {
             className="inline-flex items-center gap-2 text-sm font-medium hover:text-gray-600"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to Resources
+            Back to Knowledge Base
           </Link>
         </div>
       </div>
@@ -87,7 +87,7 @@ export default function ResourceDetail() {
   return (
     <div className="min-h-screen bg-white text-black font-sans">
       <SEO
-        title={`${resource.title} | AmpuMe Resources`}
+        title={`${resource.title} | AmpuMe Knowledge Base`}
         description={resource.editorialSummary || `Read ${resource.title} at AmpuMe`}
         url={`https://ampume.com/resources/${pillarSlug}/${resourceSlug}`}
       />
@@ -100,7 +100,7 @@ export default function ResourceDetail() {
           <FadeIn className="mb-8">
             <nav className="flex items-center gap-2 text-sm text-gray-400">
               <Link to="/resources" className="hover:text-black transition-colors">
-                Resources
+                Knowledge Base
               </Link>
               <span>/</span>
               <Link to={`/resources/${pillarSlug}`} className="hover:text-black transition-colors">

@@ -48,7 +48,7 @@ export default function ResourcesHub() {
   return (
     <div className="min-h-screen bg-white text-black font-sans">
       <SEO
-        title="Resources | AmpuMe"
+        title="Knowledge Base | AmpuMe"
         description="Structured resources across performance, prosthetic care, insurance, and everyday life — designed to help you move forward with confidence."
         url="https://ampume.com/resources"
       />
@@ -70,7 +70,7 @@ export default function ResourcesHub() {
           <div className="relative z-10 h-full px-6 md:px-12 grid grid-cols-12 items-end pb-12 md:pb-16 text-white">
             <FadeIn className="col-span-12 md:col-span-8 lg:col-span-7">
               <p className="text-xs font-bold uppercase tracking-widest text-white/60 mb-4">
-                Resource Library
+                Knowledge Base
               </p>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight mb-4">
                 Trusted guidance for life with limb&nbsp;loss.

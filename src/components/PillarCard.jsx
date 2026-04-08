@@ -36,9 +36,9 @@ export default function PillarCard({ pillar, index = 0 }) {
               style={{ color: pillar.color || '#000' }}
             />
           </div>
-          {pillar.resourceCount > 0 && (
+          {false && pillar.resourceCount > 0 && (
             <span className="text-xs text-gray-400">
-              {pillar.resourceCount} {pillar.resourceCount === 1 ? 'resource' : 'resources'}
+              {pillar.resourceCount} {pillar.resourceCount === 1 ? 'article' : 'articles'}
             </span>
           )}
         </div>
