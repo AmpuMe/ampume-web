@@ -58,7 +58,7 @@ const LandingPage = () => {
   }, []);
 
   const navLinks = [
-    { name: 'Shop', href: '/shop' },
+    { name: 'AmpuMe Store', href: '/shop' },
     { name: 'Knowledge Base', href: '/resources' },
     { name: 'AI Support', href: '/ai-support' },
     { name: 'Telemedicine', href: '/telemedicine' },
@@ -202,10 +202,10 @@ const LandingPage = () => {
                 <img src={marketplaceImage} loading="lazy" alt="Shop" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
                 <div className="absolute top-8 left-8 z-10 flex gap-2">
-                  <span className="text-[11px] font-bold uppercase tracking-widest bg-white text-black px-3 pt-[7px] pb-[5px] leading-none">Shop</span>
+                  <span className="text-[11px] font-bold uppercase tracking-widest bg-white text-black px-3 pt-[7px] pb-[5px] leading-none">Store</span>
                 </div>
                 <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
-                  <h4 className="text-3xl font-medium mb-3">Shop Prosthetic Essentials</h4>
+                  <h4 className="text-3xl font-medium mb-3">AmpuMe Store</h4>
                   <div className="h-auto md:h-0 md:group-hover:h-auto overflow-hidden transition-all duration-500">
                     <p className="text-sm text-white/90 leading-relaxed mb-4">
                       Liners, sleeves, socks, and everyday prosthetic essentials — delivered directly to you.
@@ -260,11 +260,11 @@ const LandingPage = () => {
         <div className="max-w-full mx-auto">
           <div className="flex justify-between items-end mb-10 md:mb-16">
             <div>
-              <h3 className="text-2xl font-medium">Shop Prosthetic Essentials</h3>
+              <h3 className="text-2xl font-medium">AmpuMe Store</h3>
               <p className="text-sm text-gray-400 mt-2 max-w-lg hidden md:block">Liners, sleeves, socks, and care products — thoughtfully selected for fit, function, and durability.</p>
             </div>
             <Link to="/shop" className="hidden md:inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
-              Browse Shop <ArrowRight size={14} />
+              Browse Store <ArrowRight size={14} />
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -295,7 +295,7 @@ const LandingPage = () => {
           </div>
           <div className="mt-8 md:hidden text-center">
             <Link to="/shop" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
-              Browse Shop <ArrowRight size={14} />
+              Browse Store <ArrowRight size={14} />
             </Link>
           </div>
         </div>
@@ -317,7 +317,7 @@ const LandingPage = () => {
             {[
               { pillar: 'Prosthetic Care', title: 'A Daily Prosthetic Care Routine That Actually Works', desc: 'Build a practical daily routine for liner cleaning, skin inspection, and socket maintenance.', img: '/images/articles/care-routine-cover.webp', href: '/resources/prosthetic-care/daily-prosthetic-care-routine', date: 'Mar 18, 2026' },
               { pillar: 'Everyday Life', title: 'Your First 30 Days After Amputation', desc: 'What to expect and how to adapt during the critical first month with a new prosthesis.', img: '/images/articles/first-30-days-cover.webp', href: '/resources/performance-and-recovery/first-30-days-after-amputation', date: 'Mar 18, 2026' },
-              { pillar: 'Performance & Recovery', title: 'Gait Training After Amputation', desc: 'What to expect in physical therapy — balance, weight shifting, and walking patterns.', img: '/images/articles/gait-training-cover.webp', href: '/resources/performance-and-recovery/gait-training-after-amputation', date: 'Mar 18, 2026' },
+              { pillar: 'Health & Performance', title: 'Adaptive Fitness with Amy Bream', desc: 'Strength training, workout routines, and life as an adaptive athlete.', img: '/images/articles/gait-training-cover.webp', href: '/resources/performance-and-recovery/adaptive-fitness-amy-bream', date: 'Apr 2, 2026' },
             ].map((item, i) => (
               <FadeIn key={i} delay={i * 0.1}>
                 <Link to={item.href} className="group flex flex-col bg-white overflow-hidden hover:shadow-md transition-shadow duration-300 h-full">
@@ -364,7 +364,7 @@ const LandingPage = () => {
                   Our AI assistant is trained on expert prosthetic resources — ask about recovery, daily care, insurance coverage, and more.
                 </p>
                 <div className="flex flex-wrap gap-2 mb-8">
-                  {['How often should I replace my liner?', 'Why is my residual limb irritated?', 'What does Medicare cover for prosthetics?'].map((prompt, i) => (
+                  {['What should I do if my residual limb volume is fluctuating?', 'How often will my insurance cover a new socket?', 'How do I cope with the emotional side of limb loss?', 'How often should I replace my liner?'].map((prompt, i) => (
                     <button
                       key={i}
                       onClick={() => navigate('/ai-support', { state: { prompt } })}

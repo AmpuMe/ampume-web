@@ -130,7 +130,7 @@ export default function ShopPage() {
         <section className="px-6 md:px-12 mb-12 md:mb-20">
           <FadeIn className="max-w-3xl">
             <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 block">
-              The AmpuMe Shop
+              The AmpuMe Store
             </span>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight mb-6">
               Prosthetic essentials for everyday performance.

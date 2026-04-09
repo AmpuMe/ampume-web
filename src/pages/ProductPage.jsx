@@ -273,7 +273,7 @@ export default function ProductPage() {
   return (
     <div className="min-h-screen bg-white text-black font-sans">
       <SEO
-        title={`${currentGroup ? currentGroup.baseName : product.title} | AmpuMe Shop`}
+        title={`${currentGroup ? currentGroup.baseName : product.title} | AmpuMe Store`}
         description={product.description || `Shop ${product.title} at AmpuMe`}
         url={`https://ampume.com/shop/${handle}`}
       />
@@ -305,7 +305,7 @@ export default function ProductPage() {
                 className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-black transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" />
-                {cat ? cat.label : 'Back to Shop'}
+                {cat ? cat.label : 'AmpuMe Store'}
               </Link>
             );
           })()}
