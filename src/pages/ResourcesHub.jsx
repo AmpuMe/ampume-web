@@ -168,32 +168,31 @@ export default function ResourcesHub() {
           </div>
         </section>
 
+        {/* Search bar — always visible */}
+        <section className="px-6 md:px-12 pt-8 md:pt-12">
+          <FadeIn>
+            <div className="relative max-w-lg">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => handleSearch(e.target.value)}
+                placeholder="Search articles, guides, and resources..."
+                className="w-full pl-10 pr-10 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-black transition-colors"
+              />
+              {searchQuery && (
+                <button onClick={() => { handleSearch(''); closeBrowse(); }} className="absolute right-3 top-1/2 -translate-y-1/2">
+                  <X className="w-4 h-4 text-gray-400 hover:text-black" />
+                </button>
+              )}
+            </div>
+          </FadeIn>
+        </section>
+
         {/* Browse / Search Mode */}
         {showBrowse ? (
-          <section className="px-6 md:px-12 pt-10 md:pt-16">
+          <section className="px-6 md:px-12 pt-6 md:pt-8">
             <FadeIn>
-              {/* Search bar */}
-              <div className="flex items-center gap-4 mb-6">
-                <div className="relative flex-1 max-w-lg">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => handleSearch(e.target.value)}
-                    placeholder="Search articles, guides, and resources..."
-                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-black transition-colors"
-                    autoFocus
-                  />
-                  {searchQuery && (
-                    <button onClick={() => handleSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2">
-                      <X className="w-4 h-4 text-gray-400 hover:text-black" />
-                    </button>
-                  )}
-                </div>
-                <button onClick={closeBrowse} className="text-sm text-gray-400 hover:text-black transition-colors">
-                  Back
-                </button>
-              </div>
 
               {/* Tag filters */}
               {allTags.length > 0 && (
