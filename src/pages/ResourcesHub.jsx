@@ -132,7 +132,7 @@ export default function ResourcesHub() {
                         </span>
                       )}
                       {featured.publishedAt && (
-                        <span className="text-[10px] text-gray-300">{fmtDate(featured.publishedAt)}</span>
+                        <span className="text-[10px] text-gray-500">{fmtDate(featured.publishedAt)}</span>
                       )}
                     </div>
                     <h3 className="text-xl md:text-2xl font-medium leading-tight mb-3 group-hover:text-gray-600 transition-colors">
@@ -176,7 +176,7 @@ export default function ResourcesHub() {
                               </span>
                             )}
                             {resource.publishedAt && (
-                              <span className="text-[10px] text-gray-300">{fmtDate(resource.publishedAt)}</span>
+                              <span className="text-[10px] text-gray-500">{fmtDate(resource.publishedAt)}</span>
                             )}
                           </div>
                           <h3 className="text-base font-medium leading-tight mb-2 group-hover:text-gray-600 transition-colors">

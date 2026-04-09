@@ -6,7 +6,8 @@ import SimpleNavbar from '../components/SimpleNavbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 import PortableTextRenderer from '../components/PortableTextRenderer';
-import { fetchResourceDetail, getYouTubeEmbedUrl, getThumbnailUrl } from '../lib/sanity';
+import ResourceCard from '../components/ResourceCard';
+import { fetchResourceDetail, fetchRelatedResources, getYouTubeEmbedUrl, getThumbnailUrl } from '../lib/sanity';
 
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
   <motion.div
@@ -23,6 +24,7 @@ const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
 export default function ResourceDetail() {
   const { pillarSlug, resourceSlug } = useParams();
   const [resource, setResource] = useState(null);
+  const [related, setRelated] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -33,6 +35,11 @@ export default function ResourceDetail() {
         const result = await fetchResourceDetail(resourceSlug);
         if (result) {
           setResource(result);
+          // Fetch related articles from same pillar
+          if (result.pillar?.slug?.current) {
+            const relatedResult = await fetchRelatedResources(result.pillar.slug.current, resourceSlug);
+            setRelated(relatedResult || []);
+          }
         } else {
           setError('Resource not found');
         }
@@ -190,17 +197,30 @@ export default function ResourceDetail() {
             <FadeIn delay={0.2} className="border-t border-gray-100 pt-6 mt-8">
               <div className="flex flex-wrap gap-2">
                 {resource.tags.map((tag) => (
-                  <span
+                  <Link
                     key={tag}
-                    className="text-xs text-gray-400 border border-gray-100 rounded-full px-3 py-1"
+                    to={`/resources?tag=${encodeURIComponent(tag)}`}
+                    className="text-xs text-gray-400 border border-gray-100 rounded-full px-3 py-1 hover:border-gray-400 hover:text-black transition-colors"
                   >
                     {tag}
-                  </span>
+                  </Link>
                 ))}
               </div>
             </FadeIn>
           )}
         </div>
+
+        {/* Related Articles */}
+        {related.length > 0 && (
+          <FadeIn delay={0.25} className="mt-12 pt-12 border-t border-gray-100 max-w-3xl mx-auto">
+            <h2 className="text-xl font-medium mb-6">More from {resource.pillar?.title}</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {related.map((r, i) => (
+                <ResourceCard key={r._id} resource={r} pillarSlug={pillarSlug} index={i} />
+              ))}
+            </div>
+          </FadeIn>
+        )}
       </main>
 
       <Footer />

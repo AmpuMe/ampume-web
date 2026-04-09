@@ -110,6 +110,23 @@ export const RESOURCE_DETAIL_QUERY = `
   }
 `;
 
+// Related resources — same pillar, excluding current
+export const RELATED_RESOURCES_QUERY = `
+  *[_type == "resource" && pillar->slug.current == $pillarSlug && slug.current != $currentSlug] | order(publishedAt desc)[0...3] {
+    _id,
+    title,
+    slug,
+    contentType,
+    editorialSummary,
+    "thumbnailImage": thumbnail.asset->url,
+    thumbnailUrl,
+    source,
+    tags,
+    publishedAt,
+    "pillar": pillar->{ title, slug }
+  }
+`;
+
 // Helper functions
 
 export async function fetchPillars() {
@@ -130,6 +147,10 @@ export async function fetchLatestResources() {
 
 export async function fetchResourceDetail(slug) {
   return sanityFetch(RESOURCE_DETAIL_QUERY, { slug });
+}
+
+export async function fetchRelatedResources(pillarSlug, currentSlug) {
+  return sanityFetch(RELATED_RESOURCES_QUERY, { pillarSlug, currentSlug });
 }
 
 // Get the best available thumbnail: uploaded Sanity image > external URL > null
