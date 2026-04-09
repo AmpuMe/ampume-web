@@ -198,7 +198,7 @@ function MeasurementImage({ chartData, className = "" }) {
   if (!chartData.measurementImage) return null;
 
   return (
-    <FadeIn className={`relative w-full lg:h-full rounded-lg overflow-hidden bg-brand-offwhite ${className}`}>
+    <FadeIn className={`relative w-full lg:h-full rounded-lg overflow-hidden ${className}`}>
       {/* AK / BK toggle — absolute positioned top-right of image */}
       {hasAKBKToggle && (
         <div className="absolute top-3 right-3 z-10 flex rounded-full bg-white/90 backdrop-blur-sm shadow-sm border border-gray-200 p-0.5">
