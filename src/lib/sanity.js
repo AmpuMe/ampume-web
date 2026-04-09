@@ -50,7 +50,8 @@ export const PILLAR_WITH_RESOURCES_QUERY = `
       thumbnailUrl,
       source,
       featured,
-      tags
+      tags,
+      publishedAt
     }
   }
 `;
@@ -110,6 +111,25 @@ export const RESOURCE_DETAIL_QUERY = `
   }
 `;
 
+// All resources — for search/filter/browse
+export const ALL_RESOURCES_QUERY = `
+  *[_type == "resource"] | order(publishedAt desc) {
+    _id,
+    title,
+    slug,
+    contentType,
+    editorialSummary,
+    externalUrl,
+    "thumbnailImage": thumbnail.asset->url,
+    thumbnailUrl,
+    source,
+    tags,
+    featured,
+    publishedAt,
+    "pillar": pillar->{ title, slug }
+  }
+`;
+
 // Related resources — same pillar, excluding current
 export const RELATED_RESOURCES_QUERY = `
   *[_type == "resource" && pillar->slug.current == $pillarSlug && slug.current != $currentSlug] | order(publishedAt desc)[0...3] {
@@ -143,6 +163,10 @@ export async function fetchFeaturedResources() {
 
 export async function fetchLatestResources() {
   return sanityFetch(LATEST_RESOURCES_QUERY);
+}
+
+export async function fetchAllResources() {
+  return sanityFetch(ALL_RESOURCES_QUERY);
 }
 
 export async function fetchResourceDetail(slug) {
