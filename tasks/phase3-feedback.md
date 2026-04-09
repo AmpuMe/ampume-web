@@ -109,27 +109,27 @@
 ## 8. Product Pages (All)
 
 - [X] **8.1** Default variant selection: select the variant furthest to the LEFT (not middle or random)
-- [ ] **8.2** Sizing guide background colors: make consistent across all products
-- [ ] **8.3** Alpha Classic pages: PDF download still not prominent enough — make it pop more
+- [X] **8.2** Sizing guide background colors: make consistent across all products — added bg-brand-offwhite to image container
+- [X] **8.3** Alpha Classic pages: PDF download now black pill button in Care & Maintenance header
 
 ### Alpha Classic AK Cushion
-- [ ] **8.4** Add to bottom of Overview: "Standard Configuration: This liner is sold with Spirit fabric and Buff color. Alternate fabric or color options may be available by special order—please contact us for assistance."
+- [X] **8.4** Standard Configuration disclaimer added to overview
 
 ### Alpha Classic AK Locking
-- [ ] **8.5** Add to bottom of Overview: "Standard Configuration: This liner is sold with MAX fabric, Buff color, and a Standard lock size. Alternative fabric, color, or lock options may be available by special order—please contact us for assistance."
+- [X] **8.5** Standard Configuration disclaimer added to overview
 
 ### Alpha Classic BK Cushion
-- [ ] **8.6** Add to bottom of Overview: "Standard Configuration: This liner is sold with Buff color and a Uniform profile. Alternative color or profile options may be available by special order—please contact us for assistance."
+- [X] **8.6** Standard Configuration disclaimer added to overview
 
 ### Alpha Classic BK Locking
-- [ ] **8.7** Add to bottom of Overview: "Standard Configuration: This liner is sold with Buff color, Uniform profile, and a Standard lock size. Alternative color, profile, or lock options may be available by special order—please contact us for assistance."
+- [X] **8.7** Standard Configuration disclaimer added to overview
 
 ### EasyLiner
-- [ ] **8.8** Add to bottom of Overview: "Standard Configuration: This liner is sold with a Uniform profile. Tapered profile options may be available by special order—please contact us for assistance."
+- [X] **8.8** Standard Configuration disclaimer added to overview
 
 ### General Purpose Liner
-- [ ] **8.9** Remove "Technology" section (gel technology / fabric technology)
-- [ ] **8.10** Remove "Suspension Options" section (cushion/locking — already shown in variant pills)
+- [X] **8.9** Technology section removed
+- [X] **8.10** Suspension Options section removed
 
 ---
 
