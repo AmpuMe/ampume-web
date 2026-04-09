@@ -70,9 +70,13 @@ export default function ResourcesHub() {
 
   // Collect all unique tags from loaded resources
   const allTags = useMemo(() => {
-    const tags = new Set();
-    allResources.forEach(r => r.tags?.forEach(t => tags.add(t)));
-    return [...tags].sort();
+    // Count tag frequency, only show tags used on 2+ resources
+    const tagCounts = {};
+    allResources.forEach(r => r.tags?.forEach(t => { tagCounts[t] = (tagCounts[t] || 0) + 1; }));
+    return Object.entries(tagCounts)
+      .filter(([, count]) => count >= 2)
+      .sort((a, b) => b[1] - a[1])
+      .map(([tag]) => tag);
   }, [allResources]);
 
   // Filter resources

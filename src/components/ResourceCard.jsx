@@ -46,7 +46,7 @@ export default function ResourceCard({ resource, pillarSlug, index = 0 }) {
               {new Date(resource.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
             </span>
           )}
-          {resource.featured && (
+          {false && resource.featured && (
             <span className="text-xs font-bold uppercase tracking-widest text-brand-gold">
               Featured
             </span>
