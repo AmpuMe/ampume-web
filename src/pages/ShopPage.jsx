@@ -10,7 +10,7 @@ import { fetchProducts, groupProducts, categorizeGroups, CATEGORY_ORDER } from '
 import linersImage from '../assets/shop/category-liners.webp';
 import socksImage from '../assets/shop/category-socks-v2.webp';
 import sleevesImage from '../assets/shop/category-sleeves-v2.webp';
-import accessoriesImage from '../assets/shop/category-accessories.webp';
+import accessoriesImage from '../assets/shop/category-accessories-v2.webp';
 
 const CATEGORY_IMAGES = {
   liners: { src: linersImage, position: 'object-center' },
@@ -61,11 +61,6 @@ function CategoryCard({ category, productCount, image, index }) {
               {category.description}
             </p>
             <div className="flex items-center justify-between">
-              {productCount > 0 && (
-                <span className="text-xs font-bold uppercase tracking-widest text-white/60">
-                  {productCount} product{productCount !== 1 ? 's' : ''}
-                </span>
-              )}
               <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1 group-hover:border-white transition-colors">
                 Browse <ArrowRight size={14} />
               </span>

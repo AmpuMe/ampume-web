@@ -160,10 +160,10 @@ export default function LinerContentSections({ linerDesc, showPdfDownload, rende
                 href="/Important-Instructions-for-Amputees.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-black transition-colors"
+                className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest bg-black text-white px-4 py-2.5 rounded-full hover:bg-gray-800 transition-colors"
               >
                 <FileDown className="w-4 h-4" />
-                Download Full Instructions (PDF)
+                Download Instructions (PDF)
               </a>
             )}
           </div>

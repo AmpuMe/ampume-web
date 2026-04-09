@@ -129,7 +129,8 @@ export default function ProductPage() {
           // Initialize selected options — pills auto-select first, dropdowns default to placeholder
           const initialOptions = {};
           result.options?.forEach(option => {
-            initialOptions[option.name] = option.values.length <= 6 ? option.values[0] : '';
+            const sorted = sortOptionValues(option.values, option.name);
+            initialOptions[option.name] = sorted[0] || '';
           });
           setSelectedOptions(initialOptions);
         } else {
