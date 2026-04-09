@@ -107,6 +107,76 @@ export const PRODUCT_DESCRIPTIONS = {
       'Refer to the Ottobock sizing chart to match your measurement to the appropriate size.',
     ],
   },
+  // ALPS Prosthetic Skin Lotion
+  'Skin Lotion': {
+    shortDescription: 'A hypoallergenic, 100% silicone-based moisturizing lotion formulated specifically for amputees with sensitive skin. Reduces discomfort, dryness, and irritation caused by prosthetic wear.',
+    overview: [
+      'ALPS Silicone Skin Lotion is a hypoallergenic moisturizing lotion formulated specifically for amputees with sensitive skin. The 100% silicone-based formula lubricates and protects skin to reduce discomfort, dryness, and irritation caused by daily prosthetic wear.',
+      'Safe for use with prosthetic sleeves and liners including gel, silicone, and urethane types, this lotion helps reduce friction-related blisters and chapping while keeping skin comfortable throughout the day.',
+      'The formula contains no perfumes or dyes, making it suitable for even the most sensitive skin. Active ingredients include cyclomethicone and demethicone.',
+    ],
+    features: [
+      'Hypoallergenic — no perfumes or dyes',
+      'Safe for prosthetic sleeves and liners (gel, silicone, urethane)',
+      'Reduces friction-related blisters and chapping',
+      'Helps combat tight, uncomfortable skin under prosthetics',
+      '100% silicone-based formula (cyclomethicone and demethicone)',
+      '32 oz bottle',
+    ],
+    applicationInstructions: [
+      'Squeeze a few drops onto skin or palm.',
+      'Spread in a thin film over the residual limb.',
+      'Massage into skin until dry.',
+      'Apply as needed after cleansing your residual limb.',
+    ],
+    careInstructions: [
+      'Store at room temperature.',
+      'Keep the flip-top cap closed when not in use.',
+      'Replace if the product changes color or consistency.',
+    ],
+    precautions: [
+      'For external use only.',
+      'Avoid contact with eyes.',
+      'Do not apply over open wounds or infected areas.',
+    ],
+    measuringGuide: [],
+  },
+
+  // ALPS Prosthetic Ointment
+  'Ointment': {
+    shortDescription: 'Prosthetic ointment enriched with Vitamins A and D to soothe and protect dry, chapped, and cracked skin caused by prosthetic wear.',
+    overview: [
+      'ALPS Prosthetic Ointment with Vitamins A and D is formulated to soothe and protect dry, chapped, and cracked skin caused by prosthetic wear. The gentle formula reduces shear stresses within prosthetic sockets and prevents chafing from excessive sweating.',
+      'Enriched with Vitamins A and D in a base of light mineral oil and petrolatum, this ointment is ideal for nightly application after removing your prosthesis or for use under prosthetic liners during the day.',
+      'Recommended for use with silicone and urethane prosthetic liner materials. Available in a convenient 4 oz tube with flip cap.',
+    ],
+    features: [
+      'Soothes and protects dry, chapped, cracked skin',
+      'Reduces shear stresses within prosthetic sockets',
+      'Prevents chafing from excessive sweating',
+      'Gentle formula suitable for sensitive skin',
+      'Enriched with Vitamins A and D',
+      '4 oz tube with flip cap',
+    ],
+    applicationInstructions: [
+      'Apply nightly after removing your prosthesis.',
+      'Can be placed in small amounts under prosthetic liners, particularly along the top edge.',
+      'Apply over prominent bony areas like the fibular head, kneecap, or condyles for targeted protection.',
+    ],
+    careInstructions: [
+      'Store at room temperature.',
+      'Keep the cap closed when not in use.',
+      'Replace if the product changes color or consistency.',
+    ],
+    precautions: [
+      'For external use only.',
+      'Avoid contact with eyes.',
+      'Not recommended for gel or thermoplastic liners as it may cause deterioration over time.',
+      'Recommended for silicone and urethane liner materials only.',
+      'Do not apply to open wounds or infected areas.',
+    ],
+    measuringGuide: [],
+  },
 };
 
 // Normalize product names for matching
