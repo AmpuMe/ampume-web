@@ -18,7 +18,7 @@ const Footer = () => {
           <ul className="space-y-4 text-sm font-medium">
             <li><Link to="/shop" className="hover:text-white transition-colors text-gray-300">AmpuMe Store</Link></li>
             <li><Link to="/resources" className="hover:text-white transition-colors text-gray-300">Knowledge Base</Link></li>
-            <li><Link to="/ai-support" className="hover:text-white transition-colors text-gray-300">AI Support</Link></li>
+            <li><Link to="/ai-support" className="hover:text-white transition-colors text-gray-300">Ask AmpuMe</Link></li>
             <li><Link to="/telemedicine" className="hover:text-white transition-colors text-gray-300">Telemedicine</Link></li>
             <li><Link to="/contact" className="hover:text-white transition-colors text-gray-300">Contact</Link></li>
           </ul>

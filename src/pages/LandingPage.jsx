@@ -60,7 +60,7 @@ const LandingPage = () => {
   const navLinks = [
     { name: 'AmpuMe Store', href: '/shop' },
     { name: 'Knowledge Base', href: '/resources' },
-    { name: 'AI Support', href: '/ai-support' },
+    { name: 'Ask AmpuMe', href: '/ai-support' },
     { name: 'Telemedicine', href: '/telemedicine' },
   ];
 
@@ -353,7 +353,7 @@ const LandingPage = () => {
               <p className="text-sm text-gray-400 mt-2 max-w-lg hidden md:block">Ask questions about prosthetics, care, and daily life — and get clear answers instantly.</p>
             </div>
             <Link to="/ai-support" className="hidden md:inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
-              Try AI Support <ArrowRight size={14} />
+              Ask AmpuMe <ArrowRight size={14} />
             </Link>
           </div>
           <FadeIn>
@@ -375,7 +375,7 @@ const LandingPage = () => {
                   ))}
                 </div>
                 <Link to="/ai-support" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white border-b border-white/50 pb-1 hover:border-white transition-colors">
-                  Try AI Support <ArrowRight size={14} />
+                  Ask AmpuMe <ArrowRight size={14} />
                 </Link>
               </div>
             </div>

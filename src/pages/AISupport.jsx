@@ -255,7 +255,7 @@ const AISupport = () => {
   return (
     <div className="min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white">
       <SEO
-        title="AI Support Assistant"
+        title="Ask AmpuMe"
         description="Get immediate answers about amputation recovery, prosthetics, and daily life from our AI assistant."
         url="https://ampume.com/ai-support"
       />
