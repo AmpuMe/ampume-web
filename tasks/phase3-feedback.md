@@ -74,7 +74,7 @@
 ### Page Design (Behind Gate)
 - [X] **5.5** Use existing Liner/Category page template as base layout
 - [X] **5.6** Replace product filters with: State (dropdown) + Appointment Type (dropdown or chip selector)
-- [ ] **5.7** Results grid shows clinician/physician partner cards (faces, names) instead of products
+- [X] **5.7** Results grid shows clinician/physician partner cards (faces, names) instead of products
 - [X] **5.8** Hero section:
   - Header: "Schedule an appointment with a limb loss specialist today"
   - Subtext: "AmpuMe clinical partners provide functional assessments, liner replacement visits, osseointegration consultations, mental health counseling, and other specialized care."
@@ -136,16 +136,16 @@
 ## 9. New Products — Care & Accessories
 
 ### SL108 — Prosthetic Skin Lotion (32oz)
-- [ ] **9.1** Add to Shopify — Price: $16.80
-- [ ] **9.2** Create product page with 3 anchor sections: Overview, Features, Care & Maintenance
-- [ ] **9.3** Source content from:
+- [X] **9.1** Add to Shopify — Price: $16.80
+- [X] **9.2** Create product page with 3 anchor sections: Overview, Features, Care & Maintenance
+- [X] **9.3** Source content from:
   - Amputee Store: https://amputeestore.com/collections/amputee-skin-care/products/alps-silicone-skin-lotion?variant=4114714497
   - SPS: https://www.spsco.com/by-product-type/patient-aids/skin-care/lotion/prosthetic-skin-lotion-for-sensitive-skin-32oz-bottle.html
 
 ### PO840 — Prosthetic Ointment with Vitamins A & D (4oz)
-- [ ] **9.4** Add to Shopify — Price: $27.73
-- [ ] **9.5** Create product page with 3 anchor sections: Overview, Features, Care & Maintenance
-- [ ] **9.6** Source content from:
+- [X] **9.4** Add to Shopify — Price: $27.73
+- [X] **9.5** Create product page with 3 anchor sections: Overview, Features, Care & Maintenance
+- [X] **9.6** Source content from:
   - Amputee Store: https://amputeestore.com/products/alps-prosthetic-ointment
   - SPS: https://www.spsco.com/alps-prosthetic-ointment-with-vitamins-a-and-d-4oz-tube.html
 
@@ -154,35 +154,35 @@
 ## 10. Resources / Knowledge Base
 
 ### Global
-- [ ] **10.1** Rename to "Knowledge Base" everywhere (see 1.2)
-- [ ] **10.2** Remove bracket text before category names (if present)
-- [ ] **10.3** Tags: activate tag clicking — click a tag → navigate to filtered list of articles with that tag
-- [ ] **10.4** Add search functionality to Knowledge Base
-- [ ] **10.5** "View All" button: wire up to show chronological feed of all resources (or update per search feature)
+- [X] **10.1** Rename to "Knowledge Base" everywhere (see 1.2)
+- [X] **10.2** Remove bracket text before category names (if present)
+- [X] **10.3** Tags: activate tag clicking — click a tag → navigate to filtered list of articles with that tag
+- [X] **10.4** Add search functionality to Knowledge Base
+- [X] **10.5** "View All" button: wire up to show chronological feed of all resources (or update per search feature)
 
 ### Latest Section
-- [ ] **10.6** Darken publish date text (too light to notice initially)
+- [X] **10.6** Darken publish date text (too light to notice initially)
 
 ### Category Pages
-- [ ] **10.7** Remove resource count from category cards
-- [ ] **10.8** Rename "Performance & Recovery" → "Health & Performance"
-- [ ] **10.9** Add new category: "Amputation & Recovery" — move recovery-focused content here (e.g. "First 30 Days" type articles)
-- [ ] **10.10** Category pages should surface articles with recency/value structure (replicate landing page Latest section UX)
+- [X] **10.7** Remove resource count from category cards
+- [X] **10.8** Rename "Performance & Recovery" → "Health & Performance"
+- [X] **10.9** Add new category: "Amputation & Recovery" — move recovery-focused content here (e.g. "First 30 Days" type articles)
+- [X] **10.10** Category pages should surface articles with recency/value structure (replicate landing page Latest section UX)
 
 ### Article/Resource Pages
-- [ ] **10.11** Add "Related Articles" section below article content (based on same category/tags)
+- [X] **10.11** Add "Related Articles" section below article content (based on same category/tags)
 - [ ] **10.12** External links should be posted as articles with context (e.g. the ICRC PDF should have an article wrapper, not just link out). Standardize approach.
-- [ ] **10.13** Can category label on cards be clickable? (links to that category page)
+- [X] **10.13** Can category label on cards be clickable? (links to that category page)
 
 ---
 
 ## 11. Shopify / Catalog Updates
 
 ### From Updated Catalog (April 8, 2026)
-- [ ] **11.1** Sleeves: sizes in Shopify are 1/2/3 (NOT S/M/L) — Alex kept the numeric sizing. Revert chart if we changed it.
-- [ ] **11.2** Accessories: Add SL108 (Lotion, $16.80) and PO840 (Ointment, $27.73)
-- [ ] **11.3** All pricing confirmed in catalog — verify Shopify matches
-- [ ] **11.4** Shopify payments: Alex to set up Shopify Payments (payment processor)
+- [X] **11.1** Sleeves: sizes in Shopify are 1/2/3 (NOT S/M/L) — Alex kept the numeric sizing. Revert chart if we changed it.
+- [X] **11.2** Accessories: Add SL108 (Lotion, $16.80) and PO840 (Ointment, $27.73)
+- [X] **11.3** All pricing confirmed in catalog — verify Shopify matches
+- [X] **11.4** Shopify payments: Alex to set up Shopify Payments (payment processor)
 
 ---
 
@@ -217,7 +217,7 @@
 - [ ] Alex to provide mission/intro copy for pre-tile section (2.2 / 12.3)
 - [ ] Alex to decide on "Shop" vs "AmpuMe Store" vs "Marketplace" renaming (12.1)
 - [ ] Alex to decide on pre-footer section (2.14)
-- [ ] Alex to decide on AI section rename (4.1)
+- [ ] Alex to approve "Ask AmpuMe" rename (currently deployed, was "AI Support") (4.1)
 - [ ] Alex to set up Zapier + Google Sheets for contact form (3.4)
 - [ ] Alex to set up Shopify Payments (11.4)
 - [ ] Alex to procure physician partners for telemedicine (5.x)
