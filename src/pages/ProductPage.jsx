@@ -1,7 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ShoppingBag, Check, ChevronDown } from 'lucide-react';
+import { ArrowLeft, ShoppingBag, Check } from 'lucide-react';
+import Select from '../components/Select';
 import SimpleNavbar from '../components/SimpleNavbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
@@ -128,7 +129,8 @@ export default function ProductPage() {
           // Initialize selected options — pills auto-select first, dropdowns default to placeholder
           const initialOptions = {};
           result.options?.forEach(option => {
-            initialOptions[option.name] = option.values.length <= 6 ? option.values[0] : '';
+            const sorted = sortOptionValues(option.values, option.name);
+            initialOptions[option.name] = sorted[0] || '';
           });
           setSelectedOptions(initialOptions);
         } else {
@@ -271,7 +273,7 @@ export default function ProductPage() {
   return (
     <div className="min-h-screen bg-white text-black font-sans">
       <SEO
-        title={`${currentGroup ? currentGroup.baseName : product.title} | AmpuMe Shop`}
+        title={`${currentGroup ? currentGroup.baseName : product.title} | AmpuMe Store`}
         description={product.description || `Shop ${product.title} at AmpuMe`}
         url={`https://ampume.com/shop/${handle}`}
       />
@@ -303,7 +305,7 @@ export default function ProductPage() {
                 className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-black transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" />
-                {cat ? cat.label : 'Back to Shop'}
+                {cat ? cat.label : 'AmpuMe Store'}
               </Link>
             );
           })()}
@@ -502,22 +504,13 @@ export default function ProductPage() {
                           ))}
                         </div>
                       ) : (
-                        // Dropdown for many options
-                        <div className="relative">
-                          <select
-                            value={selectedOptions[option.name]}
-                            onChange={(e) => handleOptionChange(option.name, e.target.value)}
-                            className="w-full appearance-none px-4 py-3 pr-10 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-black transition-colors"
-                          >
-                            <option value="" disabled>Select a size</option>
-                            {sortOptionValues(option.values, option.name).map(value => (
-                              <option key={value} value={value}>
-                                {value}
-                              </option>
-                            ))}
-                          </select>
-                          <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-                        </div>
+                        // Custom dropdown for many options
+                        <Select
+                          options={sortOptionValues(option.values, option.name).map(v => ({ value: v, label: v }))}
+                          value={selectedOptions[option.name]}
+                          onChange={(v) => handleOptionChange(option.name, v)}
+                          placeholder="Select a size"
+                        />
                       )}
                     </div>
                   )

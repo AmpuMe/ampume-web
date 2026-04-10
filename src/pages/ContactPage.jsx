@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Send, Check, Mail, ArrowLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import SimpleNavbar from '../components/SimpleNavbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
@@ -19,6 +19,7 @@ const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
 );
 
 export default function ContactPage() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -68,13 +69,13 @@ export default function ContactPage() {
 
       <main className="pt-32 pb-20 px-6 md:px-12">
         <FadeIn className="mb-8">
-          <Link
-            to="/shop"
+          <button
+            onClick={() => navigate(-1)}
             className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-black transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to Shop
-          </Link>
+            Back
+          </button>
         </FadeIn>
 
         <div className="max-w-xl">
@@ -86,7 +87,7 @@ export default function ContactPage() {
               How can we help?
             </h1>
             <p className="text-gray-600 leading-relaxed mb-8">
-              Have a question about a product, need help with sizing, or want to place a special order? Send us a message and we'll get back to you.
+              Have a question about products, clinical care, or using AmpuMe? Send us a message and our team will get back to you shortly.
             </p>
           </FadeIn>
 

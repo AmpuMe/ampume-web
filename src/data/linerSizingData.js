@@ -175,6 +175,11 @@ export const SIZING_CHARTS = {
       { label: 'Long*', range: '22 - 28' },
     ],
     lengthGuidance: 'BK: Typically 2-3 inches above the kneecap. AK: Preference-based (over socket vs within socket).',
+    lengthStep: {
+      title: 'Measure Your Length',
+      descriptionBK: 'Length is a matter of preference. However, the typical rule is 2-3 inches past the middle of your kneecap. Measure from the distal end of your residual limb to that point.',
+      descriptionAK: 'Length is a matter of preference. Some people prefer their prosthetic socks to reflect over the top of the socket, while others prefer the sock to stay within their socket.',
+    },
     note: 'Width is determined by TOP and BOTTOM circumference. Most below-knee amputees fit a Regular width.',
     globalMin: 0,
     globalMax: 100,
@@ -205,9 +210,9 @@ export const SIZING_CHARTS = {
       },
     ],
     sizes: [
-      { label: 'S', name: 'Small', distal: [24, 32], proximal: [34, 46], distalIn: [9.4, 12.6], proximalIn: [13.4, 18.1] },
-      { label: 'M', name: 'Medium', distal: [30, 40], proximal: [40, 54], distalIn: [11.8, 15.7], proximalIn: [15.7, 21.3] },
-      { label: 'L', name: 'Large', distal: [36, 47], proximal: [46, 66], distalIn: [14.2, 18.5], proximalIn: [18.1, 26.0] },
+      { label: '1', name: 'Size 1', distal: [24, 32], proximal: [34, 46], distalIn: [9.4, 12.6], proximalIn: [13.4, 18.1] },
+      { label: '2', name: 'Size 2', distal: [30, 40], proximal: [40, 54], distalIn: [11.8, 15.7], proximalIn: [15.7, 21.3] },
+      { label: '3', name: 'Size 3', distal: [36, 47], proximal: [46, 66], distalIn: [14.2, 18.5], proximalIn: [18.1, 26.0] },
     ],
     columns: [
       { key: 'label', header: 'Size' },

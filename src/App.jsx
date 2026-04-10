@@ -17,6 +17,7 @@ const ProductPage = lazy(() => import('./pages/ProductPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 
 // Lazy load resource pages
+const TelemedicinePage = lazy(() => import('./pages/TelemedicinePage'));
 const ResourcesHub = lazy(() => import('./pages/ResourcesHub'));
 const PillarPage = lazy(() => import('./pages/PillarPage'));
 const ResourceDetail = lazy(() => import('./pages/ResourceDetail'));
@@ -42,6 +43,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/ai-support" element={<AISupport />} />
+          <Route path="/telemedicine" element={<TelemedicinePage />} />
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/shop/liners" element={<CategoryPage />} />
           <Route path="/shop/socks" element={<CategoryPage />} />

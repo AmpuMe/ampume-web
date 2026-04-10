@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Send, User, Bot, Loader2, MessageCircle } from 'lucide-react';
 import SimpleNavbar from '../components/SimpleNavbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
-import { useSubscribe } from '../hooks/useSubscribe';
 
 const SUGGESTED_PROMPTS = [
   'How often should I replace my prosthetic liner?',
@@ -28,7 +28,12 @@ function ChatMessage({ message }) {
           ? 'bg-black text-white rounded-tr-sm'
           : 'bg-gray-50 text-gray-800 border border-gray-100 rounded-tl-sm'
       }`}>
-        <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
+        <div className="text-sm leading-relaxed whitespace-pre-wrap [&_strong]:font-bold" dangerouslySetInnerHTML={{ __html: message.content
+          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+          .replace(/\n\n/g, '<br/><br/>')
+          .replace(/^- /gm, '• ')
+          .replace(/^(\d+)\. /gm, '$1. ')
+        }} />
       </div>
     </div>
   );
@@ -53,7 +58,7 @@ function TypingIndicator() {
 
 const STORAGE_KEY = 'ampume-chat-history';
 
-function ChatInterface() {
+function ChatInterface({ initialPrompt }) {
   const [messages, setMessages] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -62,8 +67,20 @@ function ChatInterface() {
   });
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [hasUsedInitialPrompt, setHasUsedInitialPrompt] = useState(false);
   const scrollAreaRef = useRef(null);
   const inputRef = useRef(null);
+
+  // Auto-send initial prompt from navigation state (e.g. homepage prompt click)
+  useEffect(() => {
+    if (initialPrompt && !hasUsedInitialPrompt && !isLoading) {
+      setHasUsedInitialPrompt(true);
+      // Clear previous chat and send the prompt
+      localStorage.removeItem(STORAGE_KEY);
+      setMessages([]);
+      setTimeout(() => sendMessage(initialPrompt), 100);
+    }
+  }, [initialPrompt, hasUsedInitialPrompt]);
 
   // Persist messages to localStorage
   useEffect(() => {
@@ -71,14 +88,18 @@ function ChatInterface() {
     catch { /* quota exceeded or private browsing */ }
   }, [messages]);
 
-  const scrollToBottom = useCallback(() => {
-    const el = scrollAreaRef.current;
-    if (el) el.scrollTop = el.scrollHeight;
-  }, []);
+  const lastUserMsgRef = useRef(null);
 
+  // Gentle scroll within chat container only — no page scrolling
   useEffect(() => {
-    scrollToBottom();
-  }, [messages, scrollToBottom]);
+    const container = scrollAreaRef.current;
+    const target = lastUserMsgRef.current;
+    if (!container || !target || messages.length < 2) return;
+    if (container.scrollHeight <= container.clientHeight) return;
+    // Calculate target position relative to the scroll container
+    const targetTop = target.offsetTop - container.offsetTop;
+    container.scrollTo({ top: targetTop, behavior: 'smooth' });
+  }, [messages]);
 
   const sendMessage = async (text) => {
     const userMessage = { role: 'user', content: text.trim() };
@@ -87,6 +108,10 @@ function ChatInterface() {
     setInput('');
     setIsLoading(true);
 
+    // Timeout after 30 seconds
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000);
+
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
@@ -94,7 +119,10 @@ function ChatInterface() {
         body: JSON.stringify({
           messages: newMessages.map(m => ({ role: m.role, content: m.content })),
         }),
+        signal: controller.signal,
       });
+
+      clearTimeout(timeout);
 
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
@@ -104,10 +132,14 @@ function ChatInterface() {
       const content = data.choices?.[0]?.message?.content || 'Sorry, I was unable to generate a response.';
       setMessages(prev => [...prev, { role: 'assistant', content }]);
     } catch (err) {
+      clearTimeout(timeout);
       console.error('Chat error:', err);
+      const isTimeout = err.name === 'AbortError';
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: "I'm having trouble connecting right now. Please try again in a moment.",
+        content: isTimeout
+          ? "The response took too long. Please try again."
+          : "I'm having trouble connecting right now. Please try again in a moment.",
       }]);
     } finally {
       setIsLoading(false);
@@ -139,7 +171,7 @@ function ChatInterface() {
         <div className="flex justify-end px-4 pt-3 pb-0">
           <button
             onClick={clearChat}
-            className="text-[11px] text-gray-400 hover:text-black transition-colors"
+            className="text-xs font-medium text-gray-500 hover:text-black bg-gray-50 hover:bg-gray-100 px-3 py-1.5 rounded-full transition-colors"
           >
             New conversation
           </button>
@@ -170,9 +202,15 @@ function ChatInterface() {
           </div>
         ) : (
           <div className="space-y-4">
-            {messages.map((msg, i) => (
-              <ChatMessage key={i} message={msg} />
-            ))}
+            {messages.map((msg, i) => {
+              // Track the last user message for scroll anchoring
+              const isLastUser = msg.role === 'user' && (i === messages.length - 1 || (i === messages.length - 2 && messages[messages.length - 1].role === 'assistant'));
+              return (
+                <div key={i} ref={isLastUser ? lastUserMsgRef : null}>
+                  <ChatMessage message={msg} />
+                </div>
+              );
+            })}
             {isLoading && <TypingIndicator />}
           </div>
         )}
@@ -211,22 +249,13 @@ function ChatInterface() {
 }
 
 const AISupport = () => {
-  const { subscribe, loading, success, error } = useSubscribe();
-  const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '' });
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await subscribe(formData);
-  };
+  const location = useLocation();
+  const initialPrompt = location.state?.prompt || null;
 
   return (
     <div className="min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white">
       <SEO
-        title="AI Support Assistant"
+        title="Ask AmpuMe"
         description="Get immediate answers about amputation recovery, prosthetics, and daily life from our AI assistant."
         url="https://ampume.com/ai-support"
       />
@@ -234,86 +263,9 @@ const AISupport = () => {
 
       <main className="pt-28 pb-20 px-6 md:px-12">
         <div className="max-w-4xl mx-auto">
-          <ChatInterface />
+          <ChatInterface initialPrompt={initialPrompt} />
         </div>
       </main>
-
-      {/* Newsletter / CTA */}
-      <section id="newsletter" className="py-32 px-6 md:px-12 bg-gray-50 text-black border-t border-gray-100">
-        <div className="grid grid-cols-12 gap-6 items-center">
-          <div className="col-span-12 lg:col-span-6">
-             <h2 className="text-5xl md:text-7xl font-medium tracking-tight mb-8">
-              Stay in <br /> the loop.
-            </h2>
-            <p className="text-xl text-gray-500 font-light max-w-md leading-relaxed">
-              New products, resources, and platform updates — delivered to your inbox.
-            </p>
-          </div>
-
-          <div className="col-span-12 lg:col-span-5 lg:col-start-8 mt-12 lg:mt-0">
-            {success ? (
-              <div className="bg-white p-8 md:p-12 border border-gray-100 text-center">
-                <h3 className="text-2xl font-medium mb-4">You're subscribed!</h3>
-                <p className="text-gray-500">We'll keep you in the loop with updates, new products, and resources.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-6 bg-white p-8 md:p-12 border border-gray-100">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="firstName" className="block text-xs font-bold uppercase tracking-widest mb-4">First Name</label>
-                    <input
-                      id="firstName"
-                      type="text"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      placeholder="Jane"
-                      className="w-full bg-transparent border-b border-gray-200 py-4 text-left text-xl placeholder:text-gray-300 focus:outline-none focus:border-black transition-colors"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="lastName" className="block text-xs font-bold uppercase tracking-widest mb-4">Last Name</label>
-                    <input
-                      id="lastName"
-                      type="text"
-                      value={formData.lastName}
-                      onChange={handleChange}
-                      placeholder="Doe"
-                      className="w-full bg-transparent border-b border-gray-200 py-4 text-left text-xl placeholder:text-gray-300 focus:outline-none focus:border-black transition-colors"
-                      required
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-xs font-bold uppercase tracking-widest mb-4">Email Address</label>
-                  <input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="name@example.com"
-                    className="w-full bg-transparent border-b border-gray-200 py-4 text-left text-xl placeholder:text-gray-300 focus:outline-none focus:border-black transition-colors"
-                    required
-                  />
-                </div>
-                {error && <p className="text-red-500 text-xs">{error}</p>}
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mt-4">
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="bg-black text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-gray-800 transition-colors w-full md:w-auto disabled:opacity-50"
-                  >
-                    {loading ? 'Subscribing...' : 'Subscribe'}
-                  </button>
-                   <p className="text-xs text-gray-400">
-                    No spam. Unsubscribe anytime.
-                  </p>
-                </div>
-              </form>
-            )}
-          </div>
-        </div>
-      </section>
 
       <Footer />
     </div>

@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Menu, X, MessageSquare, Send } from 'lucide-react';
+import { ArrowRight, Menu, X, MessageSquare, Send, Play, FileText, ArrowUpRight, Bot, User } from 'lucide-react';
 import SEO from '../components/SEO';
 import Footer from '../components/Footer';
 import NewsletterModal from '../components/NewsletterModal';
 import heroImage from '../assets/new-hero-3.webp';
 import marketplaceImage from '../assets/shop.webp';
-import peopleImage from '../assets/people.webp';
+import peopleImage from '../assets/people-v2.webp';
 import friendsImage from '../assets/friends.webp';
 import cardPhoto from '../assets/support.webp';
-import telehealthImage from '../assets/telehealth.webp';
+import telehealthImage from '../assets/telehealth-v2.webp';
+import categoryLiners from '../assets/shop/category-liners.webp';
+import categorySleeves from '../assets/shop/category-sleeves-v2.webp';
+import categorySocks from '../assets/shop/category-socks-v2.webp';
 
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
   <motion.div
@@ -55,9 +58,10 @@ const LandingPage = () => {
   }, []);
 
   const navLinks = [
-    { name: 'Shop', href: '/shop' },
-    { name: 'Resources', href: '/resources' },
-    { name: 'AI Support', href: '/ai-support' },
+    { name: 'AmpuMe Store', href: '/shop' },
+    { name: 'Knowledge Base', href: '/resources' },
+    { name: 'Ask AmpuMe', href: '/ai-support' },
+    { name: 'Telemedicine', href: '/telemedicine' },
   ];
 
   const handleNavClick = (href) => {
@@ -77,7 +81,7 @@ const LandingPage = () => {
     <div className="min-h-screen bg-brand-white text-brand-black font-sans">
       <SEO
         title="Home"
-        description="AmpuMe is the all-in-one platform for life after limb loss. Explore prosthetic essentials, expert guidance, AI support, and a growing community."
+        description="AmpuMe is the all-in-one platform for life with limb loss. Explore prosthetic essentials, expert guidance, AI support, and a growing community."
       />
       <NewsletterModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
 
@@ -148,7 +152,7 @@ const LandingPage = () => {
         <div className="relative z-10 h-full px-6 md:px-12 grid grid-cols-12 items-end pb-24 text-white">
           <FadeIn className="col-span-12 md:col-span-8 lg:col-span-7">
             <h1 className="text-4xl sm:text-5xl md:text-7xl min-[1070px]:text-8xl 2xl:text-[6.5rem] font-medium leading-[1.1] md:leading-[0.9] tracking-tight mb-8">
-              The all-in-one platform <span className="text-brand-white opacity-90">for life after limb&nbsp;loss.</span>
+              The all-in-one platform <span className="text-brand-white opacity-90">for life with limb&nbsp;loss.</span>
             </h1>
             <div className="flex flex-col md:flex-row gap-8 items-start md:items-center mt-12">
               <button
@@ -198,10 +202,10 @@ const LandingPage = () => {
                 <img src={marketplaceImage} loading="lazy" alt="Shop" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
                 <div className="absolute top-8 left-8 z-10 flex gap-2">
-                  <span className="text-[11px] font-bold uppercase tracking-widest bg-white text-black px-3 pt-[7px] pb-[5px] leading-none">Shop</span>
+                  <span className="text-[11px] font-bold uppercase tracking-widest bg-white text-black px-3 pt-[7px] pb-[5px] leading-none">Store</span>
                 </div>
                 <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
-                  <h4 className="text-3xl font-medium mb-3">Shop Prosthetic Essentials</h4>
+                  <h4 className="text-3xl font-medium mb-3">AmpuMe Store</h4>
                   <div className="h-auto md:h-0 md:group-hover:h-auto overflow-hidden transition-all duration-500">
                     <p className="text-sm text-white/90 leading-relaxed mb-4">
                       Liners, sleeves, socks, and everyday prosthetic essentials — delivered directly to you.
@@ -220,7 +224,7 @@ const LandingPage = () => {
                 <span className="text-[11px] font-bold uppercase tracking-widest bg-white text-black px-3 pt-[7px] pb-[5px] leading-none">Learn and Connect</span>
               </div>
               <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
-                <h4 className="text-3xl font-medium mb-3">Knowledge Hub</h4>
+                <h4 className="text-3xl font-medium mb-3">Knowledge Base</h4>
                 <div className="h-auto md:h-0 md:group-hover:h-auto overflow-hidden transition-all duration-500">
                   <p className="text-sm text-white/90 leading-relaxed mb-4">
                     Articles, expert guidance, and community resources for life with limb loss.
@@ -232,7 +236,7 @@ const LandingPage = () => {
 
             {/* Telehealth — Position 4 */}
             <FadeIn id="telehealth" onClick={() => setModalOpen(true)} delay={0.3} className="group relative h-[500px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
-              <img src={telehealthImage} loading="lazy" alt="Telehealth" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={telehealthImage} loading="lazy" alt="Telehealth" className="w-full h-full object-cover object-[70%_center] md:object-center transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
               <div className="absolute top-8 left-8 z-10 flex gap-2">
                 <span className="text-[11px] font-bold uppercase tracking-widest bg-white text-black px-3 pt-[7px] pb-[5px] leading-none">Care</span>
@@ -251,106 +255,132 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Proof of Platform — Shop Preview */}
-      <section className="py-16 md:py-24 px-6 md:px-12 bg-white border-t border-gray-100">
-        <FadeIn className="max-w-6xl mx-auto">
-          <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 block">Shop</span>
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10">
-            <h3 className="text-3xl md:text-4xl font-light tracking-tight">Prosthetic Essentials</h3>
-            <Link to="/shop" className="mt-4 md:mt-0 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
-              Browse Shop <ArrowRight size={14} />
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { name: 'Alpha Classic Cushion Liner', desc: 'Trusted liner with adaptive gel for comfortable, secure fit.', href: '/shop/liners' },
-              { name: 'ProFlex Suspension Sleeve', desc: 'Reliable suspension for below-knee prosthetic systems.', href: '/shop/sleeves' },
-              { name: 'Knit-Rite Prosthetic Socks', desc: 'Manage limb volume changes with breathable knit construction.', href: '/shop/socks' },
-            ].map((product, i) => (
-              <Link key={i} to={product.href} className="group border border-gray-100 rounded-lg p-6 hover:border-gray-300 transition-all">
-                <div className="aspect-square bg-gray-50 rounded-lg mb-4 flex items-center justify-center">
-                  <span className="text-gray-300 text-sm">Product Image</span>
-                </div>
-                <h4 className="text-base font-medium mb-2 group-hover:text-gray-600 transition-colors">{product.name}</h4>
-                <p className="text-sm text-gray-500 leading-relaxed">{product.desc}</p>
-              </Link>
-            ))}
-          </div>
-        </FadeIn>
-      </section>
-
-      {/* Proof of Platform — Resources Preview */}
-      <section className="py-16 md:py-24 px-6 md:px-12 bg-brand-offwhite">
-        <FadeIn className="max-w-6xl mx-auto">
-          <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 block">Resources</span>
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10">
-            <h3 className="text-3xl md:text-4xl font-light tracking-tight">Expert Guidance</h3>
-            <Link to="/resources" className="mt-4 md:mt-0 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
-              Explore Resources <ArrowRight size={14} />
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { pillar: 'Performance & Recovery', title: 'Strength, gait, balance, and injury prevention resources.' },
-              { pillar: 'Prosthetic Care', title: 'Fit, liners, skin health, and maintenance guides.' },
-              { pillar: 'Insurance & Coverage', title: 'Benefits, approvals, and financial guidance.' },
-            ].map((item, i) => (
-              <div key={i} className="bg-white border border-gray-100 rounded-lg p-6">
-                <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3 block">{item.pillar}</span>
-                <p className="text-sm text-gray-600 leading-relaxed">{item.title}</p>
-              </div>
-            ))}
-          </div>
-        </FadeIn>
-      </section>
-
-      {/* Proof of Platform — AI Support Preview */}
-      <section className="py-16 md:py-24 px-6 md:px-12 bg-white border-t border-gray-100">
-        <FadeIn className="max-w-6xl mx-auto">
-          <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 block">AI Support</span>
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10">
+      {/* ── Proof of Platform: Shop ─────────────────────────────── */}
+      <section className="py-16 md:py-20 px-6 md:px-12 bg-white">
+        <div className="max-w-full mx-auto">
+          <div className="flex justify-between items-end mb-10 md:mb-16">
             <div>
-              <h3 className="text-3xl md:text-4xl font-light tracking-tight mb-3">Ask Anything</h3>
-              <p className="text-gray-500 max-w-lg">Ask questions about prosthetics, care, and daily life — and get clear answers instantly.</p>
+              <h3 className="text-2xl font-medium">AmpuMe Store</h3>
+              <p className="text-sm text-gray-400 mt-2 max-w-lg hidden md:block">Liners, sleeves, socks, and care products — thoughtfully selected for fit, function, and durability.</p>
             </div>
-            <Link to="/ai-support" className="mt-4 md:mt-0 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
-              Try AI Support <ArrowRight size={14} />
+            <Link to="/shop" className="hidden md:inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
+              Browse Store <ArrowRight size={14} />
             </Link>
           </div>
-          <div className="bg-gray-50 border border-gray-100 rounded-lg overflow-hidden max-w-2xl">
-            {/* Chat mockup header */}
-            <div className="bg-black text-white px-6 py-4 flex items-center gap-3">
-              <MessageSquare className="w-5 h-5" />
-              <span className="text-sm font-medium">AmpuMe AI Support</span>
-            </div>
-            {/* Sample conversation */}
-            <div className="p-6 space-y-4">
-              <div className="flex justify-end">
-                <div className="bg-black text-white rounded-2xl rounded-br-md px-4 py-3 max-w-xs">
-                  <p className="text-sm">How often should I replace my liner?</p>
-                </div>
-              </div>
-              <div className="flex justify-start">
-                <div className="bg-white border border-gray-200 rounded-2xl rounded-bl-md px-4 py-3 max-w-sm">
-                  <p className="text-sm text-gray-700">Most prosthetic liners should be replaced every 6-12 months depending on usage, activity level, and material wear. Signs it's time include...</p>
-                </div>
-              </div>
-            </div>
-            {/* Prompt suggestions */}
-            <div className="px-6 pb-6 flex flex-wrap gap-2">
-              {['Why is my residual limb irritated?', 'What does Medicare cover?', 'Tips for phantom limb pain'].map((prompt, i) => (
-                <Link key={i} to="/ai-support" className="text-xs bg-white border border-gray-200 rounded-full px-3 py-1.5 text-gray-600 hover:border-gray-400 transition-colors">
-                  {prompt}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { tag: 'Liners', name: 'Prosthetic Liners', desc: 'Adaptive gel for comfort and secure suspension.', href: '/shop/liners', img: categoryLiners, pos: 'object-center' },
+              { tag: 'Sleeves', name: 'Suspension Sleeves', desc: 'Maintain a secure seal for below-knee systems.', href: '/shop/sleeves', img: categorySleeves, pos: 'object-[60%_center]' },
+              { tag: 'Socks', name: 'Prosthetic Socks', desc: 'Manage limb volume with breathable knit construction.', href: '/shop/socks', img: categorySocks, pos: 'object-center' },
+            ].map((product, i) => (
+              <FadeIn key={i} delay={i * 0.1}>
+                <Link to={product.href} className="group relative block h-[350px] md:h-[500px] overflow-hidden cursor-pointer">
+                  <img src={product.img} alt={product.name} className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${product.pos || 'object-center'}`} />
+                  <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500" />
+                  <span className="absolute top-8 left-8 z-10 text-[11px] font-bold uppercase tracking-widest bg-white text-black px-3 pt-[7px] pb-[5px] leading-none">
+                    {product.tag}
+                  </span>
+                  <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
+                    <h4 className="text-3xl font-medium mb-3">{product.name}</h4>
+                    <div className="h-auto md:h-0 md:group-hover:h-auto overflow-hidden transition-all duration-500">
+                      <p className="text-sm text-white/90 leading-relaxed mb-4">{product.desc}</p>
+                      <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1 group-hover:border-white transition-colors">
+                        Shop Now <ArrowRight size={14} />
+                      </span>
+                    </div>
+                  </div>
                 </Link>
-              ))}
-            </div>
-            {/* Input mockup */}
-            <div className="border-t border-gray-100 px-6 py-4 flex items-center gap-3">
-              <input type="text" disabled placeholder="Ask a question..." className="flex-1 text-sm text-gray-400 bg-transparent outline-none" />
-              <Send className="w-4 h-4 text-gray-300" />
-            </div>
+              </FadeIn>
+            ))}
           </div>
-        </FadeIn>
+          <div className="mt-8 md:hidden text-center">
+            <Link to="/shop" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
+              Browse Store <ArrowRight size={14} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Proof of Platform: Resources ──────────────────────── */}
+      <section className="py-16 md:py-20 px-6 md:px-12 bg-brand-offwhite">
+        <div className="max-w-full mx-auto">
+          <div className="flex justify-between items-end mb-10 md:mb-16">
+            <div>
+              <h3 className="text-2xl font-medium">Knowledge Base</h3>
+              <p className="text-sm text-gray-400 mt-2 max-w-lg hidden md:block">Articles, videos, and guides covering prosthetic care, recovery, insurance, and everyday life.</p>
+            </div>
+            <Link to="/resources" className="hidden md:inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
+              Explore Knowledge Base <ArrowRight size={14} />
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { pillar: 'Prosthetic Care', title: 'A Daily Prosthetic Care Routine That Actually Works', desc: 'Build a practical daily routine for liner cleaning, skin inspection, and socket maintenance.', img: '/images/articles/care-routine-cover.webp', href: '/resources/prosthetic-care/daily-prosthetic-care-routine', date: 'Mar 18, 2026' },
+              { pillar: 'Everyday Life', title: 'Your First 30 Days After Amputation', desc: 'What to expect and how to adapt during the critical first month with a new prosthesis.', img: '/images/articles/first-30-days-cover.webp', href: '/resources/performance-and-recovery/first-30-days-after-amputation', date: 'Mar 18, 2026' },
+              { pillar: 'Health & Performance', title: 'Adaptive Fitness with Amy Bream', desc: 'Strength training, workout routines, and life as an adaptive athlete.', img: '/images/articles/gait-training-cover.webp', href: '/resources/performance-and-recovery/adaptive-fitness-amy-bream', date: 'Apr 2, 2026' },
+            ].map((item, i) => (
+              <FadeIn key={i} delay={i * 0.1}>
+                <Link to={item.href} className="group flex flex-col bg-white overflow-hidden hover:shadow-md transition-shadow duration-300 h-full">
+                  <div className="aspect-[16/10] overflow-hidden">
+                    <img src={item.img} alt="" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  </div>
+                  <div className="p-6">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-[11px] font-bold uppercase tracking-widest text-gray-400">{item.pillar}</span>
+                      <span className="text-[11px] text-gray-400">{item.date}</span>
+                    </div>
+                    <h4 className="text-lg font-medium leading-snug mb-2 group-hover:text-gray-500 transition-colors">{item.title}</h4>
+                    <p className="text-sm text-gray-400 leading-relaxed">{item.desc}</p>
+                  </div>
+                </Link>
+              </FadeIn>
+            ))}
+          </div>
+          <div className="mt-8 md:hidden text-center">
+            <Link to="/resources" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
+              Explore Knowledge Base <ArrowRight size={14} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Proof of Platform: AI Support ──────────────────────── */}
+      <section className="py-16 md:py-20 px-6 md:px-12 bg-white">
+        <div className="max-w-full mx-auto">
+          <div className="flex justify-between items-end mb-10 md:mb-16">
+            <div>
+              <h3 className="text-2xl font-medium">Ask Anything</h3>
+              <p className="text-sm text-gray-400 mt-2 max-w-lg hidden md:block">Ask questions about prosthetics, care, and daily life — and get clear answers instantly.</p>
+            </div>
+            <Link to="/ai-support" className="hidden md:inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
+              Ask AmpuMe <ArrowRight size={14} />
+            </Link>
+          </div>
+          <FadeIn>
+            <div className="bg-black p-8 md:p-12">
+              <div className="max-w-2xl">
+                <span className="text-[11px] font-bold uppercase tracking-widest text-white/40 mb-6 block">Available 24/7</span>
+                <p className="text-xl md:text-2xl font-light text-white leading-relaxed mb-8">
+                  Our AI assistant is trained on expert prosthetic resources — ask about recovery, daily care, insurance coverage, and more.
+                </p>
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {['What should I do if my residual limb volume is fluctuating?', 'How often will my insurance cover a new socket?', 'How do I cope with the emotional side of limb loss?', 'How often should I replace my liner?'].map((prompt, i) => (
+                    <button
+                      key={i}
+                      onClick={() => navigate('/ai-support', { state: { prompt } })}
+                      className="text-xs bg-white/10 text-white/70 rounded-full px-4 py-2 hover:bg-white/20 hover:text-white transition-colors text-left cursor-pointer"
+                    >
+                      {prompt}
+                    </button>
+                  ))}
+                </div>
+                <Link to="/ai-support" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white border-b border-white/50 pb-1 hover:border-white transition-colors">
+                  Ask AmpuMe <ArrowRight size={14} />
+                </Link>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
       </section>
 
       <Footer />

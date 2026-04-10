@@ -40,11 +40,18 @@ export default function ResourceCard({ resource, pillarSlug, index = 0 }) {
           <TypeIcon className="w-3.5 h-3.5" />
           {config.label}
         </span>
-        {resource.featured && (
-          <span className="text-xs font-bold uppercase tracking-widest text-brand-gold">
-            Featured
-          </span>
-        )}
+        <div className="flex items-center gap-2">
+          {resource.publishedAt && (
+            <span className="text-[10px] text-gray-500">
+              {new Date(resource.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+            </span>
+          )}
+          {false && resource.featured && (
+            <span className="text-xs font-bold uppercase tracking-widest text-brand-gold">
+              Featured
+            </span>
+          )}
+        </div>
       </div>
 
       <h3 className="font-medium text-base mb-2 group-hover:text-gray-600 transition-colors leading-tight">
@@ -75,18 +82,10 @@ export default function ResourceCard({ resource, pillarSlug, index = 0 }) {
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.08 }}
     >
-      {isExternal ? (
-        <a
-          href={resource.externalUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group block border border-gray-100 rounded-lg p-5 hover:border-gray-300 transition-all duration-300 h-full flex flex-col"
-        >
-          {cardContent}
-        </a>
-      ) : (
+      {/* All resources go to detail page — external links have "Visit Resource" button there */}
+      {(
         <Link
-          to={`/resources/${pillarSlug}/${resource.slug?.current}`}
+          to={`/resources/${pillarSlug || resource.pillar?.slug?.current}/${resource.slug?.current}`}
           className="group block border border-gray-100 rounded-lg p-5 hover:border-gray-300 transition-all duration-300 h-full flex flex-col"
         >
           {cardContent}

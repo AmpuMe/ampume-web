@@ -8,15 +8,15 @@ import SEO from '../components/SEO';
 import { useCart } from '../context/CartContext';
 import { fetchProducts, groupProducts, categorizeGroups, CATEGORY_ORDER } from '../lib/shopify';
 import linersImage from '../assets/shop/category-liners.webp';
-import socksImage from '../assets/shop/category-socks.webp';
-import sleevesImage from '../assets/shop/category-sleeves.webp';
-import accessoriesImage from '../assets/shop/category-accessories.webp';
+import socksImage from '../assets/shop/category-socks-v2.webp';
+import sleevesImage from '../assets/shop/category-sleeves-v2.webp';
+import accessoriesImage from '../assets/shop/category-accessories-v2.webp';
 
 const CATEGORY_IMAGES = {
-  liners: linersImage,
-  socks: socksImage,
-  sleeves: sleevesImage,
-  accessories: accessoriesImage,
+  liners: { src: linersImage, position: 'object-center' },
+  socks: { src: socksImage, position: 'object-center' },
+  sleeves: { src: sleevesImage, position: 'object-[30%_center]' },
+  accessories: { src: accessoriesImage, position: 'object-center' },
 };
 
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
@@ -46,9 +46,9 @@ function CategoryCard({ category, productCount, image, index }) {
       >
         {image ? (
           <img
-            src={image}
+            src={image.src || image}
             alt={category.label}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${image.position || 'object-center'}`}
           />
         ) : (
           <div className="w-full h-full bg-gray-100" />
@@ -61,11 +61,6 @@ function CategoryCard({ category, productCount, image, index }) {
               {category.description}
             </p>
             <div className="flex items-center justify-between">
-              {productCount > 0 && (
-                <span className="text-xs font-bold uppercase tracking-widest text-white/60">
-                  {productCount} product{productCount !== 1 ? 's' : ''}
-                </span>
-              )}
               <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1 group-hover:border-white transition-colors">
                 Browse <ArrowRight size={14} />
               </span>
@@ -135,7 +130,7 @@ export default function ShopPage() {
         <section className="px-6 md:px-12 mb-12 md:mb-20">
           <FadeIn className="max-w-3xl">
             <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 block">
-              The AmpuMe Shop
+              The AmpuMe Store
             </span>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight mb-6">
               Prosthetic essentials for everyday performance.

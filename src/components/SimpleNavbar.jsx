@@ -27,9 +27,10 @@ const SimpleNavbar = ({ transparent = false }) => {
           </div>
 
           <div className="hidden lg:flex col-span-6 justify-center gap-6 xl:gap-12">
-            <Link to="/shop" className="text-sm font-medium hover:opacity-70 transition-opacity">Shop</Link>
-            <Link to="/resources" className="text-sm font-medium hover:opacity-70 transition-opacity">Resources</Link>
-            <Link to="/ai-support" className="text-sm font-medium hover:opacity-70 transition-opacity">AI Support</Link>
+            <Link to="/shop" className="text-sm font-medium hover:opacity-70 transition-opacity">AmpuMe Store</Link>
+            <Link to="/resources" className="text-sm font-medium hover:opacity-70 transition-opacity">Knowledge Base</Link>
+            <Link to="/ai-support" className="text-sm font-medium hover:opacity-70 transition-opacity">Ask AmpuMe</Link>
+            <Link to="/telemedicine" className="text-sm font-medium hover:opacity-70 transition-opacity">Telemedicine</Link>
           </div>
 
           <div className="hidden lg:flex col-span-3 justify-end items-center">
@@ -57,9 +58,10 @@ const SimpleNavbar = ({ transparent = false }) => {
               <button onClick={() => setMobileMenuOpen(false)} aria-label="Close menu"><X size={24} /></button>
             </div>
             <div className="flex flex-col gap-6 text-xl font-medium">
-              <Link to="/shop" onClick={() => setMobileMenuOpen(false)}>Shop</Link>
-              <Link to="/resources" onClick={() => setMobileMenuOpen(false)}>Resources</Link>
-              <Link to="/ai-support" onClick={() => setMobileMenuOpen(false)}>AI Support</Link>
+              <Link to="/shop" onClick={() => setMobileMenuOpen(false)}>AmpuMe Store</Link>
+              <Link to="/resources" onClick={() => setMobileMenuOpen(false)}>Knowledge Base</Link>
+              <Link to="/ai-support" onClick={() => setMobileMenuOpen(false)}>Ask AmpuMe</Link>
+              <Link to="/telemedicine" onClick={() => setMobileMenuOpen(false)}>Telemedicine</Link>
               <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
             </div>
           </motion.div>

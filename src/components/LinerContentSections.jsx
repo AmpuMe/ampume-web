@@ -151,9 +151,22 @@ export default function LinerContentSections({ linerDesc, showPdfDownload, rende
       {/* Care & Maintenance */}
       <section id="care-maintenance" className="py-16 md:py-20 border-t border-gray-100">
         <FadeIn className="max-w-6xl mx-auto px-6 md:px-12">
-          <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-8 block">
-            Care & Maintenance
-          </span>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-8 gap-4">
+            <span className="text-xs font-bold uppercase tracking-widest text-gray-400">
+              Care & Maintenance
+            </span>
+            {showPdfDownload && (
+              <a
+                href="/Important-Instructions-for-Amputees.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest bg-black text-white px-4 py-2.5 rounded-full hover:bg-gray-800 transition-colors"
+              >
+                <FileDown className="w-4 h-4" />
+                Download Instructions (PDF)
+              </a>
+            )}
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Application Instructions */}
             <div>
@@ -198,24 +211,6 @@ export default function LinerContentSections({ linerDesc, showPdfDownload, rende
               </ul>
             </div>
           </div>
-
-          {/* PDF Download */}
-          {showPdfDownload && (
-            <div className="mt-8 pt-8 border-t border-gray-200">
-              <a
-                href="/Important-Instructions-for-Amputees.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:border-gray-400 transition-colors bg-white"
-              >
-                <FileDown className="w-5 h-5 text-gray-500 flex-shrink-0" />
-                <div>
-                  <p className="text-sm font-medium">Important Instructions for Amputees</p>
-                  <p className="text-xs text-gray-400">PDF Download</p>
-                </div>
-              </a>
-            </div>
-          )}
         </FadeIn>
       </section>
     </>

@@ -63,9 +63,9 @@ export default function InsuranceExpertForm() {
 
   return (
     <div className="bg-brand-offwhite rounded-lg p-8 md:p-12">
-      <h3 className="text-xl font-medium mb-2">Check Your Benefits</h3>
+      <h3 className="text-xl font-medium mb-2">Start Your Coverage Review</h3>
       <p className="text-sm text-gray-500 mb-8 max-w-lg">
-        Tell us about your insurance and what you need. We'll review your benefits and let you know what's covered.
+        Share a few details about your insurance and what you're looking for. Our team will review your benefits and follow up with clear next steps.
       </p>
 
       <form onSubmit={handleSubmit} className="space-y-6 max-w-lg">
@@ -141,7 +141,7 @@ export default function InsuranceExpertForm() {
           {loading ? 'Submitting...' : (
             <>
               <Send className="w-4 h-4" />
-              Submit Inquiry
+              Check My Coverage
             </>
           )}
         </button>

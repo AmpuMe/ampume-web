@@ -87,7 +87,7 @@ export default function PillarPage() {
             className="inline-flex items-center gap-2 text-sm font-medium hover:text-gray-600"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to Resources
+            Back to Knowledge Base
           </Link>
         </div>
       </div>
@@ -97,7 +97,7 @@ export default function PillarPage() {
   return (
     <div className="min-h-screen bg-white text-black font-sans">
       <SEO
-        title={`${pillar.title} | AmpuMe Resources`}
+        title={`${pillar.title} | AmpuMe Knowledge Base`}
         description={pillar.description || `Browse ${pillar.title} resources at AmpuMe`}
         url={`https://ampume.com/resources/${pillarSlug}`}
       />
@@ -119,13 +119,13 @@ export default function PillarPage() {
         {/* Pillar Hero */}
         <FadeIn className="max-w-3xl mb-12">
           <h1 className="text-3xl md:text-4xl font-light tracking-tight mb-4">
-            {pillar.title}
+            {isInsurancePillar ? 'Understand Your Insurance and Coverage' : pillar.title}
           </h1>
-          {pillar.description && (
-            <p className="text-lg text-gray-500 leading-relaxed">
-              {pillar.description}
-            </p>
-          )}
+          <p className="text-lg text-gray-500 leading-relaxed">
+            {isInsurancePillar
+              ? 'Get clarity on your benefits, coverage, and what to expect. Our team will review your information and help you understand your options.'
+              : pillar.description}
+          </p>
         </FadeIn>
 
         {/* Insurance Expert Form (special pillar) */}
@@ -172,6 +172,14 @@ export default function PillarPage() {
               </div>
             </FadeIn>
           </>
+        )}
+
+        {/* Bridge section — Knowledge Base link for insurance pillar */}
+        {isInsurancePillar && pillar.resources && pillar.resources.length > 0 && (
+          <FadeIn delay={0.2} className="mb-10">
+            <h2 className="text-xl font-medium mb-2">From Our Knowledge Base</h2>
+            <p className="text-sm text-gray-500">Explore guides and resources to better understand insurance, coverage, and the claims process.</p>
+          </FadeIn>
         )}
 
         {/* Resource Grid */}

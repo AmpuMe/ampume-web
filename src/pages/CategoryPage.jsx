@@ -106,7 +106,7 @@ export default function CategoryPage() {
             className="inline-flex items-center gap-2 text-sm font-medium hover:text-gray-600"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to Shop
+            All Categories
           </Link>
         </div>
       </div>
@@ -116,7 +116,7 @@ export default function CategoryPage() {
   return (
     <div className="min-h-screen bg-white text-black font-sans">
       <SEO
-        title={`${category.label} | AmpuMe Shop`}
+        title={`${category.label} | AmpuMe Store`}
         description={category.description}
         url={`https://ampume.com/shop/${categoryId}`}
       />
@@ -152,7 +152,7 @@ export default function CategoryPage() {
 
           <FadeIn className="max-w-3xl" delay={0.05}>
             <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 block">
-              {copy?.tagline || 'The AmpuMe Shop'}
+              {copy?.tagline || 'The AmpuMe Store'}
             </span>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight mb-6">
               {category.label}
