@@ -100,11 +100,19 @@ function PreLaunchGate({ onUnlock }) {
     }
   };
 
-  const handleEmail = (e) => {
+  const handleEmail = async (e) => {
     e.preventDefault();
-    if (email.trim()) {
-      setEmailSubmitted(true);
+    if (!email.trim()) return;
+    try {
+      await fetch('/api/telehealth-waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+    } catch (err) {
+      console.error('Waitlist error:', err);
     }
+    setEmailSubmitted(true);
   };
 
   return (
