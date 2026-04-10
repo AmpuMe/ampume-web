@@ -175,6 +175,10 @@ export const SIZING_CHARTS = {
       { label: 'Long*', range: '22 - 28' },
     ],
     lengthGuidance: 'BK: Typically 2-3 inches above the kneecap. AK: Preference-based (over socket vs within socket).',
+    lengthStep: {
+      title: 'Measure Your Length',
+      description: 'Measure from the distal end of your residual limb to how high you want the sock to reach. BK: the typical rule is 2-3 inches past the middle of your kneecap. AK: length is preference-based (over socket vs within socket).',
+    },
     note: 'Width is determined by TOP and BOTTOM circumference. Most below-knee amputees fit a Regular width.',
     globalMin: 0,
     globalMax: 100,

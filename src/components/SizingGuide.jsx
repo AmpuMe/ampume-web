@@ -118,21 +118,33 @@ function RecommendationResult({ recommendation }) {
 /* ── Measurement Steps (Left Column) ──────────────────────────── */
 
 function MeasurementSteps({ chartData }) {
+  const hasLengthStep = !!chartData.lengthStep;
+  let stepNum = 0;
+
   const steps = [
     {
-      number: 1,
-      title: 'Gather Your Tools',
-      desc: 'You\u2019ll need a flexible measuring tape (cloth or plastic). A helper can make measuring easier.',
+      number: ++stepNum,
+      title: hasLengthStep ? 'Step 1: Top & Bottom' : 'Gather Your Tools',
+      desc: hasLengthStep
+        ? 'Measure your width using the Top and Bottom circumference measurements shown in the image.'
+        : 'You\u2019ll need a flexible measuring tape (cloth or plastic). A helper can make measuring easier.',
     },
-    ...chartData.measurementPoints.map((point, i) => ({
-      number: i + 2,
+    ...chartData.measurementPoints.map((point) => ({
+      number: ++stepNum,
       title: `Measure at ${point.distance}`,
       desc: point.description,
     })),
+    ...(hasLengthStep ? [{
+      number: ++stepNum,
+      title: chartData.lengthStep.title,
+      desc: chartData.lengthStep.description,
+    }] : []),
     {
-      number: chartData.measurementPoints.length + 2,
-      title: 'Enter Your Measurements',
-      desc: 'Use the size finder to get your recommended size instantly.',
+      number: ++stepNum,
+      title: hasLengthStep ? 'Find Your Size' : 'Enter Your Measurements',
+      desc: hasLengthStep
+        ? 'Use your Top, Bottom, and Length measurements with the charts below to find your width and length.'
+        : 'Use the size finder to get your recommended size instantly.',
     },
   ];
 
