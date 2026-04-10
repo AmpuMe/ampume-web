@@ -7,7 +7,7 @@ import Footer from '../components/Footer';
 import NewsletterModal from '../components/NewsletterModal';
 import heroImage from '../assets/new-hero-3.webp';
 import marketplaceImage from '../assets/shop.webp';
-import peopleImage from '../assets/people.webp';
+import peopleImage from '../assets/people-v2.webp';
 import friendsImage from '../assets/friends.webp';
 import cardPhoto from '../assets/support.webp';
 import telehealthImage from '../assets/telehealth-v2.webp';
