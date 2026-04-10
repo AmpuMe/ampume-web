@@ -117,7 +117,7 @@ function RecommendationResult({ recommendation }) {
 
 /* ── Measurement Steps (Left Column) ──────────────────────────── */
 
-function MeasurementSteps({ chartData }) {
+function MeasurementSteps({ chartData, showAK = false }) {
   const hasLengthStep = !!chartData.lengthStep;
   let stepNum = 0;
 
@@ -137,7 +137,7 @@ function MeasurementSteps({ chartData }) {
     ...(hasLengthStep ? [{
       number: ++stepNum,
       title: chartData.lengthStep.title,
-      desc: chartData.lengthStep.description,
+      desc: showAK ? chartData.lengthStep.descriptionAK : chartData.lengthStep.descriptionBK,
     }] : []),
     {
       number: ++stepNum,
@@ -175,10 +175,12 @@ function MeasurementSteps({ chartData }) {
 
 /* ── Measurement Image (Left Column) ─────────────────────────── */
 
-function MeasurementImage({ chartData, className = "" }) {
+function MeasurementImage({ chartData, className = "", showAK: externalShowAK, onToggleAK }) {
   const isDual = chartData.measurementMethod === 'dual-circumference';
   const hasAKBKToggle = !!chartData.measurementImageAK;
-  const [showAK, setShowAK] = useState(false);
+  const [internalShowAK, setInternalShowAK] = useState(false);
+  const showAK = externalShowAK !== undefined ? externalShowAK : internalShowAK;
+  const setShowAK = onToggleAK || setInternalShowAK;
 
   const currentImage = hasAKBKToggle && showAK
     ? chartData.measurementImageAK
@@ -497,6 +499,7 @@ export default function SizingGuide({ sizingType }) {
 
   const isDual = chartData.measurementMethod === 'dual-circumference';
 
+  const [showAK, setShowAK] = useState(false);
   const [distalCm, setDistalCm] = useState('');
   const [proximalCm, setProximalCm] = useState('');
   const [circumferenceCm, setCircumferenceCm] = useState('');
@@ -612,7 +615,7 @@ export default function SizingGuide({ sizingType }) {
         {/* On mobile: Steps → Image → Finder (stacked). On desktop: (Steps + Finder) | Image */}
         <div className="grid grid-cols-1 lg:grid-cols-[11fr,9fr] gap-6 lg:gap-10 mb-8 md:mb-10">
           <div className="order-1">
-            <MeasurementSteps chartData={chartData} />
+            <MeasurementSteps chartData={chartData} showAK={showAK} />
             <div className="hidden lg:block mt-8">
               <SizeFinder
                 chartData={chartData}
@@ -627,7 +630,7 @@ export default function SizingGuide({ sizingType }) {
               />
             </div>
           </div>
-          <MeasurementImage chartData={chartData} className="order-2" />
+          <MeasurementImage chartData={chartData} className="order-2" showAK={showAK} onToggleAK={setShowAK} />
           <div className="order-3 lg:hidden">
             <SizeFinder
               chartData={chartData}
