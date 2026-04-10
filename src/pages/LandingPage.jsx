@@ -269,13 +269,13 @@ const LandingPage = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { tag: 'Liners', name: 'Prosthetic Liners', desc: 'Adaptive gel for comfort and secure suspension.', href: '/shop/liners', img: categoryLiners },
-              { tag: 'Sleeves', name: 'Suspension Sleeves', desc: 'Maintain a secure seal for below-knee systems.', href: '/shop/sleeves', img: categorySleeves },
-              { tag: 'Socks', name: 'Prosthetic Socks', desc: 'Manage limb volume with breathable knit construction.', href: '/shop/socks', img: categorySocks },
+              { tag: 'Liners', name: 'Prosthetic Liners', desc: 'Adaptive gel for comfort and secure suspension.', href: '/shop/liners', img: categoryLiners, pos: 'object-center' },
+              { tag: 'Sleeves', name: 'Suspension Sleeves', desc: 'Maintain a secure seal for below-knee systems.', href: '/shop/sleeves', img: categorySleeves, pos: 'object-[60%_center]' },
+              { tag: 'Socks', name: 'Prosthetic Socks', desc: 'Manage limb volume with breathable knit construction.', href: '/shop/socks', img: categorySocks, pos: 'object-center' },
             ].map((product, i) => (
               <FadeIn key={i} delay={i * 0.1}>
                 <Link to={product.href} className="group relative block h-[350px] md:h-[500px] overflow-hidden cursor-pointer">
-                  <img src={product.img} alt={product.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <img src={product.img} alt={product.name} className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${product.pos || 'object-center'}`} />
                   <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500" />
                   <span className="absolute top-8 left-8 z-10 text-[11px] font-bold uppercase tracking-widest bg-white text-black px-3 pt-[7px] pb-[5px] leading-none">
                     {product.tag}
