@@ -92,7 +92,7 @@ function PreLaunchGate({ onUnlock }) {
 
   const handlePassword = (e) => {
     e.preventDefault();
-    if (password === 'ampume2026') {
+    if (password === 'AmpuMe2026') {
       onUnlock();
     } else {
       setPasswordError(true);
