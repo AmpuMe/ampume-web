@@ -8,7 +8,7 @@ import SEO from '../components/SEO';
 import { useCart } from '../context/CartContext';
 import { fetchProducts, groupProducts, categorizeGroups, CATEGORY_ORDER } from '../lib/shopify';
 import linersImage from '../assets/shop/category-liners.webp';
-import socksImage from '../assets/shop/category-socks-v2.webp';
+import socksImage from '../assets/shop/category-socks-v3.webp';
 import sleevesImage from '../assets/shop/category-sleeves-v2.webp';
 import accessoriesImage from '../assets/shop/category-accessories-v2.webp';
 
