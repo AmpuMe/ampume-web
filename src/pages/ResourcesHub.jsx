@@ -8,7 +8,7 @@ import SEO from '../components/SEO';
 import PillarCard from '../components/PillarCard';
 import ResourceCard from '../components/ResourceCard';
 import { fetchPillars, fetchLatestResources, fetchAllResources } from '../lib/sanity';
-import heroImage from '../assets/resources-hero-v2.webp';
+import heroImage from '../assets/resources-hero-v3.webp';
 
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
   <motion.div
@@ -158,7 +158,7 @@ export default function ResourcesHub() {
       <main className="pb-20">
         {/* Hero */}
         <section className="relative h-[50vh] md:h-[60vh] overflow-hidden bg-black">
-          <img src={heroImage} alt="" className="w-full h-full object-cover object-[100%_60%] opacity-70" />
+          <img src={heroImage} alt="" className="w-full h-full object-cover object-[60%_60%] opacity-70" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30" />
           <div className="absolute bottom-0 left-0 w-full px-6 md:px-12 pb-12 md:pb-16 text-white">
             <FadeIn>
