@@ -63,9 +63,11 @@ export default function LinerContentSections({ linerDesc, showPdfDownload, rende
               </h2>
             </div>
             <div className="md:col-span-7 md:col-start-6 space-y-4">
-              {linerDesc.overview.map((para, i) => (
-                <p key={i} className="text-sm text-gray-600 leading-relaxed">{para}</p>
-              ))}
+              {linerDesc.overview
+                .filter((para) => !para.startsWith('Standard Configuration:'))
+                .map((para, i) => (
+                  <p key={i} className="text-sm text-gray-600 leading-relaxed">{para}</p>
+                ))}
             </div>
           </div>
         </FadeIn>

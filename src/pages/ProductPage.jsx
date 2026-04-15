@@ -186,8 +186,6 @@ export default function ProductPage() {
     }
   };
 
-  // Check if variant is available
-  const isAvailable = selectedVariant?.availableForSale ?? false;
   const price = selectedVariant?.price?.amount;
 
   // Detect product type for enhanced layout
@@ -453,9 +451,21 @@ export default function ProductPage() {
 
                 {/* Short description for liner products */}
                 {activeDesc && (
-                  <p className="text-sm text-gray-600 leading-relaxed mb-6">
-                    {activeDesc.shortDescription || activeDesc.overview?.[0]}
-                  </p>
+                  <div className="mb-6 space-y-3">
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      {activeDesc.shortDescription || activeDesc.overview?.[0]}
+                    </p>
+                    {(() => {
+                      const stdConfig = activeDesc.overview?.find(p => p.startsWith('Standard Configuration:'));
+                      if (!stdConfig) return null;
+                      const rest = stdConfig.replace(/^Standard Configuration:\s*/, '');
+                      return (
+                        <p className="text-sm text-gray-600 leading-relaxed">
+                          <strong className="font-bold text-black">Standard Configuration:</strong> {rest}
+                        </p>
+                      );
+                    })()}
+                  </div>
                 )}
 
                 {/* Options */}
@@ -520,13 +530,13 @@ export default function ProductPage() {
                 <div className="space-y-4 mb-8">
                   <button
                     onClick={handleAddToCart}
-                    disabled={isAdding || !isAvailable || !price || price === '0.00'}
+                    disabled={isAdding || !price || price === '0.00'}
                     className={`
                       w-full py-4 px-8 rounded-full font-bold text-center transition-all duration-300
                       flex items-center justify-center gap-2
                       ${addedToCart
                         ? 'bg-green-600 text-white'
-                        : isAvailable && price && price !== '0.00'
+                        : price && price !== '0.00'
                           ? 'bg-black text-white hover:bg-gray-800'
                           : 'bg-gray-200 text-gray-500 cursor-not-allowed'
                       }
@@ -539,8 +549,6 @@ export default function ProductPage() {
                       </>
                     ) : isAdding ? (
                       'Adding...'
-                    ) : !isAvailable ? (
-                      'Out of Stock'
                     ) : !price || price === '0.00' ? (
                       'Price Coming Soon'
                     ) : (

@@ -8,7 +8,7 @@ import SEO from '../components/SEO';
 import PillarCard from '../components/PillarCard';
 import ResourceCard from '../components/ResourceCard';
 import { fetchPillars, fetchLatestResources, fetchAllResources } from '../lib/sanity';
-import heroImage from '../assets/resources-hero.webp';
+import heroImage from '../assets/resources-hero-v3.webp';
 
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
   <motion.div
@@ -129,19 +129,14 @@ export default function ResourcesHub() {
     setSearchParams({}, { replace: true });
   };
 
-  // Helpers shared by the Latest section
+  // Helpers shared by the Latest section — always route to internal detail page
   const makeHref = (r) => {
     const ps = r.pillar?.slug?.current;
-    return r.contentType === 'externalLink' && r.externalUrl
-      ? r.externalUrl : `/resources/${ps}/${r.slug?.current}`;
+    return `/resources/${ps}/${r.slug?.current}`;
   };
-  const isExt = (r) => r.contentType === 'externalLink' && r.externalUrl;
-  const Wrap = ({ resource, children, className = '' }) => {
-    const href = makeHref(resource);
-    return isExt(resource)
-      ? <a href={href} target="_blank" rel="noopener noreferrer" className={className}>{children}</a>
-      : <Link to={href} className={className}>{children}</Link>;
-  };
+  const Wrap = ({ resource, children, className = '' }) => (
+    <Link to={makeHref(resource)} className={className}>{children}</Link>
+  );
   const thumb = (r) => r.thumbnailImage || r.thumbnailUrl;
   const fmtDate = (d) => d ? new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : null;
 
@@ -158,16 +153,19 @@ export default function ResourcesHub() {
       <main className="pb-20">
         {/* Hero */}
         <section className="relative h-[50vh] md:h-[60vh] overflow-hidden bg-black">
-          <img src={heroImage} alt="" className="w-full h-full object-cover object-[50%_60%] opacity-70" />
+          <img src={heroImage} alt="" className="w-full h-full object-cover object-[60%_60%] opacity-70" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30" />
           <div className="absolute bottom-0 left-0 w-full px-6 md:px-12 pb-12 md:pb-16 text-white">
             <FadeIn>
               <span className="text-[11px] font-bold uppercase tracking-widest text-white/60 mb-4 block">
                 Knowledge Base
               </span>
-              <h1 className="text-3xl md:text-5xl font-light tracking-tight">
+              <h1 className="text-3xl md:text-5xl font-light tracking-tight mb-4">
                 Expert guidance at your pace.
               </h1>
+              <p className="text-base md:text-lg text-white/80 max-w-2xl leading-relaxed">
+                Explore trusted resources to navigate amputation, prosthetic care, and everyday life with limb loss.
+              </p>
             </FadeIn>
           </div>
         </section>

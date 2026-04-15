@@ -13,7 +13,7 @@ import cardPhoto from '../assets/support.webp';
 import telehealthImage from '../assets/telehealth-v2.webp';
 import categoryLiners from '../assets/shop/category-liners.webp';
 import categorySleeves from '../assets/shop/category-sleeves-v2.webp';
-import categorySocks from '../assets/shop/category-socks-v2.webp';
+import categorySocks from '../assets/shop/category-socks-v13.webp';
 
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
   <motion.div
@@ -167,6 +167,14 @@ const LandingPage = () => {
             </div>
           </FadeIn>
         </div>
+      </section>
+
+      {/* Mission / Intro */}
+      <section className="pt-16 md:pt-24 pb-2 md:pb-4 px-6 md:px-12 bg-white">
+        <FadeIn>
+          <h3 className="text-2xl font-medium">Everything you need—built around real life with limb loss.</h3>
+          <p className="text-sm text-gray-400 mt-2 max-w-lg">Explore trusted products, expert guidance, and personalized support—all in one place.</p>
+        </FadeIn>
       </section>
 
       {/* Platform Grid */}
@@ -345,38 +353,69 @@ const LandingPage = () => {
       </section>
 
       {/* ── Proof of Platform: AI Support ──────────────────────── */}
-      <section className="py-16 md:py-20 px-6 md:px-12 bg-white">
+      <section className="py-16 md:py-20 px-6 md:px-12 bg-brand-offwhite">
         <div className="max-w-full mx-auto">
           <div className="flex justify-between items-end mb-10 md:mb-16">
             <div>
               <h3 className="text-2xl font-medium">Ask Anything</h3>
-              <p className="text-sm text-gray-400 mt-2 max-w-lg hidden md:block">Ask questions about prosthetics, care, and daily life — and get clear answers instantly.</p>
+              <p className="text-sm text-gray-500 mt-2 max-w-lg hidden md:block">Ask questions about prosthetics, care, and daily life — and get clear answers instantly.</p>
             </div>
             <Link to="/ai-support" className="hidden md:inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
               Ask AmpuMe <ArrowRight size={14} />
             </Link>
           </div>
           <FadeIn>
-            <div className="bg-black p-8 md:p-12">
-              <div className="max-w-2xl">
-                <span className="text-[11px] font-bold uppercase tracking-widest text-white/40 mb-6 block">Available 24/7</span>
-                <p className="text-xl md:text-2xl font-light text-white leading-relaxed mb-8">
-                  Our AI assistant is trained on expert prosthetic resources — ask about recovery, daily care, insurance coverage, and more.
-                </p>
-                <div className="flex flex-wrap gap-2 mb-8">
-                  {['What should I do if my residual limb volume is fluctuating?', 'How often will my insurance cover a new socket?', 'How do I cope with the emotional side of limb loss?', 'How often should I replace my liner?'].map((prompt, i) => (
+            <div className="bg-white border border-black/5">
+              {/* Assistant header */}
+              <div className="px-6 md:px-10 py-5 border-b border-black/5 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 bg-brand-gold/15 flex items-center justify-center">
+                    <Bot size={16} className="text-brand-gold" strokeWidth={2} />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium">AmpuMe Assistant</p>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                      <span className="text-[10px] text-gray-500 uppercase tracking-widest">Available 24/7</span>
+                    </div>
+                  </div>
+                </div>
+                <MessageSquare size={16} className="text-gray-400 hidden md:block" />
+              </div>
+
+              {/* Input mock */}
+              <div className="px-6 md:px-10 pt-8 md:pt-10 pb-6">
+                <button
+                  onClick={() => navigate('/ai-support')}
+                  className="w-full flex items-center gap-3 border border-black/10 bg-brand-offwhite/50 hover:border-black/25 transition-colors group px-5 py-4 text-left"
+                >
+                  <span className="flex-1 text-sm text-gray-500">Ask anything about limb loss, prosthetics, or daily life…</span>
+                  <div className="w-9 h-9 bg-brand-gold flex items-center justify-center group-hover:bg-black transition-colors flex-shrink-0">
+                    <Send size={14} className="text-black group-hover:text-white" strokeWidth={2} />
+                  </div>
+                </button>
+              </div>
+
+              {/* Suggested prompts */}
+              <div className="px-6 md:px-10 pb-8 md:pb-10">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-4">Try asking</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {[
+                    'What should I do if my residual limb volume is fluctuating?',
+                    'How often will my insurance cover a new socket?',
+                    'How do I cope with the emotional side of limb loss?',
+                    'How often should I replace my liner?',
+                  ].map((prompt, i) => (
                     <button
                       key={i}
                       onClick={() => navigate('/ai-support', { state: { prompt } })}
-                      className="text-xs bg-white/10 text-white/70 rounded-full px-4 py-2 hover:bg-white/20 hover:text-white transition-colors text-left cursor-pointer"
+                      className="group flex items-start justify-between gap-4 text-left border border-black/5 px-5 py-4 hover:bg-brand-offwhite/60 hover:border-black/15 transition-colors"
                     >
-                      {prompt}
+                      <span className="text-sm text-gray-800 leading-relaxed">{prompt}</span>
+                      <ArrowUpRight size={16} className="text-gray-400 group-hover:text-black transition-colors mt-0.5 flex-shrink-0" />
                     </button>
                   ))}
                 </div>
-                <Link to="/ai-support" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white border-b border-white/50 pb-1 hover:border-white transition-colors">
-                  Ask AmpuMe <ArrowRight size={14} />
-                </Link>
               </div>
             </div>
           </FadeIn>

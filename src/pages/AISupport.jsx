@@ -180,8 +180,8 @@ function ChatInterface({ initialPrompt }) {
       {/* Messages area */}
       <div ref={scrollAreaRef} className="flex-1 overflow-y-auto px-4 md:px-6 py-6">
         {isEmpty ? (
-          <div className="h-full flex flex-col items-center justify-center text-center px-4">
-            <div className="w-14 h-14 rounded-full bg-gray-50 flex items-center justify-center mb-5">
+          <div className="min-h-full flex flex-col items-center justify-center text-center px-4 py-8">
+            <div className="w-14 h-14 rounded-full bg-gray-50 flex items-center justify-center mb-5 flex-shrink-0">
               <MessageCircle className="w-7 h-7 text-gray-400" />
             </div>
             <h3 className="text-lg font-medium mb-2">How can I help you today?</h3>

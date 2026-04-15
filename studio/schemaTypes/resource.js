@@ -76,7 +76,6 @@ export default defineType({
       type: 'array',
       title: 'Body',
       of: [{type: 'block'}],
-      hidden: ({document}) => document?.contentType === 'externalLink',
     }),
     defineField({
       name: 'source',
