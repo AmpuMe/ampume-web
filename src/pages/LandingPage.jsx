@@ -13,7 +13,7 @@ import cardPhoto from '../assets/support.webp';
 import telehealthImage from '../assets/telehealth-v2.webp';
 import categoryLiners from '../assets/shop/category-liners.webp';
 import categorySleeves from '../assets/shop/category-sleeves-v2.webp';
-import categorySocks from '../assets/shop/category-socks-v3.webp';
+import categorySocks from '../assets/shop/category-socks-v4.webp';
 
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
   <motion.div
