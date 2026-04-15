@@ -188,6 +188,7 @@ function MeasurementImage({ chartData, className = "", showAK: externalShowAK, o
 
   const isAK = currentImage?.includes('ak');
   const customLabels = chartData.labels;
+  const currentLengthArrow = isAK ? chartData.lengthArrowAK : chartData.lengthArrow;
 
   // Build callouts — use custom labels if provided, else defaults
   const callouts = isDual
@@ -249,6 +250,24 @@ function MeasurementImage({ chartData, className = "", showAK: externalShowAK, o
           </div>
         </div>
       ))}
+      {currentLengthArrow && (
+        <div
+          className="absolute left-3 md:left-6 flex items-stretch pointer-events-none"
+          style={{ top: `${currentLengthArrow.top}%`, bottom: `${100 - currentLengthArrow.bottom}%` }}
+        >
+          {/* Vertical double-arrow */}
+          <div className="flex flex-col items-center">
+            <div className="w-0 h-0 border-l-[5px] border-r-[5px] border-b-[8px] border-l-transparent border-r-transparent border-b-brand-gold" />
+            <div className="flex-1 w-[2px] bg-brand-gold" />
+            <div className="w-0 h-0 border-l-[5px] border-r-[5px] border-t-[8px] border-l-transparent border-r-transparent border-t-brand-gold" />
+          </div>
+          {/* Label centered on the line */}
+          <div className="self-center ml-2 bg-white/95 backdrop-blur-sm rounded-md px-2.5 py-1.5 shadow-sm border border-brand-gold/20 max-w-[130px]">
+            <p className="text-[11px] md:text-xs font-bold text-brand-gold leading-none">{currentLengthArrow.label}</p>
+            <p className="text-[10px] md:text-[11px] text-gray-500 leading-tight mt-0.5">{currentLengthArrow.sublabel}</p>
+          </div>
+        </div>
+      )}
     </FadeIn>
   );
 }

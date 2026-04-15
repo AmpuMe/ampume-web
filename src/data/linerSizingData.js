@@ -180,6 +180,18 @@ export const SIZING_CHARTS = {
       descriptionBK: 'Length is a matter of preference. However, the typical rule is 2-3 inches past the middle of your kneecap. Measure from the distal end of your residual limb to that point.',
       descriptionAK: 'Length is a matter of preference. Some people prefer their prosthetic socks to reflect over the top of the socket, while others prefer the sock to stay within their socket.',
     },
+    lengthArrow: {
+      top: 22,
+      bottom: 80,
+      label: 'LENGTH',
+      sublabel: 'To ~2 in past kneecap',
+    },
+    lengthArrowAK: {
+      top: 15,
+      bottom: 72,
+      label: 'LENGTH',
+      sublabel: 'To top of socket',
+    },
     note: 'Width is determined by TOP and BOTTOM circumference. Most below-knee amputees fit a Regular width.',
     globalMin: 0,
     globalMax: 100,
