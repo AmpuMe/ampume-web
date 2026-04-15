@@ -365,7 +365,7 @@ const LandingPage = () => {
             </Link>
           </div>
           <FadeIn>
-            <div className="bg-white border border-black/5 max-w-6xl mx-auto">
+            <div className="bg-white border border-black/5">
               {/* Assistant header */}
               <div className="px-6 md:px-10 py-5 border-b border-black/5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
