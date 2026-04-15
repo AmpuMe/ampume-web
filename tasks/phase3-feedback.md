@@ -192,7 +192,7 @@
 - [X] **12.1** "Shop" label reconsideration — Alex considering "Marketplace" or "AmpuMe Store" (leaning toward "AmpuMe Store"). Awaiting final decision. Would need renaming across nav, tiles, proof section, breadcrumbs, etc.
 
 ### Homepage
-- [ ] **12.2** Hero banner: remove white line/glare on the bottom of the woman's socket
+- [X] **12.2** Hero banner: remove white line/glare on the bottom of the woman's socket
 - [ ] **12.3** Pre-tile copy: Alex still owes copy (same as 2.2)
 - [X] **12.4** Telehealth tile: knee image doesn't look representative of actual devices. Alex can provide reference images if needed.
 - [X] **12.5** Knowledge Base tile: include at least one image featuring an upper extremity amputee. Alex thinks this tile is the right place.
@@ -240,7 +240,7 @@
 ### Homepage / Mobile
 - [ ] **14.6** Mobile homepage hero banner: starts zoomed-in on mobile, jumps on scroll — fix positioning
 - [ ] **14.7** Homepage Knowledge Base proof-of-platform card: Adaptive Fitness cover image — subject is wearing pants; regenerate so prosthetic is visible (shorts, gym setting)
-- [ ] **14.8** Pre-footer "Ask AmpuMe" section feels too much like the footer (both black). Consider reverting to an earlier cleaner version or breaking up visual weight.
+- [X] **14.8** Pre-footer "Ask AmpuMe" section feels too much like the footer (both black). Consider reverting to an earlier cleaner version or breaking up visual weight.
 - [ ] **14.9** Ask AmpuMe chat widget icon still occasionally cut off at certain resolutions — investigate and fix
 
 ### Telemedicine

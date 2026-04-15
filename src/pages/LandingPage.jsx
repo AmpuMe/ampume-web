@@ -353,37 +353,70 @@ const LandingPage = () => {
       </section>
 
       {/* ── Proof of Platform: AI Support ──────────────────────── */}
-      <section className="py-16 md:py-20 px-6 md:px-12 bg-white">
+      <section className="py-16 md:py-20 px-6 md:px-12 bg-brand-offwhite">
         <div className="max-w-full mx-auto">
           <div className="flex justify-between items-end mb-10 md:mb-16">
             <div>
               <h3 className="text-2xl font-medium">Ask Anything</h3>
-              <p className="text-sm text-gray-400 mt-2 max-w-lg hidden md:block">Ask questions about prosthetics, care, and daily life — and get clear answers instantly.</p>
+              <p className="text-sm text-gray-500 mt-2 max-w-lg hidden md:block">Ask questions about prosthetics, care, and daily life — and get clear answers instantly.</p>
             </div>
             <Link to="/ai-support" className="hidden md:inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
               Ask AmpuMe <ArrowRight size={14} />
             </Link>
           </div>
           <FadeIn>
-            <div className="bg-black p-8 md:p-12">
-              <div className="max-w-2xl">
-                <span className="text-[11px] font-bold uppercase tracking-widest text-white/40 mb-6 block">Available 24/7</span>
-                <p className="text-xl md:text-2xl font-light text-white leading-relaxed mb-8">
-                  Our AI assistant is trained on expert prosthetic resources — ask about recovery, daily care, insurance coverage, and more.
-                </p>
-                <div className="flex flex-wrap gap-2 mb-8">
-                  {['What should I do if my residual limb volume is fluctuating?', 'How often will my insurance cover a new socket?', 'How do I cope with the emotional side of limb loss?', 'How often should I replace my liner?'].map((prompt, i) => (
+            <div className="bg-white border border-black/5 max-w-3xl mx-auto shadow-sm">
+              {/* Chat header */}
+              <div className="px-6 md:px-10 py-5 border-b border-black/5 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 bg-brand-gold/15 flex items-center justify-center">
+                    <Bot size={16} className="text-brand-gold" strokeWidth={2} />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium">AmpuMe Assistant</p>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                      <span className="text-[10px] text-gray-500 uppercase tracking-widest">Available 24/7</span>
+                    </div>
+                  </div>
+                </div>
+                <MessageSquare size={16} className="text-gray-400 hidden md:block" />
+              </div>
+
+              {/* Chat preview */}
+              <div className="px-6 md:px-10 py-8 md:py-10 space-y-4 bg-brand-offwhite/40">
+                <div className="flex justify-end">
+                  <div className="bg-brand-gold text-gray-900 max-w-md px-4 py-3 rounded-2xl rounded-br-md text-sm leading-relaxed">
+                    What should I do if my residual limb volume is fluctuating?
+                  </div>
+                </div>
+                <div className="flex justify-start">
+                  <div className="bg-white border border-black/5 max-w-md px-4 py-3 rounded-2xl rounded-bl-md text-sm text-gray-800 leading-relaxed">
+                    Daily volume changes are normal. Add prosthetic socks in increasing plies as your limb reduces — start with a 1-ply in the morning and layer up as needed. If you're adjusting multiple times a day, it may be time to talk to your prosthetist about a new socket.
+                  </div>
+                </div>
+              </div>
+
+              {/* Suggested prompts */}
+              <div className="px-6 md:px-10 py-6 border-t border-black/5">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-4">Try asking</p>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {[
+                    'How often will my insurance cover a new socket?',
+                    'How do I cope with the emotional side of limb loss?',
+                    'How often should I replace my liner?',
+                  ].map((prompt, i) => (
                     <button
                       key={i}
                       onClick={() => navigate('/ai-support', { state: { prompt } })}
-                      className="text-xs bg-white/10 text-white/70 rounded-full px-4 py-2 hover:bg-white/20 hover:text-white transition-colors text-left cursor-pointer"
+                      className="text-xs bg-brand-offwhite text-gray-700 rounded-full px-4 py-2 hover:bg-brand-gold/20 hover:text-gray-900 transition-colors cursor-pointer text-left"
                     >
                       {prompt}
                     </button>
                   ))}
                 </div>
-                <Link to="/ai-support" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white border-b border-white/50 pb-1 hover:border-white transition-colors">
-                  Ask AmpuMe <ArrowRight size={14} />
+                <Link to="/ai-support" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-black border-b border-black/40 pb-1 hover:border-black transition-colors">
+                  Start a conversation <ArrowRight size={14} />
                 </Link>
               </div>
             </div>
