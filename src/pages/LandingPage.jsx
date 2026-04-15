@@ -365,8 +365,8 @@ const LandingPage = () => {
             </Link>
           </div>
           <FadeIn>
-            <div className="bg-white border border-black/5 max-w-3xl mx-auto shadow-sm">
-              {/* Chat header */}
+            <div className="bg-white border border-black/5 max-w-6xl mx-auto">
+              {/* Assistant header */}
               <div className="px-6 md:px-10 py-5 border-b border-black/5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 bg-brand-gold/15 flex items-center justify-center">
@@ -383,25 +383,25 @@ const LandingPage = () => {
                 <MessageSquare size={16} className="text-gray-400 hidden md:block" />
               </div>
 
-              {/* Chat preview */}
-              <div className="px-6 md:px-10 py-8 md:py-10 space-y-4 bg-brand-offwhite/40">
-                <div className="flex justify-end">
-                  <div className="bg-brand-gold text-gray-900 max-w-md px-4 py-3 rounded-2xl rounded-br-md text-sm leading-relaxed">
-                    What should I do if my residual limb volume is fluctuating?
+              {/* Input mock */}
+              <div className="px-6 md:px-10 pt-8 md:pt-10 pb-6">
+                <button
+                  onClick={() => navigate('/ai-support')}
+                  className="w-full flex items-center gap-3 border border-black/10 bg-brand-offwhite/50 hover:border-black/25 transition-colors group px-5 py-4 text-left"
+                >
+                  <span className="flex-1 text-sm text-gray-500">Ask anything about limb loss, prosthetics, or daily life…</span>
+                  <div className="w-9 h-9 bg-brand-gold flex items-center justify-center group-hover:bg-black transition-colors flex-shrink-0">
+                    <Send size={14} className="text-black group-hover:text-white" strokeWidth={2} />
                   </div>
-                </div>
-                <div className="flex justify-start">
-                  <div className="bg-white border border-black/5 max-w-md px-4 py-3 rounded-2xl rounded-bl-md text-sm text-gray-800 leading-relaxed">
-                    Daily volume changes are normal. Add prosthetic socks in increasing plies as your limb reduces — start with a 1-ply in the morning and layer up as needed. If you're adjusting multiple times a day, it may be time to talk to your prosthetist about a new socket.
-                  </div>
-                </div>
+                </button>
               </div>
 
               {/* Suggested prompts */}
-              <div className="px-6 md:px-10 py-6 border-t border-black/5">
+              <div className="px-6 md:px-10 pb-8 md:pb-10">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-4">Try asking</p>
-                <div className="flex flex-wrap gap-2 mb-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {[
+                    'What should I do if my residual limb volume is fluctuating?',
                     'How often will my insurance cover a new socket?',
                     'How do I cope with the emotional side of limb loss?',
                     'How often should I replace my liner?',
@@ -409,15 +409,13 @@ const LandingPage = () => {
                     <button
                       key={i}
                       onClick={() => navigate('/ai-support', { state: { prompt } })}
-                      className="text-xs bg-brand-offwhite text-gray-700 rounded-full px-4 py-2 hover:bg-brand-gold/20 hover:text-gray-900 transition-colors cursor-pointer text-left"
+                      className="group flex items-start justify-between gap-4 text-left border border-black/5 px-5 py-4 hover:bg-brand-offwhite/60 hover:border-black/15 transition-colors"
                     >
-                      {prompt}
+                      <span className="text-sm text-gray-800 leading-relaxed">{prompt}</span>
+                      <ArrowUpRight size={16} className="text-gray-400 group-hover:text-black transition-colors mt-0.5 flex-shrink-0" />
                     </button>
                   ))}
                 </div>
-                <Link to="/ai-support" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-black border-b border-black/40 pb-1 hover:border-black transition-colors">
-                  Start a conversation <ArrowRight size={14} />
-                </Link>
               </div>
             </div>
           </FadeIn>
