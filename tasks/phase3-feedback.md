@@ -241,7 +241,7 @@
 - [ ] **14.6** Mobile homepage hero banner: starts zoomed-in on mobile, jumps on scroll — fix positioning
 - [ ] **14.7** Homepage Knowledge Base proof-of-platform card: Adaptive Fitness cover image — subject is wearing pants; regenerate so prosthetic is visible (shorts, gym setting)
 - [X] **14.8** Pre-footer "Ask AmpuMe" section feels too much like the footer (both black). Consider reverting to an earlier cleaner version or breaking up visual weight.
-- [ ] **14.9** Ask AmpuMe chat widget icon still occasionally cut off at certain resolutions — investigate and fix
+- [X] **14.9** Ask AmpuMe chat widget icon still occasionally cut off at certain resolutions — investigate and fix
 
 ### Telemedicine
 - [X] **14.10** Dr. Emily Watson card height misalignment — fix card heights so buttons align across the row (flex layout)
