@@ -451,9 +451,21 @@ export default function ProductPage() {
 
                 {/* Short description for liner products */}
                 {activeDesc && (
-                  <p className="text-sm text-gray-600 leading-relaxed mb-6">
-                    {activeDesc.shortDescription || activeDesc.overview?.[0]}
-                  </p>
+                  <div className="mb-6 space-y-3">
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      {activeDesc.shortDescription || activeDesc.overview?.[0]}
+                    </p>
+                    {(() => {
+                      const stdConfig = activeDesc.overview?.find(p => p.startsWith('Standard Configuration:'));
+                      if (!stdConfig) return null;
+                      const rest = stdConfig.replace(/^Standard Configuration:\s*/, '');
+                      return (
+                        <p className="text-sm text-gray-600 leading-relaxed">
+                          <strong className="font-bold text-black">Standard Configuration:</strong> {rest}
+                        </p>
+                      );
+                    })()}
+                  </div>
                 )}
 
                 {/* Options */}

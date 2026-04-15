@@ -181,13 +181,13 @@ export const SIZING_CHARTS = {
       descriptionAK: 'Length is a matter of preference. Some people prefer their prosthetic socks to reflect over the top of the socket, while others prefer the sock to stay within their socket.',
     },
     lengthArrow: {
-      top: 22,
+      top: 28,
       bottom: 80,
       label: 'LENGTH',
       sublabel: 'To ~2 in past kneecap',
     },
     lengthArrowAK: {
-      top: 15,
+      top: 22,
       bottom: 72,
       label: 'LENGTH',
       sublabel: 'To top of socket',

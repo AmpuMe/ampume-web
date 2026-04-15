@@ -124,7 +124,7 @@ function MeasurementSteps({ chartData, showAK = false }) {
   const steps = [
     {
       number: ++stepNum,
-      title: hasLengthStep ? 'Step 1: Top & Bottom' : 'Gather Your Tools',
+      title: hasLengthStep ? 'Measure Top & Bottom Circumference' : 'Gather Your Tools',
       desc: hasLengthStep
         ? 'Measure your width using the Top and Bottom circumference measurements shown in the image.'
         : 'You\u2019ll need a flexible measuring tape (cloth or plastic). A helper can make measuring easier.',
