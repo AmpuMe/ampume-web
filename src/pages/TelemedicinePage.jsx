@@ -51,8 +51,9 @@ const DEMO_CLINICIANS = [
 
 function ClinicianCard({ clinician }) {
   return (
-    <div className="h-full flex flex-col border border-gray-100 rounded-lg p-6 hover:border-gray-300 transition-colors">
-      <div className="flex items-start gap-4 mb-4">
+    <div className="h-[440px] w-full flex flex-col border border-gray-100 rounded-lg p-6 hover:border-gray-300 transition-colors overflow-hidden">
+      {/* Header block — fixed height */}
+      <div className="flex items-start gap-4 mb-4 h-20 flex-shrink-0">
         {clinician.image ? (
           <img src={clinician.image} alt={clinician.name} className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
         ) : (
@@ -61,22 +62,32 @@ function ClinicianCard({ clinician }) {
           </div>
         )}
         <div className="flex-1 min-w-0">
-          <h3 className="text-base font-medium">{clinician.name}</h3>
-          <p className="text-xs text-gray-400">{clinician.credential}</p>
-          <p className="text-sm text-gray-500 mt-0.5">{clinician.specialty}</p>
+          <h3 className="text-base font-medium line-clamp-1">{clinician.name}</h3>
+          <p className="text-xs text-gray-400 line-clamp-1">{clinician.credential}</p>
+          <p className="text-sm text-gray-500 mt-0.5 line-clamp-1">{clinician.specialty}</p>
         </div>
       </div>
-      <p className="text-sm text-gray-500 leading-relaxed mb-4">{clinician.bio}</p>
-      <div className="flex items-center gap-1.5 text-xs text-gray-400 mb-4">
+
+      {/* Bio — fixed height, clips long text */}
+      <p className="text-sm text-gray-500 leading-relaxed mb-4 h-20 overflow-hidden line-clamp-4 flex-shrink-0">
+        {clinician.bio}
+      </p>
+
+      {/* Location — fixed */}
+      <div className="flex items-center gap-1.5 text-xs text-gray-400 mb-4 h-4 flex-shrink-0">
         <MapPin className="w-3 h-3" />
-        {clinician.state}
+        <span className="line-clamp-1">{clinician.state}</span>
       </div>
-      <div className="flex flex-wrap gap-1.5 mb-5">
+
+      {/* Appointment type pills — fixed height, clips extras */}
+      <div className="flex flex-wrap gap-1.5 mb-5 h-[52px] overflow-hidden flex-shrink-0">
         {clinician.types.map((type) => (
-          <span key={type} className="text-[10px] bg-gray-50 text-gray-500 px-2 py-1 rounded-full">{type}</span>
+          <span key={type} className="text-[10px] bg-gray-50 text-gray-500 px-2 py-1 rounded-full h-fit">{type}</span>
         ))}
       </div>
-      <button className="mt-auto w-full text-center text-xs font-bold uppercase tracking-widest bg-black text-white py-3 rounded-full hover:bg-gray-800 transition-colors">
+
+      {/* Button — pinned to bottom */}
+      <button className="mt-auto w-full text-center text-xs font-bold uppercase tracking-widest bg-black text-white py-3 rounded-full hover:bg-gray-800 transition-colors flex-shrink-0">
         Schedule Appointment
       </button>
     </div>
