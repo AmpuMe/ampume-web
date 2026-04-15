@@ -51,7 +51,7 @@ const DEMO_CLINICIANS = [
 
 function ClinicianCard({ clinician }) {
   return (
-    <div className="border border-gray-100 rounded-lg p-6 hover:border-gray-300 transition-colors">
+    <div className="h-full flex flex-col border border-gray-100 rounded-lg p-6 hover:border-gray-300 transition-colors">
       <div className="flex items-start gap-4 mb-4">
         {clinician.image ? (
           <img src={clinician.image} alt={clinician.name} className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
@@ -76,7 +76,7 @@ function ClinicianCard({ clinician }) {
           <span key={type} className="text-[10px] bg-gray-50 text-gray-500 px-2 py-1 rounded-full">{type}</span>
         ))}
       </div>
-      <button className="w-full text-center text-xs font-bold uppercase tracking-widest bg-black text-white py-3 rounded-full hover:bg-gray-800 transition-colors">
+      <button className="mt-auto w-full text-center text-xs font-bold uppercase tracking-widest bg-black text-white py-3 rounded-full hover:bg-gray-800 transition-colors">
         Schedule Appointment
       </button>
     </div>
@@ -244,10 +244,10 @@ export default function TelemedicinePage() {
               Telemedicine
             </span>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight mb-6">
-              Schedule an appointment with a limb loss specialist today
+              Specialized care for limb loss.
             </h1>
             <p className="text-lg text-gray-600 leading-relaxed">
-              AmpuMe clinical partners provide functional assessments, liner replacement visits, osseointegration consultations, mental health counseling, and other specialized care.
+              Connect with licensed clinicians for assessments, guidance, and ongoing support.
             </p>
           </FadeIn>
         </section>
@@ -290,9 +290,9 @@ export default function TelemedicinePage() {
         {/* Results grid */}
         <section className="px-6 md:px-12">
           {filteredClinicians.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
               {filteredClinicians.map((clinician, i) => (
-                <FadeIn key={i} delay={i * 0.05}>
+                <FadeIn key={i} delay={i * 0.05} className="h-full">
                   <ClinicianCard clinician={clinician} />
                 </FadeIn>
               ))}

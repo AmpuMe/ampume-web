@@ -33,9 +33,9 @@
 - [X] **2.9** "Expert Guidance" → "Knowledge Base" (consistent renaming)
 - [X] **2.10** Resource preview cards: link to the specific article/resource (deep link, not just /resources)
 - [X] **2.11** Resource preview cards: add publish date
-- [ ] **2.12** Resource preview: Alex to provide which 3 articles/resources to feature
-- [ ] **2.13** AI Support "Ask Anything" section: Alex to provide preset questions (current ones may change)
-- [ ] **2.14** Pre-footer section: Alex on the fence about adding newsletter or something back between AI section and footer — awaiting decision
+- [X] **2.12** Resource preview: Alex to provide which 3 articles/resources to feature
+- [X] **2.13** AI Support "Ask Anything" section: Alex to provide preset questions (current ones may change)
+- [X] **2.14** Pre-footer section: Alex on the fence about adding newsletter or something back between AI section and footer — awaiting decision
 
 ---
 
@@ -52,7 +52,7 @@
 
 ## 4. AI Support Page
 
-- [ ] **4.1** Rename section — "AI Support" evokes customer support. Find a better name. Discussed options: "Start a Conversation", or something else. TBD.
+- [X] **4.1** Rename section — "AI Support" evokes customer support. Find a better name. Discussed options: "Start a Conversation", or something else. TBD.
 - [X] **4.2** Response formatting: codes showing (e.g. `**bold**` instead of rendered bold). Fix markdown rendering.
 - [X] **4.3** Response anchoring: currently auto-scrolls to bottom of response. Instead, anchor at the TOP of the response so user reads top-down without scrolling up.
 - [X] **4.4** Chat stalling: occasionally the chat hangs with typing indicator and never responds. Add timeout detection → show error message with "try again" option.
@@ -171,7 +171,7 @@
 
 ### Article/Resource Pages
 - [X] **10.11** Add "Related Articles" section below article content (based on same category/tags)
-- [ ] **10.12** External links should be posted as articles with context (e.g. the ICRC PDF should have an article wrapper, not just link out). Standardize approach.
+- [X] **10.12** External links should be posted as articles with context (e.g. the ICRC PDF should have an article wrapper, not just link out). Standardize approach.
 - [X] **10.13** Can category label on cards be clickable? (links to that category page)
 
 ---
@@ -189,38 +189,80 @@
 ## 12. April 9 Additional Notes (from Alex)
 
 ### General UX
-- [ ] **12.1** "Shop" label reconsideration — Alex considering "Marketplace" or "AmpuMe Store" (leaning toward "AmpuMe Store"). Awaiting final decision. Would need renaming across nav, tiles, proof section, breadcrumbs, etc.
+- [X] **12.1** "Shop" label reconsideration — Alex considering "Marketplace" or "AmpuMe Store" (leaning toward "AmpuMe Store"). Awaiting final decision. Would need renaming across nav, tiles, proof section, breadcrumbs, etc.
 
 ### Homepage
 - [ ] **12.2** Hero banner: remove white line/glare on the bottom of the woman's socket
 - [ ] **12.3** Pre-tile copy: Alex still owes copy (same as 2.2)
-- [ ] **12.4** Telehealth tile: knee image doesn't look representative of actual devices. Alex can provide reference images if needed.
-- [ ] **12.5** Knowledge Base tile: include at least one image featuring an upper extremity amputee. Alex thinks this tile is the right place.
+- [X] **12.4** Telehealth tile: knee image doesn't look representative of actual devices. Alex can provide reference images if needed.
+- [X] **12.5** Knowledge Base tile: include at least one image featuring an upper extremity amputee. Alex thinks this tile is the right place.
 
 ### Proof of Platform
-- [ ] **12.6** Sleeves card: center the sleeve image. Hand positioning looks slightly artificial.
-- [ ] **12.7** Socks card: similar issue — doesn't show a natural way of pulling up a sock.
-- [ ] **12.8** Knowledge Base section: two "After Amputation" articles currently. Replace one with a Health & Performance piece — use the Adaptive Fitness article. Needs updated cover image.
-- [ ] **12.9** Ask Anything preset questions (REPLACES 2.13 — no longer blocked):
+- [X] **12.6** Sleeves card: center the sleeve image. Hand positioning looks slightly artificial.
+- [X] **12.7** Socks card: similar issue — doesn't show a natural way of pulling up a sock.
+- [X] **12.8** Knowledge Base section: two "After Amputation" articles currently. Replace one with a Health & Performance piece — use the Adaptive Fitness article. Needs updated cover image.
+- [X] **12.9** Ask Anything preset questions (REPLACES 2.13 — no longer blocked):
   - "What should I do if my residual limb volume is fluctuating?"
   - "How often will my insurance cover a new socket?"
   - "How do I cope with the emotional side of limb loss?"
   - "How often should I replace my liner?"
 
 ### Knowledge Base Page
-- [ ] **12.10** Banner image: shift so we can see the full bench and the bottom of her foot
+- [X] **12.10** Banner image: shift so we can see the full bench and the bottom of her foot
 
 ---
 
 ## 13. Blocked / Waiting on Alex
 
-- [ ] Alex to provide mission/intro copy for pre-tile section (2.2 / 12.3)
-- [ ] Alex to decide on "Shop" vs "AmpuMe Store" vs "Marketplace" renaming (12.1)
-- [ ] Alex to decide on pre-footer section (2.14)
-- [ ] Alex to approve "Ask AmpuMe" rename (currently deployed, was "AI Support") (4.1)
-- [ ] Alex to set up Zapier + Google Sheets for contact form (3.4)
-- [ ] Alex to set up Shopify Payments (11.4)
-- [ ] Alex to procure physician partners for telemedicine (5.x)
-- [ ] Alex to provide telemedicine clinician data for page build
-- [ ] Alex to provide reference images for telehealth tile if needed (12.4)
-- [ ] Alex to provide upper extremity amputee image reference for KB tile (12.5)
+- [X] Alex provided mission/intro copy for pre-tile section (2.2 / 12.3) — added 2026-04-14
+- [X] Alex confirmed "AmpuMe Store" rename (12.1)
+- [X] Alex confirmed pre-footer section stays as-is (just footer) (2.14)
+- [X] Alex confirmed "Ask AmpuMe" rename (4.1)
+- [ ] Alex to set up Zapier + Google Sheets for contact form (3.4) — team account created 2026-04-14, awaiting invite accept + Sheets connection
+
+---
+
+## 14. April 14 Call + Email Follow-Ups
+
+### Copy Updates (email from Alex 2026-04-14)
+- [X] **14.1** Homepage: add copy between Hero and "The Platform":
+  Headline: "Everything you need—built around real life with limb loss."
+  Subtext: "Explore trusted products, expert guidance, and personalized support—all in one place."
+- [X] **14.2** Telemedicine hero:
+  Headline: "Specialized care for limb loss."
+  Subtext: "Connect with licensed clinicians for assessments, guidance, and ongoing support."
+- [X] **14.3** Knowledge Base hero:
+  Headline: "Expert guidance at your pace." (kept)
+  Subtext (new): "Explore trusted resources to navigate amputation, prosthetic care, and everyday life with limb loss."
+- [ ] **14.4** Ask AmpuMe: Alex to send final copy tonight (2026-04-14) — still pending
+- [ ] **14.5** Updated pricelist: Alex sending final version — do one more bulk price update
+
+### Homepage / Mobile
+- [ ] **14.6** Mobile homepage hero banner: starts zoomed-in on mobile, jumps on scroll — fix positioning
+- [ ] **14.7** Homepage Knowledge Base proof-of-platform card: Adaptive Fitness cover image — subject is wearing pants; regenerate so prosthetic is visible (shorts, gym setting)
+- [ ] **14.8** Pre-footer "Ask AmpuMe" section feels too much like the footer (both black). Consider reverting to an earlier cleaner version or breaking up visual weight.
+- [ ] **14.9** Ask AmpuMe chat widget icon still occasionally cut off at certain resolutions — investigate and fix
+
+### Telemedicine
+- [X] **14.10** Dr. Emily Watson card height misalignment — fix card heights so buttons align across the row (flex layout)
+
+### Knowledge Base
+- [ ] **14.11** Adaptive Fitness article cover image: needs update — not representative (YouTuber who does high-intensity workouts)
+- [ ] **14.12** Prosthetic Socks article cover image: needs update — current image doesn't show actual prosthetic socks
+- [ ] **14.13** Article page not rendering for some resources (Alex saw one return to production view / broken link) — audit resource detail routing
+- [ ] **14.14** Insurance + Coverage banner image: adjust so the bench clears the border crop (regenerate)
+- [ ] **14.15** Knowledge Base category page header (3-line title) takes too much space, especially on mobile — Alex to provide shorter header
+
+### Store
+- [X] **14.16** Update all pricing from April 8 catalog (231 variants + 2 accessories) — see shopify-pricing-update.csv
+- [X] **14.17** Remove "Out of Stock" labels everywhere. Alex confirmed all stock is drop-shipped and treated as always available.
+- [ ] **14.18** Apply latest (forthcoming) pricelist when Alex sends it — one more bulk update
+
+### Product Pages
+- [ ] **14.19** Move "Standard Configuration" disclaimer into the short description area above the fold (currently below); style the "Standard Configuration" label (bold)
+
+### Checkout
+- [ ] **14.20** Stalling on `ampme.myshopify.com` redirect at Add to Cart / Checkout — monitor; Alex saw this over the weekend but couldn't reproduce today
+
+### Future Scope
+- [ ] **14.21** Asianpost redesign — Brennan to prepare scope of work (two versions: full parity + lightweight)

@@ -165,9 +165,12 @@ export default function ResourcesHub() {
               <span className="text-[11px] font-bold uppercase tracking-widest text-white/60 mb-4 block">
                 Knowledge Base
               </span>
-              <h1 className="text-3xl md:text-5xl font-light tracking-tight">
+              <h1 className="text-3xl md:text-5xl font-light tracking-tight mb-4">
                 Expert guidance at your pace.
               </h1>
+              <p className="text-base md:text-lg text-white/80 max-w-2xl leading-relaxed">
+                Explore trusted resources to navigate amputation, prosthetic care, and everyday life with limb loss.
+              </p>
             </FadeIn>
           </div>
         </section>

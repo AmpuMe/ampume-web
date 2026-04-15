@@ -169,6 +169,18 @@ const LandingPage = () => {
         </div>
       </section>
 
+      {/* Mission / Intro */}
+      <section className="pt-20 md:pt-28 pb-4 md:pb-6 px-6 md:px-12 bg-white">
+        <FadeIn className="max-w-4xl">
+          <p className="text-2xl md:text-3xl lg:text-4xl font-light leading-snug tracking-tight text-black">
+            Everything you need—built around real life with limb loss.
+          </p>
+          <p className="mt-4 text-base md:text-lg text-gray-500 leading-relaxed max-w-2xl">
+            Explore trusted products, expert guidance, and personalized support—all in one place.
+          </p>
+        </FadeIn>
+      </section>
+
       {/* Platform Grid */}
       <section id="platform" className="py-16 md:py-20 px-6 md:px-12 bg-white">
         <div className="max-w-full mx-auto">
