@@ -129,19 +129,14 @@ export default function ResourcesHub() {
     setSearchParams({}, { replace: true });
   };
 
-  // Helpers shared by the Latest section
+  // Helpers shared by the Latest section — always route to internal detail page
   const makeHref = (r) => {
     const ps = r.pillar?.slug?.current;
-    return r.contentType === 'externalLink' && r.externalUrl
-      ? r.externalUrl : `/resources/${ps}/${r.slug?.current}`;
+    return `/resources/${ps}/${r.slug?.current}`;
   };
-  const isExt = (r) => r.contentType === 'externalLink' && r.externalUrl;
-  const Wrap = ({ resource, children, className = '' }) => {
-    const href = makeHref(resource);
-    return isExt(resource)
-      ? <a href={href} target="_blank" rel="noopener noreferrer" className={className}>{children}</a>
-      : <Link to={href} className={className}>{children}</Link>;
-  };
+  const Wrap = ({ resource, children, className = '' }) => (
+    <Link to={makeHref(resource)} className={className}>{children}</Link>
+  );
   const thumb = (r) => r.thumbnailImage || r.thumbnailUrl;
   const fmtDate = (d) => d ? new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : null;
 
