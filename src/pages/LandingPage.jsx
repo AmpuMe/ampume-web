@@ -170,12 +170,12 @@ const LandingPage = () => {
       </section>
 
       {/* Mission / Intro */}
-      <section className="pt-20 md:pt-28 pb-4 md:pb-6 px-6 md:px-12 bg-white">
-        <FadeIn className="max-w-4xl">
-          <p className="text-2xl md:text-3xl lg:text-4xl font-light leading-snug tracking-tight text-black">
+      <section className="pt-16 md:pt-24 pb-2 md:pb-4 px-6 md:px-12 bg-white">
+        <FadeIn className="max-w-xl">
+          <p className="text-xl md:text-2xl font-light leading-snug tracking-tight text-black">
             Everything you need—built around real life with limb loss.
           </p>
-          <p className="mt-4 text-base md:text-lg text-gray-500 leading-relaxed max-w-2xl">
+          <p className="mt-3 text-sm md:text-base text-gray-500 leading-relaxed max-w-md">
             Explore trusted products, expert guidance, and personalized support—all in one place.
           </p>
         </FadeIn>
