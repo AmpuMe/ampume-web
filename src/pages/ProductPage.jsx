@@ -126,12 +126,22 @@ export default function ProductPage() {
         const result = await fetchProductByHandle(handle);
         if (result) {
           setProduct(result);
-          // Initialize selected options — pills auto-select first, dropdowns default to placeholder
+          // Initialize selected options — prefer the leftmost (sorted) value per option.
           const initialOptions = {};
           result.options?.forEach(option => {
             const sorted = sortOptionValues(option.values, option.name);
             initialOptions[option.name] = sorted[0] || '';
           });
+          // If that combo doesn't correspond to a real variant (common when not every
+          // option combination exists in Shopify), fall back to the first available
+          // variant's selectedOptions so price + add-to-cart work on load.
+          const variants = result.variants?.edges?.map(e => e.node) || [];
+          const initialMatches = variants.find(v =>
+            v.selectedOptions.every(o => initialOptions[o.name] === o.value)
+          );
+          if (!initialMatches && variants[0]) {
+            variants[0].selectedOptions.forEach(o => { initialOptions[o.name] = o.value; });
+          }
           setSelectedOptions(initialOptions);
         } else {
           setError('Product not found');
@@ -186,7 +196,9 @@ export default function ProductPage() {
     }
   };
 
-  const price = selectedVariant?.price?.amount;
+  // Prefer the selected variant's price; fall back to the product's minimum price
+  // so the page always displays a real number when Shopify pricing is set.
+  const price = selectedVariant?.price?.amount || product?.priceRange?.minVariantPrice?.amount;
 
   // Detect product type for enhanced layout
   const baseName = currentGroup ? currentGroup.baseName : product?.title;
@@ -530,13 +542,13 @@ export default function ProductPage() {
                 <div className="space-y-4 mb-8">
                   <button
                     onClick={handleAddToCart}
-                    disabled={isAdding || !price || price === '0.00'}
+                    disabled={isAdding || !selectedVariant || !price || price === '0.00'}
                     className={`
                       w-full py-4 px-8 rounded-full font-bold text-center transition-all duration-300
                       flex items-center justify-center gap-2
                       ${addedToCart
                         ? 'bg-green-600 text-white'
-                        : price && price !== '0.00'
+                        : selectedVariant && price && price !== '0.00'
                           ? 'bg-black text-white hover:bg-gray-800'
                           : 'bg-gray-200 text-gray-500 cursor-not-allowed'
                       }
@@ -549,7 +561,7 @@ export default function ProductPage() {
                       </>
                     ) : isAdding ? (
                       'Adding...'
-                    ) : !price || price === '0.00' ? (
+                    ) : !selectedVariant || !price || price === '0.00' ? (
                       'Price Coming Soon'
                     ) : (
                       <>
