@@ -140,12 +140,6 @@ export default function PillarPage() {
               <h2 className="text-xl font-medium mb-6">Frequently Asked Questions</h2>
               <div className="space-y-6">
                 <div className="border-b border-gray-100 pb-6">
-                  <h3 className="text-sm font-bold mb-2">Can I use insurance to buy prosthetic supplies online?</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    In many cases, yes. Prosthetic liners, socks, sleeves, and other supplies are often covered under durable medical equipment (DME) benefits. Coverage varies by plan — submit your details above and we'll help you understand what's covered.
-                  </p>
-                </div>
-                <div className="border-b border-gray-100 pb-6">
                   <h3 className="text-sm font-bold mb-2">What if my insurance doesn't cover what I need?</h3>
                   <p className="text-sm text-gray-600 leading-relaxed">
                     Our <Link to="/shop" className="underline hover:text-black transition-colors">shop</Link> offers prosthetic supplies at accessible prices for out-of-pocket purchases. Many people keep backup liners, travel supplies, or extra socks on hand outside of their insurance coverage.
