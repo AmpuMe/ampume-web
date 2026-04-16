@@ -126,21 +126,11 @@ export default function ProductPage() {
         const result = await fetchProductByHandle(handle);
         if (result) {
           setProduct(result);
-          // Initialize selected options — cascade through options left-to-right,
-          // always picking the leftmost sorted value that still maps to a real variant.
+          // Always select the leftmost (sorted) value for every option.
           const initialOptions = {};
-          const variants = result.variants?.edges?.map(e => e.node) || [];
-          let remaining = variants;
-
           result.options?.forEach(option => {
             const sorted = sortOptionValues(option.values, option.name);
-            const chosen = sorted.find(val =>
-              remaining.some(v => v.selectedOptions.some(o => o.name === option.name && o.value === val))
-            ) || sorted[0] || '';
-            initialOptions[option.name] = chosen;
-            remaining = remaining.filter(v =>
-              v.selectedOptions.some(o => o.name === option.name && o.value === chosen)
-            );
+            initialOptions[option.name] = sorted[0] || '';
           });
           setSelectedOptions(initialOptions);
         } else {
@@ -157,7 +147,7 @@ export default function ProductPage() {
     loadProduct();
   }, [handle]);
 
-  // Find the selected variant based on options
+  // Find the selected variant based on options (exact match)
   const selectedVariant = useMemo(() => {
     if (!product?.variants?.edges) return null;
 
@@ -167,6 +157,22 @@ export default function ProductPage() {
       );
     })?.node;
   }, [product, selectedOptions]);
+
+  // When the leftmost defaults don't form a real variant, find the closest one
+  // so pricing and Add to Cart still work on page load.
+  const bestVariant = useMemo(() => {
+    if (selectedVariant) return selectedVariant;
+    if (!product?.variants?.edges) return null;
+    let best = null;
+    let bestScore = -1;
+    for (const { node: v } of product.variants.edges) {
+      const score = v.selectedOptions.reduce(
+        (s, o) => s + (selectedOptions[o.name] === o.value ? 1 : 0), 0
+      );
+      if (score > bestScore) { best = v; bestScore = score; }
+    }
+    return best;
+  }, [product, selectedOptions, selectedVariant]);
 
   // Get raw images from Shopify
   const rawImages = product?.images?.edges?.map(edge => edge.node) || [];
@@ -180,13 +186,13 @@ export default function ProductPage() {
     setAddedToCart(false);
   };
 
-  // Handle add to cart
   const handleAddToCart = async () => {
-    if (!selectedVariant) return;
+    const variant = selectedVariant || bestVariant;
+    if (!variant) return;
 
     setIsAdding(true);
     try {
-      await addToCart(selectedVariant.id, 1);
+      await addToCart(variant.id, 1);
       setAddedToCart(true);
       setTimeout(() => setAddedToCart(false), 3000);
     } catch (err) {
@@ -196,9 +202,7 @@ export default function ProductPage() {
     }
   };
 
-  // Prefer the selected variant's price; fall back to the product's minimum price
-  // so the page always displays a real number when Shopify pricing is set.
-  const price = selectedVariant?.price?.amount || product?.priceRange?.minVariantPrice?.amount;
+  const price = selectedVariant?.price?.amount || bestVariant?.price?.amount || product?.priceRange?.minVariantPrice?.amount;
 
   // Detect product type for enhanced layout
   const baseName = currentGroup ? currentGroup.baseName : product?.title;
@@ -542,13 +546,13 @@ export default function ProductPage() {
                 <div className="space-y-4 mb-8">
                   <button
                     onClick={handleAddToCart}
-                    disabled={isAdding || !selectedVariant || !price || price === '0.00'}
+                    disabled={isAdding || (!selectedVariant && !bestVariant) || !price || price === '0.00'}
                     className={`
                       w-full py-4 px-8 rounded-full font-bold text-center transition-all duration-300
                       flex items-center justify-center gap-2
                       ${addedToCart
                         ? 'bg-green-600 text-white'
-                        : selectedVariant && price && price !== '0.00'
+                        : (selectedVariant || bestVariant) && price && price !== '0.00'
                           ? 'bg-black text-white hover:bg-gray-800'
                           : 'bg-gray-200 text-gray-500 cursor-not-allowed'
                       }
@@ -561,7 +565,7 @@ export default function ProductPage() {
                       </>
                     ) : isAdding ? (
                       'Adding...'
-                    ) : !selectedVariant || !price || price === '0.00' ? (
+                    ) : (!selectedVariant && !bestVariant) || !price || price === '0.00' ? (
                       'Price Coming Soon'
                     ) : (
                       <>
