@@ -72,7 +72,7 @@ const PasswordGate = ({ children }) => {
           style={{
             width: '100%',
             padding: '0.875rem 1rem',
-            fontSize: '0.875rem',
+            fontSize: '16px',
             fontFamily: 'inherit',
             color: '#fff',
             background: 'rgba(255,255,255,0.06)',

@@ -192,7 +192,7 @@ function PreLaunchGate({ onUnlock }) {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Access code"
                     autoFocus
-                    className={`w-full pl-10 pr-4 py-3 border rounded-lg text-sm focus:outline-none transition-colors ${
+                    className={`w-full pl-10 pr-4 py-3 border rounded-lg text-base focus:outline-none transition-colors ${
                       passwordError ? 'border-red-300 focus:border-red-400' : 'border-gray-200 focus:border-black'
                     }`}
                   />
