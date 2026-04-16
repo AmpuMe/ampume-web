@@ -12,7 +12,6 @@
   html {
     scroll-behavior: smooth;
     overflow-x: hidden;
-    overflow-x: clip;
     overscroll-behavior-x: none;
   }
   body {
@@ -20,17 +19,12 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
-    overflow-x: clip;
     overscroll-behavior-x: none;
-    touch-action: pan-y pinch-zoom;
     width: 100%;
-    position: relative;
   }
   #root {
     overflow-x: hidden;
-    overflow-x: clip;
     width: 100%;
-    position: relative;
   }
 }
 
