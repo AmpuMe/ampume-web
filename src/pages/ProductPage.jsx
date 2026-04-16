@@ -126,22 +126,22 @@ export default function ProductPage() {
         const result = await fetchProductByHandle(handle);
         if (result) {
           setProduct(result);
-          // Initialize selected options — prefer the leftmost (sorted) value per option.
+          // Initialize selected options — cascade through options left-to-right,
+          // always picking the leftmost sorted value that still maps to a real variant.
           const initialOptions = {};
+          const variants = result.variants?.edges?.map(e => e.node) || [];
+          let remaining = variants;
+
           result.options?.forEach(option => {
             const sorted = sortOptionValues(option.values, option.name);
-            initialOptions[option.name] = sorted[0] || '';
+            const chosen = sorted.find(val =>
+              remaining.some(v => v.selectedOptions.some(o => o.name === option.name && o.value === val))
+            ) || sorted[0] || '';
+            initialOptions[option.name] = chosen;
+            remaining = remaining.filter(v =>
+              v.selectedOptions.some(o => o.name === option.name && o.value === chosen)
+            );
           });
-          // If that combo doesn't correspond to a real variant (common when not every
-          // option combination exists in Shopify), fall back to the first available
-          // variant's selectedOptions so price + add-to-cart work on load.
-          const variants = result.variants?.edges?.map(e => e.node) || [];
-          const initialMatches = variants.find(v =>
-            v.selectedOptions.every(o => initialOptions[o.name] === o.value)
-          );
-          if (!initialMatches && variants[0]) {
-            variants[0].selectedOptions.forEach(o => { initialOptions[o.name] = o.value; });
-          }
           setSelectedOptions(initialOptions);
         } else {
           setError('Product not found');
