@@ -58,7 +58,21 @@ function sortOptionValues(values, optionName = '') {
   const key = OPTION_NAME_MAP[optionName.toLowerCase()];
   const order = key ? SORT_ORDERS[key] : FALLBACK_ORDER;
 
+  // Numeric-first heuristic: values that begin with a number (e.g. "16cm", "3mm")
+  // always sort ascending BEFORE any named-size values like "X-Large".
+  const startsWithNumber = (v) => /^\d/.test(v.trim());
+
   return [...values].sort((a, b) => {
+    const aNumeric = startsWithNumber(a);
+    const bNumeric = startsWithNumber(b);
+    if (aNumeric && !bNumeric) return -1;
+    if (!aNumeric && bNumeric) return 1;
+    if (aNumeric && bNumeric) {
+      const aNum = parseFloat(a.replace(/[^\d.]/g, ''));
+      const bNum = parseFloat(b.replace(/[^\d.]/g, ''));
+      if (!isNaN(aNum) && !isNaN(bNum)) return aNum - bNum;
+    }
+
     const al = a.toLowerCase();
     const bl = b.toLowerCase();
 
@@ -67,11 +81,6 @@ function sortOptionValues(values, optionName = '') {
     if (ai !== -1 && bi !== -1) return ai - bi;
     if (ai !== -1) return -1;
     if (bi !== -1) return 1;
-
-    // Numeric fallback
-    const aNum = parseFloat(a.replace(/[^\d.]/g, ''));
-    const bNum = parseFloat(b.replace(/[^\d.]/g, ''));
-    if (!isNaN(aNum) && !isNaN(bNum)) return aNum - bNum;
 
     return al.localeCompare(bl);
   });
@@ -173,6 +182,19 @@ export default function ProductPage() {
     }
     return best;
   }, [product, selectedOptions, selectedVariant]);
+
+  // For a given option name + value, would any real variant exist given the
+  // current selections of the OTHER options? Used to grey out impossible combos.
+  const isOptionValueAvailable = (optionName, value) => {
+    if (!product?.variants?.edges) return true;
+    return product.variants.edges.some(({ node: v }) => {
+      return v.selectedOptions.every(o => {
+        if (o.name === optionName) return o.value === value;
+        const sel = selectedOptions[o.name];
+        return !sel || sel === o.value;
+      });
+    });
+  };
 
   // Get raw images from Shopify
   const rawImages = product?.images?.edges?.map(edge => edge.node) || [];
@@ -513,26 +535,39 @@ export default function ProductPage() {
                       {option.values.length <= 6 ? (
                         // Button style for few options
                         <div className="flex flex-wrap gap-2">
-                          {sortOptionValues(option.values, option.name).map(value => (
-                            <button
-                              key={value}
-                              onClick={() => handleOptionChange(option.name, value)}
-                              className={`
-                                px-4 py-2 text-sm border rounded-full transition-colors
-                                ${selectedOptions[option.name] === value
-                                  ? 'border-black bg-black text-white'
-                                  : 'border-gray-200 hover:border-gray-400'
-                                }
-                              `}
-                            >
-                              {value}
-                            </button>
-                          ))}
+                          {sortOptionValues(option.values, option.name).map(value => {
+                            const isSelected = selectedOptions[option.name] === value;
+                            const available = isOptionValueAvailable(option.name, value);
+                            const disabled = !available && !isSelected;
+                            return (
+                              <button
+                                key={value}
+                                onClick={() => !disabled && handleOptionChange(option.name, value)}
+                                disabled={disabled}
+                                title={disabled ? 'Not available with the current selection' : undefined}
+                                className={`
+                                  px-4 py-2 text-sm border rounded-full transition-colors
+                                  ${isSelected
+                                    ? 'border-black bg-black text-white'
+                                    : disabled
+                                      ? 'border-gray-100 text-gray-300 line-through cursor-not-allowed'
+                                      : 'border-gray-200 hover:border-gray-400'
+                                  }
+                                `}
+                              >
+                                {value}
+                              </button>
+                            );
+                          })}
                         </div>
                       ) : (
                         // Custom dropdown for many options
                         <Select
-                          options={sortOptionValues(option.values, option.name).map(v => ({ value: v, label: v }))}
+                          options={sortOptionValues(option.values, option.name).map(v => ({
+                            value: v,
+                            label: v,
+                            disabled: !isOptionValueAvailable(option.name, v) && selectedOptions[option.name] !== v,
+                          }))}
                           value={selectedOptions[option.name]}
                           onChange={(v) => handleOptionChange(option.name, v)}
                           placeholder="Select a size"

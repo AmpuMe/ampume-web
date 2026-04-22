@@ -12,14 +12,12 @@
   html {
     scroll-behavior: smooth;
     overflow-x: hidden;
-    overscroll-behavior-x: none;
   }
   body {
     @apply text-brand-black antialiased font-sans;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
-    overscroll-behavior-x: none;
     width: 100%;
   }
   #root {

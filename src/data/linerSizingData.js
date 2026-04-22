@@ -146,8 +146,10 @@ export const SIZING_CHARTS = {
     measurementPoints: [
       {
         label: 'Top Measurement',
-        distance: 'Around kneecap (BK) or groin (AK)',
-        description: 'BK: Measure the circumference around the middle of your kneecap. AK: Measure the circumference along the top of your groin.',
+        distance: 'around kneecap',
+        distanceAK: 'around top of groin',
+        description: 'Measure the circumference around the middle of your kneecap.',
+        descriptionAK: 'Measure the circumference along the top of your groin.',
       },
       {
         label: 'Bottom Measurement',
@@ -174,7 +176,8 @@ export const SIZING_CHARTS = {
       { label: 'Medium', range: '16 - 20' },
       { label: 'Long*', range: '22 - 28' },
     ],
-    lengthGuidance: 'BK: Typically 2-3 inches above the kneecap. AK: Preference-based (over socket vs within socket).',
+    lengthGuidance: 'Typically 2-3 inches above the kneecap.',
+    lengthGuidanceAK: 'Preference-based — some prefer the sock to reflect over the top of the socket, others within.',
     lengthStep: {
       title: 'Measure Your Length',
       descriptionBK: 'Length is a matter of preference. However, the typical rule is 2-3 inches past the middle of your kneecap. Measure from the distal end of your residual limb to that point.',
