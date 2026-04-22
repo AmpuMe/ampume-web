@@ -9,6 +9,9 @@ import ResourceCard from '../components/ResourceCard';
 import InsuranceExpertForm from '../components/InsuranceExpertForm';
 import { fetchPillarWithResources } from '../lib/sanity';
 
+// Temporarily hidden pending HIPAA review — set true to restore form + FAQs.
+const SHOW_INSURANCE_FORM = false;
+
 const FadeIn = ({ children, delay = 0, className = "", ...props }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
@@ -122,14 +125,14 @@ export default function PillarPage() {
             {isInsurancePillar ? 'Understand Your Insurance and Coverage' : pillar.title}
           </h1>
           <p className="text-lg text-gray-500 leading-relaxed">
-            {isInsurancePillar
+            {isInsurancePillar && SHOW_INSURANCE_FORM
               ? 'Get clarity on your benefits, coverage, and what to expect. Our team will review your information and help you understand your options.'
               : pillar.description}
           </p>
         </FadeIn>
 
-        {/* Insurance Expert Form (special pillar) */}
-        {isInsurancePillar && (
+        {/* Insurance Expert Form (special pillar) — gated pending HIPAA review */}
+        {isInsurancePillar && SHOW_INSURANCE_FORM && (
           <>
             <FadeIn delay={0.1} className="mb-12">
               <InsuranceExpertForm />
@@ -168,8 +171,8 @@ export default function PillarPage() {
           </>
         )}
 
-        {/* Bridge section — Knowledge Base link for insurance pillar */}
-        {isInsurancePillar && pillar.resources && pillar.resources.length > 0 && (
+        {/* Bridge section — Knowledge Base link for insurance pillar (only shown alongside the form) */}
+        {isInsurancePillar && SHOW_INSURANCE_FORM && pillar.resources && pillar.resources.length > 0 && (
           <FadeIn delay={0.2} className="mb-10">
             <h2 className="text-xl font-medium mb-2">From Our Knowledge Base</h2>
             <p className="text-sm text-gray-500">Explore guides and resources to better understand insurance, coverage, and the claims process.</p>

@@ -17,6 +17,8 @@ const FadeIn = ({ children, className = "", ...props }) => (
   </motion.div>
 );
 
+const toSentenceCase = (s) => s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : s;
+
 /* ── Measurement Input ─────────────────────────────────────────── */
 
 function MeasurementInput({ label, value, onChange, placeholder }) {
@@ -124,26 +126,28 @@ function MeasurementSteps({ chartData, showAK = false }) {
   const steps = [
     {
       number: ++stepNum,
-      title: hasLengthStep ? 'Measure Top & Bottom Circumference' : 'Gather Your Tools',
-      desc: hasLengthStep
-        ? 'Measure your width using the Top and Bottom circumference measurements shown in the image.'
-        : 'You\u2019ll need a flexible measuring tape (cloth or plastic). A helper can make measuring easier.',
+      title: 'Gather your tools',
+      desc: 'You\u2019ll need a flexible measuring tape (cloth or plastic). A helper can make measuring easier.',
     },
-    ...chartData.measurementPoints.map((point) => ({
-      number: ++stepNum,
-      title: `Measure at ${point.distance}`,
-      desc: point.description,
-    })),
+    ...chartData.measurementPoints.map((point) => {
+      const distance = showAK && point.distanceAK ? point.distanceAK : point.distance;
+      const desc = showAK && point.descriptionAK ? point.descriptionAK : point.description;
+      return {
+        number: ++stepNum,
+        title: `Measure at ${distance}`,
+        desc,
+      };
+    }),
     ...(hasLengthStep ? [{
       number: ++stepNum,
-      title: chartData.lengthStep.title,
+      title: toSentenceCase(chartData.lengthStep.title),
       desc: showAK ? chartData.lengthStep.descriptionAK : chartData.lengthStep.descriptionBK,
     }] : []),
     {
       number: ++stepNum,
-      title: hasLengthStep ? 'Find Your Size' : 'Enter Your Measurements',
+      title: hasLengthStep ? 'Find your size' : 'Enter your measurements',
       desc: hasLengthStep
-        ? 'Use your Top, Bottom, and Length measurements with the charts below to find your width and length.'
+        ? 'Use your top, bottom, and length measurements with the charts below to find your width and length.'
         : 'Use the size finder to get your recommended size instantly.',
     },
   ];
@@ -251,22 +255,25 @@ function MeasurementImage({ chartData, className = "", showAK: externalShowAK, o
         </div>
       ))}
       {currentLengthArrow && (
-        <div
-          className="absolute left-3 md:left-6 flex items-stretch pointer-events-none"
-          style={{ top: `${currentLengthArrow.top}%`, bottom: `${100 - currentLengthArrow.bottom}%` }}
-        >
-          {/* Vertical double-arrow */}
-          <div className="flex flex-col items-center">
+        <>
+          {/* Vertical double-arrow hugs the leg at roughly centre-left */}
+          <div
+            className="absolute left-[42%] md:left-[44%] flex flex-col items-center pointer-events-none"
+            style={{ top: `${currentLengthArrow.top}%`, bottom: `${100 - currentLengthArrow.bottom}%` }}
+          >
             <div className="w-0 h-0 border-l-[5px] border-r-[5px] border-b-[8px] border-l-transparent border-r-transparent border-b-brand-gold" />
             <div className="flex-1 w-[2px] bg-brand-gold" />
             <div className="w-0 h-0 border-l-[5px] border-r-[5px] border-t-[8px] border-l-transparent border-r-transparent border-t-brand-gold" />
           </div>
-          {/* Label centered on the line */}
-          <div className="self-center ml-2 bg-white/95 backdrop-blur-sm rounded-md px-2.5 py-1.5 shadow-sm border border-brand-gold/20 max-w-[130px]">
+          {/* Label anchored to the LEFT edge so it doesn't crowd the arrow */}
+          <div
+            className="absolute left-3 md:left-6 bg-white/95 backdrop-blur-sm rounded-md px-2.5 py-1.5 shadow-sm border border-brand-gold/20 max-w-[130px] pointer-events-none"
+            style={{ top: `${(currentLengthArrow.top + currentLengthArrow.bottom) / 2}%`, transform: 'translateY(-50%)' }}
+          >
             <p className="text-[11px] md:text-xs font-bold text-brand-gold leading-none">{currentLengthArrow.label}</p>
             <p className="text-[10px] md:text-[11px] text-gray-500 leading-tight mt-0.5">{currentLengthArrow.sublabel}</p>
           </div>
-        </div>
+        </>
       )}
     </FadeIn>
   );
@@ -402,13 +409,10 @@ function SizingChartTable({ chartData, highlightedLabel }) {
                   : `border-l-transparent ${i % 2 === 0 ? 'bg-white' : 'bg-brand-offwhite'}`
               }`}
             >
-              <div className="py-4 px-4 flex items-center gap-3">
-                <span className={`inline-flex items-center justify-center w-10 h-10 rounded-full text-sm font-bold flex-shrink-0 ${
-                  isHighlighted ? 'bg-brand-gold text-white' : 'bg-black text-white'
-                }`}>
-                  {size.label.charAt(0).toUpperCase()}
+              <div className="py-4 px-4 flex items-center">
+                <span className={`text-sm font-medium ${isHighlighted ? 'text-brand-gold' : 'text-black'}`}>
+                  {size.name || size.label}
                 </span>
-                {(size.name || size.label) && <span className="text-sm text-gray-500">{size.name || size.label}</span>}
               </div>
 
               {isDual ? (
@@ -439,13 +443,10 @@ function SizingChartTable({ chartData, highlightedLabel }) {
                   : 'bg-brand-offwhite'
               }`}
             >
-              <div className="flex items-center gap-3 mb-3">
-                <span className={`inline-flex items-center justify-center w-10 h-10 rounded-full text-sm font-bold flex-shrink-0 ${
-                  isHighlighted ? 'bg-brand-gold text-white' : 'bg-black text-white'
-                }`}>
-                  {size.label}
+              <div className="mb-3">
+                <span className={`text-sm font-bold ${isHighlighted ? 'text-brand-gold' : 'text-black'}`}>
+                  {size.name || size.label}
                 </span>
-                {size.name && <span className="text-sm font-medium">{size.name}</span>}
               </div>
 
               {isDual ? (

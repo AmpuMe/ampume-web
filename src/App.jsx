@@ -27,7 +27,9 @@ const ScrollToTop = () => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      window.scrollTo(0, 0);
+      // Instant jump — CSS scroll-behavior: smooth would otherwise animate
+      // from wherever the user left off (looks like a bottom-to-top scroll).
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     }
   }, [pathname]);
 

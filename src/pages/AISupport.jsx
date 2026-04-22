@@ -188,12 +188,12 @@ function ChatInterface({ initialPrompt }) {
             <p className="text-sm text-gray-500 mb-6 max-w-md">
               Ask me anything about prosthetics, recovery, daily life, or insurance coverage.
             </p>
-            <div className="flex flex-wrap gap-2 justify-center max-w-lg">
+            <div className="grid grid-cols-1 sm:flex sm:flex-wrap sm:justify-center gap-2 w-full max-w-lg">
               {SUGGESTED_PROMPTS.map((prompt) => (
                 <button
                   key={prompt}
                   onClick={() => handlePromptClick(prompt)}
-                  className="text-xs text-gray-600 bg-gray-50 hover:bg-gray-100 border border-gray-200 px-3 py-2 rounded-full transition-colors text-left"
+                  className="text-xs text-gray-600 bg-gray-50 hover:bg-gray-100 border border-gray-200 px-3 py-2 rounded-full transition-colors text-left w-full sm:w-auto"
                 >
                   {prompt}
                 </button>

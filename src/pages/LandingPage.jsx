@@ -172,8 +172,8 @@ const LandingPage = () => {
       {/* Mission / Intro */}
       <section className="pt-16 md:pt-24 pb-2 md:pb-4 px-6 md:px-12 bg-white">
         <FadeIn>
-          <h3 className="text-2xl font-medium">Everything you need—built around real life with limb loss.</h3>
-          <p className="text-sm text-gray-400 mt-2 max-w-lg">Explore trusted products, expert guidance, and personalized support—all in one place.</p>
+          <h3 className="text-3xl md:text-4xl font-medium tracking-tight max-w-3xl">Everything you need—built around real life with limb loss.</h3>
+          <p className="text-base md:text-lg text-gray-500 mt-4 max-w-2xl">Explore trusted products, expert guidance, and personalized support—all in one place.</p>
         </FadeIn>
       </section>
 
@@ -194,7 +194,7 @@ const LandingPage = () => {
                 <span className="text-[11px] font-bold uppercase tracking-widest bg-white text-black px-3 pt-[7px] pb-[5px] leading-none">Ask</span>
               </div>
               <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 text-white">
-                <h4 className="text-3xl font-medium mb-3">Ask Anything</h4>
+                <h4 className="text-3xl font-medium mb-3">Ask AmpuMe</h4>
                 <div className="h-auto md:h-0 md:group-hover:h-auto overflow-hidden transition-all duration-500">
                   <p className="text-sm text-white/90 leading-relaxed mb-4">
                     Trusted answers about prosthetics, care, and daily life — powered by AI trained on expert resources.
@@ -264,7 +264,7 @@ const LandingPage = () => {
       </section>
 
       {/* ── Proof of Platform: Shop ─────────────────────────────── */}
-      <section className="py-16 md:py-20 px-6 md:px-12 bg-white">
+      <section className="py-16 md:py-20 px-6 md:px-12 bg-brand-offwhite">
         <div className="max-w-full mx-auto">
           <div className="flex justify-between items-end mb-10 md:mb-16">
             <div>
@@ -277,9 +277,9 @@ const LandingPage = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { tag: 'Liners', name: 'Prosthetic Liners', desc: 'Adaptive gel for comfort and secure suspension.', href: '/shop/liners', img: categoryLiners, pos: 'object-center' },
-              { tag: 'Sleeves', name: 'Suspension Sleeves', desc: 'Maintain a secure seal for below-knee systems.', href: '/shop/sleeves', img: categorySleeves, pos: 'object-[60%_center]' },
-              { tag: 'Socks', name: 'Prosthetic Socks', desc: 'Manage limb volume with breathable knit construction.', href: '/shop/socks', img: categorySocks, pos: 'object-center' },
+              { tag: 'Liners', name: 'Prosthetic Liners', desc: 'Prosthetic liners designed for comfort, protection, and secure fit.', href: '/shop/liners', img: categoryLiners, pos: 'object-center' },
+              { tag: 'Sleeves', name: 'Prosthetic Sleeves', desc: 'Prosthetic sleeves designed to maintain suspension and keep your prosthesis secure and comfortable.', href: '/shop/sleeves', img: categorySleeves, pos: 'object-[60%_center]' },
+              { tag: 'Socks', name: 'Prosthetic Socks', desc: 'Manage socket fit and daily limb volume changes with prosthetic socks designed for comfort and control.', href: '/shop/socks', img: categorySocks, pos: 'object-center' },
             ].map((product, i) => (
               <FadeIn key={i} delay={i * 0.1}>
                 <Link to={product.href} className="group relative block h-[350px] md:h-[500px] overflow-hidden cursor-pointer">
@@ -310,7 +310,7 @@ const LandingPage = () => {
       </section>
 
       {/* ── Proof of Platform: Resources ──────────────────────── */}
-      <section className="py-16 md:py-20 px-6 md:px-12 bg-brand-offwhite">
+      <section className="py-16 md:py-20 px-6 md:px-12 bg-white">
         <div className="max-w-full mx-auto">
           <div className="flex justify-between items-end mb-10 md:mb-16">
             <div>
@@ -357,7 +357,7 @@ const LandingPage = () => {
         <div className="max-w-full mx-auto">
           <div className="flex justify-between items-end mb-10 md:mb-16">
             <div>
-              <h3 className="text-2xl font-medium">Ask Anything</h3>
+              <h3 className="text-2xl font-medium">Ask AmpuMe</h3>
               <p className="text-sm text-gray-500 mt-2 max-w-lg hidden md:block">Ask questions about prosthetics, care, and daily life — and get clear answers instantly.</p>
             </div>
             <Link to="/ai-support" className="hidden md:inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
