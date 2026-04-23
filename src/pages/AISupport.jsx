@@ -320,9 +320,6 @@ const AISupport = () => {
         <div className="max-w-4xl mx-auto">
           {/* Headline + positioning */}
           <div className="text-center mb-8 md:mb-10">
-            <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 block">
-              Ask AmpuMe
-            </span>
             <h1 className="text-3xl md:text-5xl font-light tracking-tight mb-4">
               Ask AmpuMe. Get real answers.
             </h1>
