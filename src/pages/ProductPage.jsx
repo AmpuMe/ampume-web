@@ -537,6 +537,16 @@ export default function ProductPage() {
                         </p>
                       );
                     })()}
+                    {(() => {
+                      const xl = activeDesc.overview?.find(p => p.startsWith('XL Size:'));
+                      if (!xl) return null;
+                      const rest = xl.replace(/^XL Size:\s*/, '');
+                      return (
+                        <p className="text-sm text-gray-600 leading-relaxed">
+                          <strong className="font-bold text-black">XL Size:</strong> {rest}
+                        </p>
+                      );
+                    })()}
                   </div>
                 )}
 
