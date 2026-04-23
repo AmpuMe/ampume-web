@@ -1,18 +1,48 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Send, User, Bot, Loader2, MessageCircle } from 'lucide-react';
+import { Send, User, Bot, Loader2, MessageCircle, Sparkles } from 'lucide-react';
 import SimpleNavbar from '../components/SimpleNavbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 
-const SUGGESTED_PROMPTS = [
+// All six default suggested prompts (per Alex, 2026-04-26).
+const ALL_PROMPTS = [
+  'What exercises help improve prosthetic walking?',
+  'What should I expect after an amputation?',
+  'How do I choose the right prosthetic liner?',
+  'How do I manage limb volume changes during the day?',
   'How often should I replace my prosthetic liner?',
-  'Why is my residual limb irritated?',
   'What does Medicare cover for prosthetics?',
-  'How do I manage limb volume changes throughout the day?',
-  'What exercises help with prosthetic gait training?',
-  'How should I care for my prosthetic socket?',
 ];
+
+// Category chips cycle the displayed questions. "All" shows the canonical six.
+const PROMPT_CATEGORIES = [
+  { key: 'all',         label: 'All',             prompts: ALL_PROMPTS },
+  { key: 'care',        label: 'Care',            prompts: [
+    'How often should I replace my prosthetic liner?',
+    'How should I care for my prosthetic socket?',
+    'What are early signs of skin irritation to watch for?',
+  ] },
+  { key: 'insurance',   label: 'Insurance',       prompts: [
+    'What does Medicare cover for prosthetics?',
+    'How often will insurance cover a new socket?',
+    'What if my insurance denies coverage for supplies?',
+  ] },
+  { key: 'comfort',     label: 'Comfort',         prompts: [
+    'How do I manage limb volume changes during the day?',
+    'Why is my residual limb irritated?',
+    'How can I reduce phantom limb pain?',
+  ] },
+  { key: 'getting-started', label: 'Getting Started', prompts: [
+    'What should I expect after an amputation?',
+    'How do I choose the right prosthetic liner?',
+    'What exercises help improve prosthetic walking?',
+  ] },
+];
+
+const DISCLAIMER = 'AmpuMe provides informational guidance only and is not a medical provider, medical device, or diagnostic tool. Responses are not medical advice and should not be relied upon for healthcare decisions. Always consult your prosthetist or a qualified healthcare provider.';
+
+const INPUT_PLACEHOLDER = "Ask a question or share what's on your mind about your prosthesis, care, or daily life…";
 
 function ChatMessage({ message }) {
   const isUser = message.role === 'user';
@@ -68,8 +98,11 @@ function ChatInterface({ initialPrompt }) {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [hasUsedInitialPrompt, setHasUsedInitialPrompt] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('all');
   const scrollAreaRef = useRef(null);
   const inputRef = useRef(null);
+
+  const visiblePrompts = PROMPT_CATEGORIES.find(c => c.key === activeCategory)?.prompts || ALL_PROMPTS;
 
   // Auto-send initial prompt from navigation state (e.g. homepage prompt click)
   useEffect(() => {
@@ -189,7 +222,7 @@ function ChatInterface({ initialPrompt }) {
               Ask me anything about prosthetics, recovery, daily life, or insurance coverage.
             </p>
             <div className="grid grid-cols-1 sm:flex sm:flex-wrap sm:justify-center gap-2 w-full max-w-lg">
-              {SUGGESTED_PROMPTS.map((prompt) => (
+              {visiblePrompts.map((prompt) => (
                 <button
                   key={prompt}
                   onClick={() => handlePromptClick(prompt)}
@@ -216,17 +249,17 @@ function ChatInterface({ initialPrompt }) {
         )}
       </div>
 
-      {/* Input area */}
-      <div className="border-t border-gray-100 px-4 md:px-6 py-4 bg-white">
+      {/* Input area — subtle gradient anchors the composer */}
+      <div className="border-t border-gray-100 px-4 md:px-6 py-5 bg-gradient-to-b from-brand-offwhite/70 to-white">
         <form onSubmit={handleSubmit} className="flex items-center gap-3">
           <input
             ref={inputRef}
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask a question..."
+            placeholder={INPUT_PLACEHOLDER}
             disabled={isLoading}
-            className="flex-1 text-sm bg-gray-50 border border-gray-200 rounded-full px-4 py-3 focus:outline-none focus:border-gray-400 transition-colors disabled:opacity-50 placeholder:text-gray-400"
+            className="flex-1 text-sm bg-white border border-gray-200 rounded-full px-4 py-3 focus:outline-none focus:border-gray-400 transition-colors disabled:opacity-50 placeholder:text-gray-400 shadow-sm"
           />
           <button
             type="submit"
@@ -240,8 +273,30 @@ function ChatInterface({ initialPrompt }) {
             )}
           </button>
         </form>
-        <p className="text-xs text-gray-600 text-center mt-2">
-          AI responses are informational only. Always consult your prosthetist or healthcare provider for medical decisions.
+        {/* Category chips */}
+        {isEmpty && (
+          <div className="flex flex-wrap justify-center gap-2 mt-3">
+            {PROMPT_CATEGORIES.map((cat) => {
+              const active = cat.key === activeCategory;
+              return (
+                <button
+                  key={cat.key}
+                  type="button"
+                  onClick={() => setActiveCategory(cat.key)}
+                  className={`text-[11px] font-medium px-3 py-1.5 rounded-full border transition-colors ${
+                    active
+                      ? 'bg-black text-white border-black'
+                      : 'bg-white text-gray-600 border-gray-200 hover:border-gray-400 hover:text-black'
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              );
+            })}
+          </div>
+        )}
+        <p className="text-xs text-gray-600 text-center mt-3 max-w-3xl mx-auto leading-relaxed">
+          {DISCLAIMER}
         </p>
       </div>
     </div>
@@ -263,6 +318,20 @@ const AISupport = () => {
 
       <main className="pt-28 pb-20 px-6 md:px-12">
         <div className="max-w-4xl mx-auto">
+          {/* Headline + positioning */}
+          <div className="text-center mb-8 md:mb-10">
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-brand-gold bg-brand-gold/10 border border-brand-gold/20 rounded-full px-3 py-1 mb-5">
+              <Sparkles className="w-3 h-3" />
+              Trained on expert prosthetic knowledge and real-world patient needs
+            </span>
+            <h1 className="text-3xl md:text-5xl font-light tracking-tight mb-4">
+              Ask AmpuMe. Get real answers.
+            </h1>
+            <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              Clear, reliable answers for real life with limb loss — informed by expert guidance and designed for everyday life.
+            </p>
+          </div>
+
           <ChatInterface initialPrompt={initialPrompt} />
         </div>
       </main>
