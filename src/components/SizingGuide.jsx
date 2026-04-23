@@ -529,9 +529,9 @@ function SizingChartTable({ chartData, highlightedLabel }) {
       </div>
 
       {chartData.note && (
-        <p className="text-xs text-gray-500 mt-4 flex items-start gap-2">
+        <p className="text-xs text-gray-500 mt-4 flex items-start justify-center gap-2 text-center">
           <Info className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
-          {chartData.note}
+          <span>{chartData.note}</span>
         </p>
       )}
 
