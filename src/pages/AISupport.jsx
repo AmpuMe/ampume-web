@@ -198,10 +198,10 @@ function ChatInterface({ initialPrompt }) {
   const isEmpty = messages.length === 0;
 
   return (
-    <div className="flex flex-col bg-white border border-gray-200 rounded-2xl overflow-hidden" style={{ height: 'min(70vh, 640px)' }}>
+    <div className="flex flex-col bg-white border border-gray-200 rounded-2xl overflow-hidden" style={{ height: 'min(82vh, 820px)' }}>
       {/* Header — new conversation button */}
       {!isEmpty && (
-        <div className="flex justify-end px-4 pt-3 pb-0">
+        <div className="flex justify-end px-5 md:px-6 pt-5 pb-0">
           <button
             onClick={clearChat}
             className="text-xs font-medium text-gray-500 hover:text-black bg-gray-50 hover:bg-gray-100 px-3 py-1.5 rounded-full transition-colors"
@@ -210,8 +210,8 @@ function ChatInterface({ initialPrompt }) {
           </button>
         </div>
       )}
-      {/* Messages area */}
-      <div ref={scrollAreaRef} className="flex-1 overflow-y-auto px-4 md:px-6 py-6">
+      {/* Messages area — extra top + right padding so scrollbar doesn't sit flush against the rounded corner */}
+      <div ref={scrollAreaRef} className="flex-1 overflow-y-auto pl-4 pr-3 md:pl-6 md:pr-4 pt-8 pb-6 [scrollbar-gutter:stable]">
         {isEmpty ? (
           <div className="min-h-full flex flex-col items-center justify-center text-center px-4 py-8">
             <div className="w-14 h-14 rounded-full bg-gray-50 flex items-center justify-center mb-5 flex-shrink-0">
@@ -316,7 +316,7 @@ const AISupport = () => {
       />
       <SimpleNavbar />
 
-      <main className="pt-28 pb-20 px-6 md:px-12">
+      <main className="pt-36 md:pt-40 pb-20 px-6 md:px-12">
         <div className="max-w-4xl mx-auto">
           {/* Headline + positioning */}
           <div className="text-center mb-8 md:mb-10">
