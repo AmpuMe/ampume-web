@@ -299,6 +299,7 @@ export const LINER_DESCRIPTIONS = {
       'The ALPS\u00AE General Purpose Prosthetic Liner is designed to provide comfortable socket fit, reliable suspension, and adaptable cushioning for a wide variety of prosthesis users. Made with ALPS Grip Gel, this liner ensures optimum adhesion while comfortably conforming to the shape of the residual limb.',
       'The softer durometer Grip Gel is engineered for easier application, making it especially suitable for individuals with reduced hand dexterity. The liner elongates and gently conforms during ambulation, helping to reduce the potential for blood flow restriction, particularly for users with circulatory concerns.',
       'The General Purpose Liner is recommended for users with low activity levels, healthy skin conditions, irregular limb shapes, and bony prominences requiring added protection.',
+      'XL Size: XL is available in 3mm thickness only and in a locking configuration. It features a larger umbrella and U-shaped matrix, making it ideal for bariatric patients.',
     ],
     features: [
       'Available for Above-Knee (AK) and Below-Knee (BK) users',

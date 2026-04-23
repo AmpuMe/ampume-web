@@ -152,11 +152,18 @@ function MeasurementSteps({ chartData, showAK = false }) {
     },
   ];
 
+  const hasAKBKToggle = !!chartData.measurementImageAK;
+
   return (
     <FadeIn>
-      <h3 className="text-xs font-bold uppercase tracking-widest mb-5">
+      <h3 className="text-xs font-bold uppercase tracking-widest mb-2">
         How to Measure
       </h3>
+      {hasAKBKToggle && (
+        <p className="text-sm text-gray-500 mb-5">
+          Select Below Knee or Above Knee on the image, then follow the steps below.
+        </p>
+      )}
       <div className="space-y-5">
         {steps.map((step, i) => (
           <div key={step.number} className="flex items-start gap-4 relative">
@@ -540,10 +547,10 @@ function SizingChartTable({ chartData, highlightedLabel }) {
 
       {/* Length chart (socks) */}
       {chartData.lengthChart && (
-        <div className="mt-8 pt-8 border-t border-gray-100">
-          <h3 className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-1">Length Sizing</h3>
+        <div className="mt-12 pt-8 border-t border-gray-100">
+          <h3 className="text-xs font-bold uppercase tracking-widest mb-6 text-center">Length Size Chart</h3>
           {chartData.lengthGuidance && (
-            <p className="text-sm text-gray-500 mb-4">{chartData.lengthGuidance}</p>
+            <p className="text-sm text-gray-500 mb-4 text-center">{chartData.lengthGuidance}</p>
           )}
           <div className="hidden md:block">
             <div className="grid grid-cols-2 border-b-2 border-black">
@@ -552,16 +559,25 @@ function SizingChartTable({ chartData, highlightedLabel }) {
             </div>
             {chartData.lengthChart.map((row, i) => (
               <div key={row.label} className={`grid grid-cols-2 border-b border-gray-100 ${i % 2 === 0 ? 'bg-white' : 'bg-brand-offwhite'}`}>
-                <div className="py-4 px-4 text-sm font-medium">{row.label}</div>
-                <div className="py-4 px-4 text-sm">{row.range} in</div>
+                <div className="py-4 px-4 flex items-center">
+                  <span className="text-sm font-medium text-black">{row.label}</span>
+                </div>
+                <div className="py-4 px-4">
+                  <span className="text-sm font-medium">{row.range} in</span>
+                </div>
               </div>
             ))}
           </div>
-          <div className="md:hidden grid grid-cols-2 gap-3">
+          <div className="md:hidden space-y-3">
             {chartData.lengthChart.map((row) => (
-              <div key={row.label} className="bg-brand-offwhite rounded-lg p-4">
-                <p className="text-sm font-bold mb-1">{row.label}</p>
-                <p className="text-sm text-gray-600">{row.range} in</p>
+              <div key={row.label} className="rounded-lg p-4 bg-brand-offwhite">
+                <div className="mb-3">
+                  <span className="text-sm font-bold text-black">{row.label}</span>
+                </div>
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-widest text-gray-400 block mb-1">Inches</span>
+                  <p className="text-sm font-medium">{row.range} in</p>
+                </div>
               </div>
             ))}
           </div>
@@ -732,7 +748,7 @@ export default function SizingGuide({ sizingType }) {
         {/* Size Chart — full width below */}
         <FadeIn>
           <h3 className="text-xs font-bold uppercase tracking-widest mb-6 text-center">
-            Size Chart
+            {chartData.lengthChart ? 'Width Size Chart' : 'Size Chart'}
           </h3>
           <SizingChartTable chartData={chartData} highlightedLabel={highlightedLabel} />
         </FadeIn>

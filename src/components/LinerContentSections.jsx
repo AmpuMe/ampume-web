@@ -64,7 +64,7 @@ export default function LinerContentSections({ linerDesc, showPdfDownload, rende
             </div>
             <div className="md:col-span-7 md:col-start-6 space-y-4">
               {linerDesc.overview
-                .filter((para) => !para.startsWith('Standard Configuration:'))
+                .filter((para) => !para.startsWith('Standard Configuration:') && !para.startsWith('XL Size:'))
                 .map((para, i) => (
                   <p key={i} className="text-sm text-gray-600 leading-relaxed">{para}</p>
                 ))}
