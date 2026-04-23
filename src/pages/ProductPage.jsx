@@ -352,20 +352,37 @@ export default function ProductPage() {
             {/* Images */}
             <FadeIn>
               <div className="space-y-4">
-                {/* Main Image */}
-                <div className="aspect-square bg-gray-50 rounded-lg overflow-hidden">
-                  {images[selectedImage] ? (
-                    <img
-                      src={images[selectedImage].url}
-                      alt={images[selectedImage].altText || product.title}
-                      className="w-full h-full object-contain"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <span className="text-gray-300">No image</span>
+                {/* Main Image — sizing charts render at natural aspect so they stay legible */}
+                {(() => {
+                  const current = images[selectedImage];
+                  const isChart = current?.url?.includes('/sizing/') && current.url.includes('-sizing-chart');
+                  if (isChart) {
+                    return (
+                      <div className="bg-white rounded-lg overflow-hidden border border-gray-100">
+                        <img
+                          src={current.url}
+                          alt={current.altText || product.title}
+                          className="w-full h-auto block"
+                        />
+                      </div>
+                    );
+                  }
+                  return (
+                    <div className="aspect-square bg-gray-50 rounded-lg overflow-hidden">
+                      {current ? (
+                        <img
+                          src={current.url}
+                          alt={current.altText || product.title}
+                          className="w-full h-full object-contain"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <span className="text-gray-300">No image</span>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
+                  );
+                })()}
 
                 {/* Thumbnail Gallery */}
                 {images.length > 1 && (

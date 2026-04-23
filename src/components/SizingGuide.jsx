@@ -363,13 +363,19 @@ function SizingChartTable({ chartData, highlightedLabel }) {
   const isDual = chartData.measurementMethod === 'dual-circumference';
   const labels = chartData.labels || {};
   const inchPrimary = chartData.useInches;
+  const reverseColumns = !!chartData.reverseColumns;
+  const showAvailability = !!chartData.showAvailability;
 
-  // Column headers from data or defaults
-  const col1Header = chartData.columns?.[0]?.header || 'Size';
-  const col2Header = isDual ? (chartData.columns?.[2]?.header || `${labels.distal || 'Distal'} (4 cm)`) : `Circumference (${chartData.measurementPoints[0]?.distance})`;
-  const col3Header = isDual ? (chartData.columns?.[1]?.header || `${labels.proximal || 'Proximal'} (30 cm)`) : null;
+  // Default headers
+  const sizeHeader = chartData.columns?.find(c => c.key === 'label')?.header || 'Size';
+  const circHeader = chartData.columns?.find(c => c.key === 'circumference')?.header
+    || `Circumference (${chartData.measurementPoints[0]?.distance})`;
+  // Dual-circumference headers (socks / alpha classic)
+  const dualCol2 = chartData.columns?.[2]?.header || `${labels.distal || 'Distal'} (4 cm)`;
+  const dualCol3 = chartData.columns?.[1]?.header || `${labels.proximal || 'Proximal'} (30 cm)`;
 
   const formatRange = (range, rangeIn) => {
+    if (!range) return <span className="text-xs text-gray-400">—</span>;
     if (inchPrimary && rangeIn) {
       const suffix = rangeIn[1] >= 40 ? '+' : '';
       return <span className="text-sm font-medium">{rangeIn[0]} &ndash; {rangeIn[1]}{suffix} in</span>;
@@ -382,19 +388,49 @@ function SizingChartTable({ chartData, highlightedLabel }) {
     );
   };
 
+  const renderSizeCell = (size, isHighlighted) => (
+    <div className="py-4 px-4 flex items-center">
+      <span className={`text-sm font-medium ${isHighlighted ? 'text-brand-gold' : 'text-black'}`}>
+        {size.name || size.label}
+      </span>
+    </div>
+  );
+  const renderCircCell = (size) => (
+    <div className="py-4 px-4">{formatRange(size.circumference)}</div>
+  );
+  const renderAvail = (v) => (
+    <div className="py-4 px-4">
+      {v ? <span className="text-sm text-gray-600">{v}</span> : <span className="text-sm text-gray-300">N/A</span>}
+    </div>
+  );
+
+  // Column count
+  const colCount = isDual ? 3 : (showAvailability ? 4 : 2);
+  const gridCols = isDual ? 'grid-cols-3' : (showAvailability ? 'grid-cols-4' : 'grid-cols-2');
+
   return (
     <>
       {/* Desktop table */}
       <div className="hidden md:block">
-        <div className={`grid ${isDual ? 'grid-cols-3' : 'grid-cols-2'} border-b-2 border-black`}>
-          <div className="py-3 px-4 text-xs font-bold uppercase tracking-widest">{col1Header}</div>
+        <div className={`grid ${gridCols} border-b-2 border-black`}>
           {isDual ? (
             <>
-              <div className="py-3 px-4 text-xs font-bold uppercase tracking-widest">{col2Header}</div>
-              <div className="py-3 px-4 text-xs font-bold uppercase tracking-widest">{col3Header}</div>
+              <div className="py-3 px-4 text-xs font-bold uppercase tracking-widest">{sizeHeader}</div>
+              <div className="py-3 px-4 text-xs font-bold uppercase tracking-widest">{dualCol2}</div>
+              <div className="py-3 px-4 text-xs font-bold uppercase tracking-widest">{dualCol3}</div>
+            </>
+          ) : reverseColumns ? (
+            <>
+              <div className="py-3 px-4 text-xs font-bold uppercase tracking-widest">{circHeader}</div>
+              <div className="py-3 px-4 text-xs font-bold uppercase tracking-widest">{sizeHeader}</div>
+              {showAvailability && <div className="py-3 px-4 text-xs font-bold uppercase tracking-widest">Locking</div>}
+              {showAvailability && <div className="py-3 px-4 text-xs font-bold uppercase tracking-widest">Cushion</div>}
             </>
           ) : (
-            <div className="py-3 px-4 text-xs font-bold uppercase tracking-widest">{col2Header}</div>
+            <>
+              <div className="py-3 px-4 text-xs font-bold uppercase tracking-widest">{sizeHeader}</div>
+              <div className="py-3 px-4 text-xs font-bold uppercase tracking-widest">{circHeader}</div>
+            </>
           )}
         </div>
 
@@ -403,27 +439,30 @@ function SizingChartTable({ chartData, highlightedLabel }) {
           return (
             <div
               key={size.label}
-              className={`grid ${isDual ? 'grid-cols-3' : 'grid-cols-2'} border-b border-gray-100 transition-colors duration-300 border-l-4 ${
+              className={`grid ${gridCols} border-b border-gray-100 transition-colors duration-300 border-l-4 ${
                 isHighlighted
                   ? 'border-l-brand-gold bg-brand-gold/5'
                   : `border-l-transparent ${i % 2 === 0 ? 'bg-white' : 'bg-brand-offwhite'}`
               }`}
             >
-              <div className="py-4 px-4 flex items-center">
-                <span className={`text-sm font-medium ${isHighlighted ? 'text-brand-gold' : 'text-black'}`}>
-                  {size.name || size.label}
-                </span>
-              </div>
-
               {isDual ? (
                 <>
+                  {renderSizeCell(size, isHighlighted)}
                   <div className="py-4 px-4">{formatRange(size.distal, size.distalIn)}</div>
                   <div className="py-4 px-4">{formatRange(size.proximal, size.proximalIn)}</div>
                 </>
+              ) : reverseColumns ? (
+                <>
+                  {renderCircCell(size)}
+                  {renderSizeCell(size, isHighlighted)}
+                  {showAvailability && renderAvail(size.locking)}
+                  {showAvailability && renderAvail(size.cushion)}
+                </>
               ) : (
-                <div className="py-4 px-4">
-                  <span className="text-sm font-medium">{size.circumference[0]} &ndash; {size.circumference[1]} cm</span>
-                </div>
+                <>
+                  {renderSizeCell(size, isHighlighted)}
+                  {renderCircCell(size)}
+                </>
               )}
             </div>
           );
@@ -461,10 +500,28 @@ function SizingChartTable({ chartData, highlightedLabel }) {
                   </div>
                 </div>
               ) : (
-                <div>
-                  <span className="text-xs font-bold uppercase tracking-widest text-gray-400 block mb-1">Circumference</span>
-                  <p className="text-sm font-medium">{size.circumference[0]} &ndash; {size.circumference[1]} cm</p>
-                </div>
+                <>
+                  <div>
+                    <span className="text-xs font-bold uppercase tracking-widest text-gray-400 block mb-1">Measured Circumference</span>
+                    {size.circumference ? (
+                      <p className="text-sm font-medium">{size.circumference[0]} &ndash; {size.circumference[1]} cm</p>
+                    ) : (
+                      <p className="text-sm text-gray-400">—</p>
+                    )}
+                  </div>
+                  {showAvailability && (
+                    <div className="grid grid-cols-2 gap-4 mt-3">
+                      <div>
+                        <span className="text-xs font-bold uppercase tracking-widest text-gray-400 block mb-1">Locking</span>
+                        {size.locking ? <p className="text-sm text-gray-600">{size.locking}</p> : <p className="text-sm text-gray-300">N/A</p>}
+                      </div>
+                      <div>
+                        <span className="text-xs font-bold uppercase tracking-widest text-gray-400 block mb-1">Cushion</span>
+                        {size.cushion ? <p className="text-sm text-gray-600">{size.cushion}</p> : <p className="text-sm text-gray-300">N/A</p>}
+                      </div>
+                    </div>
+                  )}
+                </>
               )}
             </div>
           );
@@ -580,8 +637,11 @@ export default function SizingGuide({ sizingType }) {
       const circ = parseFloat(circumferenceCm);
       if (isNaN(circ)) return;
 
+      // Only consider sizes with a concrete circumference range (skip X-Large etc.)
+      const measurable = sizes.filter((s) => s.circumference);
+
       // Find ALL sizes where measurement falls within range
-      const matches = sizes.filter(
+      const matches = measurable.filter(
         (s) => circ >= s.circumference[0] && circ <= s.circumference[1]
       );
 
@@ -598,9 +658,9 @@ export default function SizingGuide({ sizingType }) {
       }
 
       // Between sizes — find the gap and recommend the larger
-      for (let i = 0; i < sizes.length - 1; i++) {
-        if (circ > sizes[i].circumference[1] && circ < sizes[i + 1].circumference[0]) {
-          setRecommendation({ size: sizes[i + 1], between: [sizes[i], sizes[i + 1]], noMatch: false });
+      for (let i = 0; i < measurable.length - 1; i++) {
+        if (circ > measurable[i].circumference[1] && circ < measurable[i + 1].circumference[0]) {
+          setRecommendation({ size: measurable[i + 1], between: [measurable[i], measurable[i + 1]], noMatch: false });
           return;
         }
       }
