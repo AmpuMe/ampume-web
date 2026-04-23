@@ -240,7 +240,7 @@ function ChatInterface({ initialPrompt }) {
             )}
           </button>
         </form>
-        <p className="text-[10px] text-gray-400 text-center mt-2">
+        <p className="text-xs text-gray-600 text-center mt-2">
           AI responses are informational only. Always consult your prosthetist or healthcare provider for medical decisions.
         </p>
       </div>
