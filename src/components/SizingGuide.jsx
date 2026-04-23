@@ -256,19 +256,22 @@ function MeasurementImage({ chartData, className = "", showAK: externalShowAK, o
       ))}
       {currentLengthArrow && (
         <>
-          {/* Vertical double-arrow hugs the leg at roughly centre-left */}
+          {/* Vertical double-arrow, shifted further left */}
           <div
-            className="absolute left-[42%] md:left-[44%] flex flex-col items-center pointer-events-none"
+            className="absolute left-[30%] md:left-[32%] flex flex-col items-center pointer-events-none"
             style={{ top: `${currentLengthArrow.top}%`, bottom: `${100 - currentLengthArrow.bottom}%` }}
           >
             <div className="w-0 h-0 border-l-[5px] border-r-[5px] border-b-[8px] border-l-transparent border-r-transparent border-b-brand-gold" />
             <div className="flex-1 w-[2px] bg-brand-gold" />
             <div className="w-0 h-0 border-l-[5px] border-r-[5px] border-t-[8px] border-l-transparent border-r-transparent border-t-brand-gold" />
           </div>
-          {/* Label anchored to the LEFT edge so it doesn't crowd the arrow */}
+          {/* Label centered over the arrow */}
           <div
-            className="absolute left-3 md:left-6 bg-white/95 backdrop-blur-sm rounded-md px-2.5 py-1.5 shadow-sm border border-brand-gold/20 max-w-[130px] pointer-events-none"
-            style={{ top: `${(currentLengthArrow.top + currentLengthArrow.bottom) / 2}%`, transform: 'translateY(-50%)' }}
+            className="absolute left-[30%] md:left-[32%] bg-white/95 backdrop-blur-sm rounded-md px-2.5 py-1.5 shadow-sm border border-brand-gold/20 max-w-[140px] pointer-events-none"
+            style={{
+              top: `${(currentLengthArrow.top + currentLengthArrow.bottom) / 2}%`,
+              transform: 'translate(-50%, -50%)',
+            }}
           >
             <p className="text-[11px] md:text-xs font-bold text-brand-gold leading-none">{currentLengthArrow.label}</p>
             <p className="text-[10px] md:text-[11px] text-gray-500 leading-tight mt-0.5">{currentLengthArrow.sublabel}</p>
