@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Send, User, Bot, Loader2, MessageCircle, Sparkles } from 'lucide-react';
+import { Send, User, Bot, Loader2, MessageCircle } from 'lucide-react';
 import SimpleNavbar from '../components/SimpleNavbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
@@ -320,15 +320,17 @@ const AISupport = () => {
         <div className="max-w-4xl mx-auto">
           {/* Headline + positioning */}
           <div className="text-center mb-8 md:mb-10">
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-brand-gold bg-brand-gold/10 border border-brand-gold/20 rounded-full px-3 py-1 mb-5">
-              <Sparkles className="w-3 h-3" />
-              Trained on expert prosthetic knowledge and real-world patient needs
+            <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 block">
+              Ask AmpuMe
             </span>
             <h1 className="text-3xl md:text-5xl font-light tracking-tight mb-4">
               Ask AmpuMe. Get real answers.
             </h1>
             <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
               Clear, reliable answers for real life with limb loss — informed by expert guidance and designed for everyday life.
+            </p>
+            <p className="text-xs text-gray-400 mt-5 tracking-wide">
+              Trained on expert prosthetic knowledge and real-world patient needs.
             </p>
           </div>
 
