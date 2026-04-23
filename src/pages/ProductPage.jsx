@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ShoppingBag, Check } from 'lucide-react';
+import { ArrowLeft, ShoppingBag, Check, ZoomIn, X } from 'lucide-react';
 import Select from '../components/Select';
 import SimpleNavbar from '../components/SimpleNavbar';
 import Footer from '../components/Footer';
@@ -105,6 +105,14 @@ export default function ProductPage() {
   const [error, setError] = useState(null);
   const [selectedOptions, setSelectedOptions] = useState({});
   const [selectedImage, setSelectedImage] = useState(0);
+  const [chartZoomOpen, setChartZoomOpen] = useState(false);
+
+  useEffect(() => {
+    if (!chartZoomOpen) return;
+    const onKey = (e) => { if (e.key === 'Escape') setChartZoomOpen(false); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [chartZoomOpen]);
   const [isAdding, setIsAdding] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
   const [currentGroup, setCurrentGroup] = useState(null);
@@ -358,13 +366,22 @@ export default function ProductPage() {
                   const isChart = current?.url?.includes('/sizing/') && current.url.includes('-sizing-chart');
                   if (isChart) {
                     return (
-                      <div className="bg-white rounded-lg overflow-hidden border border-gray-100">
+                      <button
+                        type="button"
+                        onClick={() => setChartZoomOpen(true)}
+                        className="group relative block w-full bg-white rounded-lg overflow-hidden border border-gray-100 cursor-zoom-in"
+                        aria-label="View full-size sizing chart"
+                      >
                         <img
                           src={current.url}
                           alt={current.altText || product.title}
                           className="w-full h-auto block"
                         />
-                      </div>
+                        <span className="absolute top-3 right-3 flex items-center gap-1.5 bg-white/95 backdrop-blur-sm border border-gray-200 rounded-full pl-2.5 pr-3 py-1.5 text-[11px] font-medium text-gray-700 shadow-sm group-hover:bg-white group-hover:border-gray-400 transition-colors">
+                          <ZoomIn className="w-3.5 h-3.5" />
+                          Click to enlarge
+                        </span>
+                      </button>
                     );
                   }
                   return (
@@ -713,6 +730,39 @@ export default function ProductPage() {
       )}
 
       <Footer />
+
+      {/* Sizing chart zoom modal */}
+      {chartZoomOpen && (() => {
+        const chartImg = images.find(
+          (im) => im?.url?.includes('/sizing/') && im.url.includes('-sizing-chart')
+        );
+        if (!chartImg) return null;
+        return (
+          <div
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 md:p-8"
+            onClick={() => setChartZoomOpen(false)}
+            onKeyDown={(e) => e.key === 'Escape' && setChartZoomOpen(false)}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Sizing chart"
+          >
+            <button
+              type="button"
+              onClick={() => setChartZoomOpen(false)}
+              className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 rounded-full bg-white text-black flex items-center justify-center shadow-lg hover:bg-gray-100 transition-colors"
+              aria-label="Close"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <img
+              src={chartImg.url}
+              alt={chartImg.altText || 'Sizing chart'}
+              onClick={(e) => e.stopPropagation()}
+              className="max-w-[95vw] max-h-[90vh] w-auto h-auto bg-white rounded-lg shadow-2xl"
+            />
+          </div>
+        );
+      })()}
     </div>
   );
 }
