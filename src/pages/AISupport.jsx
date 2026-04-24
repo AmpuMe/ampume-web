@@ -198,7 +198,7 @@ function ChatInterface({ initialPrompt }) {
   const isEmpty = messages.length === 0;
 
   return (
-    <div className="flex flex-col bg-white border border-gray-200 rounded-2xl overflow-hidden" style={{ height: 'min(82vh, 820px)' }}>
+    <div className="flex flex-col bg-white border border-gray-200 rounded-2xl overflow-hidden flex-1 min-h-0">
       {/* Header — new conversation button */}
       {!isEmpty && (
         <div className="flex justify-end px-5 md:px-6 pt-5 pb-0">
@@ -316,18 +316,18 @@ const AISupport = () => {
       />
       <SimpleNavbar />
 
-      <main className="pt-36 md:pt-40 pb-20 px-6 md:px-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Headline + positioning */}
-          <div className="text-center mb-8 md:mb-10">
-            <h1 className="text-3xl md:text-5xl font-light tracking-tight mb-4">
+      {/* Full-viewport layout — chat stays in one frame so we don't stack
+          two vertical scroll areas (page + chat window). Footer sits below
+          the fold. */}
+      <main className="h-[100dvh] flex flex-col pt-28 md:pt-32 pb-6 md:pb-8 px-6 md:px-12">
+        <div className="max-w-4xl mx-auto w-full flex flex-col flex-1 min-h-0">
+          {/* Headline block — kept tight so the chat gets maximum vertical room */}
+          <div className="text-center mb-4 md:mb-6 flex-shrink-0">
+            <h1 className="text-3xl md:text-4xl font-light tracking-tight mb-3">
               Ask AmpuMe. Get real answers.
             </h1>
-            <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-sm md:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">
               Clear, reliable answers for real life with limb loss — informed by expert guidance and designed for everyday life.
-            </p>
-            <p className="text-xs text-gray-400 mt-5 tracking-wide">
-              Trained on expert prosthetic knowledge and real-world patient needs.
             </p>
           </div>
 
