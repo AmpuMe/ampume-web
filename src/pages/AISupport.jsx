@@ -211,14 +211,14 @@ function ChatInterface({ initialPrompt }) {
         </div>
       )}
       {/* Messages area — extra top + right padding so scrollbar doesn't sit flush against the rounded corner */}
-      <div ref={scrollAreaRef} className="flex-1 overflow-y-auto pl-4 pr-3 md:pl-6 md:pr-4 pt-8 pb-6 [scrollbar-gutter:stable]">
+      <div ref={scrollAreaRef} className="flex-1 overflow-y-auto pl-4 pr-3 md:pl-6 md:pr-4 pt-4 md:pt-8 pb-4 md:pb-6 [scrollbar-gutter:stable]">
         {isEmpty ? (
-          <div className="min-h-full flex flex-col items-center justify-center text-center px-4 py-8">
-            <div className="w-14 h-14 rounded-full bg-gray-50 flex items-center justify-center mb-5 flex-shrink-0">
-              <MessageCircle className="w-7 h-7 text-gray-400" />
+          <div className="min-h-full flex flex-col items-center justify-center text-center px-2 md:px-4 py-4 md:py-8">
+            <div className="w-10 h-10 md:w-14 md:h-14 rounded-full bg-gray-50 flex items-center justify-center mb-3 md:mb-5 flex-shrink-0">
+              <MessageCircle className="w-5 h-5 md:w-7 md:h-7 text-gray-400" />
             </div>
-            <h3 className="text-lg font-medium mb-2">How can I help you today?</h3>
-            <p className="text-sm text-gray-500 mb-6 max-w-md">
+            <h3 className="text-base md:text-lg font-medium mb-1 md:mb-2">How can I help you today?</h3>
+            <p className="text-xs md:text-sm text-gray-500 mb-4 md:mb-6 max-w-md">
               Ask me anything about prosthetics, recovery, daily life, or insurance coverage.
             </p>
             <div className="grid grid-cols-1 sm:flex sm:flex-wrap sm:justify-center gap-2 w-full max-w-lg">
@@ -250,7 +250,7 @@ function ChatInterface({ initialPrompt }) {
       </div>
 
       {/* Input area — subtle gradient anchors the composer */}
-      <div className="border-t border-gray-100 px-4 md:px-6 py-5 bg-gradient-to-b from-brand-offwhite/70 to-white">
+      <div className="border-t border-gray-100 px-4 md:px-6 py-3 md:py-5 bg-gradient-to-b from-brand-offwhite/70 to-white">
         <form onSubmit={handleSubmit} className="flex items-center gap-3">
           <input
             ref={inputRef}
@@ -295,7 +295,7 @@ function ChatInterface({ initialPrompt }) {
             })}
           </div>
         )}
-        <p className="text-xs text-gray-600 text-center mt-3 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-[10px] md:text-xs text-gray-600 text-center mt-3 max-w-3xl mx-auto leading-snug md:leading-relaxed">
           {DISCLAIMER}
         </p>
       </div>
@@ -319,14 +319,14 @@ const AISupport = () => {
       {/* Full-viewport layout — chat stays in one frame so we don't stack
           two vertical scroll areas (page + chat window). Footer sits below
           the fold. */}
-      <main className="h-[100dvh] flex flex-col pt-20 md:pt-24 pb-6 md:pb-8 px-6 md:px-12">
+      <main className="h-[100dvh] flex flex-col pt-24 md:pt-32 pb-6 md:pb-8 px-6 md:px-12">
         <div className="max-w-4xl mx-auto w-full flex flex-col flex-1 min-h-0">
-          {/* Headline block — kept tight so the chat gets maximum vertical room */}
-          <div className="text-center mb-4 md:mb-6 flex-shrink-0">
-            <h1 className="text-3xl md:text-4xl font-light tracking-tight mb-3">
+          {/* Headline block — kept tight on mobile so the chat gets maximum vertical room */}
+          <div className="text-center mb-3 md:mb-6 flex-shrink-0">
+            <h1 className="text-2xl md:text-4xl font-light tracking-tight mb-2 md:mb-3">
               Ask AmpuMe. Get real answers.
             </h1>
-            <p className="text-sm md:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xs md:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">
               Clear, reliable answers for real life with limb loss — informed by expert guidance and designed for everyday life.
             </p>
           </div>
