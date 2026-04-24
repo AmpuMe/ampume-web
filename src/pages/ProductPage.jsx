@@ -143,11 +143,42 @@ export default function ProductPage() {
         const result = await fetchProductByHandle(handle);
         if (result) {
           setProduct(result);
-          // Always select the leftmost (sorted) value for every option.
+          // Decide whether to pre-select option values on load.
+          //
+          // Pre-selecting leftmost defaults is convenient for products with
+          // dense variant matrices (every combination exists), but for sparse
+          // matrices — common with liners that have Fabric × Thickness × Size
+          // — the defaults force other groups to grey out values that ARE
+          // available with a different choice. That misleads users. For those
+          // products, load with nothing selected so the full landscape is
+          // visible and the user can explore.
+          const opts = result.options?.filter(o => o.values.length > 1) || [];
+          const variants = result.variants?.edges?.map(e => e.node) || [];
+          const maxCombos = opts.reduce((acc, o) => acc * o.values.length, 1);
+          const isSparse = opts.length >= 2 && variants.length < maxCombos;
+
+          // Try to restore last session's picks for this product first.
+          let stored = null;
+          try {
+            const raw = typeof window !== 'undefined' && sessionStorage.getItem(`product-options:${handle}`);
+            if (raw) stored = JSON.parse(raw);
+          } catch { /* ignore */ }
+
           const initialOptions = {};
           result.options?.forEach(option => {
-            const sorted = sortOptionValues(option.values, option.name);
-            initialOptions[option.name] = sorted[0] || '';
+            const storedVal = stored?.[option.name];
+            const isValidStored = storedVal && option.values.includes(storedVal);
+            if (isValidStored) {
+              initialOptions[option.name] = storedVal;
+            } else if (isSparse) {
+              // Empty string = not yet chosen; isOptionValueAvailable treats
+              // missing selections as "any value matches", so everything
+              // renders as available on load.
+              initialOptions[option.name] = '';
+            } else {
+              const sorted = sortOptionValues(option.values, option.name);
+              initialOptions[option.name] = sorted[0] || '';
+            }
           });
           setSelectedOptions(initialOptions);
         } else {
@@ -163,6 +194,14 @@ export default function ProductPage() {
 
     loadProduct();
   }, [handle]);
+
+  // Persist picks per-product so nav-away-and-back doesn't wipe them
+  useEffect(() => {
+    if (!product || Object.keys(selectedOptions).length === 0) return;
+    try {
+      sessionStorage.setItem(`product-options:${handle}`, JSON.stringify(selectedOptions));
+    } catch { /* ignore quota errors */ }
+  }, [selectedOptions, handle, product]);
 
   // Find the selected variant based on options (exact match)
   const selectedVariant = useMemo(() => {
@@ -207,22 +246,46 @@ export default function ProductPage() {
   // Get raw images from Shopify
   const rawImages = product?.images?.edges?.map(edge => edge.node) || [];
 
-  // Handle option change
+  // Handle option change — supports three behaviors:
+  //   1. Click an unselected, compatible value → select it
+  //   2. Click the currently-selected value → deselect (toggle off)
+  //   3. Click a value that's incompatible with current picks → select it
+  //      and clear any other-group picks that conflict, so the user can
+  //      freely pivot without having to manually deselect first
   const handleOptionChange = (optionName, value) => {
-    setSelectedOptions(prev => ({
-      ...prev,
-      [optionName]: value,
-    }));
     setAddedToCart(false);
+    setSelectedOptions(prev => {
+      const currentlySelected = prev[optionName] === value;
+      if (currentlySelected) {
+        return { ...prev, [optionName]: '' };
+      }
+      // Would the new combo have any matching variant? If not, clear other
+      // groups that conflict — starting from the LAST one the user set.
+      const tentative = { ...prev, [optionName]: value };
+      const hasMatch = (sel) =>
+        product?.variants?.edges?.some(({ node: v }) =>
+          v.selectedOptions.every(o => !sel[o.name] || sel[o.name] === o.value)
+        );
+      if (!hasMatch(tentative)) {
+        // Clear other selections one at a time until the pick is consistent.
+        for (const o of (product?.options || [])) {
+          if (o.name === optionName) continue;
+          if (!tentative[o.name]) continue;
+          tentative[o.name] = '';
+          if (hasMatch(tentative)) break;
+        }
+      }
+      return tentative;
+    });
   };
 
   const handleAddToCart = async () => {
-    const variant = selectedVariant || bestVariant;
-    if (!variant) return;
+    // Only add once every option is chosen and a concrete variant resolves.
+    if (!selectedVariant) return;
 
     setIsAdding(true);
     try {
-      await addToCart(variant.id, 1);
+      await addToCart(selectedVariant.id, 1);
       setAddedToCart(true);
       setTimeout(() => setAddedToCart(false), 3000);
     } catch (err) {
@@ -232,7 +295,31 @@ export default function ProductPage() {
     }
   };
 
-  const price = selectedVariant?.price?.amount || bestVariant?.price?.amount || product?.priceRange?.minVariantPrice?.amount;
+  // Which option groups (with >1 value) haven't been picked yet?
+  const unpickedOptions = (product?.options || [])
+    .filter(o => o.values.length > 1 && !selectedOptions[o.name])
+    .map(o => o.name);
+
+  const allOptionsChosen = unpickedOptions.length === 0;
+
+  // Price display: exact variant price once fully resolved, otherwise the
+  // product-level min/max range while the user is still exploring.
+  const minPrice = product?.priceRange?.minVariantPrice?.amount;
+  const maxPrice = product?.priceRange?.maxVariantPrice?.amount;
+  const price = allOptionsChosen
+    ? (selectedVariant?.price?.amount || bestVariant?.price?.amount || minPrice)
+    : minPrice;
+  const showPriceRange = !allOptionsChosen && minPrice && maxPrice && minPrice !== maxPrice;
+
+  // Progressive Add-to-Cart label — narrates what's still missing.
+  const formatList = (items) => {
+    if (items.length <= 1) return items.join('');
+    if (items.length === 2) return `${items[0]} and ${items[1]}`;
+    return `${items.slice(0, -1).join(', ')}, and ${items[items.length - 1]}`;
+  };
+  const addToCartLabel = allOptionsChosen
+    ? 'Add to Cart'
+    : `Select ${formatList(unpickedOptions.map(n => n.toLowerCase()))}`;
 
   // Detect product type for enhanced layout
   const baseName = currentGroup ? currentGroup.baseName : product?.title;
@@ -516,9 +603,13 @@ export default function ProductPage() {
                   <div className="mb-4" />
                 )}
 
-                {/* Price */}
+                {/* Price — shows a range until all options are picked */}
                 <p className="text-2xl font-bold mb-4">
-                  {price && price !== '0.00' ? formatPrice(price) : 'Price TBD'}
+                  {showPriceRange
+                    ? `${formatPrice(minPrice)} – ${formatPrice(maxPrice)}`
+                    : price && price !== '0.00'
+                      ? formatPrice(price)
+                      : 'Price TBD'}
                 </p>
 
                 {/* Short description for liner products */}
@@ -577,25 +668,25 @@ export default function ProductPage() {
                       </div>
 
                       {option.values.length <= 6 ? (
-                        // Button style for few options
+                        // Button style for few options — all clickable;
+                        // unavailable values stay pickable (and clearing
+                        // conflicting picks is handled in handleOptionChange)
                         <div className="flex flex-wrap gap-2">
                           {sortOptionValues(option.values, option.name).map(value => {
                             const isSelected = selectedOptions[option.name] === value;
                             const available = isOptionValueAvailable(option.name, value);
-                            const disabled = !available && !isSelected;
                             return (
                               <button
                                 key={value}
-                                onClick={() => !disabled && handleOptionChange(option.name, value)}
-                                disabled={disabled}
-                                title={disabled ? 'Not available with the current selection' : undefined}
+                                onClick={() => handleOptionChange(option.name, value)}
+                                title={!available && !isSelected ? 'Not available with the current selection — click to switch' : undefined}
                                 className={`
                                   px-4 py-2 text-sm border rounded-full transition-colors
                                   ${isSelected
                                     ? 'border-black bg-black text-white'
-                                    : disabled
-                                      ? 'border-gray-100 text-gray-300 line-through cursor-not-allowed'
-                                      : 'border-gray-200 hover:border-gray-400'
+                                    : available
+                                      ? 'border-gray-200 hover:border-gray-400'
+                                      : 'border-gray-100 text-gray-300 hover:border-gray-300 hover:text-gray-500'
                                   }
                                 `}
                               >
@@ -625,13 +716,13 @@ export default function ProductPage() {
                 <div className="space-y-4 mb-8">
                   <button
                     onClick={handleAddToCart}
-                    disabled={isAdding || (!selectedVariant && !bestVariant) || !price || price === '0.00'}
+                    disabled={isAdding || !allOptionsChosen || !selectedVariant || !price || price === '0.00'}
                     className={`
                       w-full py-4 px-8 rounded-full font-bold text-center transition-all duration-300
                       flex items-center justify-center gap-2
                       ${addedToCart
                         ? 'bg-green-600 text-white'
-                        : (selectedVariant || bestVariant) && price && price !== '0.00'
+                        : allOptionsChosen && selectedVariant && price && price !== '0.00'
                           ? 'bg-black text-white hover:bg-gray-800'
                           : 'bg-gray-200 text-gray-500 cursor-not-allowed'
                       }
@@ -644,7 +735,9 @@ export default function ProductPage() {
                       </>
                     ) : isAdding ? (
                       'Adding...'
-                    ) : (!selectedVariant && !bestVariant) || !price || price === '0.00' ? (
+                    ) : !allOptionsChosen ? (
+                      addToCartLabel
+                    ) : !selectedVariant || !price || price === '0.00' ? (
                       'Price Coming Soon'
                     ) : (
                       <>
