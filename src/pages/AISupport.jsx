@@ -319,7 +319,7 @@ const AISupport = () => {
       {/* Full-viewport layout — chat stays in one frame so we don't stack
           two vertical scroll areas (page + chat window). Footer sits below
           the fold. */}
-      <main className="h-[100dvh] flex flex-col pt-28 md:pt-32 pb-6 md:pb-8 px-6 md:px-12">
+      <main className="h-[100dvh] flex flex-col pt-20 md:pt-24 pb-6 md:pb-8 px-6 md:px-12">
         <div className="max-w-4xl mx-auto w-full flex flex-col flex-1 min-h-0">
           {/* Headline block — kept tight so the chat gets maximum vertical room */}
           <div className="text-center mb-4 md:mb-6 flex-shrink-0">
