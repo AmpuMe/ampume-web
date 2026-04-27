@@ -25,12 +25,17 @@
     width: 100%;
   }
 
-  /* Prevent iOS Safari from auto-zooming the page when focusing form inputs
-     (it zooms whenever input/textarea/select has a computed font-size < 16px). */
-  @media (max-width: 768px) {
-    input, textarea, select {
-      font-size: 16px;
-    }
+}
+
+/* Prevent iOS Safari from auto-zooming the page when focusing form inputs
+   (it zooms whenever input/textarea/select has a computed font-size < 16px).
+   Lives outside @layer base so it can defeat Tailwind utility classes like
+   `text-sm` on individual inputs without needing !important everywhere. */
+@media (max-width: 768px) {
+  input:not([type="checkbox"]):not([type="radio"]),
+  textarea,
+  select {
+    font-size: 16px !important;
   }
 }
 

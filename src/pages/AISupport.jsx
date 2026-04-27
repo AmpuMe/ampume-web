@@ -166,7 +166,7 @@ function LandingView({ onSend, isLoading }) {
             onChange={(e) => setInput(e.target.value)}
             placeholder={isNarrow ? 'Ask a question…' : "Ask a question or share what's going on"}
             disabled={isLoading}
-            className="flex-1 min-w-0 bg-transparent text-sm md:text-base focus:outline-none placeholder:text-gray-400 py-1.5"
+            className="flex-1 min-w-0 bg-transparent text-base focus:outline-none placeholder:text-gray-400 py-1.5"
           />
           <button
             type="submit"
