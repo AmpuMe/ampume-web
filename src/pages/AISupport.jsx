@@ -211,14 +211,14 @@ function LandingView({ onSend, isLoading }) {
                 key={key}
                 type="button"
                 onClick={() => setActiveTopic(active ? null : key)}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-full border transition-colors flex-shrink-0 ${
+                className={`flex items-center gap-1.5 md:gap-2 px-3 py-2 md:px-4 md:py-2.5 rounded-full border transition-colors flex-shrink-0 ${
                   active
                     ? 'bg-black text-white border-black'
                     : 'bg-gray-50 text-gray-600 border-gray-100 hover:border-gray-300 hover:text-gray-900'
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 ${active ? 'text-white' : color}`} />
-                <span className="text-[11px] md:text-xs font-medium whitespace-nowrap">{label}</span>
+                <Icon className={`w-3.5 h-3.5 md:w-4 md:h-4 ${active ? 'text-white' : color}`} />
+                <span className="text-[11px] md:text-sm font-medium whitespace-nowrap">{label}</span>
               </button>
             );
           })}
