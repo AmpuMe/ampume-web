@@ -147,19 +147,18 @@ function LandingView({ onSend, isLoading }) {
 
   return (
     <div className="max-w-4xl mx-auto px-6 md:px-12 pt-32 md:pt-40 pb-12 min-h-[100dvh]">
-      {/* Hero — headline + subtext kept tight to the input below so they
-          read as one primary block (Alex's V2 layout: input is the anchor). */}
-      <div className="text-center mb-3 md:mb-5">
-        <h1 className="text-2xl md:text-5xl font-light tracking-tight mb-2 md:mb-3">
+      {/* Hero */}
+      <div className="text-center mb-6 md:mb-8">
+        <h1 className="text-3xl md:text-5xl font-light tracking-tight mb-3 md:mb-4">
           Ask AmpuMe. Get real answers.
         </h1>
-        <p className="text-xs md:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-sm md:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">
           Clear, reliable answers for real life with limb loss — informed by expert guidance and designed for everyday life.
         </p>
       </div>
 
-      {/* Primary action — the dominant input. Larger pill, more visible shadow. */}
-      <form onSubmit={handleSubmit} className="max-w-2xl mx-auto mb-6 md:mb-8">
+      {/* Primary action — dominant input */}
+      <form onSubmit={handleSubmit} className="max-w-2xl mx-auto mb-10 md:mb-14">
         <div className="relative bg-white border border-gray-200 rounded-full shadow-md hover:shadow-lg px-4 md:px-5 py-3 md:py-3.5 flex items-center gap-2 md:gap-3 focus-within:border-gray-400 focus-within:shadow-lg transition-all">
           <input
             type="text"
@@ -180,20 +179,20 @@ function LandingView({ onSend, isLoading }) {
         </div>
       </form>
 
-      {/* Suggested questions — secondary, tighter pills, 2 rows max on mobile */}
-      <div className="mb-4 md:mb-6">
-        <h3 className="text-xs md:text-sm font-medium text-gray-700 mb-2.5 md:mb-3">Suggested questions</h3>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+      {/* Suggested questions */}
+      <div className="mb-8 md:mb-10">
+        <h3 className="text-xs md:text-sm font-medium text-gray-700 mb-3 md:mb-4">Suggested questions</h3>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 md:gap-3">
           {visibleQuestions.map((q) => (
             <button
               key={q}
               type="button"
               onClick={() => onSend(q)}
               disabled={isLoading}
-              className="group text-left bg-white border border-gray-200 hover:border-gray-400 hover:shadow-sm rounded-xl px-3 py-2.5 md:px-3.5 md:py-3 transition-all disabled:opacity-50 disabled:hover:border-gray-200"
+              className="group text-left bg-white border border-gray-200 hover:border-gray-400 hover:shadow-sm rounded-xl px-3.5 py-3 md:px-4 md:py-3.5 transition-all disabled:opacity-50 disabled:hover:border-gray-200"
             >
               <div className="flex items-start justify-between gap-2">
-                <span className="text-[11px] md:text-sm text-gray-700 leading-snug line-clamp-3">{q}</span>
+                <span className="text-xs md:text-sm text-gray-700 leading-snug line-clamp-3">{q}</span>
                 <ChevronRight className="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-300 group-hover:text-gray-700 flex-shrink-0 mt-0.5 transition-colors" />
               </div>
             </button>
@@ -201,10 +200,10 @@ function LandingView({ onSend, isLoading }) {
         </div>
       </div>
 
-      {/* Browse by topic — de-emphasized; horizontal scroll only, lighter pills */}
-      <div className="mb-4 md:mb-6">
-        <h3 className="text-xs md:text-sm font-medium text-gray-500 mb-2.5 md:mb-3">Browse by topic</h3>
-        <div className="flex flex-nowrap overflow-x-auto gap-1.5 md:gap-2 pb-1 -mx-6 px-6 md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      {/* Browse by topic — de-emphasized */}
+      <div className="mb-8 md:mb-10">
+        <h3 className="text-xs md:text-sm font-medium text-gray-500 mb-3 md:mb-4">Browse by topic</h3>
+        <div className="flex flex-nowrap overflow-x-auto gap-2 pb-1 -mx-6 px-6 md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {TOPICS.map(({ key, label, Icon, color }) => {
             const active = activeTopic === key;
             return (
@@ -212,13 +211,13 @@ function LandingView({ onSend, isLoading }) {
                 key={key}
                 type="button"
                 onClick={() => setActiveTopic(active ? null : key)}
-                className={`flex items-center gap-1.5 px-2.5 md:px-3 py-1.5 rounded-full border transition-colors flex-shrink-0 ${
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-full border transition-colors flex-shrink-0 ${
                   active
                     ? 'bg-black text-white border-black'
                     : 'bg-gray-50 text-gray-600 border-gray-100 hover:border-gray-300 hover:text-gray-900'
                 }`}
               >
-                <Icon className={`w-3 h-3 md:w-3.5 md:h-3.5 ${active ? 'text-white' : color}`} />
+                <Icon className={`w-3.5 h-3.5 ${active ? 'text-white' : color}`} />
                 <span className="text-[11px] md:text-xs font-medium whitespace-nowrap">{label}</span>
               </button>
             );
@@ -226,25 +225,25 @@ function LandingView({ onSend, isLoading }) {
         </div>
       </div>
 
-      {/* Subtle divider between content and disclaimer */}
-      <div className="h-px bg-gray-100 mb-4 md:mb-6" />
+      {/* Subtle divider */}
+      <div className="h-px bg-gray-100 mb-6 md:mb-8" />
 
-      {/* Important information — collapsible, light treatment */}
-      <div className="rounded-xl">
+      {/* Important information — quietest */}
+      <div>
         <button
           type="button"
           onClick={() => setShowInfo((v) => !v)}
-          className="w-full flex items-center gap-2 py-2 text-left text-[11px] md:text-xs font-medium text-gray-500 hover:text-gray-800 transition-colors"
+          className="w-full flex items-center gap-2 py-2 text-left text-xs font-medium text-gray-500 hover:text-gray-800 transition-colors"
           aria-expanded={showInfo}
         >
-          <Info className="w-3 h-3 md:w-3.5 md:h-3.5 text-gray-400 flex-shrink-0" />
+          <Info className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
           Important information
           <ChevronDown
             className={`w-3.5 h-3.5 ml-auto text-gray-400 transition-transform ${showInfo ? 'rotate-180' : ''}`}
           />
         </button>
         {showInfo && (
-          <p className="text-[11px] md:text-xs text-gray-500 leading-relaxed pt-2 pb-2">
+          <p className="text-xs text-gray-500 leading-relaxed pt-2 pb-2">
             {DISCLAIMER}
           </p>
         )}
