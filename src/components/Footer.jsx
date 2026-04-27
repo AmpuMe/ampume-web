@@ -9,7 +9,7 @@ const Footer = () => {
           <Link to="/" className="text-2xl font-bold uppercase tracking-tight mb-8 block">AmpuMe.</Link>
           <div className="text-sm text-gray-400 space-y-2">
             <p>The all-in-one platform for</p>
-            <p>life after limb loss.</p>
+            <p>life with limb loss.</p>
           </div>
         </div>
         
