@@ -146,10 +146,11 @@ function LandingView({ onSend, isLoading }) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-6 md:px-12 pt-20 md:pt-32 pb-8 md:pb-12">
-      {/* Headline */}
-      <div className="text-center mb-5 md:mb-10">
-        <h1 className="text-2xl md:text-5xl font-light tracking-tight mb-2 md:mb-4">
+    <div className="max-w-4xl mx-auto px-6 md:px-12 pt-24 md:pt-36 pb-8 md:pb-12">
+      {/* Hero — headline + subtext kept tight to the input below so they
+          read as one primary block (Alex's V2 layout: input is the anchor). */}
+      <div className="text-center mb-3 md:mb-5">
+        <h1 className="text-2xl md:text-5xl font-light tracking-tight mb-2 md:mb-3">
           Ask AmpuMe. Get real answers.
         </h1>
         <p className="text-xs md:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">
@@ -157,9 +158,9 @@ function LandingView({ onSend, isLoading }) {
         </p>
       </div>
 
-      {/* Input pill */}
-      <form onSubmit={handleSubmit} className="max-w-2xl mx-auto mb-6 md:mb-12">
-        <div className="relative bg-white border border-gray-200 rounded-full shadow-sm px-4 md:px-5 py-2.5 md:py-3 flex items-center gap-2 md:gap-3 focus-within:border-gray-400 transition-colors">
+      {/* Primary action — the dominant input. Larger pill, more visible shadow. */}
+      <form onSubmit={handleSubmit} className="max-w-2xl mx-auto mb-6 md:mb-8">
+        <div className="relative bg-white border border-gray-200 rounded-full shadow-md hover:shadow-lg px-4 md:px-5 py-3 md:py-3.5 flex items-center gap-2 md:gap-3 focus-within:border-gray-400 focus-within:shadow-lg transition-all">
           <input
             type="text"
             value={input}
@@ -171,7 +172,7 @@ function LandingView({ onSend, isLoading }) {
           <button
             type="submit"
             disabled={!input.trim() || isLoading}
-            className="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center flex-shrink-0 transition-colors disabled:opacity-30"
+            className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-black hover:bg-gray-800 text-white flex items-center justify-center flex-shrink-0 transition-colors disabled:opacity-30 disabled:bg-gray-200 disabled:text-gray-400"
             aria-label="Send"
           >
             {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
@@ -179,31 +180,31 @@ function LandingView({ onSend, isLoading }) {
         </div>
       </form>
 
-      {/* Suggested questions */}
-      <div className="mb-6 md:mb-10">
-        <h3 className="text-xs md:text-sm font-medium text-gray-700 mb-3 md:mb-4">Suggested questions</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3">
+      {/* Suggested questions — secondary, tighter pills, 2 rows max on mobile */}
+      <div className="mb-4 md:mb-6">
+        <h3 className="text-xs md:text-sm font-medium text-gray-700 mb-2.5 md:mb-3">Suggested questions</h3>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
           {visibleQuestions.map((q) => (
             <button
               key={q}
               type="button"
               onClick={() => onSend(q)}
               disabled={isLoading}
-              className="group text-left bg-white border border-gray-200 hover:border-gray-400 hover:shadow-sm rounded-2xl p-3 md:p-4 transition-all disabled:opacity-50 disabled:hover:border-gray-200"
+              className="group text-left bg-white border border-gray-200 hover:border-gray-400 hover:shadow-sm rounded-xl px-3 py-2.5 md:px-3.5 md:py-3 transition-all disabled:opacity-50 disabled:hover:border-gray-200"
             >
-              <div className="flex items-start justify-between gap-3">
-                <span className="text-xs md:text-sm text-gray-700 leading-snug">{q}</span>
-                <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-gray-700 flex-shrink-0 mt-0.5 transition-colors" />
+              <div className="flex items-start justify-between gap-2">
+                <span className="text-[11px] md:text-sm text-gray-700 leading-snug line-clamp-3">{q}</span>
+                <ChevronRight className="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-300 group-hover:text-gray-700 flex-shrink-0 mt-0.5 transition-colors" />
               </div>
             </button>
           ))}
         </div>
       </div>
 
-      {/* Browse by topic */}
-      <div className="mb-6 md:mb-10">
-        <h3 className="text-xs md:text-sm font-medium text-gray-700 mb-3 md:mb-4">Browse by topic</h3>
-        <div className="flex flex-nowrap overflow-x-auto md:flex-wrap gap-2 pb-2 -mx-6 px-6 md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      {/* Browse by topic — de-emphasized; horizontal scroll only, lighter pills */}
+      <div className="mb-4 md:mb-6">
+        <h3 className="text-xs md:text-sm font-medium text-gray-500 mb-2.5 md:mb-3">Browse by topic</h3>
+        <div className="flex flex-nowrap overflow-x-auto gap-1.5 md:gap-2 pb-1 -mx-6 px-6 md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {TOPICS.map(({ key, label, Icon, color }) => {
             const active = activeTopic === key;
             return (
@@ -211,36 +212,39 @@ function LandingView({ onSend, isLoading }) {
                 key={key}
                 type="button"
                 onClick={() => setActiveTopic(active ? null : key)}
-                className={`flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 md:py-2.5 rounded-full border transition-colors flex-shrink-0 ${
+                className={`flex items-center gap-1.5 px-2.5 md:px-3 py-1.5 rounded-full border transition-colors flex-shrink-0 ${
                   active
                     ? 'bg-black text-white border-black'
-                    : 'bg-white text-gray-700 border-gray-200 hover:border-gray-400'
+                    : 'bg-gray-50 text-gray-600 border-gray-100 hover:border-gray-300 hover:text-gray-900'
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 md:w-4 md:h-4 ${active ? 'text-white' : color}`} />
-                <span className="text-xs md:text-sm font-medium whitespace-nowrap">{label}</span>
+                <Icon className={`w-3 h-3 md:w-3.5 md:h-3.5 ${active ? 'text-white' : color}`} />
+                <span className="text-[11px] md:text-xs font-medium whitespace-nowrap">{label}</span>
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* Important information — collapsible */}
-      <div className="bg-gray-50 border border-gray-100 rounded-2xl">
+      {/* Subtle divider between content and disclaimer */}
+      <div className="h-px bg-gray-100 mb-4 md:mb-6" />
+
+      {/* Important information — collapsible, light treatment */}
+      <div className="rounded-xl">
         <button
           type="button"
           onClick={() => setShowInfo((v) => !v)}
-          className="w-full flex items-center gap-2 p-3 md:p-4 text-left text-xs md:text-sm font-medium text-gray-700 hover:text-black transition-colors"
+          className="w-full flex items-center gap-2 py-2 text-left text-[11px] md:text-xs font-medium text-gray-500 hover:text-gray-800 transition-colors"
           aria-expanded={showInfo}
         >
-          <Info className="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-500 flex-shrink-0" />
+          <Info className="w-3 h-3 md:w-3.5 md:h-3.5 text-gray-400 flex-shrink-0" />
           Important information
           <ChevronDown
-            className={`w-4 h-4 ml-auto text-gray-400 transition-transform ${showInfo ? 'rotate-180' : ''}`}
+            className={`w-3.5 h-3.5 ml-auto text-gray-400 transition-transform ${showInfo ? 'rotate-180' : ''}`}
           />
         </button>
         {showInfo && (
-          <p className="text-[11px] md:text-xs text-gray-600 leading-relaxed px-3 md:px-4 pb-3 md:pb-4 pt-0">
+          <p className="text-[11px] md:text-xs text-gray-500 leading-relaxed pt-2 pb-2">
             {DISCLAIMER}
           </p>
         )}
