@@ -123,6 +123,14 @@ function LandingView({ onSend, isLoading }) {
   const [input, setInput] = useState('');
   const [activeTopic, setActiveTopic] = useState(null);
   const [showInfo, setShowInfo] = useState(false);
+  const [isNarrow, setIsNarrow] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsNarrow(window.innerWidth < 640);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   // Suggested questions: when a topic is active, show that topic's set;
   // otherwise the canonical first 4 from ALL_PROMPTS.
@@ -138,27 +146,27 @@ function LandingView({ onSend, isLoading }) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-6 md:px-12 pt-24 md:pt-32 pb-12">
+    <div className="max-w-4xl mx-auto px-6 md:px-12 pt-20 md:pt-32 pb-8 md:pb-12">
       {/* Headline */}
-      <div className="text-center mb-8 md:mb-10">
-        <h1 className="text-3xl md:text-5xl font-light tracking-tight mb-4">
+      <div className="text-center mb-5 md:mb-10">
+        <h1 className="text-2xl md:text-5xl font-light tracking-tight mb-2 md:mb-4">
           Ask AmpuMe. Get real answers.
         </h1>
-        <p className="text-sm md:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-xs md:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">
           Clear, reliable answers for real life with limb loss — informed by expert guidance and designed for everyday life.
         </p>
       </div>
 
       {/* Input pill */}
-      <form onSubmit={handleSubmit} className="max-w-2xl mx-auto mb-12">
-        <div className="relative bg-white border border-gray-200 rounded-full shadow-sm px-5 py-3 flex items-center gap-3 focus-within:border-gray-400 transition-colors">
+      <form onSubmit={handleSubmit} className="max-w-2xl mx-auto mb-6 md:mb-12">
+        <div className="relative bg-white border border-gray-200 rounded-full shadow-sm px-4 md:px-5 py-2.5 md:py-3 flex items-center gap-2 md:gap-3 focus-within:border-gray-400 transition-colors">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask a question or share what's going on"
+            placeholder={isNarrow ? 'Ask a question…' : "Ask a question or share what's going on"}
             disabled={isLoading}
-            className="flex-1 bg-transparent text-sm md:text-base focus:outline-none placeholder:text-gray-400 py-1.5"
+            className="flex-1 min-w-0 bg-transparent text-sm md:text-base focus:outline-none placeholder:text-gray-400 py-1.5"
           />
           <button
             type="submit"
@@ -172,19 +180,19 @@ function LandingView({ onSend, isLoading }) {
       </form>
 
       {/* Suggested questions */}
-      <div className="mb-10">
-        <h3 className="text-sm font-medium text-gray-700 mb-4">Suggested questions</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="mb-6 md:mb-10">
+        <h3 className="text-xs md:text-sm font-medium text-gray-700 mb-3 md:mb-4">Suggested questions</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3">
           {visibleQuestions.map((q) => (
             <button
               key={q}
               type="button"
               onClick={() => onSend(q)}
               disabled={isLoading}
-              className="group text-left bg-white border border-gray-200 hover:border-gray-400 hover:shadow-sm rounded-2xl p-4 transition-all disabled:opacity-50 disabled:hover:border-gray-200"
+              className="group text-left bg-white border border-gray-200 hover:border-gray-400 hover:shadow-sm rounded-2xl p-3 md:p-4 transition-all disabled:opacity-50 disabled:hover:border-gray-200"
             >
               <div className="flex items-start justify-between gap-3">
-                <span className="text-sm text-gray-700 leading-snug">{q}</span>
+                <span className="text-xs md:text-sm text-gray-700 leading-snug">{q}</span>
                 <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-gray-700 flex-shrink-0 mt-0.5 transition-colors" />
               </div>
             </button>
@@ -193,8 +201,8 @@ function LandingView({ onSend, isLoading }) {
       </div>
 
       {/* Browse by topic */}
-      <div className="mb-10">
-        <h3 className="text-sm font-medium text-gray-700 mb-4">Browse by topic</h3>
+      <div className="mb-6 md:mb-10">
+        <h3 className="text-xs md:text-sm font-medium text-gray-700 mb-3 md:mb-4">Browse by topic</h3>
         <div className="flex flex-nowrap overflow-x-auto md:flex-wrap gap-2 pb-2 -mx-6 px-6 md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {TOPICS.map(({ key, label, Icon, color }) => {
             const active = activeTopic === key;
@@ -203,14 +211,14 @@ function LandingView({ onSend, isLoading }) {
                 key={key}
                 type="button"
                 onClick={() => setActiveTopic(active ? null : key)}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-full border transition-colors flex-shrink-0 ${
+                className={`flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 md:py-2.5 rounded-full border transition-colors flex-shrink-0 ${
                   active
                     ? 'bg-black text-white border-black'
                     : 'bg-white text-gray-700 border-gray-200 hover:border-gray-400'
                 }`}
               >
-                <Icon className={`w-4 h-4 ${active ? 'text-white' : color}`} />
-                <span className="text-sm font-medium whitespace-nowrap">{label}</span>
+                <Icon className={`w-3.5 h-3.5 md:w-4 md:h-4 ${active ? 'text-white' : color}`} />
+                <span className="text-xs md:text-sm font-medium whitespace-nowrap">{label}</span>
               </button>
             );
           })}
@@ -222,17 +230,17 @@ function LandingView({ onSend, isLoading }) {
         <button
           type="button"
           onClick={() => setShowInfo((v) => !v)}
-          className="w-full flex items-center gap-2 p-4 text-left text-sm font-medium text-gray-700 hover:text-black transition-colors"
+          className="w-full flex items-center gap-2 p-3 md:p-4 text-left text-xs md:text-sm font-medium text-gray-700 hover:text-black transition-colors"
           aria-expanded={showInfo}
         >
-          <Info className="w-4 h-4 text-gray-500 flex-shrink-0" />
+          <Info className="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-500 flex-shrink-0" />
           Important information
           <ChevronDown
             className={`w-4 h-4 ml-auto text-gray-400 transition-transform ${showInfo ? 'rotate-180' : ''}`}
           />
         </button>
         {showInfo && (
-          <p className="text-xs text-gray-600 leading-relaxed px-4 pb-4 pt-0">
+          <p className="text-[11px] md:text-xs text-gray-600 leading-relaxed px-3 md:px-4 pb-3 md:pb-4 pt-0">
             {DISCLAIMER}
           </p>
         )}
