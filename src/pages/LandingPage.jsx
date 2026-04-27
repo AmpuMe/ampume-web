@@ -144,7 +144,7 @@ const LandingPage = () => {
       {/* Hero Section */}
       <section className="relative h-screen w-full overflow-hidden bg-black">
         <div className="absolute inset-0">
-          <img src={heroImage} alt="Hero" className="w-full h-full object-cover object-[92%_center] md:object-center" />
+          <img src={heroImage} alt="Hero" className="w-full h-full object-cover object-[89%_center] md:object-center" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-transparent"></div>
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60"></div>
         </div>
