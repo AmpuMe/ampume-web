@@ -274,9 +274,11 @@ function ChatView({ messages, isLoading, input, setInput, onSend, onClear, scrol
           </button>
         </div>
 
-        {/* Messages */}
+        {/* Messages — anchored to the BOTTOM of the scroll area (standard
+            chat-app pattern). New / short conversations sit just above the
+            input; long conversations scroll naturally from the top. */}
         <div ref={scrollAreaRef} className="flex-1 overflow-y-auto pr-1 [scrollbar-gutter:stable]">
-          <div className="space-y-4 pb-2">
+          <div className="min-h-full flex flex-col justify-end space-y-4 pb-2">
             {messages.map((msg, i) => {
               const isLastUser = msg.role === 'user' && (i === messages.length - 1 || (i === messages.length - 2 && messages[messages.length - 1].role === 'assistant'));
               return (
