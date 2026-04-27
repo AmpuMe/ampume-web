@@ -40,13 +40,22 @@ export default function ContactPage() {
     setError(null);
 
     try {
-      const response = await fetch('/api/contact', {
+      // Formspree handles validation, spam filtering, and email delivery to Alex.
+      const response = await fetch('https://formspree.io/f/mkoklola', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(formData),
       });
 
-      if (!response.ok) throw new Error('Failed to send. Please try again.');
+      if (!response.ok) {
+        // Surface Formspree's error message if it returned one
+        let msg = 'Failed to send. Please try again.';
+        try {
+          const data = await response.json();
+          if (data?.errors?.[0]?.message) msg = data.errors[0].message;
+        } catch { /* ignore JSON parse errors */ }
+        throw new Error(msg);
+      }
 
       setSuccess(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
