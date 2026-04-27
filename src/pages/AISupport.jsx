@@ -146,7 +146,7 @@ function LandingView({ onSend, isLoading }) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-6 md:px-12 pt-24 md:pt-36 pb-8 md:pb-12">
+    <div className="max-w-4xl mx-auto px-6 md:px-12 pt-32 md:pt-40 pb-12 min-h-[100dvh]">
       {/* Hero — headline + subtext kept tight to the input below so they
           read as one primary block (Alex's V2 layout: input is the anchor). */}
       <div className="text-center mb-3 md:mb-5">
