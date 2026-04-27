@@ -1,6 +1,10 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Send, User, Bot, Loader2, MessageCircle } from 'lucide-react';
+import {
+  Send, User, Bot, Loader2,
+  ChevronRight, ChevronDown, Info,
+  HandHeart, ShieldCheck, Smile, Flag,
+} from 'lucide-react';
 import SimpleNavbar from '../components/SimpleNavbar';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
@@ -15,34 +19,61 @@ const ALL_PROMPTS = [
   'What does Medicare cover for prosthetics?',
 ];
 
-// Category chips cycle the displayed questions. "All" shows the canonical six.
-const PROMPT_CATEGORIES = [
-  { key: 'all',         label: 'All',             prompts: ALL_PROMPTS },
-  { key: 'care',        label: 'Care',            prompts: [
-    'How often should I replace my prosthetic liner?',
-    'How should I care for my prosthetic socket?',
-    'What are early signs of skin irritation to watch for?',
-  ] },
-  { key: 'insurance',   label: 'Insurance',       prompts: [
-    'What does Medicare cover for prosthetics?',
-    'How often will insurance cover a new socket?',
-    'What if my insurance denies coverage for supplies?',
-  ] },
-  { key: 'comfort',     label: 'Comfort',         prompts: [
-    'How do I manage limb volume changes during the day?',
-    'Why is my residual limb irritated?',
-    'How can I reduce phantom limb pain?',
-  ] },
-  { key: 'getting-started', label: 'Getting Started', prompts: [
-    'What should I expect after an amputation?',
-    'How do I choose the right prosthetic liner?',
-    'What exercises help improve prosthetic walking?',
-  ] },
+// Topic chips with brand-friendly accent colors and curated prompt sets.
+const TOPICS = [
+  {
+    key: 'care',
+    label: 'Care',
+    Icon: HandHeart,
+    color: 'text-rose-500',
+    prompts: [
+      'How often should I replace my prosthetic liner?',
+      'How should I care for my prosthetic socket?',
+      'What are early signs of skin irritation to watch for?',
+    ],
+  },
+  {
+    key: 'insurance',
+    label: 'Insurance',
+    Icon: ShieldCheck,
+    color: 'text-emerald-500',
+    prompts: [
+      'What does Medicare cover for prosthetics?',
+      'How often will insurance cover a new socket?',
+      'What if my insurance denies coverage for supplies?',
+    ],
+  },
+  {
+    key: 'comfort',
+    label: 'Comfort',
+    Icon: Smile,
+    color: 'text-violet-500',
+    prompts: [
+      'How do I manage limb volume changes during the day?',
+      'Why is my residual limb irritated?',
+      'How can I reduce phantom limb pain?',
+    ],
+  },
+  {
+    key: 'getting-started',
+    label: 'Getting Started',
+    Icon: Flag,
+    color: 'text-amber-500',
+    prompts: [
+      'What should I expect after an amputation?',
+      'How do I choose the right prosthetic liner?',
+      'What exercises help improve prosthetic walking?',
+    ],
+  },
 ];
 
 const DISCLAIMER = 'AmpuMe provides informational guidance only and is not a medical provider, medical device, or diagnostic tool. Responses are not medical advice and should not be relied upon for healthcare decisions. Always consult your prosthetist or a qualified healthcare provider.';
 
 const INPUT_PLACEHOLDER = "Ask a question or share what's on your mind about your prosthesis, care, or daily life…";
+
+const STORAGE_KEY = 'ampume-chat-history';
+
+/* ── Message bubble (chat view) ─────────────────────────────────── */
 
 function ChatMessage({ message }) {
   const isUser = message.role === 'user';
@@ -86,7 +117,197 @@ function TypingIndicator() {
   );
 }
 
-const STORAGE_KEY = 'ampume-chat-history';
+/* ── Landing view (pre-chat) ────────────────────────────────────── */
+
+function LandingView({ onSend, isLoading }) {
+  const [input, setInput] = useState('');
+  const [activeTopic, setActiveTopic] = useState(null);
+  const [showInfo, setShowInfo] = useState(false);
+
+  // Suggested questions: when a topic is active, show that topic's set;
+  // otherwise the canonical first 4 from ALL_PROMPTS.
+  const visibleQuestions = activeTopic
+    ? TOPICS.find(t => t.key === activeTopic)?.prompts || []
+    : ALL_PROMPTS.slice(0, 4);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
+    onSend(input);
+    setInput('');
+  };
+
+  return (
+    <div className="max-w-4xl mx-auto px-6 md:px-12 pt-24 md:pt-32 pb-12">
+      {/* Headline */}
+      <div className="text-center mb-8 md:mb-10">
+        <h1 className="text-3xl md:text-5xl font-light tracking-tight mb-4">
+          Ask AmpuMe. Get real answers.
+        </h1>
+        <p className="text-sm md:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">
+          Clear, reliable answers for real life with limb loss — informed by expert guidance and designed for everyday life.
+        </p>
+      </div>
+
+      {/* Input pill */}
+      <form onSubmit={handleSubmit} className="max-w-2xl mx-auto mb-12">
+        <div className="relative bg-white border border-gray-200 rounded-full shadow-sm px-5 py-3 flex items-center gap-3 focus-within:border-gray-400 transition-colors">
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Ask a question or share what's going on"
+            disabled={isLoading}
+            className="flex-1 bg-transparent text-sm md:text-base focus:outline-none placeholder:text-gray-400 py-1.5"
+          />
+          <button
+            type="submit"
+            disabled={!input.trim() || isLoading}
+            className="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center flex-shrink-0 transition-colors disabled:opacity-30"
+            aria-label="Send"
+          >
+            {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+          </button>
+        </div>
+      </form>
+
+      {/* Suggested questions */}
+      <div className="mb-10">
+        <h3 className="text-sm font-medium text-gray-700 mb-4">Suggested questions</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+          {visibleQuestions.map((q) => (
+            <button
+              key={q}
+              type="button"
+              onClick={() => onSend(q)}
+              disabled={isLoading}
+              className="group text-left bg-white border border-gray-200 hover:border-gray-400 hover:shadow-sm rounded-2xl p-4 transition-all disabled:opacity-50 disabled:hover:border-gray-200"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <span className="text-sm text-gray-700 leading-snug">{q}</span>
+                <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-gray-700 flex-shrink-0 mt-0.5 transition-colors" />
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Browse by topic */}
+      <div className="mb-10">
+        <h3 className="text-sm font-medium text-gray-700 mb-4">Browse by topic</h3>
+        <div className="flex flex-nowrap overflow-x-auto md:flex-wrap gap-2 pb-2 -mx-6 px-6 md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {TOPICS.map(({ key, label, Icon, color }) => {
+            const active = activeTopic === key;
+            return (
+              <button
+                key={key}
+                type="button"
+                onClick={() => setActiveTopic(active ? null : key)}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-full border transition-colors flex-shrink-0 ${
+                  active
+                    ? 'bg-black text-white border-black'
+                    : 'bg-white text-gray-700 border-gray-200 hover:border-gray-400'
+                }`}
+              >
+                <Icon className={`w-4 h-4 ${active ? 'text-white' : color}`} />
+                <span className="text-sm font-medium whitespace-nowrap">{label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Important information — collapsible */}
+      <div className="bg-gray-50 border border-gray-100 rounded-2xl">
+        <button
+          type="button"
+          onClick={() => setShowInfo((v) => !v)}
+          className="w-full flex items-center gap-2 p-4 text-left text-sm font-medium text-gray-700 hover:text-black transition-colors"
+          aria-expanded={showInfo}
+        >
+          <Info className="w-4 h-4 text-gray-500 flex-shrink-0" />
+          Important information
+          <ChevronDown
+            className={`w-4 h-4 ml-auto text-gray-400 transition-transform ${showInfo ? 'rotate-180' : ''}`}
+          />
+        </button>
+        {showInfo && (
+          <p className="text-xs text-gray-600 leading-relaxed px-4 pb-4 pt-0">
+            {DISCLAIMER}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ── Chat view (post-first-message) ─────────────────────────────── */
+
+function ChatView({ messages, isLoading, input, setInput, onSend, onClear, scrollAreaRef, lastUserMsgRef }) {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
+    onSend(input);
+  };
+
+  return (
+    <div className="h-[100dvh] flex flex-col pt-20 md:pt-24 pb-4 md:pb-6 px-4 md:px-12">
+      <div className="max-w-4xl mx-auto w-full flex flex-col flex-1 min-h-0">
+        {/* New conversation button row */}
+        <div className="flex justify-end mb-3 flex-shrink-0">
+          <button
+            onClick={onClear}
+            className="text-xs font-medium text-gray-500 hover:text-black bg-gray-50 hover:bg-gray-100 px-3 py-1.5 rounded-full transition-colors"
+          >
+            New conversation
+          </button>
+        </div>
+
+        {/* Messages */}
+        <div ref={scrollAreaRef} className="flex-1 overflow-y-auto pr-1 [scrollbar-gutter:stable]">
+          <div className="space-y-4 pb-2">
+            {messages.map((msg, i) => {
+              const isLastUser = msg.role === 'user' && (i === messages.length - 1 || (i === messages.length - 2 && messages[messages.length - 1].role === 'assistant'));
+              return (
+                <div key={i} ref={isLastUser ? lastUserMsgRef : null}>
+                  <ChatMessage message={msg} />
+                </div>
+              );
+            })}
+            {isLoading && <TypingIndicator />}
+          </div>
+        </div>
+
+        {/* Input pill */}
+        <form onSubmit={handleSubmit} className="mt-4 flex-shrink-0">
+          <div className="relative bg-white border border-gray-200 rounded-full shadow-sm px-5 py-3 flex items-center gap-3 focus-within:border-gray-400 transition-colors">
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder={INPUT_PLACEHOLDER}
+              disabled={isLoading}
+              className="flex-1 bg-transparent text-sm md:text-base focus:outline-none placeholder:text-gray-400 py-1.5"
+            />
+            <button
+              type="submit"
+              disabled={!input.trim() || isLoading}
+              className="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center flex-shrink-0 transition-colors disabled:opacity-30"
+              aria-label="Send"
+            >
+              {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+            </button>
+          </div>
+          <p className="text-[10px] md:text-xs text-gray-500 text-center mt-3 max-w-3xl mx-auto leading-snug">
+            {DISCLAIMER}
+          </p>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+/* ── Stateful container ─────────────────────────────────────────── */
 
 function ChatInterface({ initialPrompt }) {
   const [messages, setMessages] = useState(() => {
@@ -98,38 +319,32 @@ function ChatInterface({ initialPrompt }) {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [hasUsedInitialPrompt, setHasUsedInitialPrompt] = useState(false);
-  const [activeCategory, setActiveCategory] = useState('all');
   const scrollAreaRef = useRef(null);
-  const inputRef = useRef(null);
-
-  const visiblePrompts = PROMPT_CATEGORIES.find(c => c.key === activeCategory)?.prompts || ALL_PROMPTS;
+  const lastUserMsgRef = useRef(null);
 
   // Auto-send initial prompt from navigation state (e.g. homepage prompt click)
   useEffect(() => {
     if (initialPrompt && !hasUsedInitialPrompt && !isLoading) {
       setHasUsedInitialPrompt(true);
-      // Clear previous chat and send the prompt
       localStorage.removeItem(STORAGE_KEY);
       setMessages([]);
       setTimeout(() => sendMessage(initialPrompt), 100);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialPrompt, hasUsedInitialPrompt]);
 
-  // Persist messages to localStorage
+  // Persist messages
   useEffect(() => {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(messages)); }
     catch { /* quota exceeded or private browsing */ }
   }, [messages]);
 
-  const lastUserMsgRef = useRef(null);
-
-  // Gentle scroll within chat container only — no page scrolling
+  // Gentle scroll to last user message
   useEffect(() => {
     const container = scrollAreaRef.current;
     const target = lastUserMsgRef.current;
     if (!container || !target || messages.length < 2) return;
     if (container.scrollHeight <= container.clientHeight) return;
-    // Calculate target position relative to the scroll container
     const targetTop = target.offsetTop - container.offsetTop;
     container.scrollTo({ top: targetTop, behavior: 'smooth' });
   }, [messages]);
@@ -141,7 +356,6 @@ function ChatInterface({ initialPrompt }) {
     setInput('');
     setIsLoading(true);
 
-    // Timeout after 30 seconds
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 30000);
 
@@ -150,7 +364,7 @@ function ChatInterface({ initialPrompt }) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          messages: newMessages.map(m => ({ role: m.role, content: m.content })),
+          messages: newMessages.map((m) => ({ role: m.role, content: m.content })),
         }),
         signal: controller.signal,
       });
@@ -163,26 +377,23 @@ function ChatInterface({ initialPrompt }) {
 
       const data = await response.json();
       const content = data.choices?.[0]?.message?.content || 'Sorry, I was unable to generate a response.';
-      setMessages(prev => [...prev, { role: 'assistant', content }]);
+      setMessages((prev) => [...prev, { role: 'assistant', content }]);
     } catch (err) {
       clearTimeout(timeout);
       console.error('Chat error:', err);
       const isTimeout = err.name === 'AbortError';
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: isTimeout
-          ? "The response took too long. Please try again."
-          : "I'm having trouble connecting right now. Please try again in a moment.",
-      }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: isTimeout
+            ? 'The response took too long. Please try again.'
+            : "I'm having trouble connecting right now. Please try again in a moment.",
+        },
+      ]);
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!input.trim() || isLoading) return;
-    sendMessage(input);
   };
 
   const clearChat = () => {
@@ -190,118 +401,25 @@ function ChatInterface({ initialPrompt }) {
     localStorage.removeItem(STORAGE_KEY);
   };
 
-  const handlePromptClick = (prompt) => {
-    if (isLoading) return;
-    sendMessage(prompt);
-  };
-
   const isEmpty = messages.length === 0;
 
-  return (
-    <div className="flex flex-col bg-white border border-gray-200 rounded-2xl overflow-hidden flex-1 min-h-0">
-      {/* Header — new conversation button */}
-      {!isEmpty && (
-        <div className="flex justify-end px-5 md:px-6 pt-5 pb-0">
-          <button
-            onClick={clearChat}
-            className="text-xs font-medium text-gray-500 hover:text-black bg-gray-50 hover:bg-gray-100 px-3 py-1.5 rounded-full transition-colors"
-          >
-            New conversation
-          </button>
-        </div>
-      )}
-      {/* Messages area — extra top + right padding so scrollbar doesn't sit flush against the rounded corner */}
-      <div ref={scrollAreaRef} className="flex-1 overflow-y-auto pl-4 pr-3 md:pl-6 md:pr-4 pt-4 md:pt-8 pb-4 md:pb-6 [scrollbar-gutter:stable]">
-        {isEmpty ? (
-          <div className="min-h-full flex flex-col items-center justify-center text-center px-2 md:px-4 py-4 md:py-8">
-            <div className="w-10 h-10 md:w-14 md:h-14 rounded-full bg-gray-50 flex items-center justify-center mb-3 md:mb-5 flex-shrink-0">
-              <MessageCircle className="w-5 h-5 md:w-7 md:h-7 text-gray-400" />
-            </div>
-            <h3 className="text-base md:text-lg font-medium mb-1 md:mb-2">How can I help you today?</h3>
-            <p className="text-xs md:text-sm text-gray-500 mb-4 md:mb-6 max-w-md">
-              Ask me anything about prosthetics, recovery, daily life, or insurance coverage.
-            </p>
-            <div className="grid grid-cols-1 sm:flex sm:flex-wrap sm:justify-center gap-2 w-full max-w-lg">
-              {visiblePrompts.map((prompt) => (
-                <button
-                  key={prompt}
-                  onClick={() => handlePromptClick(prompt)}
-                  className="text-xs text-gray-600 bg-gray-50 hover:bg-gray-100 border border-gray-200 px-3 py-2 rounded-full transition-colors text-left w-full sm:w-auto"
-                >
-                  {prompt}
-                </button>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {messages.map((msg, i) => {
-              // Track the last user message for scroll anchoring
-              const isLastUser = msg.role === 'user' && (i === messages.length - 1 || (i === messages.length - 2 && messages[messages.length - 1].role === 'assistant'));
-              return (
-                <div key={i} ref={isLastUser ? lastUserMsgRef : null}>
-                  <ChatMessage message={msg} />
-                </div>
-              );
-            })}
-            {isLoading && <TypingIndicator />}
-          </div>
-        )}
-      </div>
-
-      {/* Input area — subtle gradient anchors the composer */}
-      <div className="border-t border-gray-100 px-4 md:px-6 py-3 md:py-5 bg-gradient-to-b from-brand-offwhite/70 to-white">
-        <form onSubmit={handleSubmit} className="flex items-center gap-3">
-          <input
-            ref={inputRef}
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder={INPUT_PLACEHOLDER}
-            disabled={isLoading}
-            className="flex-1 text-sm bg-white border border-gray-200 rounded-full px-4 py-3 focus:outline-none focus:border-gray-400 transition-colors disabled:opacity-50 placeholder:text-gray-400 shadow-sm"
-          />
-          <button
-            type="submit"
-            disabled={!input.trim() || isLoading}
-            className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center flex-shrink-0 hover:bg-gray-800 transition-colors disabled:opacity-30"
-          >
-            {isLoading ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
-            ) : (
-              <Send className="w-4 h-4" />
-            )}
-          </button>
-        </form>
-        {/* Category chips */}
-        {isEmpty && (
-          <div className="flex flex-wrap justify-center gap-2 mt-3">
-            {PROMPT_CATEGORIES.map((cat) => {
-              const active = cat.key === activeCategory;
-              return (
-                <button
-                  key={cat.key}
-                  type="button"
-                  onClick={() => setActiveCategory(cat.key)}
-                  className={`text-[11px] font-medium px-3 py-1.5 rounded-full border transition-colors ${
-                    active
-                      ? 'bg-black text-white border-black'
-                      : 'bg-white text-gray-600 border-gray-200 hover:border-gray-400 hover:text-black'
-                  }`}
-                >
-                  {cat.label}
-                </button>
-              );
-            })}
-          </div>
-        )}
-        <p className="text-[10px] md:text-xs text-gray-600 text-center mt-3 max-w-3xl mx-auto leading-snug md:leading-relaxed">
-          {DISCLAIMER}
-        </p>
-      </div>
-    </div>
+  return isEmpty ? (
+    <LandingView onSend={sendMessage} isLoading={isLoading} />
+  ) : (
+    <ChatView
+      messages={messages}
+      isLoading={isLoading}
+      input={input}
+      setInput={setInput}
+      onSend={sendMessage}
+      onClear={clearChat}
+      scrollAreaRef={scrollAreaRef}
+      lastUserMsgRef={lastUserMsgRef}
+    />
   );
 }
+
+/* ── Page wrapper ──────────────────────────────────────────────── */
 
 const AISupport = () => {
   const location = useLocation();
@@ -316,23 +434,8 @@ const AISupport = () => {
       />
       <SimpleNavbar />
 
-      {/* Full-viewport layout — chat stays in one frame so we don't stack
-          two vertical scroll areas (page + chat window). Footer sits below
-          the fold. */}
-      <main className="h-[100dvh] flex flex-col pt-24 md:pt-32 pb-6 md:pb-8 px-6 md:px-12">
-        <div className="max-w-4xl mx-auto w-full flex flex-col flex-1 min-h-0">
-          {/* Headline block — kept tight on mobile so the chat gets maximum vertical room */}
-          <div className="text-center mb-3 md:mb-6 flex-shrink-0">
-            <h1 className="text-2xl md:text-4xl font-light tracking-tight mb-2 md:mb-3">
-              Ask AmpuMe. Get real answers.
-            </h1>
-            <p className="text-xs md:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Clear, reliable answers for real life with limb loss — informed by expert guidance and designed for everyday life.
-            </p>
-          </div>
-
-          <ChatInterface initialPrompt={initialPrompt} />
-        </div>
+      <main>
+        <ChatInterface initialPrompt={initialPrompt} />
       </main>
 
       <Footer />
