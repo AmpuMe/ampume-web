@@ -8,14 +8,11 @@ import '@fontsource/inter/600.css';
 import '@fontsource/inter/700.css';
 import './index.css'
 import App from './App.jsx'
-import PasswordGate from './components/PasswordGate.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <PasswordGate>
-      <HelmetProvider>
-        <App />
-      </HelmetProvider>
-    </PasswordGate>
+    <HelmetProvider>
+      <App />
+    </HelmetProvider>
   </StrictMode>,
 )
