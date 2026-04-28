@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Menu, X, MessageSquare, Send, Play, FileText, ArrowUpRight, Sparkles, User } from 'lucide-react';
+import { ArrowRight, Menu, X, MessageSquare, Send, Play, FileText, ArrowUpRight, Sparkles, User, ChevronRight, HandHeart, ShieldCheck, Smile, Flag } from 'lucide-react';
 import SEO from '../components/SEO';
 import Footer from '../components/Footer';
 import NewsletterModal from '../components/NewsletterModal';
@@ -364,55 +364,61 @@ const LandingPage = () => {
               Ask AmpuMe <ArrowRight size={14} />
             </Link>
           </div>
+
           <FadeIn>
-            <div className="bg-white border border-black/5">
-              {/* Assistant header */}
-              <div className="px-6 md:px-10 py-5 border-b border-black/5 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 bg-brand-gold/15 flex items-center justify-center">
-                    <Sparkles size={16} className="text-brand-gold" strokeWidth={2} />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium">AmpuMe Assistant</p>
-                    <div className="flex items-center gap-1.5 mt-0.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
-                      <span className="text-[10px] text-gray-500 uppercase tracking-widest">Available 24/7</span>
-                    </div>
-                  </div>
-                </div>
-                <MessageSquare size={16} className="text-gray-400 hidden md:block" />
-              </div>
+            <div className="max-w-4xl mx-auto">
+              {/* Big input pill — clicks into the AI page */}
+              <button
+                onClick={() => navigate('/ai-support')}
+                className="w-full max-w-2xl mx-auto flex items-center gap-3 bg-white border border-gray-200 rounded-full shadow-md hover:shadow-lg hover:border-gray-400 transition-all px-4 md:px-5 py-3 md:py-3.5 mb-8 md:mb-10 group"
+              >
+                <span className="flex-1 text-left text-sm md:text-base text-gray-400 truncate">Ask a question or share what's going on</span>
+                <span className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-black group-hover:bg-gray-800 text-white flex items-center justify-center flex-shrink-0 transition-colors">
+                  <Send className="w-4 h-4" />
+                </span>
+              </button>
 
-              {/* Input mock */}
-              <div className="px-6 md:px-10 pt-8 md:pt-10 pb-6">
-                <button
-                  onClick={() => navigate('/ai-support')}
-                  className="w-full flex items-center gap-3 border border-black/10 bg-brand-offwhite/50 hover:border-black/25 transition-colors group px-5 py-4 text-left"
-                >
-                  <span className="flex-1 text-sm text-gray-500">Ask anything about limb loss, prosthetics, or daily life…</span>
-                  <div className="w-9 h-9 bg-brand-gold flex items-center justify-center group-hover:bg-black transition-colors flex-shrink-0">
-                    <Send size={14} className="text-black group-hover:text-white" strokeWidth={2} />
-                  </div>
-                </button>
-              </div>
-
-              {/* Suggested prompts */}
-              <div className="px-6 md:px-10 pb-8 md:pb-10">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-4">Try asking</p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {/* Suggested questions */}
+              <div className="mb-8 md:mb-10">
+                <h4 className="text-xs md:text-sm font-medium text-gray-700 mb-3 md:mb-4">Suggested questions</h4>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 md:gap-3">
                   {[
                     'What should I do if my residual limb volume is fluctuating?',
                     'How often will my insurance cover a new socket?',
                     'How do I cope with the emotional side of limb loss?',
                     'How often should I replace my liner?',
-                  ].map((prompt, i) => (
+                  ].map((prompt) => (
                     <button
-                      key={i}
+                      key={prompt}
                       onClick={() => navigate('/ai-support', { state: { prompt } })}
-                      className="group flex items-start justify-between gap-4 text-left border border-black/5 px-5 py-4 hover:bg-brand-offwhite/60 hover:border-black/15 transition-colors"
+                      className="group text-left bg-white border border-gray-200 hover:border-gray-400 hover:shadow-sm rounded-xl px-3.5 py-3 md:px-4 md:py-3.5 transition-all"
                     >
-                      <span className="text-sm text-gray-800 leading-relaxed">{prompt}</span>
-                      <ArrowUpRight size={16} className="text-gray-400 group-hover:text-black transition-colors mt-0.5 flex-shrink-0" />
+                      <div className="flex items-start justify-between gap-2">
+                        <span className="text-xs md:text-sm text-gray-700 leading-snug line-clamp-3">{prompt}</span>
+                        <ChevronRight className="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-300 group-hover:text-gray-700 flex-shrink-0 mt-0.5 transition-colors" />
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Browse by topic — mirror the topic chips on the AI landing */}
+              <div>
+                <h4 className="text-xs md:text-sm font-medium text-gray-500 mb-3 md:mb-4">Browse by topic</h4>
+                <div className="flex flex-nowrap overflow-x-auto gap-2 pb-1 -mx-6 px-6 md:grid md:grid-cols-4 md:gap-3 md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                  {[
+                    { label: 'Care', Icon: HandHeart, color: 'text-rose-500' },
+                    { label: 'Insurance', Icon: ShieldCheck, color: 'text-emerald-500' },
+                    { label: 'Comfort', Icon: Smile, color: 'text-violet-500' },
+                    { label: 'Getting Started', Icon: Flag, color: 'text-amber-500' },
+                  ].map(({ label, Icon, color }) => (
+                    <button
+                      key={label}
+                      onClick={() => navigate('/ai-support')}
+                      className="flex items-center justify-center gap-1.5 md:gap-2 px-3 py-2 md:px-4 md:py-3 rounded-full border bg-gray-50 text-gray-600 border-gray-100 hover:border-gray-300 hover:text-gray-900 transition-colors flex-shrink-0 md:w-full"
+                    >
+                      <Icon className={`w-3.5 h-3.5 md:w-4 md:h-4 ${color}`} />
+                      <span className="text-[11px] md:text-sm font-medium whitespace-nowrap">{label}</span>
                     </button>
                   ))}
                 </div>
