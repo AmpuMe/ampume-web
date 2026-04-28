@@ -203,7 +203,8 @@ function LandingView({ onSend, isLoading }) {
       {/* Browse by topic — de-emphasized */}
       <div className="mb-8 md:mb-10">
         <h3 className="text-xs md:text-sm font-medium text-gray-500 mb-3 md:mb-4">Browse by topic</h3>
-        <div className="flex flex-nowrap overflow-x-auto gap-2 pb-1 -mx-6 px-6 md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {/* Mobile: horizontal scroll. Desktop: 4-col grid that fills the container. */}
+        <div className="flex flex-nowrap overflow-x-auto gap-2 pb-1 -mx-6 px-6 md:grid md:grid-cols-4 md:gap-3 md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {TOPICS.map(({ key, label, Icon, color }) => {
             const active = activeTopic === key;
             return (
@@ -211,7 +212,7 @@ function LandingView({ onSend, isLoading }) {
                 key={key}
                 type="button"
                 onClick={() => setActiveTopic(active ? null : key)}
-                className={`flex items-center gap-1.5 md:gap-2 px-3 py-2 md:px-4 md:py-2.5 rounded-full border transition-colors flex-shrink-0 ${
+                className={`flex items-center justify-center gap-1.5 md:gap-2 px-3 py-2 md:px-4 md:py-3 rounded-full border transition-colors flex-shrink-0 md:w-full ${
                   active
                     ? 'bg-black text-white border-black'
                     : 'bg-gray-50 text-gray-600 border-gray-100 hover:border-gray-300 hover:text-gray-900'
