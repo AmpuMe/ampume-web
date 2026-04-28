@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Menu, X, MessageSquare, Send, Play, FileText, ArrowUpRight, Bot, User } from 'lucide-react';
+import { ArrowRight, Menu, X, MessageSquare, Send, Play, FileText, ArrowUpRight, Sparkles, User } from 'lucide-react';
 import SEO from '../components/SEO';
 import Footer from '../components/Footer';
 import NewsletterModal from '../components/NewsletterModal';
@@ -370,7 +370,7 @@ const LandingPage = () => {
               <div className="px-6 md:px-10 py-5 border-b border-black/5 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 bg-brand-gold/15 flex items-center justify-center">
-                    <Bot size={16} className="text-brand-gold" strokeWidth={2} />
+                    <Sparkles size={16} className="text-brand-gold" strokeWidth={2} />
                   </div>
                   <div>
                     <p className="text-sm font-medium">AmpuMe Assistant</p>
