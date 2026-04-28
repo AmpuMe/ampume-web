@@ -6,7 +6,7 @@ import App from './App'
 
 export function render(url, context) {
   const helmetContext = {}
-  
+
   const html = ReactDOMServer.renderToString(
     <HelmetProvider context={helmetContext}>
       <StaticRouter location={url} context={context}>
