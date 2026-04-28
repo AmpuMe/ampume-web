@@ -15,7 +15,7 @@ import accessoriesImage from '../assets/shop/category-accessories-v2.webp';
 const CATEGORY_IMAGES = {
   liners: { src: linersImage, position: 'object-center' },
   socks: { src: socksImage, position: 'object-center' },
-  sleeves: { src: sleevesImage, position: 'object-[30%_center]' },
+  sleeves: { src: sleevesImage, position: 'object-center md:object-[30%_center]' },
   accessories: { src: accessoriesImage, position: 'object-center' },
 };
 
