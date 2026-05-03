@@ -1,5 +1,5 @@
 import React, { useEffect, Suspense, lazy } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import AISupport from './pages/AISupport';
 import { CartProvider } from './context/CartContext';
@@ -44,7 +44,10 @@ const App = () => {
       <Suspense fallback={<div className="min-h-screen bg-white" />}>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/ai-support" element={<AISupport />} />
+          <Route path="/ask-ampume" element={<AISupport />} />
+          {/* Legacy: keep old URL working forever — preserves any indexed
+              links and existing nav-state prompt deep-links. */}
+          <Route path="/ai-support" element={<Navigate to="/ask-ampume" replace />} />
           <Route path="/telemedicine" element={<TelemedicinePage />} />
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/shop/liners" element={<CategoryPage />} />

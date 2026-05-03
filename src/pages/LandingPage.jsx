@@ -60,7 +60,7 @@ const LandingPage = () => {
   const navLinks = [
     { name: 'AmpuMe Store', href: '/shop' },
     { name: 'Knowledge Base', href: '/resources' },
-    { name: 'Ask AmpuMe', href: '/ai-support' },
+    { name: 'Ask AmpuMe', href: '/ask-ampume' },
     { name: 'Telemedicine', href: '/telemedicine' },
   ];
 
@@ -187,7 +187,7 @@ const LandingPage = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
             {/* Ask — Position 1 */}
-            <FadeIn id="ai-support" onClick={() => navigate('/ai-support')} delay={0} className="group relative h-[500px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
+            <FadeIn id="ai-support" onClick={() => navigate('/ask-ampume')} delay={0} className="group relative h-[500px] md:h-[600px] overflow-hidden cursor-pointer scroll-mt-32">
               <img src={friendsImage} loading="lazy" alt="AI Support" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/30 md:bg-black/10 md:group-hover:bg-black/30 transition-colors duration-500"></div>
               <div className="absolute top-8 left-8 z-10 flex gap-2">
@@ -360,7 +360,7 @@ const LandingPage = () => {
               <h3 className="text-2xl font-medium">Ask AmpuMe</h3>
               <p className="text-sm text-gray-500 mt-2 max-w-lg hidden md:block">Ask questions about prosthetics, care, and daily life — and get clear answers instantly.</p>
             </div>
-            <Link to="/ai-support" className="hidden md:inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
+            <Link to="/ask-ampume" className="hidden md:inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:opacity-70 transition-opacity">
               Ask AmpuMe <ArrowRight size={14} />
             </Link>
           </div>
@@ -369,7 +369,7 @@ const LandingPage = () => {
             <div className="max-w-4xl mx-auto">
               {/* Big input pill — clicks into the AI page */}
               <button
-                onClick={() => navigate('/ai-support')}
+                onClick={() => navigate('/ask-ampume')}
                 className="w-full max-w-2xl mx-auto flex items-center gap-3 bg-white border border-gray-200 rounded-full shadow-md hover:shadow-lg hover:border-gray-400 transition-all px-4 md:px-5 py-3 md:py-3.5 mb-8 md:mb-10 group"
               >
                 <span className="flex-1 text-left text-sm md:text-base text-gray-400 truncate">Ask a question or share what's going on</span>
@@ -390,7 +390,7 @@ const LandingPage = () => {
                   ].map((prompt) => (
                     <button
                       key={prompt}
-                      onClick={() => navigate('/ai-support', { state: { prompt } })}
+                      onClick={() => navigate('/ask-ampume', { state: { prompt } })}
                       className="group text-left bg-white border border-gray-200 hover:border-gray-400 hover:shadow-sm rounded-xl px-3.5 py-3 md:px-4 md:py-3.5 transition-all"
                     >
                       <div className="flex items-start justify-between gap-2">
@@ -414,7 +414,7 @@ const LandingPage = () => {
                   ].map(({ label, Icon, color }) => (
                     <button
                       key={label}
-                      onClick={() => navigate('/ai-support')}
+                      onClick={() => navigate('/ask-ampume')}
                       className="flex items-center justify-center gap-1.5 md:gap-2 px-3 py-2 md:px-4 md:py-3 rounded-full border bg-gray-50 text-gray-600 border-gray-100 hover:border-gray-300 hover:text-gray-900 transition-colors flex-shrink-0 md:w-full"
                     >
                       <Icon className={`w-3.5 h-3.5 md:w-4 md:h-4 ${color}`} />
