@@ -1,26 +1,27 @@
-import React, { useEffect, Suspense, lazy } from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import AISupport from './pages/AISupport';
 import { CartProvider } from './context/CartContext';
 import CartDrawer from './components/CartDrawer';
 
-// Lazy load secondary pages for better performance
-const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
-const TermsOfService = lazy(() => import('./pages/TermsOfService'));
-const AccessibilityStatement = lazy(() => import('./pages/AccessibilityStatement'));
-
-// Lazy load shop pages
-const ShopPage = lazy(() => import('./pages/ShopPage'));
-const CategoryPage = lazy(() => import('./pages/CategoryPage'));
-const ProductPage = lazy(() => import('./pages/ProductPage'));
-const ContactPage = lazy(() => import('./pages/ContactPage'));
-
-// Lazy load resource pages
-const TelemedicinePage = lazy(() => import('./pages/TelemedicinePage'));
-const ResourcesHub = lazy(() => import('./pages/ResourcesHub'));
-const PillarPage = lazy(() => import('./pages/PillarPage'));
-const ResourceDetail = lazy(() => import('./pages/ResourceDetail'));
+// All page components are imported eagerly. We previously lazy-loaded most
+// of these, but React.lazy() falls back to the Suspense placeholder during
+// SSR (renderToString), which made every prerendered route ship without its
+// SEO tags or body content. Eager imports give us proper static rendering
+// at the cost of a slightly larger initial JS bundle — a net win because
+// the prerendered HTML now serves crawlers instantly.
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
+import AccessibilityStatement from './pages/AccessibilityStatement';
+import ShopPage from './pages/ShopPage';
+import CategoryPage from './pages/CategoryPage';
+import ProductPage from './pages/ProductPage';
+import ContactPage from './pages/ContactPage';
+import TelemedicinePage from './pages/TelemedicinePage';
+import ResourcesHub from './pages/ResourcesHub';
+import PillarPage from './pages/PillarPage';
+import ResourceDetail from './pages/ResourceDetail';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -41,29 +42,27 @@ const App = () => {
     <CartProvider>
       <ScrollToTop />
       <CartDrawer />
-      <Suspense fallback={<div className="min-h-screen bg-white" />}>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/ask-ampume" element={<AISupport />} />
-          {/* Legacy: keep old URL working forever — preserves any indexed
-              links and existing nav-state prompt deep-links. */}
-          <Route path="/ai-support" element={<Navigate to="/ask-ampume" replace />} />
-          <Route path="/telemedicine" element={<TelemedicinePage />} />
-          <Route path="/shop" element={<ShopPage />} />
-          <Route path="/shop/liners" element={<CategoryPage />} />
-          <Route path="/shop/socks" element={<CategoryPage />} />
-          <Route path="/shop/sleeves" element={<CategoryPage />} />
-          <Route path="/shop/accessories" element={<CategoryPage />} />
-          <Route path="/shop/:handle" element={<ProductPage />} />
-          <Route path="/resources" element={<ResourcesHub />} />
-          <Route path="/resources/:pillarSlug" element={<PillarPage />} />
-          <Route path="/resources/:pillarSlug/:resourceSlug" element={<ResourceDetail />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms-of-service" element={<TermsOfService />} />
-          <Route path="/accessibility-statement" element={<AccessibilityStatement />} />
-        </Routes>
-      </Suspense>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/ask-ampume" element={<AISupport />} />
+        {/* Legacy: client-side fallback in case a request slips past the
+            Vercel-level 301 redirect (vercel.json). */}
+        <Route path="/ai-support" element={<Navigate to="/ask-ampume" replace />} />
+        <Route path="/telemedicine" element={<TelemedicinePage />} />
+        <Route path="/shop" element={<ShopPage />} />
+        <Route path="/shop/liners" element={<CategoryPage />} />
+        <Route path="/shop/socks" element={<CategoryPage />} />
+        <Route path="/shop/sleeves" element={<CategoryPage />} />
+        <Route path="/shop/accessories" element={<CategoryPage />} />
+        <Route path="/shop/:handle" element={<ProductPage />} />
+        <Route path="/resources" element={<ResourcesHub />} />
+        <Route path="/resources/:pillarSlug" element={<PillarPage />} />
+        <Route path="/resources/:pillarSlug/:resourceSlug" element={<ResourceDetail />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="/accessibility-statement" element={<AccessibilityStatement />} />
+      </Routes>
     </CartProvider>
   );
 };

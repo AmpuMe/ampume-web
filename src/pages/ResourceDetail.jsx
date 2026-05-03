@@ -55,9 +55,16 @@ export default function ResourceDetail() {
 
   const embedUrl = resource?.videoUrl ? getYouTubeEmbedUrl(resource.videoUrl) : null;
 
+  // SEO renders in every state so prerendered HTML always carries tags.
+  // Real per-resource title/description come from the build-time override.
+  const seoTitle = resource ? `${resource.title} | AmpuMe Knowledge Base` : 'Knowledge Base | AmpuMe';
+  const seoDesc = resource?.editorialSummary || 'Expert guidance and resources for life with limb loss.';
+  const seoUrl = `https://ampume.com/resources/${pillarSlug}/${resourceSlug}`;
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-white">
+        <SEO title={seoTitle} description={seoDesc} url={seoUrl} />
         <SimpleNavbar />
         <div className="pt-32 px-6 md:px-12">
           <div className="max-w-3xl mx-auto">
@@ -75,6 +82,7 @@ export default function ResourceDetail() {
   if (error || !resource) {
     return (
       <div className="min-h-screen bg-white">
+        <SEO title={seoTitle} description={seoDesc} url={seoUrl} />
         <SimpleNavbar />
         <div className="pt-32 px-6 md:px-12 text-center">
           <h1 className="text-2xl font-medium mb-4">Resource not found</h1>

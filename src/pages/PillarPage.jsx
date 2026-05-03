@@ -53,9 +53,15 @@ export default function PillarPage() {
 
   const isInsurancePillar = pillarSlug === 'insurance-and-coverage';
 
+  // SEO renders in every state so prerendered HTML always carries tags.
+  const seoTitle = pillar ? `${pillar.title} | AmpuMe Knowledge Base` : 'Knowledge Base | AmpuMe';
+  const seoDesc = pillar?.description || 'Expert guidance and resources for life with limb loss.';
+  const seoUrl = `https://ampume.com/resources/${pillarSlug}`;
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-white">
+        <SEO title={seoTitle} description={seoDesc} url={seoUrl} />
         <SimpleNavbar />
         <div className="pt-32 px-6 md:px-12">
           <div className="max-w-4xl">
@@ -81,6 +87,7 @@ export default function PillarPage() {
   if (error || !pillar) {
     return (
       <div className="min-h-screen bg-white">
+        <SEO title={seoTitle} description={seoDesc} url={seoUrl} />
         <SimpleNavbar />
         <div className="pt-32 px-6 md:px-12 text-center">
           <h1 className="text-2xl font-medium mb-4">Section not found</h1>
