@@ -12,7 +12,7 @@ const templatePath = toAbsolute('dist/index.html')
 // Determine routes to pre-render
 const routesToPrerender = [
     '/',
-    '/ai-support',
+    '/ask-ampume',
     '/shop',
     '/resources',
     '/privacy-policy',
