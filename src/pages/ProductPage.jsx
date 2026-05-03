@@ -362,9 +362,18 @@ export default function ProductPage() {
     return imgs;
   }, [product, rawImages, linerDesc]);
 
+  // SEO renders in every state so the prerendered HTML always carries
+  // tags. Real product-specific titles for crawlers come from the
+  // build-time prerender override (see prerender.js).
+  const seoTitle = product
+    ? `${currentGroup ? currentGroup.baseName : product.title} | AmpuMe Store`
+    : 'Shop | AmpuMe';
+  const seoDesc = product?.description || 'Shop prosthetic supplies at AmpuMe.';
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-white">
+        <SEO title={seoTitle} description={seoDesc} url={`https://ampume.com/shop/${handle}`} />
         <SimpleNavbar />
         <div className="pt-32 px-6 md:px-12">
           <div className="max-w-6xl mx-auto">
@@ -385,6 +394,7 @@ export default function ProductPage() {
   if (error || !product) {
     return (
       <div className="min-h-screen bg-white">
+        <SEO title={seoTitle} description={seoDesc} url={`https://ampume.com/shop/${handle}`} />
         <SimpleNavbar />
         <div className="pt-32 px-6 md:px-12 text-center">
           <h1 className="text-2xl font-medium mb-4">Product not found</h1>
