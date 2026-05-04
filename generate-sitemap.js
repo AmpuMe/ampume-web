@@ -36,22 +36,36 @@ const STATIC_URLS = [
 const SHOPIFY_DOMAIN = process.env.VITE_SHOPIFY_STORE_DOMAIN || 'ampume.myshopify.com'
 const SHOPIFY_TOKEN  = process.env.VITE_SHOPIFY_STOREFRONT_TOKEN || ''
 const SHOPIFY_API_VERSION = '2024-10'
+// Live serverless proxy — used as a fallback when no build-time token is set
+// (e.g. when VITE_SHOPIFY_STOREFRONT_TOKEN is configured as a Function-only
+// env var on Vercel). The proxy already has the runtime token, so we can
+// piggyback on it to keep products in the sitemap regardless.
+const SHOPIFY_PROXY = 'https://www.ampume.com/api/shopify'
 
 const SANITY_PROJECT = process.env.SANITY_PROJECT_ID || 'uoase9v5'
 const SANITY_DATASET = process.env.SANITY_DATASET || 'production'
 
-async function fetchShopifyProducts() {
-  if (!SHOPIFY_TOKEN) {
-    console.warn('[sitemap] No Shopify token — skipping product URLs')
-    return []
-  }
-  const query = `
-    query AllProducts {
-      products(first: 250) {
-        edges { node { handle updatedAt status } }
-      }
+const SHOPIFY_QUERY = `
+  query AllProducts {
+    products(first: 250) {
+      edges { node { handle updatedAt } }
     }
-  `
+  }
+`
+
+function shapeShopifyEdges(edges) {
+  return edges
+    .filter(e => e?.node?.handle && !e.node.handle.toLowerCase().includes('test'))
+    .map(e => ({
+      loc: `/shop/${e.node.handle}`,
+      lastmod: e.node.updatedAt ? e.node.updatedAt.split('T')[0] : null,
+      priority: '0.7',
+      changefreq: 'weekly',
+    }))
+}
+
+async function fetchShopifyDirect() {
+  if (!SHOPIFY_TOKEN) return null
   try {
     const res = await fetch(`https://${SHOPIFY_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`, {
       method: 'POST',
@@ -59,20 +73,49 @@ async function fetchShopifyProducts() {
         'Content-Type': 'application/json',
         'Shopify-Storefront-Private-Token': SHOPIFY_TOKEN,
       },
-      body: JSON.stringify({ query }),
+      body: JSON.stringify({ query: SHOPIFY_QUERY }),
     })
     const data = await res.json()
-    const edges = data?.data?.products?.edges || []
-    return edges.map(e => ({
-      loc: `/shop/${e.node.handle}`,
-      lastmod: e.node.updatedAt ? e.node.updatedAt.split('T')[0] : null,
-      priority: '0.7',
-      changefreq: 'weekly',
-    }))
+    const edges = data?.data?.products?.edges
+    if (!Array.isArray(edges) || edges.length === 0) return null
+    return shapeShopifyEdges(edges)
   } catch (err) {
-    console.warn('[sitemap] Shopify fetch failed:', err.message)
-    return []
+    console.warn('[sitemap] Shopify direct fetch failed:', err.message)
+    return null
   }
+}
+
+async function fetchShopifyViaProxy() {
+  try {
+    const res = await fetch(SHOPIFY_PROXY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: SHOPIFY_QUERY }),
+    })
+    if (!res.ok) return null
+    const data = await res.json()
+    const edges = data?.data?.products?.edges
+    if (!Array.isArray(edges) || edges.length === 0) return null
+    return shapeShopifyEdges(edges)
+  } catch (err) {
+    console.warn('[sitemap] Shopify proxy fetch failed:', err.message)
+    return null
+  }
+}
+
+async function fetchShopifyProducts() {
+  const direct = await fetchShopifyDirect()
+  if (direct && direct.length > 0) {
+    console.log(`[sitemap] Shopify direct: ${direct.length} products`)
+    return direct
+  }
+  const proxied = await fetchShopifyViaProxy()
+  if (proxied && proxied.length > 0) {
+    console.log(`[sitemap] Shopify via proxy: ${proxied.length} products`)
+    return proxied
+  }
+  console.warn('[sitemap] No products fetched (token + proxy both empty)')
+  return []
 }
 
 async function fetchSanityRoutes() {
@@ -129,6 +172,14 @@ function entry({ loc, priority, changefreq, lastmod }) {
 ;(async () => {
   console.log('[sitemap] generating…')
   const [products, sanity] = await Promise.all([fetchShopifyProducts(), fetchSanityRoutes()])
+
+  // If both upstreams returned nothing, leave the public/ static fallback
+  // alone instead of overwriting it with a partial (static-only) sitemap.
+  if (products.length === 0 && sanity.length === 0) {
+    console.warn('[sitemap] both upstreams empty — keeping static public/sitemap.xml')
+    return
+  }
+
   const all = [...STATIC_URLS, ...products, ...sanity]
 
   // De-dupe by loc just in case
@@ -147,5 +198,5 @@ ${unique.map(entry).join('\n')}
 
   const distPath = toAbsolute('dist/sitemap.xml')
   fs.writeFileSync(distPath, xml)
-  console.log(`[sitemap] wrote ${unique.length} URLs to ${distPath}`)
+  console.log(`[sitemap] wrote ${unique.length} URLs (${products.length} products, ${sanity.length} resources) to ${distPath}`)
 })()

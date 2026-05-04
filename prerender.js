@@ -39,36 +39,62 @@ const STATIC_ROUTES = [
 async function getDynamicRoutes() {
     const routes = []
 
-    // Shopify products
+    // Shopify products — try direct token first, fall back to live proxy.
+    // The proxy already has the token at runtime, so even without a build-time
+    // env var we still get full product coverage in the prerender pass.
     try {
+        const PRODUCT_QUERY = `query { products(first: 250) { edges { node { handle title description } } } }`
         const domain = process.env.VITE_SHOPIFY_STORE_DOMAIN || 'ampume.myshopify.com'
         const token  = process.env.VITE_SHOPIFY_STOREFRONT_TOKEN
+        let products = []
+
         if (token) {
-            const res = await fetch(`https://${domain}/api/2024-10/graphql.json`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Shopify-Storefront-Private-Token': token,
-                },
-                body: JSON.stringify({
-                    query: `query { products(first: 250) { edges { node { handle title description } } } }`,
-                }),
-            })
-            const data = await res.json()
-            const products = (data?.data?.products?.edges || []).map(e => e.node).filter(p => p.handle)
-            for (const p of products) {
-                routes.push({
-                    path: `/shop/${p.handle}`,
-                    title: `${p.title} | AmpuMe`,
-                    description: (p.description || '').replace(/\s+/g, ' ').trim().slice(0, 160),
+            try {
+                const res = await fetch(`https://${domain}/api/2024-10/graphql.json`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Shopify-Storefront-Private-Token': token,
+                    },
+                    body: JSON.stringify({ query: PRODUCT_QUERY }),
                 })
+                const data = await res.json()
+                products = (data?.data?.products?.edges || []).map(e => e.node).filter(p => p.handle)
+            } catch (err) {
+                console.warn('[prerender] Shopify direct fetch failed:', err.message)
             }
-            console.log(`[prerender] +${products.length} product routes`)
-        } else {
-            console.warn('[prerender] No Shopify token — skipping product routes')
         }
+
+        if (products.length === 0) {
+            try {
+                const res = await fetch('https://www.ampume.com/api/shopify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: PRODUCT_QUERY }),
+                })
+                if (res.ok) {
+                    const data = await res.json()
+                    products = (data?.data?.products?.edges || []).map(e => e.node).filter(p => p.handle)
+                    if (products.length > 0) console.log('[prerender] using Shopify proxy fallback')
+                }
+            } catch (err) {
+                console.warn('[prerender] Shopify proxy fetch failed:', err.message)
+            }
+        }
+
+        // Skip obvious test fixtures so they don't get prerendered HTML pages.
+        products = products.filter(p => !p.handle.toLowerCase().includes('test'))
+
+        for (const p of products) {
+            routes.push({
+                path: `/shop/${p.handle}`,
+                title: `${p.title} | AmpuMe`,
+                description: (p.description || '').replace(/\s+/g, ' ').trim().slice(0, 160),
+            })
+        }
+        console.log(`[prerender] +${products.length} product routes`)
     } catch (err) {
-        console.warn('[prerender] Shopify fetch failed:', err.message)
+        console.warn('[prerender] Shopify pipeline failed:', err.message)
     }
 
     // Sanity Knowledge Base — pillars + articles
