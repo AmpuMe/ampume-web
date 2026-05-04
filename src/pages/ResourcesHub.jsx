@@ -143,7 +143,7 @@ export default function ResourcesHub() {
   return (
     <div className="min-h-screen bg-white text-black font-sans">
       <SEO
-        title="Knowledge Base | AmpuMe"
+        title="Knowledge Base"
         description="Structured resources across performance, prosthetic care, insurance, and everyday life — designed to help you move forward with confidence."
         url="https://ampume.com/resources"
       />

@@ -104,7 +104,7 @@ export default function ShopPage() {
   return (
     <div className="min-h-screen bg-white text-black font-sans">
       <SEO
-        title="Shop Prosthetic Supplies | AmpuMe"
+        title="Shop Prosthetic Supplies"
         description="Expertly curated prosthetic supplies and performance products to support comfort, mobility, and quality of life."
         url="https://ampume.com/shop"
       />

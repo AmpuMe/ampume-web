@@ -69,7 +69,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-white text-black font-sans">
       <SEO
-        title="Contact Us | AmpuMe"
+        title="Contact Us"
         description="Get in touch with the AmpuMe team. We're here to help with product questions, special orders, and more."
         url="https://ampume.com/contact"
       />

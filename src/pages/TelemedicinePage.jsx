@@ -225,7 +225,7 @@ export default function TelemedicinePage() {
   return (
     <div className="min-h-screen bg-white text-black font-sans">
       <SEO
-        title="Telemedicine | AmpuMe"
+        title="Telemedicine"
         description="Schedule an appointment with a limb loss specialist. AmpuMe clinical partners provide functional assessments, liner replacement visits, and specialized care."
         url="https://ampume.com/telemedicine"
       />
