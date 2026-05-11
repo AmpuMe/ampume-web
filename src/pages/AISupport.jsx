@@ -444,7 +444,7 @@ const AISupport = () => {
       <SEO
         title="Ask AmpuMe"
         description="Get immediate answers about amputation recovery, prosthetics, and daily life from our AI assistant."
-        url="https://ampume.com/ask-ampume"
+        url="https://www.ampume.com/ask-ampume"
       />
       <SimpleNavbar />
 

@@ -373,7 +373,7 @@ export default function ProductPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-white">
-        <SEO title={seoTitle} description={seoDesc} url={`https://ampume.com/shop/${handle}`} />
+        <SEO title={seoTitle} description={seoDesc} url={`https://www.ampume.com/shop/${handle}`} />
         <SimpleNavbar />
         <div className="pt-32 px-6 md:px-12">
           <div className="max-w-6xl mx-auto">
@@ -394,7 +394,7 @@ export default function ProductPage() {
   if (error || !product) {
     return (
       <div className="min-h-screen bg-white">
-        <SEO title={seoTitle} description={seoDesc} url={`https://ampume.com/shop/${handle}`} />
+        <SEO title={seoTitle} description={seoDesc} url={`https://www.ampume.com/shop/${handle}`} />
         <SimpleNavbar />
         <div className="pt-32 px-6 md:px-12 text-center">
           <h1 className="text-2xl font-medium mb-4">Product not found</h1>
@@ -416,7 +416,7 @@ export default function ProductPage() {
       <SEO
         title={`${currentGroup ? currentGroup.baseName : product.title} | AmpuMe Store`}
         description={product.description || `Shop ${product.title} at AmpuMe`}
-        url={`https://ampume.com/shop/${handle}`}
+        url={`https://www.ampume.com/shop/${handle}`}
       />
 
       <SimpleNavbar />

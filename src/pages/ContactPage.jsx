@@ -71,7 +71,7 @@ export default function ContactPage() {
       <SEO
         title="Contact Us"
         description="Get in touch with the AmpuMe team. We're here to help with product questions, special orders, and more."
-        url="https://ampume.com/contact"
+        url="https://www.ampume.com/contact"
       />
 
       <SimpleNavbar />
