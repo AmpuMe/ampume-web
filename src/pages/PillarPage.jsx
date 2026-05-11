@@ -56,7 +56,7 @@ export default function PillarPage() {
   // SEO renders in every state so prerendered HTML always carries tags.
   const seoTitle = pillar ? `${pillar.title} | AmpuMe Knowledge Base` : 'Knowledge Base | AmpuMe';
   const seoDesc = pillar?.description || 'Expert guidance and resources for life with limb loss.';
-  const seoUrl = `https://ampume.com/resources/${pillarSlug}`;
+  const seoUrl = `https://www.ampume.com/resources/${pillarSlug}`;
 
   if (isLoading) {
     return (
@@ -109,7 +109,7 @@ export default function PillarPage() {
       <SEO
         title={`${pillar.title} | AmpuMe Knowledge Base`}
         description={pillar.description || `Browse ${pillar.title} resources at AmpuMe`}
-        url={`https://ampume.com/resources/${pillarSlug}`}
+        url={`https://www.ampume.com/resources/${pillarSlug}`}
       />
 
       <SimpleNavbar />

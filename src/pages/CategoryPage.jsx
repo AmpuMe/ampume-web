@@ -118,7 +118,7 @@ export default function CategoryPage() {
       <SEO
         title={`${category.label} | AmpuMe Store`}
         description={category.description}
-        url={`https://ampume.com/shop/${categoryId}`}
+        url={`https://www.ampume.com/shop/${categoryId}`}
       />
 
       <SimpleNavbar />

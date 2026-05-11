@@ -106,7 +106,7 @@ export default function ShopPage() {
       <SEO
         title="Shop Prosthetic Supplies"
         description="Expertly curated prosthetic supplies and performance products to support comfort, mobility, and quality of life."
-        url="https://ampume.com/shop"
+        url="https://www.ampume.com/shop"
       />
 
       <SimpleNavbar />

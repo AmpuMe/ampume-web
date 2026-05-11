@@ -59,7 +59,7 @@ export default function ResourceDetail() {
   // Real per-resource title/description come from the build-time override.
   const seoTitle = resource ? `${resource.title} | AmpuMe Knowledge Base` : 'Knowledge Base | AmpuMe';
   const seoDesc = resource?.editorialSummary || 'Expert guidance and resources for life with limb loss.';
-  const seoUrl = `https://ampume.com/resources/${pillarSlug}/${resourceSlug}`;
+  const seoUrl = `https://www.ampume.com/resources/${pillarSlug}/${resourceSlug}`;
 
   if (isLoading) {
     return (
@@ -104,7 +104,7 @@ export default function ResourceDetail() {
       <SEO
         title={`${resource.title} | AmpuMe Knowledge Base`}
         description={resource.editorialSummary || `Read ${resource.title} at AmpuMe`}
-        url={`https://ampume.com/resources/${pillarSlug}/${resourceSlug}`}
+        url={`https://www.ampume.com/resources/${pillarSlug}/${resourceSlug}`}
       />
 
       <SimpleNavbar />

@@ -145,7 +145,7 @@ export default function ResourcesHub() {
       <SEO
         title="Knowledge Base"
         description="Structured resources across performance, prosthetic care, insurance, and everyday life — designed to help you move forward with confidence."
-        url="https://ampume.com/resources"
+        url="https://www.ampume.com/resources"
       />
 
       <SimpleNavbar transparent />

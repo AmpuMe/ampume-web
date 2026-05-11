@@ -14,7 +14,7 @@ import { fileURLToPath } from 'node:url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const toAbsolute = (p) => path.resolve(__dirname, p)
 
-const SITE = 'https://ampume.com'
+const SITE = 'https://www.ampume.com'
 
 // Static URLs, with default priority + change frequency hints.
 const STATIC_URLS = [
