@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
+    "@vercel/functions": "^3.7.7",
     "@portabletext/react": "^6.0.2",
     "@shopify/storefront-api-client": "^1.0.9",
     "framer-motion": "^10.16.4",
