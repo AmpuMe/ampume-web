@@ -17,8 +17,9 @@ const LOGIN_PATH = '/__site-auth';
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 30; // 30 days
 
 export const config = {
-  // Run on every path except the login-form submission endpoint itself.
-  matcher: ['/((?!__site-auth).*)'],
+  // Run on every path, including the login-form submission endpoint —
+  // the branch below handles that path explicitly.
+  matcher: ['/(.*)'],
 };
 
 async function sha256Hex(input) {
